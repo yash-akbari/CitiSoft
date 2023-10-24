@@ -74,7 +74,7 @@
             this.minimizeBtn.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.minimizeBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(80)))), ((int)(((byte)(145)))));
             this.minimizeBtn.Cursor = System.Windows.Forms.Cursors.Default;
-            this.minimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.minimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.minimizeBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.minimizeBtn.Location = new System.Drawing.Point(702, 12);
             this.minimizeBtn.Name = "minimizeBtn";
@@ -89,7 +89,7 @@
             this.maximizeBtn.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.maximizeBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(80)))), ((int)(((byte)(145)))));
             this.maximizeBtn.Cursor = System.Windows.Forms.Cursors.Default;
-            this.maximizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.maximizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.maximizeBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.maximizeBtn.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.maximizeBtn.Location = new System.Drawing.Point(730, 12);
@@ -106,7 +106,7 @@
             this.closeBtn.BackColor = System.Drawing.Color.Red;
             this.closeBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.closeBtn.Cursor = System.Windows.Forms.Cursors.Default;
-            this.closeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.closeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.closeBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.closeBtn.Location = new System.Drawing.Point(772, 12);
             this.closeBtn.Name = "closeBtn";

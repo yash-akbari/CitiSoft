@@ -39,7 +39,7 @@ namespace CitiSoft
 
         private void minimizeBtn_Click(object sender, EventArgs e)
         {
-            
+            this.WindowState = FormWindowState.Minimized;
         }
 
         private void maximizeBtn_Click(object sender, EventArgs e)
