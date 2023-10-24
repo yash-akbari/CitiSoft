@@ -68,8 +68,6 @@
             this.headPan.Size = new System.Drawing.Size(820, 128);
             this.headPan.TabIndex = 0;
             this.headPan.MouseDown += new System.Windows.Forms.MouseEventHandler(this.headPan_MouseDown);
-            this.headPan.MouseMove += new System.Windows.Forms.MouseEventHandler(this.headPan_MouseMove);
-            this.headPan.MouseUp += new System.Windows.Forms.MouseEventHandler(this.headPan_MouseUp);
             // 
             // minimizeBtn
             // 
@@ -240,7 +238,6 @@
             this.venSerTex.Name = "venSerTex";
             this.venSerTex.Size = new System.Drawing.Size(409, 23);
             this.venSerTex.TabIndex = 0;
-            this.venSerTex.TextChanged += new System.EventHandler(this.venSerTex_TextChanged);
             // 
             // CitiSoft
             // 

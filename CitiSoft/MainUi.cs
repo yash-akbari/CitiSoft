@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
     
@@ -30,10 +31,11 @@ namespace CitiSoft
 
         }
 
-        private void venSerTex_TextChanged(object sender, EventArgs e)
-        {
+        [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
 
-        }
+        [DllImport("user32.dll", EntryPoint = "SendMessage")]
+        private extern static void SendMessge(System.IntPtr hwnd, int wmsg, int wparam, int lparam);
 
         private void minimizeBtn_Click(object sender, EventArgs e)
         {
@@ -54,18 +56,9 @@ namespace CitiSoft
 
         private void headPan_MouseDown(object sender, MouseEventArgs e)
         {
-        }
-
-        private void headPan_MouseMove(object sender, MouseEventArgs e)
-        {
-            
-        }
-
-        private void headPan_MouseUp(object sender, MouseEventArgs e)
-        {
-            
-        }
-        
+            ReleaseCapture();
+            SendMessge(this.Handle, 0x112, 0xf012, 0);
+        }        
     }
 }
 //Label l = new Label();
