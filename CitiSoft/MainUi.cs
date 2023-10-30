@@ -58,7 +58,7 @@ namespace CitiSoft
 
         private List<Reminder> reminders = new List<Reminder>();
 
-        private void btnAddReminder_Click(object sender, EventArgs e)
+        /*private void btnAddReminder_Click(object sender, EventArgs e)
         {
             ReminderForm reminderForm = new ReminderForm();
             if (reminderForm.ShowDialog() == DialogResult.OK)
@@ -82,6 +82,6 @@ namespace CitiSoft
                     break; // Only show one reminder per tick
                 }
             }
-        }
+        }*/
     }
 }

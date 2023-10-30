@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +20,8 @@ namespace CitiSoft
         private System.Windows.Forms.TabPage venView = new System.Windows.Forms.TabPage();
         private System.Windows.Forms.TabPage venSearch = new System.Windows.Forms.TabPage();
         private System.Windows.Forms.TabPage venAdd = new System.Windows.Forms.TabPage();
+        private System.Windows.Forms.TabPage venRemind = new System.Windows.Forms.TabPage();
+
         private System.Windows.Forms.ComboBox venFilCombo = new System.Windows.Forms.ComboBox();
         private System.Windows.Forms.Button venSerBtn = new System.Windows.Forms.Button();
         private System.Windows.Forms.TextBox venSerTex = new System.Windows.Forms.TextBox();
@@ -209,6 +213,67 @@ namespace CitiSoft
             venSerTex.Size = new System.Drawing.Size(409, 23);
             venSerTex.TabIndex = 0;
         }
+
+        public void venReminderFunc()
+        {
+            // 
+            // venAdd
+            // 
+
+            venRemind.Location = new System.Drawing.Point(4, 22);
+            venRemind.Name = "venRemind";
+            venRemind.Padding = new System.Windows.Forms.Padding(3);
+            venRemind.Size = new System.Drawing.Size(610, 666);
+            venRemind.TabIndex = 0;
+            venRemind.Text = "Remind";
+            venRemind.UseVisualStyleBackColor = true;
+            venRemind.Controls.Add(venRemData);
+            venTab.Controls.Add(venRemind);
+
+
+            // 
+            // venViewData
+            // 
+            venRemData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            venRemData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            venRemData.Location = new System.Drawing.Point(3, 3);
+            venRemData.Name = "venRemData";
+            venRemData.Size = new System.Drawing.Size(604, 660);
+            venRemData.TabIndex = 0;
+
+            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\CitiSoftDatabase.mdf;Integrated Security=True;Connect Timeout=30";
+            //Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = "\\anglia.local\fs\StudentsHome\ia543\My Documents\CitiSoft\CitiSoft\CitiSoftDatabase.mdf"; Integrated Security = True
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Write SQL queries for each of your tables
+                    string query1 = "SELECT   VendorInfo.compName,VendorInfo.lstDemoDt, VendorInfo.lstRevInt, VendorInfo.lstRevDt FROM VendorInfo";
+                    // Fill DataTables
+                    DataTable table1 = new DataTable();
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(query1, connection))
+                    {
+                        adapter.Fill(table1);
+                    }
+
+
+                    // Create a DataSet and add the DataTables
+                    DataTable mergedTable = new DataTable();
+                    mergedTable.Merge(table1);
+
+                    // Bind DataGridView to the merged DataTable
+                    venRemData.DataSource = mergedTable;
+
+
+
+
+            }
+
+
+        }
         public void tblSelector(int val)
         {
             switch (val)
@@ -227,6 +292,7 @@ namespace CitiSoft
                     venViewFunc();
                     venSearchFunc();
                     venAddFunc();
+                    venReminderFunc();
                     // visible
                     break;
                 case 3:
