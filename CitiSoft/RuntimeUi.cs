@@ -250,7 +250,7 @@ namespace CitiSoft
                     connection.Open();
 
                     // Write SQL queries for each of your tables
-                    string query1 = "SELECT   VendorInfo.compName,VendorInfo.lstDemoDt, VendorInfo.lstRevInt, VendorInfo.lstRevDt FROM VendorInfo";
+                    string query1 = "SELECT   VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo";
                     // Fill DataTables
                     DataTable table1 = new DataTable();
 
