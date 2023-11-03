@@ -233,7 +233,7 @@ namespace CitiSoft
             venTab.Controls.Add(venRemind);
 
             // 
-            // venViewData
+            // venRemData
             // 
             
             venRemData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -272,7 +272,7 @@ namespace CitiSoft
         {
 
             //
-            // VenProblemHistory
+            // venProblemHistory
             //
             
             venProblemHistory.Location = new System.Drawing.Point(4, 22);
@@ -285,6 +285,9 @@ namespace CitiSoft
             venTab.Controls.Add(venProblemHistory);
             venProblemHistory.Controls.Add(venProblemHistoryData);
 
+            //
+            // venProblemHistoryData
+            //
 
             venProblemHistoryData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             venProblemHistoryData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -296,14 +299,14 @@ namespace CitiSoft
             venProblemHistoryData.TabIndex = 0;
 
            
-            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\CitiSoftDatabase.mdf;Integrated Security=True;Connect Timeout=30";
+            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30";
             //Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = "\\anglia.local\fs\StudentsHome\ia543\My Documents\CitiSoft\CitiSoft\CitiSoftDatabase.mdf"; Integrated Security = True
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
                 // SQL query
-                string query1 = "SELECT * FROM VendorInfo";
+                string query1 = "SELECT * FROM ProblemHistory";
                 DataTable table1 = new DataTable();
 
                 using (SqlDataAdapter adapter = new SqlDataAdapter(query1, connection))
