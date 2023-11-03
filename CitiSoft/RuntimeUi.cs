@@ -253,7 +253,7 @@ namespace CitiSoft
                     connection.Open();
 
                     // SQL query
-                    string query1 = "SELECT   VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo";
+                    string query1 = "SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo";
                     DataTable table1 = new DataTable();
 
                     using (SqlDataAdapter adapter = new SqlDataAdapter(query1, connection))
@@ -303,7 +303,7 @@ namespace CitiSoft
                 connection.Open();
 
                 // SQL query
-                string query1 = "SELECT * FROM";
+                string query1 = "SELECT * FROM VendorInfo";
                 DataTable table1 = new DataTable();
 
                 using (SqlDataAdapter adapter = new SqlDataAdapter(query1, connection))
