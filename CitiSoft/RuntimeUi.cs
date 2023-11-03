@@ -283,16 +283,17 @@ namespace CitiSoft
             venProblemHistory.Text = "Client Problem History";
             venProblemHistory.UseVisualStyleBackColor = true;
             venTab.Controls.Add(venProblemHistory);
+            venProblemHistory.Controls.Add(venProblemHistoryData);
 
-            /*
-            venRemData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            venRemData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+
+            venProblemHistoryData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            venProblemHistoryData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            venRemData.Location = new System.Drawing.Point(3, 3);
-            venRemData.Name = "venRemData";
-            venRemData.Size = new System.Drawing.Size(604, 660);
-            venRemData.TabIndex = 0;
+            venProblemHistoryData.Location = new System.Drawing.Point(3, 3);
+            venProblemHistoryData.Name = "venProblemHistoryData";
+            venProblemHistoryData.Size = new System.Drawing.Size(604, 660);
+            venProblemHistoryData.TabIndex = 0;
 
            
             string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\CitiSoftDatabase.mdf;Integrated Security=True;Connect Timeout=30";
@@ -302,7 +303,7 @@ namespace CitiSoft
                 connection.Open();
 
                 // SQL query
-                string query1 = "SELECT * FROM VendorInfo";
+                string query1 = "SELECT * FROM";
                 DataTable table1 = new DataTable();
 
                 using (SqlDataAdapter adapter = new SqlDataAdapter(query1, connection))
@@ -313,8 +314,8 @@ namespace CitiSoft
                 DataTable mergedTable = new DataTable();
                 mergedTable.Merge(table1);
 
-                venRemData.DataSource = mergedTable;
-            }*/
+                venProblemHistoryData.DataSource = mergedTable;
+            }
             
         }
         public void tblSelector(int val)
@@ -353,5 +354,6 @@ namespace CitiSoft
 
         }
 
+        
     }
 }

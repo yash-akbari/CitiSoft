@@ -58,6 +58,11 @@ namespace CitiSoft
 
         private List<Reminder> reminders = new List<Reminder>();
 
+        private void mainPan_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
         /*private void btnAddReminder_Click(object sender, EventArgs e)
         {
             ReminderForm reminderForm = new ReminderForm();
