@@ -22,6 +22,8 @@ namespace CitiSoft
         private System.Windows.Forms.TabPage venAdd = new System.Windows.Forms.TabPage();
         private System.Windows.Forms.TabPage venRemind = new System.Windows.Forms.TabPage();
 
+        private System.Windows.Forms.TabPage venProblemHistory = new System.Windows.Forms.TabPage();
+
         private System.Windows.Forms.ComboBox venFilCombo = new System.Windows.Forms.ComboBox();
         private System.Windows.Forms.Button venSerBtn = new System.Windows.Forms.Button();
         private System.Windows.Forms.TextBox venSerTex = new System.Windows.Forms.TextBox();
@@ -217,7 +219,7 @@ namespace CitiSoft
         public void venReminderFunc()
         {
             // 
-            // venAdd
+            // venRemind
             // 
 
             venRemind.Location = new System.Drawing.Point(4, 22);
@@ -230,10 +232,59 @@ namespace CitiSoft
             venRemind.Controls.Add(venRemData);
             venTab.Controls.Add(venRemind);
 
-
             // 
             // venViewData
             // 
+            
+            venRemData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            venRemData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            venRemData.Location = new System.Drawing.Point(3, 3);
+            venRemData.Name = "venRemData";
+            venRemData.Size = new System.Drawing.Size(604, 660);
+            venRemData.TabIndex = 0;
+            
+
+            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\CitiSoftDatabase.mdf;Integrated Security=True;Connect Timeout=30";
+            //Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = "\\anglia.local\fs\StudentsHome\ia543\My Documents\CitiSoft\CitiSoft\CitiSoftDatabase.mdf"; Integrated Security = True
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // SQL query
+                    string query1 = "SELECT   VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo";
+                    DataTable table1 = new DataTable();
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(query1, connection))
+                    {
+                        adapter.Fill(table1);
+                    }
+
+                    DataTable mergedTable = new DataTable();
+                    mergedTable.Merge(table1);
+
+                    venRemData.DataSource = mergedTable;
+            }
+        }
+
+        public void venProblemHistoryFunc()
+        {
+
+            //
+            // VenProblemHistory
+            //
+            
+            venProblemHistory.Location = new System.Drawing.Point(4, 22);
+            venProblemHistory.Name = "venProblemHistory";
+            venProblemHistory.Padding = new System.Windows.Forms.Padding(3);
+            venProblemHistory.Size = new System.Drawing.Size(610, 666);
+            venProblemHistory.TabIndex = 0;
+            venProblemHistory.Text = "Client Problem History";
+            venProblemHistory.UseVisualStyleBackColor = true;
+            venTab.Controls.Add(venProblemHistory);
+
+            /*
             venRemData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             venRemData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)
@@ -243,36 +294,28 @@ namespace CitiSoft
             venRemData.Size = new System.Drawing.Size(604, 660);
             venRemData.TabIndex = 0;
 
+           
             string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\CitiSoftDatabase.mdf;Integrated Security=True;Connect Timeout=30";
             //Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = "\\anglia.local\fs\StudentsHome\ia543\My Documents\CitiSoft\CitiSoft\CitiSoftDatabase.mdf"; Integrated Security = True
-                using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // SQL query
+                string query1 = "SELECT * FROM VendorInfo";
+                DataTable table1 = new DataTable();
+
+                using (SqlDataAdapter adapter = new SqlDataAdapter(query1, connection))
                 {
-                    connection.Open();
+                    adapter.Fill(table1);
+                }
 
-                    // Write SQL queries for each of your tables
-                    string query1 = "SELECT   VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo";
-                    // Fill DataTables
-                    DataTable table1 = new DataTable();
+                DataTable mergedTable = new DataTable();
+                mergedTable.Merge(table1);
 
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(query1, connection))
-                    {
-                        adapter.Fill(table1);
-                    }
-
-
-                    // Create a DataSet and add the DataTables
-                    DataTable mergedTable = new DataTable();
-                    mergedTable.Merge(table1);
-
-                    // Bind DataGridView to the merged DataTable
-                    venRemData.DataSource = mergedTable;
-
-
-
-
-            }
-
-
+                venRemData.DataSource = mergedTable;
+            }*/
+            
         }
         public void tblSelector(int val)
         {
@@ -293,6 +336,7 @@ namespace CitiSoft
                     venSearchFunc();
                     venAddFunc();
                     venReminderFunc();
+                    venProblemHistoryFunc();
                     // visible
                     break;
                 case 3:
