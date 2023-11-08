@@ -18,7 +18,7 @@ namespace CitiSoft
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CitiSoft());
+            Application.Run(new RuntimeUI());
         }
 
     }

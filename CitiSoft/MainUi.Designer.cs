@@ -2,7 +2,7 @@
 
 namespace CitiSoft
 {
-    partial class CitiSoft
+    partial class MainUI
     {
         /// <summary>
         /// Required designer variable.
@@ -39,12 +39,14 @@ namespace CitiSoft
             this.venSerData = new System.Windows.Forms.DataGridView();
             this.venRemData = new System.Windows.Forms.DataGridView();
             this.venProblemHistoryData = new System.Windows.Forms.DataGridView();
+            this.venModifyClientData = new System.Windows.Forms.DataGridView();
             this.mainPan = new System.Windows.Forms.Panel();
             this.headPan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.venViewData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.venSerData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.venRemData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.venProblemHistoryData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.venModifyClientData)).BeginInit();
             this.SuspendLayout();
             // 
             // headPan
@@ -59,7 +61,7 @@ namespace CitiSoft
             this.headPan.Dock = System.Windows.Forms.DockStyle.Top;
             this.headPan.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.headPan.Location = new System.Drawing.Point(0, 0);
-            this.headPan.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.headPan.Margin = new System.Windows.Forms.Padding(6);
             this.headPan.Name = "headPan";
             this.headPan.Size = new System.Drawing.Size(1640, 246);
             this.headPan.TabIndex = 0;
@@ -73,7 +75,7 @@ namespace CitiSoft
             this.minimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.minimizeBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.minimizeBtn.Location = new System.Drawing.Point(1404, 23);
-            this.minimizeBtn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.minimizeBtn.Margin = new System.Windows.Forms.Padding(6);
             this.minimizeBtn.Name = "minimizeBtn";
             this.minimizeBtn.Size = new System.Drawing.Size(44, 44);
             this.minimizeBtn.TabIndex = 2;
@@ -90,7 +92,7 @@ namespace CitiSoft
             this.maximizeBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.maximizeBtn.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.maximizeBtn.Location = new System.Drawing.Point(1460, 23);
-            this.maximizeBtn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.maximizeBtn.Margin = new System.Windows.Forms.Padding(6);
             this.maximizeBtn.Name = "maximizeBtn";
             this.maximizeBtn.Size = new System.Drawing.Size(72, 44);
             this.maximizeBtn.TabIndex = 1;
@@ -107,7 +109,7 @@ namespace CitiSoft
             this.closeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.closeBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.closeBtn.Location = new System.Drawing.Point(1544, 23);
-            this.closeBtn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.closeBtn.Margin = new System.Windows.Forms.Padding(6);
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(72, 44);
             this.closeBtn.TabIndex = 0;
@@ -119,7 +121,7 @@ namespace CitiSoft
             // 
             this.menuPan.Dock = System.Windows.Forms.DockStyle.Left;
             this.menuPan.Location = new System.Drawing.Point(0, 246);
-            this.menuPan.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.menuPan.Margin = new System.Windows.Forms.Padding(6);
             this.menuPan.Name = "menuPan";
             this.menuPan.Size = new System.Drawing.Size(404, 854);
             this.menuPan.TabIndex = 1;
@@ -153,19 +155,33 @@ namespace CitiSoft
             // 
             // venProblemHistoryData
             // 
-            
+            this.venProblemHistoryData.ColumnHeadersHeight = 46;
+            this.venProblemHistoryData.Location = new System.Drawing.Point(0, 0);
+            this.venProblemHistoryData.Name = "venProblemHistoryData";
+            this.venProblemHistoryData.RowHeadersWidth = 82;
+            this.venProblemHistoryData.Size = new System.Drawing.Size(240, 150);
+            this.venProblemHistoryData.TabIndex = 0;
+            // 
+            // venModifyClientData
+            // 
+            this.venModifyClientData.ColumnHeadersHeight = 46;
+            this.venModifyClientData.Location = new System.Drawing.Point(0, 0);
+            this.venModifyClientData.Name = "venModifyClientData";
+            this.venModifyClientData.RowHeadersWidth = 82;
+            this.venModifyClientData.Size = new System.Drawing.Size(240, 150);
+            this.venModifyClientData.TabIndex = 0;
             // 
             // mainPan
             // 
             this.mainPan.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPan.Location = new System.Drawing.Point(404, 246);
-            this.mainPan.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.mainPan.Margin = new System.Windows.Forms.Padding(6);
             this.mainPan.Name = "mainPan";
             this.mainPan.Size = new System.Drawing.Size(1236, 854);
             this.mainPan.TabIndex = 2;
             this.mainPan.Paint += new System.Windows.Forms.PaintEventHandler(this.mainPan_Paint);
             // 
-            // CitiSoft
+            // MainUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -175,15 +191,16 @@ namespace CitiSoft
             this.Controls.Add(this.menuPan);
             this.Controls.Add(this.headPan);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MinimumSize = new System.Drawing.Size(1640, 1038);
-            this.Name = "CitiSoft";
+            this.Name = "MainUI";
             this.Text = "CitiSoft";
             this.headPan.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.venViewData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.venSerData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.venRemData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.venProblemHistoryData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.venModifyClientData)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -192,14 +209,16 @@ namespace CitiSoft
 
         private System.Windows.Forms.Panel headPan;
         private System.Windows.Forms.Button closeBtn;
-        private System.Windows.Forms.Panel menuPan;
+        protected System.Windows.Forms.Panel menuPan;
         private System.Windows.Forms.Button maximizeBtn;
         private System.Windows.Forms.Button minimizeBtn;
-        private System.Windows.Forms.DataGridView venViewData;
-        private System.Windows.Forms.DataGridView venSerData;
-        private System.Windows.Forms.DataGridView venRemData;
-        private System.Windows.Forms.DataGridView venProblemHistoryData;
-        private Panel mainPan;
+        protected System.Windows.Forms.DataGridView venViewData;
+        protected System.Windows.Forms.DataGridView venSerData;
+        protected System.Windows.Forms.DataGridView venRemData;
+        protected System.Windows.Forms.DataGridView venProblemHistoryData;
+        protected System.Windows.Forms.DataGridView venModifyClientData;
+
+        protected Panel mainPan;
     }
 }
 

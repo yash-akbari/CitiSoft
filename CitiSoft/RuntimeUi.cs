@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace CitiSoft
 {
-    public partial class CitiSoft : Form
+    public partial class RuntimeUI : MainUI
     {
 
         private System.Windows.Forms.Label setMenu = new System.Windows.Forms.Label();
@@ -21,15 +21,18 @@ namespace CitiSoft
         private System.Windows.Forms.TabPage venSearch = new System.Windows.Forms.TabPage();
         private System.Windows.Forms.TabPage venAdd = new System.Windows.Forms.TabPage();
         private System.Windows.Forms.TabPage venRemind = new System.Windows.Forms.TabPage();
-
         private System.Windows.Forms.TabPage venProblemHistory = new System.Windows.Forms.TabPage();
+
+        private System.Windows.Forms.TabPage venModifyClient = new System.Windows.Forms.TabPage();
 
         private System.Windows.Forms.ComboBox venFilCombo = new System.Windows.Forms.ComboBox();
         private System.Windows.Forms.Button venSerBtn = new System.Windows.Forms.Button();
         private System.Windows.Forms.TextBox venSerTex = new System.Windows.Forms.TextBox();
         private System.Windows.Forms.Panel venPan = new System.Windows.Forms.Panel();
 
-       
+
+        int menuYLoc = 0;
+
 
         public void setMenuFunc()
         {//Settings Menu
@@ -244,28 +247,8 @@ namespace CitiSoft
             venRemData.Name = "venRemData";
             venRemData.Size = new System.Drawing.Size(604, 660);
             venRemData.TabIndex = 0;
-            
 
-            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\CitiSoftDatabase.mdf;Integrated Security=True;Connect Timeout=30";
-            //Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = "\\anglia.local\fs\StudentsHome\ia543\My Documents\CitiSoft\CitiSoft\CitiSoftDatabase.mdf"; Integrated Security = True
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    // SQL query
-                    string query1 = "SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo";
-                    DataTable table1 = new DataTable();
-
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(query1, connection))
-                    {
-                        adapter.Fill(table1);
-                    }
-
-                    DataTable mergedTable = new DataTable();
-                    mergedTable.Merge(table1);
-
-                    venRemData.DataSource = mergedTable;
-            }
+            dataBinding("CitiSoftDatabase.mdf", "SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo", venRemData);
         }
 
         public void venProblemHistoryFunc()
@@ -298,15 +281,22 @@ namespace CitiSoft
             venProblemHistoryData.Size = new System.Drawing.Size(604, 660);
             venProblemHistoryData.TabIndex = 0;
 
-           
-            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30";
+            dataBinding("Functionality.mdf", "SELECT * FROM ProblemHistory", venProblemHistoryData);
+            
+        }
+
+        // takes database name, query and DataGridView instance to display a table
+        public void dataBinding(string databaseName, string query, DataGridView table)
+        {
+            string connectionString = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\{databaseName};Integrated Security=True;Connect Timeout=30";
             //Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = "\\anglia.local\fs\StudentsHome\ia543\My Documents\CitiSoft\CitiSoft\CitiSoftDatabase.mdf"; Integrated Security = True
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
                 // SQL query
-                string query1 = "SELECT * FROM ProblemHistory";
+                string query1 = query;
+
                 DataTable table1 = new DataTable();
 
                 using (SqlDataAdapter adapter = new SqlDataAdapter(query1, connection))
@@ -317,9 +307,42 @@ namespace CitiSoft
                 DataTable mergedTable = new DataTable();
                 mergedTable.Merge(table1);
 
-                venProblemHistoryData.DataSource = mergedTable;
+                table.DataSource = mergedTable;
             }
-            
+        }
+
+        public void venModifyClientFunc()
+        {
+            venModifyClient.Location = new System.Drawing.Point(4, 22);
+            venModifyClient.Name = "venModifyClient";
+            venModifyClient.Padding = new System.Windows.Forms.Padding(3);
+            venModifyClient.Size = new System.Drawing.Size(610, 666);
+            venModifyClient.TabIndex = 0;
+            venModifyClient.Text = "Modify Client";
+            venModifyClient.UseVisualStyleBackColor = true;
+            venTab.Controls.Add(venModifyClient);
+
+
+            venModifyClient.Controls.Add(venModifyClientData);
+
+            venModifyClientData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            venModifyClientData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            venModifyClientData.Location = new System.Drawing.Point(3, 3);
+            venModifyClientData.Name = "venModifyClientData";
+            venModifyClientData.Size = new System.Drawing.Size(604, 660);
+            venModifyClientData.TabIndex = 0;
+
+            dataBinding("Functionality.mdf", "SELECT Client.cid, compName, phone, email, Street, City, Cointry AS 'Country'\r\nFROM Client\r\nJOIN CustAddress\r\n  ON Client.cid=CustAddress.cid;", venModifyClientData);
+
+        }
+
+        public RuntimeUI()
+        {
+
+            tblSelector(2);
+
         }
         public void tblSelector(int val)
         {
@@ -341,6 +364,7 @@ namespace CitiSoft
                     venAddFunc();
                     venReminderFunc();
                     venProblemHistoryFunc();
+                    venModifyClientFunc();
                     // visible
                     break;
                 case 3:
@@ -358,5 +382,10 @@ namespace CitiSoft
         }
 
         
+
+        private void CitiSoft_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
