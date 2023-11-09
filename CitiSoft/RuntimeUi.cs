@@ -328,7 +328,7 @@ namespace CitiSoft
             | System.Windows.Forms.AnchorStyles.Right)));
             venModifyClientData.Location = new System.Drawing.Point(3, 3);
             venModifyClientData.Name = "venModifyClientData";
-            venModifyClientData.Size = new System.Drawing.Size(604, 660);
+            venModifyClientData.Size = new System.Drawing.Size(500, 500);
             venModifyClientData.TabIndex = 0;
 
             dataBinding("Functionality.mdf", "SELECT Client.cid, compName, phone, email, Street, City, Cointry AS 'Country'\r\nFROM Client\r\nJOIN CustAddress\r\n  ON Client.cid=CustAddress.cid;", venModifyClientData);
@@ -337,13 +337,16 @@ namespace CitiSoft
             updateClientBtn = new Button();
             deleteClientBtn = new Button();
 
+            updateClientBtn.Size = new Size(100, 35);
+            deleteClientBtn.Size = new Size(100, 35);
+
 
             updateClientBtn.Text = "Update";
-            updateClientBtn.Location = new Point(10, venModifyClient.Height - 30);
+            updateClientBtn.Location = new Point(10, venModifyClient.Height - 10);
             updateClientBtn.Click += updateClientBtn_Click;
 
             deleteClientBtn.Text = "Delete";
-            deleteClientBtn.Location = new Point(100, venModifyClient.Height - 30);
+            deleteClientBtn.Location = new Point(150, venModifyClient.Height - 10);
             deleteClientBtn.Click += deleteClientBtn_Click;
 
             venModifyClient.Controls.Add(updateClientBtn);
@@ -375,21 +378,41 @@ namespace CitiSoft
         {
             foreach (DataGridViewRow item in venModifyClientData.SelectedRows)
             {
-                venModifyClientData.Rows.RemoveAt(item.Index);
-                // deletion from the table
-                using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
+                if (!item.IsNewRow) // Check to ensure the row is not the 'new row' placeholder
                 {
-                    connection.Open();
-                    string query = "BEGIN TRANSACTION DELETE FROM Client WHERE cid = @cid; DELETE FROM ProblemHistory WHERE cid = @cid; COMMIT TRANSACTION"; // SQL query
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    try
                     {
-                        // Since the client id is the first column
-                        command.Parameters.AddWithValue("@cid", item.Cells[0].Value);
-                        command.ExecuteNonQuery();
+                        venModifyClientData.Rows.RemoveAt(item.Index);
+                        using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
+                        {
+                            connection.Open();
+                            string query = "BEGIN TRANSACTION DELETE FROM Client WHERE cid = @cid; DELETE FROM ProblemHistory WHERE cid = @cid; COMMIT TRANSACTION;";
+                            using (SqlCommand command = new SqlCommand(query, connection))
+                            {
+                                command.Parameters.AddWithValue("@cid", item.Cells[0].Value);
+                                command.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        
+                        MessageBox.Show("A SQL error occurred: " + sqlEx.Message);
+                    }
+                    catch (InvalidOperationException ioEx)
+                    {
+                        
+                        MessageBox.Show("An invalid operation occurred: " + ioEx.Message);
+                    }
+                    catch (Exception ex)
+                    {
+                        // General catch block for any other exceptions
+                        MessageBox.Show("An error occurred: " + ex.Message);
                     }
                 }
             }
         }
+
 
         public RuntimeUI()
         {
