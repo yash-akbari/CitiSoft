@@ -218,6 +218,9 @@ namespace CitiSoft
         protected System.Windows.Forms.DataGridView venProblemHistoryData;
         protected System.Windows.Forms.DataGridView venModifyClientData;
 
+        protected System.Windows.Forms.Button deleteClientBtn;
+        protected System.Windows.Forms.Button updateClientBtn;
+
         protected Panel mainPan;
     }
 }

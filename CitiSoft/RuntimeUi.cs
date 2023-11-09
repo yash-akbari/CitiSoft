@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace CitiSoft
 {
@@ -294,12 +295,10 @@ namespace CitiSoft
             {
                 connection.Open();
 
-                // SQL query
-                string query1 = query;
 
                 DataTable table1 = new DataTable();
 
-                using (SqlDataAdapter adapter = new SqlDataAdapter(query1, connection))
+                using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                 {
                     adapter.Fill(table1);
                 }
@@ -321,8 +320,6 @@ namespace CitiSoft
             venModifyClient.Text = "Modify Client";
             venModifyClient.UseVisualStyleBackColor = true;
             venTab.Controls.Add(venModifyClient);
-
-
             venModifyClient.Controls.Add(venModifyClientData);
 
             venModifyClientData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -335,7 +332,63 @@ namespace CitiSoft
             venModifyClientData.TabIndex = 0;
 
             dataBinding("Functionality.mdf", "SELECT Client.cid, compName, phone, email, Street, City, Cointry AS 'Country'\r\nFROM Client\r\nJOIN CustAddress\r\n  ON Client.cid=CustAddress.cid;", venModifyClientData);
+            
+            // defining buttons
+            updateClientBtn = new Button();
+            deleteClientBtn = new Button();
 
+
+            updateClientBtn.Text = "Update";
+            updateClientBtn.Location = new Point(10, venModifyClient.Height - 30);
+            updateClientBtn.Click += updateClientBtn_Click;
+
+            deleteClientBtn.Text = "Delete";
+            deleteClientBtn.Location = new Point(100, venModifyClient.Height - 30);
+            deleteClientBtn.Click += deleteClientBtn_Click;
+
+            venModifyClient.Controls.Add(updateClientBtn);
+            venModifyClient.Controls.Add(deleteClientBtn);
+        }
+
+        private void updateClientBtn_Click(object sender, EventArgs e)
+        {
+            venModifyClientData.EndEdit();
+            DataTable changes = ((DataTable)venModifyClientData.DataSource).GetChanges();
+
+            if (changes != null)
+            {
+                using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
+                {
+                    connection.Open();
+                    using (SqlDataAdapter adapter = new SqlDataAdapter())
+                    {
+                        adapter.UpdateCommand = new SqlCommand("UPDATE SQL HERE", connection);
+                        adapter.Update(changes);
+                    }
+                }
+
+                ((DataTable)venModifyClientData.DataSource).AcceptChanges();
+            }
+        }
+
+        private void deleteClientBtn_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow item in venModifyClientData.SelectedRows)
+            {
+                venModifyClientData.Rows.RemoveAt(item.Index);
+                // deletion from the table
+                using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
+                {
+                    connection.Open();
+                    string query = "BEGIN TRANSACTION DELETE FROM Client WHERE cid = @cid; DELETE FROM ProblemHistory WHERE cid = @cid; COMMIT TRANSACTION"; // SQL query
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        // Since the client id is the first column
+                        command.Parameters.AddWithValue("@cid", item.Cells[0].Value);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
         }
 
         public RuntimeUI()
