@@ -141,6 +141,15 @@ namespace CitiSoft
             this.phoneTxtBox.TabIndex = 9;
             this.phoneTxtBox.TextChanged += new System.EventHandler(this.phoneTxtBox_TextChanged);
             // 
+            // deleteIDTextBox
+            // 
+            this.deleteIDTextBox.Location = new System.Drawing.Point(159, 558);
+            this.deleteIDTextBox.Name = "deleteIDTextBox";
+            this.deleteIDTextBox.Size = new System.Drawing.Size(135, 31);
+            this.deleteIDTextBox.TabIndex = 17;
+            this.deleteIDTextBox.TextChanged += new System.EventHandler(this.deleteIDTxtBox_TextChanged);
+
+            // 
             // idLabel
             // 
             this.idLabel.AutoSize = true;
@@ -203,13 +212,6 @@ namespace CitiSoft
             this.streetLabel.Size = new System.Drawing.Size(69, 25);
             this.streetLabel.TabIndex = 14;
             this.streetLabel.Text = "Street";
-            // 
-            // deleteIDTextBox
-            // 
-            this.deleteIDTextBox.Location = new System.Drawing.Point(159, 558);
-            this.deleteIDTextBox.Name = "deleteIDTextBox";
-            this.deleteIDTextBox.Size = new System.Drawing.Size(135, 31);
-            this.deleteIDTextBox.TabIndex = 17;
             // 
             // clientIDLabel
             // 

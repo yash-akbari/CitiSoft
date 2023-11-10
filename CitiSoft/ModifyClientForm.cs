@@ -220,7 +220,53 @@ namespace CitiSoft
 
         private void phoneTxtBox_TextChanged(object sender, EventArgs e)
         {
-            //string value = .Text
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+            {
+                string input = textBox.Text;
+                foreach (char c in input)
+                {
+                    if (!char.IsDigit(c) && c != ' ' && c != '+') // Allow letters spaces and numbers
+                    {
+                        // Show a message or handle the invalid character
+                        MessageBox.Show("Only letters, spaces and numbers are allowed.");
+
+                        // Remove the last character
+                        textBox.Text = input.Substring(0, input.Length - 1);
+
+                        // Set the cursor position to the end of the text
+                        textBox.SelectionStart = textBox.Text.Length;
+                        textBox.SelectionLength = 0;
+
+                        break;
+                    }
+                }
+            }
+        }
+        private void deleteIDTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+            {
+                string input = textBox.Text;
+                foreach (char c in input)
+                {
+                    if (!char.IsDigit(c))
+                    {
+                        // Show a message or handle the invalid character
+                        MessageBox.Show("Only numbers are allowed.");
+
+                        // Remove the last character
+                        textBox.Text = input.Substring(0, input.Length - 1);
+
+                        // Set the cursor position to the end of the text
+                        textBox.SelectionStart = textBox.Text.Length;
+                        textBox.SelectionLength = 0;
+
+                        break;
+                    }
+                }
+            }
         }
     }
 }
