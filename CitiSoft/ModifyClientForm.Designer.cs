@@ -32,7 +32,7 @@ namespace CitiSoft
         {
             this.updateClientBtn = new System.Windows.Forms.Button();
             this.deleteClientBtn = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ModifyClientDgv = new System.Windows.Forms.DataGridView();
             this.clientIDTxtBox = new System.Windows.Forms.TextBox();
             this.companyNameTxtBox = new System.Windows.Forms.TextBox();
             this.countryTxtBox = new System.Windows.Forms.TextBox();
@@ -49,7 +49,7 @@ namespace CitiSoft
             this.streetLabel = new System.Windows.Forms.Label();
             this.deleteIDTextBox = new System.Windows.Forms.TextBox();
             this.clientIDLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ModifyClientDgv)).BeginInit();
             this.SuspendLayout();
             // 
             // updateClientBtn
@@ -71,19 +71,19 @@ namespace CitiSoft
             this.deleteClientBtn.UseVisualStyleBackColor = true;
             this.deleteClientBtn.Click += new System.EventHandler(this.deleteClientBtn_Click);
             // 
-            // dataGridView1
+            // ModifyClientDgv
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersWidth = 82;
-            this.dataGridView1.RowTemplate.Height = 33;
-            this.dataGridView1.Size = new System.Drawing.Size(831, 492);
-            this.dataGridView1.TabIndex = 2;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.ModifyClientDgv.AllowUserToAddRows = false;
+            this.ModifyClientDgv.AllowUserToDeleteRows = false;
+            this.ModifyClientDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ModifyClientDgv.Location = new System.Drawing.Point(12, 12);
+            this.ModifyClientDgv.Name = "ModifyClientDgv";
+            this.ModifyClientDgv.ReadOnly = true;
+            this.ModifyClientDgv.RowHeadersWidth = 82;
+            this.ModifyClientDgv.RowTemplate.Height = 33;
+            this.ModifyClientDgv.Size = new System.Drawing.Size(831, 492);
+            this.ModifyClientDgv.TabIndex = 2;
+            this.ModifyClientDgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // clientIDTxtBox
             // 
@@ -131,7 +131,7 @@ namespace CitiSoft
             this.emailTxtBox.Name = "emailTxtBox";
             this.emailTxtBox.Size = new System.Drawing.Size(275, 31);
             this.emailTxtBox.TabIndex = 8;
-            this.emailTxtBox.KeyDown += new KeyEventHandler(emailTextBox_KeyDown);
+            this.emailTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.emailTextBox_KeyDown);
             // 
             // phoneTxtBox
             // 
@@ -140,14 +140,6 @@ namespace CitiSoft
             this.phoneTxtBox.Size = new System.Drawing.Size(275, 31);
             this.phoneTxtBox.TabIndex = 9;
             this.phoneTxtBox.TextChanged += new System.EventHandler(this.phoneTxtBox_TextChanged);
-            // 
-            // deleteIDTextBox
-            // 
-            this.deleteIDTextBox.Location = new System.Drawing.Point(159, 558);
-            this.deleteIDTextBox.Name = "deleteIDTextBox";
-            this.deleteIDTextBox.Size = new System.Drawing.Size(135, 31);
-            this.deleteIDTextBox.TabIndex = 17;
-            this.deleteIDTextBox.TextChanged += new System.EventHandler(this.deleteIDTxtBox_TextChanged);
             // 
             // idLabel
             // 
@@ -212,6 +204,14 @@ namespace CitiSoft
             this.streetLabel.TabIndex = 14;
             this.streetLabel.Text = "Street";
             // 
+            // deleteIDTextBox
+            // 
+            this.deleteIDTextBox.Location = new System.Drawing.Point(159, 558);
+            this.deleteIDTextBox.Name = "deleteIDTextBox";
+            this.deleteIDTextBox.Size = new System.Drawing.Size(135, 31);
+            this.deleteIDTextBox.TabIndex = 17;
+            this.deleteIDTextBox.TextChanged += new System.EventHandler(this.deleteIDTxtBox_TextChanged);
+            // 
             // clientIDLabel
             // 
             this.clientIDLabel.AutoSize = true;
@@ -242,15 +242,17 @@ namespace CitiSoft
             this.Controls.Add(this.countryTxtBox);
             this.Controls.Add(this.companyNameTxtBox);
             this.Controls.Add(this.clientIDTxtBox);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.ModifyClientDgv);
             this.Controls.Add(this.deleteClientBtn);
             this.Controls.Add(this.updateClientBtn);
             this.Name = "ModifyClientForm";
             this.Text = "ModifyClientForm";
             this.Load += new System.EventHandler(this.ModifyClientForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ModifyClientDgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+            
+            RuntimeUI.dataBinding("Functionality.mdf", "SELECT Client.cid, compName, phone, email, Street, City, Cointry AS 'Country'\r\nFROM Client\r\nJOIN CustAddress\r\n  ON Client.cid=CustAddress.cid;", ModifyClientDgv);
 
         }
 
@@ -258,7 +260,7 @@ namespace CitiSoft
 
         private System.Windows.Forms.Button updateClientBtn;
         private System.Windows.Forms.Button deleteClientBtn;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView ModifyClientDgv;
 
         private System.Windows.Forms.TextBox clientIDTxtBox;
         private System.Windows.Forms.TextBox companyNameTxtBox;

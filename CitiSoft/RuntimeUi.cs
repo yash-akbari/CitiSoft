@@ -286,7 +286,7 @@ namespace CitiSoft
         }
 
         // takes database name, query and DataGridView instance to display a table
-        public void dataBinding(string databaseName, string query, DataGridView table)
+        public static void dataBinding(string databaseName, string query, DataGridView table)
         {
             string connectionString = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\{databaseName};Integrated Security=True;Connect Timeout=30";
             //Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = "\\anglia.local\fs\StudentsHome\ia543\My Documents\CitiSoft\CitiSoft\CitiSoftDatabase.mdf"; Integrated Security = True
