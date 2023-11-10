@@ -1,4 +1,6 @@
-﻿namespace CitiSoft
+﻿using System.Windows.Forms;
+
+namespace CitiSoft
 {
     partial class ModifyClientForm
     {
@@ -129,7 +131,7 @@
             this.emailTxtBox.Name = "emailTxtBox";
             this.emailTxtBox.Size = new System.Drawing.Size(275, 31);
             this.emailTxtBox.TabIndex = 8;
-            this.emailTxtBox.TextChanged += new System.EventHandler(this.emailTxtBox_TextChanged);
+            this.emailTxtBox.KeyDown += new KeyEventHandler(emailTextBox_KeyDown);
             // 
             // phoneTxtBox
             // 

@@ -331,7 +331,9 @@ namespace CitiSoft
             venModifyClientData.TabIndex = 0;
 
             dataBinding("Functionality.mdf", "SELECT Client.cid, compName, phone, email, Street, City, Cointry AS 'Country'\r\nFROM Client\r\nJOIN CustAddress\r\n  ON Client.cid=CustAddress.cid;", venModifyClientData);
+
             
+
             // defining buttons
             updateClientBtn = new Button();
             deleteClientBtn = new Button();
@@ -350,6 +352,8 @@ namespace CitiSoft
 
             venModifyClient.Controls.Add(updateClientBtn);
             venModifyClient.Controls.Add(deleteClientBtn);
+
+
         }
 
         private void updateClientBtn_Click(object sender, EventArgs e)
@@ -440,6 +444,8 @@ namespace CitiSoft
                     venReminderFunc();
                     venProblemHistoryFunc();
                     venModifyClientFunc();
+                    ModifyClientForm some = new ModifyClientForm();
+                    some.ShowDialog();
                     // visible
                     break;
                 case 3:

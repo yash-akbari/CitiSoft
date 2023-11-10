@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,7 +21,7 @@ namespace CitiSoft
 
         private void updateClientBtn_Click(object sender, EventArgs e)
         {
-
+           
         }
 
         private void deleteClientBtn_Click(object sender, EventArgs e)
@@ -39,33 +41,182 @@ namespace CitiSoft
 
         private void clientIDTxtBox_TextChanged(object sender, EventArgs e)
         {
-            //string value = .Text
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+            {
+                string input = textBox.Text;
+                foreach (char c in input)
+                {
+                    if (!char.IsDigit(c))
+                    {
+                        // Show a message or handle the invalid character
+                        MessageBox.Show("Only numbers are allowed.");
+
+                        // Remove the last character
+                        textBox.Text = input.Substring(0, input.Length - 1);
+
+                        // Set the cursor position to the end of the text
+                        textBox.SelectionStart = textBox.Text.Length;
+                        textBox.SelectionLength = 0;
+
+                        break;
+                    }
+                }
+            }
         }
 
         private void companyNameTxtBox_TextChanged(object sender, EventArgs e)
         {
-            //string value = .Text
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+            {
+                string input = textBox.Text;
+                foreach (char c in input)
+                {
+                    if (!char.IsLetter(c) && c != ' ') // Allow letters and spaces
+                    {
+                        // Show a message or handle the invalid character
+                        MessageBox.Show("Only letters and spaces are allowed.");
+
+                        // Remove the last character
+                        textBox.Text = input.Substring(0, input.Length - 1);
+
+                        // Set the cursor position to the end of the text
+                        textBox.SelectionStart = textBox.Text.Length;
+                        textBox.SelectionLength = 0;
+
+                        break;
+                    }
+                }
+            }
         }
 
         private void countryTxtBox_TextChanged(object sender, EventArgs e)
         {
-            //string value = .Text
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+            {
+                string input = textBox.Text;
+                foreach (char c in input)
+                {
+                    if (!char.IsLetter(c)) // Allow letters
+                    {
+                        // Show a message or handle the invalid character
+                        MessageBox.Show("Only letters are allowed.");
+
+                        // Remove the last character
+                        textBox.Text = input.Substring(0, input.Length - 1);
+
+                        // Set the cursor position to the end of the text
+                        textBox.SelectionStart = textBox.Text.Length;
+                        textBox.SelectionLength = 0;
+
+                        break;
+                    }
+                }
+            }
         }
 
         private void cityTxtBox_TextChanged(object sender, EventArgs e)
         {
-            //string value = .Text
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+            {
+                string input = textBox.Text;
+                foreach (char c in input)
+                {
+                    if (!char.IsLetter(c)) // Allow letters
+                    {
+                        // Show a message or handle the invalid character
+                        MessageBox.Show("Only letters are allowed.");
+
+                        // Remove the last character
+                        textBox.Text = input.Substring(0, input.Length - 1);
+
+                        // Set the cursor position to the end of the text
+                        textBox.SelectionStart = textBox.Text.Length;
+                        textBox.SelectionLength = 0;
+
+                        break;
+                    }
+                }
+            }
         }
 
         private void streetTxtBox_TextChanged(object sender, EventArgs e)
         {
-            //string value = .Text
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+            {
+                string input = textBox.Text;
+                foreach (char c in input)
+                {
+                    if (!char.IsLetterOrDigit(c) && c != ' ' && c != '.') // Allow letters spaces and numbers
+                    {
+                        // Show a message or handle the invalid character
+                        MessageBox.Show("Only letters, spaces and numbers are allowed.");
+
+                        // Remove the last character
+                        textBox.Text = input.Substring(0, input.Length - 1);
+
+                        // Set the cursor position to the end of the text
+                        textBox.SelectionStart = textBox.Text.Length;
+                        textBox.SelectionLength = 0;
+
+                        break;
+                    }
+                }
+            }
         }
 
-        private void emailTxtBox_TextChanged(object sender, EventArgs e)
+        // checks only after the enter key was pressed
+        private void emailTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            //string value = .Text
+            if (e.KeyCode == Keys.Enter)
+            {
+                TextBox textBox = sender as TextBox;
+                if (textBox != null && !IsValidEmail(textBox.Text))
+                {
+                    MessageBox.Show("Invalid email format.");
+                
+                }
+            }
         }
+
+        // checks if the text is email structured
+        private bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            try
+            {
+                // Normalize the domain
+                email = Regex.Replace(email, @"(@)(.+)$", DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds(200));
+
+                // Examines the domain part of the email and normalizes it.
+                string DomainMapper(Match match)
+                {
+                    var idn = new System.Globalization.IdnMapping();
+                    string domainName = idn.GetAscii(match.Groups[2].Value);
+                    return match.Groups[1].Value + domainName;
+                }
+
+                return Regex.IsMatch(email,
+                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                    RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+        }
+
+
 
         private void phoneTxtBox_TextChanged(object sender, EventArgs e)
         {
