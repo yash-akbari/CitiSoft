@@ -21,12 +21,46 @@ namespace CitiSoft
 
         private void updateClientBtn_Click(object sender, EventArgs e)
         {
-           
+            using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand($"UPDATE Client\r\nSET compName = {companyNameTxtBox.Text}\r\nWHERE id = {clientIDTxtBox.Text}\r\n\r\nUPDATE CustAddress\r\nSET phone = {phoneTxtBox.Text}, email = {emailTxtBox.Text}, Street = {streetTxtBox.Text}, City = {cityTxtBox.Text}, Cointry = {countryTxtBox.Text}\r\nWHERE cid = {clientIDTxtBox.Text}", connection)) // query
+                {
+                    //command.Parameters.AddWithValue("@CustomerID", deleteIDTextBox.Text); // placeholder for id of row
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        Console.WriteLine("Update successful.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No rows Updated. It's possible that the customer did not exist.");
+                    }
+                }
+            }
         }
 
         private void deleteClientBtn_Click(object sender, EventArgs e)
         {
+            using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("DELETE FROM Customer WHERE id = @CustomerID DELETE FROM CustAddress WHERE cid = @CustomerID", connection)) // query
+                {
+                    command.Parameters.AddWithValue("@CustomerID", deleteIDTextBox.Text); // placeholder for id of row
 
+                    int rowsAffected = command.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        Console.WriteLine("Delete successful.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No rows deleted. It's possible that the customer did not exist.");
+                    }
+                }
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
