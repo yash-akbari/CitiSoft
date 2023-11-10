@@ -31,13 +31,13 @@
             this.updateClientBtn = new System.Windows.Forms.Button();
             this.deleteClientBtn = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.clientIDTxtBox = new System.Windows.Forms.TextBox();
+            this.companyNameTxtBox = new System.Windows.Forms.TextBox();
+            this.countryTxtBox = new System.Windows.Forms.TextBox();
+            this.cityTxtBox = new System.Windows.Forms.TextBox();
+            this.streetTxtBox = new System.Windows.Forms.TextBox();
+            this.emailTxtBox = new System.Windows.Forms.TextBox();
+            this.phoneTxtBox = new System.Windows.Forms.TextBox();
             this.idLabel = new System.Windows.Forms.Label();
             this.phoneLabel = new System.Windows.Forms.Label();
             this.emailLabel = new System.Windows.Forms.Label();
@@ -45,7 +45,7 @@
             this.countryLabel = new System.Windows.Forms.Label();
             this.companyNameLabel = new System.Windows.Forms.Label();
             this.streetLabel = new System.Windows.Forms.Label();
-            this.idtextbox = new System.Windows.Forms.TextBox();
+            this.deleteIDTextBox = new System.Windows.Forms.TextBox();
             this.clientIDLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -67,7 +67,7 @@
             this.deleteClientBtn.TabIndex = 1;
             this.deleteClientBtn.Text = "Delete row";
             this.deleteClientBtn.UseVisualStyleBackColor = true;
-            this.deleteClientBtn.Click += new System.EventHandler(this.button2_Click);
+            this.deleteClientBtn.Click += new System.EventHandler(this.deleteClientBtn_Click);
             // 
             // dataGridView1
             // 
@@ -83,55 +83,61 @@
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // textBox1
+            // clientIDTxtBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(1120, 57);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(275, 31);
-            this.textBox1.TabIndex = 3;
+            this.clientIDTxtBox.Location = new System.Drawing.Point(1120, 57);
+            this.clientIDTxtBox.Name = "clientIDTxtBox";
+            this.clientIDTxtBox.Size = new System.Drawing.Size(275, 31);
+            this.clientIDTxtBox.TabIndex = 3;
+            this.clientIDTxtBox.TextChanged += new System.EventHandler(this.clientIDTxtBox_TextChanged);
             // 
-            // textBox2
+            // companyNameTxtBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(1120, 120);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(275, 31);
-            this.textBox2.TabIndex = 4;
+            this.companyNameTxtBox.Location = new System.Drawing.Point(1120, 120);
+            this.companyNameTxtBox.Name = "companyNameTxtBox";
+            this.companyNameTxtBox.Size = new System.Drawing.Size(275, 31);
+            this.companyNameTxtBox.TabIndex = 4;
+            this.companyNameTxtBox.TextChanged += new System.EventHandler(this.companyNameTxtBox_TextChanged);
             // 
-            // textBox3
+            // countryTxtBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(1120, 484);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(275, 31);
-            this.textBox3.TabIndex = 5;
+            this.countryTxtBox.Location = new System.Drawing.Point(1120, 484);
+            this.countryTxtBox.Name = "countryTxtBox";
+            this.countryTxtBox.Size = new System.Drawing.Size(275, 31);
+            this.countryTxtBox.TabIndex = 5;
+            this.countryTxtBox.TextChanged += new System.EventHandler(this.countryTxtBox_TextChanged);
             // 
-            // textBox4
+            // cityTxtBox
             // 
-            this.textBox4.Location = new System.Drawing.Point(1120, 413);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(275, 31);
-            this.textBox4.TabIndex = 6;
+            this.cityTxtBox.Location = new System.Drawing.Point(1120, 413);
+            this.cityTxtBox.Name = "cityTxtBox";
+            this.cityTxtBox.Size = new System.Drawing.Size(275, 31);
+            this.cityTxtBox.TabIndex = 6;
+            this.cityTxtBox.TextChanged += new System.EventHandler(this.cityTxtBox_TextChanged);
             // 
-            // textBox5
+            // streetTxtBox
             // 
-            this.textBox5.Location = new System.Drawing.Point(1120, 335);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(275, 31);
-            this.textBox5.TabIndex = 7;
+            this.streetTxtBox.Location = new System.Drawing.Point(1120, 335);
+            this.streetTxtBox.Name = "streetTxtBox";
+            this.streetTxtBox.Size = new System.Drawing.Size(275, 31);
+            this.streetTxtBox.TabIndex = 7;
+            this.streetTxtBox.TextChanged += new System.EventHandler(this.streetTxtBox_TextChanged);
             // 
-            // textBox6
+            // emailTxtBox
             // 
-            this.textBox6.Location = new System.Drawing.Point(1120, 261);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(275, 31);
-            this.textBox6.TabIndex = 8;
-            this.textBox6.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
+            this.emailTxtBox.Location = new System.Drawing.Point(1120, 261);
+            this.emailTxtBox.Name = "emailTxtBox";
+            this.emailTxtBox.Size = new System.Drawing.Size(275, 31);
+            this.emailTxtBox.TabIndex = 8;
+            this.emailTxtBox.TextChanged += new System.EventHandler(this.emailTxtBox_TextChanged);
             // 
-            // textBox7
+            // phoneTxtBox
             // 
-            this.textBox7.Location = new System.Drawing.Point(1120, 186);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(275, 31);
-            this.textBox7.TabIndex = 9;
+            this.phoneTxtBox.Location = new System.Drawing.Point(1120, 186);
+            this.phoneTxtBox.Name = "phoneTxtBox";
+            this.phoneTxtBox.Size = new System.Drawing.Size(275, 31);
+            this.phoneTxtBox.TabIndex = 9;
+            this.phoneTxtBox.TextChanged += new System.EventHandler(this.phoneTxtBox_TextChanged);
             // 
             // idLabel
             // 
@@ -141,7 +147,6 @@
             this.idLabel.Size = new System.Drawing.Size(90, 25);
             this.idLabel.TabIndex = 10;
             this.idLabel.Text = "Client id";
-            this.idLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // phoneLabel
             // 
@@ -169,7 +174,6 @@
             this.cityLabel.Size = new System.Drawing.Size(49, 25);
             this.cityLabel.TabIndex = 15;
             this.cityLabel.Text = "City";
-            this.cityLabel.Click += new System.EventHandler(this.label6_Click);
             // 
             // countryLabel
             // 
@@ -188,7 +192,6 @@
             this.companyNameLabel.Size = new System.Drawing.Size(165, 25);
             this.companyNameLabel.TabIndex = 11;
             this.companyNameLabel.Text = "Company Name";
-            this.companyNameLabel.Click += new System.EventHandler(this.label2_Click);
             // 
             // streetLabel
             // 
@@ -199,12 +202,12 @@
             this.streetLabel.TabIndex = 14;
             this.streetLabel.Text = "Street";
             // 
-            // idtextbox
+            // deleteIDTextBox
             // 
-            this.idtextbox.Location = new System.Drawing.Point(159, 558);
-            this.idtextbox.Name = "idtextbox";
-            this.idtextbox.Size = new System.Drawing.Size(135, 31);
-            this.idtextbox.TabIndex = 17;
+            this.deleteIDTextBox.Location = new System.Drawing.Point(159, 558);
+            this.deleteIDTextBox.Name = "deleteIDTextBox";
+            this.deleteIDTextBox.Size = new System.Drawing.Size(135, 31);
+            this.deleteIDTextBox.TabIndex = 17;
             // 
             // clientIDLabel
             // 
@@ -214,7 +217,6 @@
             this.clientIDLabel.Size = new System.Drawing.Size(90, 25);
             this.clientIDLabel.TabIndex = 18;
             this.clientIDLabel.Text = "Client id";
-            this.clientIDLabel.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // ModifyClientForm
             // 
@@ -222,7 +224,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1599, 1062);
             this.Controls.Add(this.clientIDLabel);
-            this.Controls.Add(this.idtextbox);
+            this.Controls.Add(this.deleteIDTextBox);
             this.Controls.Add(this.countryLabel);
             this.Controls.Add(this.cityLabel);
             this.Controls.Add(this.streetLabel);
@@ -230,13 +232,13 @@
             this.Controls.Add(this.phoneLabel);
             this.Controls.Add(this.companyNameLabel);
             this.Controls.Add(this.idLabel);
-            this.Controls.Add(this.textBox7);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.phoneTxtBox);
+            this.Controls.Add(this.emailTxtBox);
+            this.Controls.Add(this.streetTxtBox);
+            this.Controls.Add(this.cityTxtBox);
+            this.Controls.Add(this.countryTxtBox);
+            this.Controls.Add(this.companyNameTxtBox);
+            this.Controls.Add(this.clientIDTxtBox);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.deleteClientBtn);
             this.Controls.Add(this.updateClientBtn);
@@ -254,13 +256,15 @@
         private System.Windows.Forms.Button updateClientBtn;
         private System.Windows.Forms.Button deleteClientBtn;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox7;
+
+        private System.Windows.Forms.TextBox clientIDTxtBox;
+        private System.Windows.Forms.TextBox companyNameTxtBox;
+        private System.Windows.Forms.TextBox countryTxtBox;
+        private System.Windows.Forms.TextBox cityTxtBox;
+        private System.Windows.Forms.TextBox streetTxtBox;
+        private System.Windows.Forms.TextBox emailTxtBox;
+        private System.Windows.Forms.TextBox phoneTxtBox;
+
         private System.Windows.Forms.Label idLabel;
         private System.Windows.Forms.Label phoneLabel;
         private System.Windows.Forms.Label emailLabel;
@@ -268,7 +272,9 @@
         private System.Windows.Forms.Label countryLabel;
         private System.Windows.Forms.Label companyNameLabel;
         private System.Windows.Forms.Label streetLabel;
-        private System.Windows.Forms.TextBox idtextbox;
+
+        private System.Windows.Forms.TextBox deleteIDTextBox;
         private System.Windows.Forms.Label clientIDLabel;
+
     }
 }

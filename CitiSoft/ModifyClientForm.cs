@@ -17,7 +17,12 @@ namespace CitiSoft
             InitializeComponent();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void updateClientBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void deleteClientBtn_Click(object sender, EventArgs e)
         {
 
         }
@@ -27,34 +32,44 @@ namespace CitiSoft
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void ModifyClientForm_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void label6_Click(object sender, EventArgs e)
+        private void clientIDTxtBox_TextChanged(object sender, EventArgs e)
         {
-
+            //string value = .Text
         }
 
-        private void textBox6_TextChanged(object sender, EventArgs e)
+        private void companyNameTxtBox_TextChanged(object sender, EventArgs e)
         {
-
+            //string value = .Text
         }
 
-        private void label1_Click_1(object sender, EventArgs e)
+        private void countryTxtBox_TextChanged(object sender, EventArgs e)
         {
+            //string value = .Text
+        }
 
+        private void cityTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            //string value = .Text
+        }
+
+        private void streetTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            //string value = .Text
+        }
+
+        private void emailTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            //string value = .Text
+        }
+
+        private void phoneTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            //string value = .Text
         }
     }
 }
