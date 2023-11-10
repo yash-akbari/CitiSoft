@@ -71,21 +71,28 @@ namespace CitiSoft
             if (textBox != null)
             {
                 string input = textBox.Text;
-                foreach (char c in input)
+                if (textBox.Text.Length > 30)
                 {
-                    if (!char.IsLetter(c) && c != ' ') // Allow letters and spaces
+                    MessageBox.Show("Company Name is too long");
+                }
+                else
+                {
+                    foreach (char c in input)
                     {
-                        // Show a message or handle the invalid character
-                        MessageBox.Show("Only letters and spaces are allowed.");
+                        if (!char.IsLetter(c) && c != ' ') // Allow letters and spaces
+                        {
+                            // Show a message or handle the invalid character
+                            MessageBox.Show("Only letters and spaces are allowed.");
 
-                        // Remove the last character
-                        textBox.Text = input.Substring(0, input.Length - 1);
+                            // Remove the last character
+                            textBox.Text = input.Substring(0, input.Length - 1);
 
-                        // Set the cursor position to the end of the text
-                        textBox.SelectionStart = textBox.Text.Length;
-                        textBox.SelectionLength = 0;
+                            // Set the cursor position to the end of the text
+                            textBox.SelectionStart = textBox.Text.Length;
+                            textBox.SelectionLength = 0;
 
-                        break;
+                            break;
+                        }
                     }
                 }
             }
@@ -97,21 +104,28 @@ namespace CitiSoft
             if (textBox != null)
             {
                 string input = textBox.Text;
-                foreach (char c in input)
+                if (input.Length > 30)
                 {
-                    if (!char.IsLetter(c)) // Allow letters
+                    MessageBox.Show("Country name is too long");
+                }
+                else
+                {
+                    foreach (char c in input)
                     {
-                        // Show a message or handle the invalid character
-                        MessageBox.Show("Only letters are allowed.");
+                        if (!char.IsLetter(c)) // Allow letters
+                        {
+                            // Show a message or handle the invalid character
+                            MessageBox.Show("Only letters are allowed.");
 
-                        // Remove the last character
-                        textBox.Text = input.Substring(0, input.Length - 1);
+                            // Remove the last character
+                            textBox.Text = input.Substring(0, input.Length - 1);
 
-                        // Set the cursor position to the end of the text
-                        textBox.SelectionStart = textBox.Text.Length;
-                        textBox.SelectionLength = 0;
+                            // Set the cursor position to the end of the text
+                            textBox.SelectionStart = textBox.Text.Length;
+                            textBox.SelectionLength = 0;
 
-                        break;
+                            break;
+                        }
                     }
                 }
             }
@@ -123,21 +137,28 @@ namespace CitiSoft
             if (textBox != null)
             {
                 string input = textBox.Text;
-                foreach (char c in input)
+                if (input.Length > 30)
                 {
-                    if (!char.IsLetter(c)) // Allow letters
+                    MessageBox.Show("City name is too long");
+                }
+                else
+                {
+                    foreach (char c in input)
                     {
-                        // Show a message or handle the invalid character
-                        MessageBox.Show("Only letters are allowed.");
+                        if (!char.IsLetter(c)) // Allow letters
+                        {
+                            // Show a message or handle the invalid character
+                            MessageBox.Show("Only letters are allowed.");
 
-                        // Remove the last character
-                        textBox.Text = input.Substring(0, input.Length - 1);
+                            // Remove the last character
+                            textBox.Text = input.Substring(0, input.Length - 1);
 
-                        // Set the cursor position to the end of the text
-                        textBox.SelectionStart = textBox.Text.Length;
-                        textBox.SelectionLength = 0;
+                            // Set the cursor position to the end of the text
+                            textBox.SelectionStart = textBox.Text.Length;
+                            textBox.SelectionLength = 0;
 
-                        break;
+                            break;
+                        }
                     }
                 }
             }
@@ -149,21 +170,28 @@ namespace CitiSoft
             if (textBox != null)
             {
                 string input = textBox.Text;
-                foreach (char c in input)
+                if (input.Length > 30)
                 {
-                    if (!char.IsLetterOrDigit(c) && c != ' ' && c != '.') // Allow letters spaces and numbers
+                    MessageBox.Show("Street address is too long");
+                }
+                else
+                {
+                    foreach (char c in input)
                     {
-                        // Show a message or handle the invalid character
-                        MessageBox.Show("Only letters, spaces and numbers are allowed.");
+                        if (!char.IsLetterOrDigit(c) && c != ' ' && c != '.') // Allow letters spaces and numbers
+                        {
+                            // Show a message or handle the invalid character
+                            MessageBox.Show("Only letters, spaces and numbers are allowed.");
 
-                        // Remove the last character
-                        textBox.Text = input.Substring(0, input.Length - 1);
+                            // Remove the last character
+                            textBox.Text = input.Substring(0, input.Length - 1);
 
-                        // Set the cursor position to the end of the text
-                        textBox.SelectionStart = textBox.Text.Length;
-                        textBox.SelectionLength = 0;
+                            // Set the cursor position to the end of the text
+                            textBox.SelectionStart = textBox.Text.Length;
+                            textBox.SelectionLength = 0;
 
-                        break;
+                            break;
+                        }
                     }
                 }
             }
@@ -175,6 +203,10 @@ namespace CitiSoft
             if (e.KeyCode == Keys.Enter)
             {
                 TextBox textBox = sender as TextBox;
+                if (textBox.Text.Length > 30)
+                {
+                    MessageBox.Show("Email is too long.");
+                }
                 if (textBox != null && !IsValidEmail(textBox.Text))
                 {
                     MessageBox.Show("Invalid email format.");
@@ -222,23 +254,32 @@ namespace CitiSoft
             if (textBox != null)
             {
                 string input = textBox.Text;
-                foreach (char c in input)
+
+                if (input.Length > 15)
                 {
-                    if (!char.IsDigit(c) && c != ' ' && c != '+') // Allow letters spaces and numbers
+                    MessageBox.Show("Number is too long");
+                }
+                else
+                {
+                    foreach (char c in input)
                     {
-                        // Show a message or handle the invalid character
-                        MessageBox.Show("Only letters, spaces and numbers are allowed.");
+                        if (!char.IsDigit(c) && c != ' ' && c != '+') // Allow letters spaces and numbers
+                        {
+                            // Show a message or handle the invalid character
+                            MessageBox.Show("Please don't inlcude any characters.");
 
-                        // Remove the last character
-                        textBox.Text = input.Substring(0, input.Length - 1);
+                            // Remove the last character
+                            textBox.Text = input.Substring(0, input.Length - 1);
 
-                        // Set the cursor position to the end of the text
-                        textBox.SelectionStart = textBox.Text.Length;
-                        textBox.SelectionLength = 0;
+                            // Set the cursor position to the end of the text
+                            textBox.SelectionStart = textBox.Text.Length;
+                            textBox.SelectionLength = 0;
 
-                        break;
+                            break;
+                        }
                     }
                 }
+                
             }
         }
         private void deleteIDTxtBox_TextChanged(object sender, EventArgs e)

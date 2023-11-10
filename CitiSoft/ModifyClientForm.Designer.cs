@@ -251,8 +251,8 @@ namespace CitiSoft
             ((System.ComponentModel.ISupportInitialize)(this.ModifyClientDgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-            
-            RuntimeUI.dataBinding("Functionality.mdf", "SELECT Client.cid, compName, phone, email, Street, City, Cointry AS 'Country'\r\nFROM Client\r\nJOIN CustAddress\r\n  ON Client.cid=CustAddress.cid;", ModifyClientDgv);
+            // displays info to the datagrid
+            RuntimeUI.dataBinding("Functionality.mdf", "SELECT Client.cid AS 'client id', compName AS 'company name', phone, email, Street AS 'street', City AS 'city', Cointry AS 'country'\r\nFROM Client\r\nJOIN CustAddress\r\n  ON Client.cid=CustAddress.cid;", ModifyClientDgv);
 
         }
 
