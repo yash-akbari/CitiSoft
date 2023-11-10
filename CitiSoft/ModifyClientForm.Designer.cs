@@ -148,7 +148,6 @@ namespace CitiSoft
             this.deleteIDTextBox.Size = new System.Drawing.Size(135, 31);
             this.deleteIDTextBox.TabIndex = 17;
             this.deleteIDTextBox.TextChanged += new System.EventHandler(this.deleteIDTxtBox_TextChanged);
-
             // 
             // idLabel
             // 

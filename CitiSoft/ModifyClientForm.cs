@@ -216,8 +216,6 @@ namespace CitiSoft
             }
         }
 
-
-
         private void phoneTxtBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -268,5 +266,7 @@ namespace CitiSoft
                 }
             }
         }
+
+
     }
 }
