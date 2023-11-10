@@ -55,12 +55,14 @@ namespace CitiSoft
             SendMessge(this.Handle, 0x112, 0xf012, 0);
         }
 
-        private List<Reminder> reminders = new List<Reminder>();
 
         private void mainPan_Paint(object sender, PaintEventArgs e)
         {
 
         }
+
+        private List<Reminder> reminders = new List<Reminder>();
+
 
         /*private void btnAddReminder_Click(object sender, EventArgs e)
         {

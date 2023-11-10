@@ -13,23 +13,22 @@ namespace CitiSoft
     public partial class RuntimeUI : MainUI
     {
 
-        private System.Windows.Forms.Label setMenu = new System.Windows.Forms.Label();
-        private System.Windows.Forms.Label venMenu = new System.Windows.Forms.Label();
-        private System.Windows.Forms.Label softMenu = new System.Windows.Forms.Label();
-        private System.Windows.Forms.Label notiMenu = new System.Windows.Forms.Label();
-        private System.Windows.Forms.TabControl venTab = new System.Windows.Forms.TabControl();
-        private System.Windows.Forms.TabPage venView = new System.Windows.Forms.TabPage();
-        private System.Windows.Forms.TabPage venSearch = new System.Windows.Forms.TabPage();
-        private System.Windows.Forms.TabPage venAdd = new System.Windows.Forms.TabPage();
-        private System.Windows.Forms.TabPage venRemind = new System.Windows.Forms.TabPage();
-        private System.Windows.Forms.TabPage venProblemHistory = new System.Windows.Forms.TabPage();
+        private Label setMenu = new Label();
+        private Label venMenu = new Label();
+        private Label softMenu = new Label();
+        private Label notiMenu = new Label();
+        private TabControl venTab = new TabControl();
+        private TabPage venView = new TabPage();
+        private TabPage venSearch = new TabPage();
+        private TabPage venAdd = new TabPage();
+        private TabPage venRemind = new TabPage();
+        private TabPage venProblemHistory = new TabPage();
 
-        private System.Windows.Forms.TabPage venModifyClient = new System.Windows.Forms.TabPage();
-
-        private System.Windows.Forms.ComboBox venFilCombo = new System.Windows.Forms.ComboBox();
-        private System.Windows.Forms.Button venSerBtn = new System.Windows.Forms.Button();
-        private System.Windows.Forms.TextBox venSerTex = new System.Windows.Forms.TextBox();
-        private System.Windows.Forms.Panel venPan = new System.Windows.Forms.Panel();
+        private TabPage venModifyClient = new TabPage();
+        private ComboBox venFilCombo = new ComboBox();
+        private Button venSerBtn = new Button();
+        private TextBox venSerTex = new TextBox();
+        private Panel venPan = new Panel();
 
 
         int menuYLoc = 0;
