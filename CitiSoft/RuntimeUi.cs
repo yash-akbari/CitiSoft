@@ -319,7 +319,8 @@ namespace CitiSoft
             venModifyClient.Text = "Modify Client";
             venModifyClient.UseVisualStyleBackColor = true;
             venTab.Controls.Add(venModifyClient);
-            
+
+
             // adds the form inside the tab
             ModifyClientForm modifyClientForm = new ModifyClientForm();
             modifyClientForm.TopLevel = false;

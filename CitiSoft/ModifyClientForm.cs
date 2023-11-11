@@ -89,7 +89,7 @@ namespace CitiSoft
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            
         }
 
         private void ModifyClientForm_Load(object sender, EventArgs e)
