@@ -129,6 +129,7 @@ namespace CitiSoft
             if (textBox != null)
             {
                 string input = textBox.Text;
+                // checks for length
                 if (textBox.Text.Length > 30)
                 {
                     MessageBox.Show("Company Name is too long");
@@ -162,6 +163,7 @@ namespace CitiSoft
             if (textBox != null)
             {
                 string input = textBox.Text;
+                // checks for length
                 if (input.Length > 30)
                 {
                     MessageBox.Show("Country name is too long");
@@ -195,6 +197,7 @@ namespace CitiSoft
             if (textBox != null)
             {
                 string input = textBox.Text;
+                // checks for length
                 if (input.Length > 30)
                 {
                     MessageBox.Show("City name is too long");
@@ -228,6 +231,7 @@ namespace CitiSoft
             if (textBox != null)
             {
                 string input = textBox.Text;
+                // checks for length
                 if (input.Length > 30)
                 {
                     MessageBox.Show("Street address is too long");
@@ -261,6 +265,7 @@ namespace CitiSoft
             if (e.KeyCode == Keys.Enter)
             {
                 TextBox textBox = sender as TextBox;
+                // checks for length
                 if (textBox.Text.Length > 30)
                 {
                     MessageBox.Show("Email is too long.");
@@ -313,6 +318,7 @@ namespace CitiSoft
             {
                 string input = textBox.Text;
 
+                // checks for length
                 if (input.Length > 15)
                 {
                     MessageBox.Show("Number is too long");

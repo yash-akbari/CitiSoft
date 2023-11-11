@@ -319,103 +319,18 @@ namespace CitiSoft
             venModifyClient.Text = "Modify Client";
             venModifyClient.UseVisualStyleBackColor = true;
             venTab.Controls.Add(venModifyClient);
-            venModifyClient.Controls.Add(venModifyClientData);
-
-            venModifyClientData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            venModifyClientData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            venModifyClientData.Location = new System.Drawing.Point(3, 3);
-            venModifyClientData.Name = "venModifyClientData";
-            venModifyClientData.Size = new System.Drawing.Size(500, 500);
-            venModifyClientData.TabIndex = 0;
-
-            dataBinding("Functionality.mdf", "SELECT Client.cid, compName, phone, email, Street, City, Cointry AS 'Country'\r\nFROM Client\r\nJOIN CustAddress\r\n  ON Client.cid=CustAddress.cid;", venModifyClientData);
-
             
+            // adds the form inside the tab
+            ModifyClientForm modifyClientForm = new ModifyClientForm();
+            modifyClientForm.TopLevel = false;
+            modifyClientForm.FormBorderStyle = FormBorderStyle.None;
+            modifyClientForm.Dock = DockStyle.Fill;
 
-            // defining buttons
-            updateClientBtn = new Button();
-            deleteClientBtn = new Button();
+            venModifyClient.Controls.Add(modifyClientForm);
 
-            updateClientBtn.Size = new Size(100, 35);
-            deleteClientBtn.Size = new Size(100, 35);
-
-
-            updateClientBtn.Text = "Update";
-            updateClientBtn.Location = new Point(10, venModifyClient.Height - 10);
-            updateClientBtn.Click += updateClientBtn_Click;
-
-            deleteClientBtn.Text = "Delete";
-            deleteClientBtn.Location = new Point(150, venModifyClient.Height - 10);
-            deleteClientBtn.Click += deleteClientBtn_Click;
-
-            venModifyClient.Controls.Add(updateClientBtn);
-            venModifyClient.Controls.Add(deleteClientBtn);
-
+            modifyClientForm.Show();
 
         }
-
-        private void updateClientBtn_Click(object sender, EventArgs e)
-        {
-            venModifyClientData.EndEdit();
-            DataTable changes = ((DataTable)venModifyClientData.DataSource).GetChanges();
-
-            if (changes != null)
-            {
-                using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
-                {
-                    connection.Open();
-                    using (SqlDataAdapter adapter = new SqlDataAdapter())
-                    {
-                        adapter.UpdateCommand = new SqlCommand("UPDATE SQL HERE", connection);
-                        adapter.Update(changes);
-                    }
-                }
-
-                ((DataTable)venModifyClientData.DataSource).AcceptChanges();
-            }
-        }
-
-        private void deleteClientBtn_Click(object sender, EventArgs e)
-        {
-            foreach (DataGridViewRow item in venModifyClientData.SelectedRows)
-            {
-                if (!item.IsNewRow) // Check to ensure the row is not the 'new row' placeholder
-                {
-                    try
-                    {
-                        venModifyClientData.Rows.RemoveAt(item.Index);
-                        using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
-                        {
-                            connection.Open();
-                            string query = "BEGIN TRANSACTION DELETE FROM Client WHERE cid = @cid; DELETE FROM ProblemHistory WHERE cid = @cid; COMMIT TRANSACTION;";
-                            using (SqlCommand command = new SqlCommand(query, connection))
-                            {
-                                command.Parameters.AddWithValue("@cid", item.Cells[0].Value);
-                                command.ExecuteNonQuery();
-                            }
-                        }
-                    }
-                    catch (SqlException sqlEx)
-                    {
-                        
-                        MessageBox.Show("A SQL error occurred: " + sqlEx.Message);
-                    }
-                    catch (InvalidOperationException ioEx)
-                    {
-                        
-                        MessageBox.Show("An invalid operation occurred: " + ioEx.Message);
-                    }
-                    catch (Exception ex)
-                    {
-                        // General catch block for any other exceptions
-                        MessageBox.Show("An error occurred: " + ex.Message);
-                    }
-                }
-            }
-        }
-
 
         public RuntimeUI()
         {
@@ -444,8 +359,6 @@ namespace CitiSoft
                     venReminderFunc();
                     venProblemHistoryFunc();
                     venModifyClientFunc();
-                    ModifyClientForm some = new ModifyClientForm();
-                    some.ShowDialog();
                     // visible
                     break;
                 case 3:
