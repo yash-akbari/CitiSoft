@@ -54,7 +54,7 @@ namespace CitiSoft
             // 
             // updateClientBtn
             // 
-            this.updateClientBtn.Location = new System.Drawing.Point(1345, 548);
+            this.updateClientBtn.Location = new System.Drawing.Point(1256, 545);
             this.updateClientBtn.Name = "updateClientBtn";
             this.updateClientBtn.Size = new System.Drawing.Size(139, 50);
             this.updateClientBtn.TabIndex = 0;
@@ -225,7 +225,10 @@ namespace CitiSoft
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1599, 1062);
+            this.ClientSize = new System.Drawing.Size(1442, 722);
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Controls.Add(this.clientIDLabel);
             this.Controls.Add(this.deleteIDTextBox);
             this.Controls.Add(this.countryLabel);
@@ -246,13 +249,11 @@ namespace CitiSoft
             this.Controls.Add(this.deleteClientBtn);
             this.Controls.Add(this.updateClientBtn);
             this.Name = "ModifyClientForm";
-            this.Text = "ModifyClientForm";
+            this.Text = "Modify Client";
             this.Load += new System.EventHandler(this.ModifyClientForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ModifyClientDgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-            // displays info to the datagrid
-            RuntimeUI.dataBinding("Functionality.mdf", "SELECT Client.cid AS 'client id', compName AS 'company name', phone, email, Street AS 'street', City AS 'city', Cointry AS 'country'\r\nFROM Client\r\nJOIN CustAddress\r\n  ON Client.cid=CustAddress.cid;", ModifyClientDgv);
 
         }
 

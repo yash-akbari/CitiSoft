@@ -24,19 +24,31 @@ namespace CitiSoft
             using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand($"UPDATE Client\r\nSET compName = {companyNameTxtBox.Text}\r\nWHERE id = {clientIDTxtBox.Text}\r\n\r\nUPDATE CustAddress\r\nSET phone = {phoneTxtBox.Text}, email = {emailTxtBox.Text}, Street = {streetTxtBox.Text}, City = {cityTxtBox.Text}, Cointry = {countryTxtBox.Text}\r\nWHERE cid = {clientIDTxtBox.Text}", connection)) // query
-                {
-                    //command.Parameters.AddWithValue("@CustomerID", deleteIDTextBox.Text); // placeholder for id of row
+                SqlTransaction transaction = connection.BeginTransaction();
 
-                    int rowsAffected = command.ExecuteNonQuery();
-                    if (rowsAffected > 0)
+                try
+                {
+                    using (SqlCommand command = new SqlCommand($"UPDATE Client\r\nSET compName = {companyNameTxtBox.Text}\r\nWHERE cid = {clientIDTxtBox.Text}\r\n\r\nUPDATE CustAddress\r\nSET phone = {phoneTxtBox.Text}, email = {emailTxtBox.Text}, Street = {streetTxtBox.Text}, City = {cityTxtBox.Text}, Cointry = {countryTxtBox.Text}\r\nWHERE cid = {clientIDTxtBox.Text};", connection, transaction))
                     {
-                        Console.WriteLine("Update successful.");
+                        //command.Parameters.AddWithValue("@ClientID", deleteIDTextBox.Text);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Update successful.");
+                            transaction.Commit(); // Only commit if no errors occurred
+                        }
+                        else
+                        {
+                            MessageBox.Show("No rows Updated. It's possible that the client did not exist.");
+                            transaction.Rollback(); // Rollback if no rows affected
+                        }
                     }
-                    else
-                    {
-                        Console.WriteLine("No rows Updated. It's possible that the customer did not exist.");
-                    }
+                }
+                catch (SqlException ex)
+                {
+                    transaction.Rollback(); // Rollback on error
+                    MessageBox.Show("An error occurred while updating the client: " + ex.Message);
                 }
             }
         }
@@ -46,19 +58,31 @@ namespace CitiSoft
             using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand("DELETE FROM Customer WHERE id = @CustomerID DELETE FROM CustAddress WHERE cid = @CustomerID", connection)) // query
-                {
-                    command.Parameters.AddWithValue("@CustomerID", deleteIDTextBox.Text); // placeholder for id of row
+                SqlTransaction transaction = connection.BeginTransaction();
 
-                    int rowsAffected = command.ExecuteNonQuery();
-                    if (rowsAffected > 0)
+                try
+                {
+                    using (SqlCommand command = new SqlCommand("DELETE FROM CustAddress WHERE cid = @ClientID DELETE FROM Client WHERE cid = @ClientID;", connection, transaction))
                     {
-                        Console.WriteLine("Delete successful.");
+                        command.Parameters.AddWithValue("@ClientID", deleteIDTextBox.Text);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Delete successful.");
+                            transaction.Commit(); // Only commit if no errors occurred
+                        }
+                        else
+                        {
+                            MessageBox.Show("No rows deleted. It's possible that the client did not exist.");
+                            transaction.Rollback(); // Rollback if no rows affected
+                        }
                     }
-                    else
-                    {
-                        Console.WriteLine("No rows deleted. It's possible that the customer did not exist.");
-                    }
+                }
+                catch (SqlException ex)
+                {
+                    transaction.Rollback(); // Rollback on error
+                    MessageBox.Show("An error occurred while deleting the client: " + ex.Message);
                 }
             }
         }
