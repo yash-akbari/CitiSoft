@@ -21,16 +21,77 @@ namespace CitiSoft
 
         private void updateClientBtn_Click(object sender, EventArgs e)
         {
-            using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
+            if (string.IsNullOrWhiteSpace(clientIDTxtBox.Text))
+            {
+                MessageBox.Show("Please provide client id");
+                return; // Exit if no client ID is provided
+            }
+
+            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
 
                 try
                 {
-                    using (SqlCommand command = new SqlCommand($"UPDATE Client\r\nSET compName = {companyNameTxtBox.Text}\r\nWHERE cid = {clientIDTxtBox.Text}\r\n\r\nUPDATE CustAddress\r\nSET phone = {phoneTxtBox.Text}, email = {emailTxtBox.Text}, Street = {streetTxtBox.Text}, City = {cityTxtBox.Text}, Cointry = {countryTxtBox.Text}\r\nWHERE cid = {clientIDTxtBox.Text};", connection, transaction))
+                    // Start building the SQL command based on provided input
+                    List<string> clientUpdates = new List<string>();
+                    List<string> addressUpdates = new List<string>();
+
+                    if (!string.IsNullOrWhiteSpace(companyNameTxtBox.Text))
+                        clientUpdates.Add("compName = @CompName");
+
+                    if (!string.IsNullOrWhiteSpace(phoneTxtBox.Text))
+                        addressUpdates.Add("phone = @Phone");
+
+                    if (!string.IsNullOrWhiteSpace(emailTxtBox.Text))
+                        addressUpdates.Add("email = @Email");
+
+                    if (!string.IsNullOrWhiteSpace(streetTxtBox.Text))
+                        addressUpdates.Add("Street = @Street");
+
+                    if (!string.IsNullOrWhiteSpace(cityTxtBox.Text))
+                        addressUpdates.Add("City = @City");
+
+                    if (!string.IsNullOrWhiteSpace(countryTxtBox.Text))
+                        addressUpdates.Add("Cointry = @Country");
+
+                    if (clientUpdates.Count == 0 && addressUpdates.Count == 0)
                     {
-                        //command.Parameters.AddWithValue("@ClientID", deleteIDTextBox.Text);
+                        MessageBox.Show("No data provided to update.");
+                        return;
+                    }
+
+                    string updateSql = "";
+                    if (clientUpdates.Count > 0)
+                        updateSql += "UPDATE Client SET " + string.Join(", ", clientUpdates) + " WHERE cid = @ClientID; ";
+
+                    if (addressUpdates.Count > 0)
+                        updateSql += "UPDATE CustAddress SET " + string.Join(", ", addressUpdates) + " WHERE cid = @ClientID;";
+
+                    using (SqlCommand command = new SqlCommand(updateSql, connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@ClientID", clientIDTxtBox.Text);
+
+                        if (!string.IsNullOrWhiteSpace(companyNameTxtBox.Text))
+                            command.Parameters.AddWithValue("@CompName", companyNameTxtBox.Text);
+
+                        if (!string.IsNullOrWhiteSpace(phoneTxtBox.Text))
+                            command.Parameters.AddWithValue("@Phone", phoneTxtBox.Text);
+
+                        if (!string.IsNullOrWhiteSpace(emailTxtBox.Text))
+                            command.Parameters.AddWithValue("@Email", emailTxtBox.Text);
+
+                        if (!string.IsNullOrWhiteSpace(streetTxtBox.Text))
+                            command.Parameters.AddWithValue("@Street", streetTxtBox.Text);
+
+                        if (!string.IsNullOrWhiteSpace(cityTxtBox.Text))
+                            command.Parameters.AddWithValue("@City", cityTxtBox.Text);
+
+                        if (!string.IsNullOrWhiteSpace(countryTxtBox.Text))
+                            command.Parameters.AddWithValue("@Country", countryTxtBox.Text);
 
                         int rowsAffected = command.ExecuteNonQuery();
                         if (rowsAffected > 0)

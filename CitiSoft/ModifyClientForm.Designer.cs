@@ -60,6 +60,8 @@ namespace CitiSoft
             this.updateClientBtn.TabIndex = 0;
             this.updateClientBtn.Text = "Update";
             this.updateClientBtn.UseVisualStyleBackColor = true;
+            this.updateClientBtn.Click += new System.EventHandler(this.updateClientBtn_Click);
+
             // 
             // deleteClientBtn
             // 
