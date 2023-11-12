@@ -56,7 +56,20 @@ namespace CitiSoft
             venMenu.Size = new System.Drawing.Size(200, 50);
             venMenu.TabIndex = 1;
             venMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            venMenu.Click += VenMenu_Click;
+
         }
+        private void VenMenu_Click(object sender, EventArgs e)
+        {
+            // Hide the user profile panel and any other panels
+            userProfilePanel.Visible = false;
+            // ... hide other panels
+
+            // Show the "Vendor" panel
+            venPan.Visible = true;
+            // ... show other controls related to "Vendor"
+        }
+
         public void softMenuFunc()
         {//Software Menu
             softMenu.Text = "Software";
