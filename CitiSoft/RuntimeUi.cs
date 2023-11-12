@@ -29,6 +29,7 @@ namespace CitiSoft
         private Button venSerBtn = new Button();
         private TextBox venSerTex = new TextBox();
         private Panel venPan = new Panel();
+        private Panel userProfilePanel;
 
 
         int menuYLoc = 0;
@@ -332,12 +333,46 @@ namespace CitiSoft
             modifyClientForm.Show();
 
         }
+        private void UserProfileMenuFunc()
+        {
+            // Create the User Profile menu label
+            var userProfileMenu = new Label
+            {
+                Text = "User Profile",
+                Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0))),
+                Location = new Point(0, menuYLoc),
+                Size = new Size(200, 50),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            userProfileMenu.Click += UserProfileMenu_Click; // Event handler for click action
+            menuPan.Controls.Add(userProfileMenu);
+            menuYLoc += 50; // Update the location for the next menu item
+        }
+        private void UserProfileMenu_Click(object sender, EventArgs e)
+        {
+            // Hide all other panels and show only the User Profile panel
+            venPan.Visible = false; // Example of hiding another panel
+                                    // ... code to hide other panels
+            userProfilePanel.Visible = true; // Show the User Profile panel
+        }
+        private void InitializeUserProfilePanel()
+        {
+            userProfilePanel = new Panel
+            {
+                // Set properties according to your layout needs
+                Size = new Size(600, 400),
+                Location = new Point(200, 50), // Adjust the location as needed
+                BorderStyle = BorderStyle.FixedSingle,
+                Visible = false // Start as hidden
+            };
+        }
 
-        public RuntimeUI()
+            public RuntimeUI()
         {
 
+            InitializeUserProfilePanel(); // Initialize the panel
             tblSelector(2);
-
+            UserProfileMenuFunc(); // Initialize menu items
         }
         public void tblSelector(int val)
         {
