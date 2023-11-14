@@ -117,21 +117,6 @@ namespace CitiSoft
             
             
         }
-        public void venAddFunc()
-        {
-            // 
-            // venAdd
-            // 
-
-            venAdd.Location = new System.Drawing.Point(4, 22);
-            venAdd.Name = "venAdd";
-            venAdd.Padding = new System.Windows.Forms.Padding(3);
-            venAdd.Size = new System.Drawing.Size(610, 666);
-            venAdd.TabIndex = 0;
-            venAdd.Text = "Add";
-            venAdd.UseVisualStyleBackColor = true;
-            venTab.Controls.Add(venAdd);
-        }
 
         public void venViewFunc()
         {
@@ -322,6 +307,238 @@ namespace CitiSoft
                 table.DataSource = mergedTable;
             }
         }
+        public void venAddFunc()
+        {
+            venAdd = new TabPage
+            {
+                Location = new System.Drawing.Point(4, 22),
+                Name = "venAdd",
+                Padding = new System.Windows.Forms.Padding(3),
+                Size = new System.Drawing.Size(610, 666),
+                TabIndex = 0,
+                Text = "Add",
+                UseVisualStyleBackColor = true,
+            };
+
+            venTab.Controls.Add(venAdd);
+
+            Label companyNameLabel = new Label();
+            TextBox companyNameTextBox = new TextBox();
+
+            Label softwareNameLabel = new Label();
+            TextBox softwareNameTextBox = new TextBox();
+
+            Label companyWebsiteLabel = new Label();
+            TextBox companyWebsiteTextBox = new TextBox();
+
+            Label typeOfSoftwareLabel = new Label();
+            TextBox typeOfSoftwareTextBox = new TextBox();
+
+            Label companyEstablishedLabel = new Label();
+            TextBox companyEstablishedTextBox = new TextBox();
+
+            Label descriptionLabel = new Label();
+            RichTextBox descriptionRichTextBox = new RichTextBox();
+
+            Label streetLabel = new Label();
+            TextBox streetTextBox = new TextBox();
+
+            Label cityLabel = new Label();
+            TextBox cityTextBox = new TextBox();
+
+            Label countryLabel = new Label();
+            TextBox countryTextBox = new TextBox();
+
+            Label emailLabel = new Label();
+            TextBox emailTextBox = new TextBox();
+
+            Label telephoneLabel = new Label();
+            TextBox telephoneTextBox = new TextBox();
+
+            ListBox addressListBox = new ListBox();
+            Button addAddressButton = new Button();
+            addAddressButton.Text = "Add Address";
+
+            Label employeesLabel = new Label();
+            TextBox employeesTextBox = new TextBox();
+
+            Label internalServicesLabel = new Label();
+            ComboBox internalServicesCheckBox = new ComboBox();
+            internalServicesCheckBox.Items.Add("Yes");
+            internalServicesCheckBox.Items.Add("No");
+
+
+            Label lastDemoDateLabel = new Label();
+            DateTimePicker lastDemoDatePicker = new DateTimePicker();
+
+
+            Label lastReviewIntLabel = new Label();
+            TextBox lastReviewIntText = new TextBox();
+
+            Label lastReviewedDateLabel = new Label();
+            DateTimePicker lastReviewedDatePicker = new DateTimePicker();
+
+            Label businessAreasLabel = new Label();
+            TextBox businessAreasTextBox = new TextBox();
+
+            Label modulesLabel = new Label();
+            TextBox modulesTextBox = new TextBox();
+
+            Label financialServicesLabel = new Label();
+            TextBox financialServicesTextBox = new TextBox();
+
+            Label cloudLabel = new Label();
+            ComboBox cloudComboBox = new ComboBox();
+
+            Label additionalInfoLabel = new Label();
+            RichTextBox additionalInfoRichTextBox = new RichTextBox();
+
+            Label docAttachLabel = new Label();
+            ComboBox docAttachCheckBox = new ComboBox();
+
+
+            Button submitButton = new Button();
+            submitButton.Text = "Submit";
+
+            venAdd.Controls.AddRange(new Control[]
+            {
+                companyNameLabel, companyNameTextBox,
+                softwareNameLabel, softwareNameTextBox,
+                companyWebsiteLabel, companyWebsiteTextBox,
+                typeOfSoftwareLabel, typeOfSoftwareTextBox,
+                companyEstablishedLabel, companyEstablishedTextBox,
+                descriptionLabel, descriptionRichTextBox,addressListBox,
+                streetLabel,streetTextBox,addAddressButton,
+                cityLabel, cityTextBox,
+                countryLabel, countryTextBox,
+                emailLabel, emailTextBox,
+                telephoneLabel, telephoneTextBox,
+                employeesLabel, employeesTextBox,
+                internalServicesLabel, internalServicesCheckBox,
+                lastDemoDateLabel, lastDemoDatePicker,
+                lastReviewedDateLabel, lastReviewedDatePicker,
+                businessAreasLabel, businessAreasTextBox,
+                modulesLabel, modulesTextBox,
+                financialServicesLabel, financialServicesTextBox,
+                cloudLabel, cloudComboBox,
+                additionalInfoLabel, additionalInfoRichTextBox,
+                docAttachLabel, docAttachCheckBox,
+                submitButton
+            });
+            string[] venControlVarName = new string[]
+            {
+                "companyNameLabel", "companyNameTextBox",
+                "softwareNameLabel", "softwareNameTextBox",
+                "companyWebsiteLabel", "companyWebsiteTextBox",
+                "typeOfSoftwareLabel", "typeOfSoftwareTextBox",
+                "companyEstablishedLabel", "companyEstablishedTextBox",
+                "descriptionLabel", "descriptionRichTextBox", "addressListBox",
+                "streetLabel","streetTextBox","addAddressButton" ,
+                "cityLabel", "cityTextBox",
+                "countryLabel", "countryTextBox",
+                "emailLabel", "emailTextBox",
+                "telephoneLabel", "telephoneTextBox",
+                "employeesLabel", "employeesTextBox",
+                "internalServicesLabel", "internalServicesCheckBox",
+                "lastDemoDateLabel", "lastDemoDatePicker",
+                "lastReviewedDateLabel", "lastReviewedDatePicker",
+                "businessAreasLabel", "businessAreasTextBox",
+                "modulesLabel", "modulesTextBox",
+                "financialServicesLabel", "financialServicesTextBox",
+                "cloudLabel", "cloudComboBox",
+                "additionalInfoLabel", "additionalInfoRichTextBox",
+                "docAttachLabel", "docAttachCheckBox",
+                "submitButton"
+            };
+            string[] venControlText = new string[]
+            {   "Company Name:",
+                "Software Name:",
+                "Company Website:",
+                "Type of Software:",
+                "Company Established:",
+                "Description:",
+                "Street:",
+                "City:",
+                "Country:",
+                "Email address:",
+                " Telephone No.:",
+                "No. of Employees:",
+                "Internal Professional Services:",
+                "Last Demo Date:",
+                "Last Reviewed Date:",
+                "Business Areas:",
+                "Modules:",
+                "Financial Services Client Types:",
+                "Cloud (Enabled/Native/Based):",
+                "Additional Information:",
+                "Document to attach?",
+            };
+            int venAddxLoc = 10;
+            int venAddyLoc = 11;
+            int venAddHeight = 21;
+            int venAddWidth = 200;
+            int i = 0, j = 0;
+            foreach (Control con in venAdd.Controls)
+            {
+                con.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                con.Name = venControlVarName.ElementAt(i++);
+                if (con is Label)
+                {
+                    con.Width = venAddWidth;
+                    con.Height = venAddHeight;
+                    con.Text = venControlText[j++];
+                    con.Left = venAddxLoc;
+                    con.Top = venAddyLoc;
+                }
+                else if (con is RichTextBox)
+                {
+                    con.Width = venAddWidth + 100;
+                    con.Height = venAddHeight + 90;
+
+                    con.Left = venAddxLoc + 210;
+                    con.Top = venAddyLoc;
+                    venAddyLoc = venAddyLoc + 120;
+                }
+                else if (con is ListBox || con.Name is "addAddressButton")
+                {
+                    con.Width = venAddWidth;
+                    con.Height = venAddHeight;
+
+                    con.Left = venAddxLoc + 210 + 100 + 210;
+                    con.Top = venAddyLoc;
+
+                }
+                else
+                {
+                    con.Width = venAddWidth + 100;
+                    con.Height = venAddHeight;
+
+                    con.Left = venAddxLoc + 210;
+                    con.Top = venAddyLoc;
+                    venAddyLoc = venAddyLoc + 30;
+                }
+
+            }
+            submitButton.Click += new EventHandler(submitButton_click);
+            addressListBox.SelectedIndexChanged += new EventHandler(addressListToAddressText);
+        }
+
+        private void addressListToAddressText(object sender, EventArgs e)
+        {
+
+        }
+        public void submitButton_click(object sender, EventArgs e)
+        {
+            string[] data = new string[50];
+            int i = 0;
+            foreach (Control con in venAdd.Controls)
+            {
+                data[i] = con.Text; i++;
+            }
+
+        }
+
+
 
         public void venModifyClientFunc()
         {
@@ -380,7 +597,7 @@ namespace CitiSoft
             };
         }
 
-            public RuntimeUI()
+        public RuntimeUI()
         {
 
             InitializeUserProfilePanel(); // Initialize the panel
