@@ -28,10 +28,10 @@ namespace CitiSoft
 
                 try
                 {
-                    using (SqlCommand command = new SqlCommand("INSERT INTO ProblemHistory (cid, date, desc, isClosed, lstRevDate) VALUES (@ClientID, @Date, @Description, @IsClosed, @LstRevDate);", connection, transaction))
+                    using (SqlCommand command = new SqlCommand("INSERT INTO ProblemHistory (cid, uid, date, desc, isClosed, lstRevDate) VALUES (@ClientID, @UserID, @Date, @Description, @IsClosed, @LstRevDate);", connection, transaction))
                     {
                         command.Parameters.AddWithValue("@ClientID", clientIDPHTxtBox.Text);
-                        command.Parameters.AddWithValue("@UserID", problemIDTxtBox.Text);
+                        command.Parameters.AddWithValue("@UserID", userIDPHTxtBox.Text);
                         command.Parameters.AddWithValue("@Description", descriptionTxtBox.Text);
                         command.Parameters.AddWithValue("@Date", DateTime.Today.ToString("yyyy-MM-dd"));
                         command.Parameters.AddWithValue("@LstRevDate", DateTime.Today.ToString("yyyy-MM-dd"));
@@ -45,7 +45,7 @@ namespace CitiSoft
                         }
                         else
                         {
-                            MessageBox.Show("Nothing was added. It's possible that there is an error.");
+                            MessageBox.Show("Nothing was added. Probably you have provided wrong IDs.");
                             transaction.Rollback(); // Rollback if no rows affected
                         }
                     }
@@ -109,6 +109,12 @@ namespace CitiSoft
                     MessageBox.Show("An error occurred while finishing the problem: " + ex.Message);
                 }
             }
+        }
+
+        private void userIDPHTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsOnlyNumbers(textBox);
         }
 
         private void clientIDPHLabel_Click(object sender, EventArgs e)

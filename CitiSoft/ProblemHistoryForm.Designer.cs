@@ -37,6 +37,8 @@
             this.finishProblemBtn = new System.Windows.Forms.Button();
             this.problemIDLabel = new System.Windows.Forms.Label();
             this.problemIDTxtBox = new System.Windows.Forms.TextBox();
+            this.userIDPHLabel = new System.Windows.Forms.Label();
+            this.userIDPHTxtBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.ProblemHistoryDgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -126,11 +128,31 @@
             this.problemIDTxtBox.TabIndex = 8;
             this.problemIDTxtBox.TextChanged += new System.EventHandler(this.problemIDTxtBox_TextChanged);
             // 
+            // userIDPHLabel
+            // 
+            this.userIDPHLabel.AutoSize = true;
+            this.userIDPHLabel.Location = new System.Drawing.Point(811, 150);
+            this.userIDPHLabel.Name = "userIDPHLabel";
+            this.userIDPHLabel.Size = new System.Drawing.Size(84, 25);
+            this.userIDPHLabel.TabIndex = 9;
+            this.userIDPHLabel.Text = "Your ID";
+            // 
+            // userIDPHTxtBox
+            // 
+            this.userIDPHTxtBox.Location = new System.Drawing.Point(1004, 144);
+            this.userIDPHTxtBox.Name = "userIDPHTxtBox";
+            this.userIDPHTxtBox.Size = new System.Drawing.Size(100, 31);
+            this.userIDPHTxtBox.TabIndex = 10;
+            this.userIDPHTxtBox.TextChanged += new System.EventHandler(this.userIDPHTxtBox_TextChanged);
+
+            // 
             // ProblemHistoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1119, 620);
+            this.Controls.Add(this.userIDPHTxtBox);
+            this.Controls.Add(this.userIDPHLabel);
             this.Controls.Add(this.problemIDTxtBox);
             this.Controls.Add(this.problemIDLabel);
             this.Controls.Add(this.finishProblemBtn);
@@ -159,5 +181,7 @@
         private System.Windows.Forms.Button finishProblemBtn;
         private System.Windows.Forms.Label problemIDLabel;
         private System.Windows.Forms.TextBox problemIDTxtBox;
+        private System.Windows.Forms.Label userIDPHLabel;
+        private System.Windows.Forms.TextBox userIDPHTxtBox;
     }
 }
