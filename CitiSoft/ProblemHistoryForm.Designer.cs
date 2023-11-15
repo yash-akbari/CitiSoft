@@ -39,6 +39,8 @@
             this.problemIDTxtBox = new System.Windows.Forms.TextBox();
             this.userIDPHLabel = new System.Windows.Forms.Label();
             this.userIDPHTxtBox = new System.Windows.Forms.TextBox();
+            this.viewProblemBtn = new System.Windows.Forms.Button();
+            this.viewAllProblemsBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ProblemHistoryDgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -144,6 +146,26 @@
             this.userIDPHTxtBox.Size = new System.Drawing.Size(100, 31);
             this.userIDPHTxtBox.TabIndex = 10;
             this.userIDPHTxtBox.TextChanged += new System.EventHandler(this.userIDPHTxtBox_TextChanged);
+            // 
+            // viewProblemBtn
+            // 
+            this.viewProblemBtn.Location = new System.Drawing.Point(268, 559);
+            this.viewProblemBtn.Name = "viewProblemBtn";
+            this.viewProblemBtn.Size = new System.Drawing.Size(178, 44);
+            this.viewProblemBtn.TabIndex = 11;
+            this.viewProblemBtn.Text = "View a problem";
+            this.viewProblemBtn.UseVisualStyleBackColor = true;
+            this.viewProblemBtn.Click += new System.EventHandler(this.viewProblemBtn_Click);
+            // 
+            // viewAllProblemsBtn
+            // 
+            this.viewAllProblemsBtn.Location = new System.Drawing.Point(469, 559);
+            this.viewAllProblemsBtn.Name = "viewAllProblemsBtn";
+            this.viewAllProblemsBtn.Size = new System.Drawing.Size(179, 44);
+            this.viewAllProblemsBtn.TabIndex = 12;
+            this.viewAllProblemsBtn.Text = "View all";
+            this.viewAllProblemsBtn.UseVisualStyleBackColor = true;
+            this.viewAllProblemsBtn.Click += new System.EventHandler(this.viewAllProblemsBtn_Click);
 
             // 
             // ProblemHistoryForm
@@ -151,6 +173,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1119, 620);
+            this.Controls.Add(this.viewAllProblemsBtn);
+            this.Controls.Add(this.viewProblemBtn);
             this.Controls.Add(this.userIDPHTxtBox);
             this.Controls.Add(this.userIDPHLabel);
             this.Controls.Add(this.problemIDTxtBox);
@@ -183,5 +207,7 @@
         private System.Windows.Forms.TextBox problemIDTxtBox;
         private System.Windows.Forms.Label userIDPHLabel;
         private System.Windows.Forms.TextBox userIDPHTxtBox;
+        private System.Windows.Forms.Button viewProblemBtn;
+        private System.Windows.Forms.Button viewAllProblemsBtn;
     }
 }

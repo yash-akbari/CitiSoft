@@ -28,7 +28,7 @@ namespace CitiSoft
 
                 try
                 {
-                    using (SqlCommand command = new SqlCommand("INSERT INTO ProblemHistory (cid, uid, date, desc, isClosed, lstRevDate) VALUES (@ClientID, @UserID, @Date, @Description, @IsClosed, @LstRevDate);", connection, transaction))
+                    using (SqlCommand command = new SqlCommand("INSERT INTO ProblemHistory (cid, uid, [date], [desc], isClosed, lstRevDate) VALUES (@ClientID, @UserID, @Date, @Description, @IsClosed, @LstRevDate);", connection, transaction))
                     {
                         command.Parameters.AddWithValue("@ClientID", clientIDPHTxtBox.Text);
                         command.Parameters.AddWithValue("@UserID", userIDPHTxtBox.Text);
@@ -120,6 +120,16 @@ namespace CitiSoft
         private void clientIDPHLabel_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void viewProblemBtn_Click(object sender, EventArgs e)
+        {
+            RuntimeUI.dataBinding("Functionality.mdf", $"SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid", ProblemHistoryDgv, int.Parse(problemIDTxtBox.Text), "p.pid ");
+        }
+
+        private void viewAllProblemsBtn_Click(object sender, EventArgs e)
+        {
+            RuntimeUI.dataBinding("Functionality.mdf", "SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid;", ProblemHistoryDgv);
         }
     }
 }

@@ -291,11 +291,6 @@ namespace CitiSoft
 
         public void venProblemHistoryFunc()
         {
-
-            //
-            // venProblemHistory
-            //
-            
             venProblemHistory.Location = new System.Drawing.Point(4, 22);
             venProblemHistory.Name = "venProblemHistory";
             venProblemHistory.Padding = new System.Windows.Forms.Padding(3);
@@ -309,29 +304,60 @@ namespace CitiSoft
             AddForm(problemHistoryForm, venProblemHistory);
         }
 
-        // takes database name, query and DataGridView instance to display a table
-        public static void dataBinding(string databaseName, string query, DataGridView table)
+        // takes database name, query and DataGridView instance to display a table. Also takes optional argument,
+        // which enables to display a particular row
+        public static void dataBinding(string databaseName, string baseQuery, DataGridView table, int? id = null, string idName = null)
         {
             string connectionString = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\{databaseName};Integrated Security=True;Connect Timeout=30";
-            //Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = "\\anglia.local\fs\StudentsHome\ia543\My Documents\CitiSoft\CitiSoft\CitiSoftDatabase.mdf"; Integrated Security = True
-            using (SqlConnection connection = new SqlConnection(connectionString))
+
+            try
             {
-                connection.Open();
-
-
-                DataTable table1 = new DataTable();
-
-                using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    adapter.Fill(table1);
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand(baseQuery, connection);
+
+                    // Modify the query and add parameter if 'id' is provided
+                    if (id.HasValue && idName != null)
+                    {
+                        command.CommandText += $" WHERE {idName} = @Id";
+                        command.Parameters.AddWithValue("@Id", id.Value);
+                    }
+
+                    DataTable table1 = new DataTable();
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        adapter.Fill(table1);
+                    }
+
+                    if (id.HasValue && table1.Rows.Count == 0)
+                    {
+                        // Handle the case where no data is found for the provided id
+                        MessageBox.Show($"No data found for ID: {id.Value}");
+                    }
+                    else
+                    {
+                        DataTable mergedTable = new DataTable();
+                        mergedTable.Merge(table1);
+
+                        table.DataSource = mergedTable;
+                    }
                 }
-
-                DataTable mergedTable = new DataTable();
-                mergedTable.Merge(table1);
-
-                table.DataSource = mergedTable;
+            }
+            catch (SqlException sqlEx)
+            {
+                // Handle SQL-specific errors here
+                MessageBox.Show("SQL Error: " + sqlEx.Message);
+            }
+            catch (Exception ex)
+            {
+                // Handle other types of errors here
+                MessageBox.Show("General Error: " + ex.Message);
             }
         }
+
         public void venAddFunc()
         {
             venAdd = new TabPage
