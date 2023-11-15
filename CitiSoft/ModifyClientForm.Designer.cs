@@ -61,13 +61,12 @@ namespace CitiSoft
             this.updateClientBtn.Text = "Update";
             this.updateClientBtn.UseVisualStyleBackColor = true;
             this.updateClientBtn.Click += new System.EventHandler(this.updateClientBtn_Click);
-
             // 
             // deleteClientBtn
             // 
-            this.deleteClientBtn.Location = new System.Drawing.Point(148, 637);
+            this.deleteClientBtn.Location = new System.Drawing.Point(1256, 704);
             this.deleteClientBtn.Name = "deleteClientBtn";
-            this.deleteClientBtn.Size = new System.Drawing.Size(146, 44);
+            this.deleteClientBtn.Size = new System.Drawing.Size(139, 44);
             this.deleteClientBtn.TabIndex = 1;
             this.deleteClientBtn.Text = "Delete row";
             this.deleteClientBtn.UseVisualStyleBackColor = true;
@@ -83,10 +82,8 @@ namespace CitiSoft
             this.ModifyClientDgv.ReadOnly = true;
             this.ModifyClientDgv.RowHeadersWidth = 82;
             this.ModifyClientDgv.RowTemplate.Height = 33;
-            this.ModifyClientDgv.Size = new System.Drawing.Size(831, 492);
+            this.ModifyClientDgv.Size = new System.Drawing.Size(909, 1243);
             this.ModifyClientDgv.TabIndex = 2;
-            RuntimeUI.dataBinding("Functionality.mdf", "SELECT Client.cid, compName, phone, email, Street, City, Cointry AS 'Country'\r\nFROM Client\r\nJOIN CustAddress\r\n  ON Client.cid=CustAddress.cid;", ModifyClientDgv);
-
             // 
             // clientIDTxtBox
             // 
@@ -209,7 +206,7 @@ namespace CitiSoft
             // 
             // deleteIDTextBox
             // 
-            this.deleteIDTextBox.Location = new System.Drawing.Point(159, 558);
+            this.deleteIDTextBox.Location = new System.Drawing.Point(1256, 650);
             this.deleteIDTextBox.Name = "deleteIDTextBox";
             this.deleteIDTextBox.Size = new System.Drawing.Size(135, 31);
             this.deleteIDTextBox.TabIndex = 17;
@@ -218,7 +215,7 @@ namespace CitiSoft
             // clientIDLabel
             // 
             this.clientIDLabel.AutoSize = true;
-            this.clientIDLabel.Location = new System.Drawing.Point(27, 558);
+            this.clientIDLabel.Location = new System.Drawing.Point(1100, 656);
             this.clientIDLabel.Name = "clientIDLabel";
             this.clientIDLabel.Size = new System.Drawing.Size(90, 25);
             this.clientIDLabel.TabIndex = 18;
@@ -228,10 +225,7 @@ namespace CitiSoft
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1442, 722);
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.ClientSize = new System.Drawing.Size(1515, 1284);
             this.Controls.Add(this.clientIDLabel);
             this.Controls.Add(this.deleteIDTextBox);
             this.Controls.Add(this.countryLabel);
@@ -251,6 +245,9 @@ namespace CitiSoft
             this.Controls.Add(this.ModifyClientDgv);
             this.Controls.Add(this.deleteClientBtn);
             this.Controls.Add(this.updateClientBtn);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ModifyClientForm";
             this.Text = "Modify Client";
             this.Load += new System.EventHandler(this.ModifyClientForm_Load);
