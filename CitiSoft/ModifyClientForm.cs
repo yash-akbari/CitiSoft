@@ -166,7 +166,7 @@ namespace CitiSoft
                 string input = textBox.Text;
                 foreach (char c in input)
                 {
-                    if (!char.IsDigit(c))
+                    if (!char.IsDigit(c)) // Allow only numbers
                     {
                         // Show a message or handle the invalid character
                         MessageBox.Show("Only numbers are allowed.");
@@ -301,7 +301,7 @@ namespace CitiSoft
                 {
                     foreach (char c in input)
                     {
-                        if (!char.IsLetterOrDigit(c) && c != ' ' && c != '.') // Allow letters spaces and numbers
+                        if (!char.IsLetterOrDigit(c) && c != ' ' && c != '.') // Allow letters, spaces, numbers and dots
                         {
                             // Show a message or handle the invalid character
                             MessageBox.Show("Only letters, spaces and numbers are allowed.");
@@ -391,7 +391,7 @@ namespace CitiSoft
                         if (!char.IsDigit(c) && c != ' ' && c != '+') // Allow letters spaces and numbers
                         {
                             // Show a message or handle the invalid character
-                            MessageBox.Show("Please don't inlcude any characters.");
+                            MessageBox.Show("Please don't include any letters.");
 
                             // Remove the last character
                             textBox.Text = input.Substring(0, input.Length - 1);
@@ -404,7 +404,6 @@ namespace CitiSoft
                         }
                     }
                 }
-                
             }
         }
         private void deleteIDTxtBox_TextChanged(object sender, EventArgs e)

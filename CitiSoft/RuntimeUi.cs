@@ -319,8 +319,8 @@ namespace CitiSoft
             venProblemHistoryData.Size = new System.Drawing.Size(604, 660);
             venProblemHistoryData.TabIndex = 0;
 
-            dataBinding("Functionality.mdf", "SELECT * FROM ProblemHistory", venProblemHistoryData);
-            
+            dataBinding("Functionality.mdf", "SELECT \r\n    u.fn AS 'First name',\r\n    pid AS 'Problem ID',\r\n    date AS 'Date', \r\n    [desc] AS 'Description',\r\n    isClosed AS 'IsClosed',\r\n    lstRevDate AS 'Last Review Date'\r\nFROM ProblemHistory\r\nJOIN [User] AS u \r\n    ON u.uid = ProblemHistory.uid;", venProblemHistoryData);
+
         }
 
         // takes database name, query and DataGridView instance to display a table
@@ -643,6 +643,8 @@ namespace CitiSoft
                     venReminderFunc();
                     venProblemHistoryFunc();
                     venModifyClientFunc();
+                    ProblemHistoryForm problemHistoryForm = new ProblemHistoryForm();
+                    problemHistoryForm.ShowDialog();
                     // visible
                     break;
                 case 3:

@@ -85,7 +85,7 @@ namespace CitiSoft
             this.ModifyClientDgv.RowTemplate.Height = 33;
             this.ModifyClientDgv.Size = new System.Drawing.Size(831, 492);
             this.ModifyClientDgv.TabIndex = 2;
-            this.ModifyClientDgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            //this.ModifyClientDgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             RuntimeUI.dataBinding("Functionality.mdf", "SELECT Client.cid, compName, phone, email, Street, City, Cointry AS 'Country'\r\nFROM Client\r\nJOIN CustAddress\r\n  ON Client.cid=CustAddress.cid;", ModifyClientDgv);
 
             // 
