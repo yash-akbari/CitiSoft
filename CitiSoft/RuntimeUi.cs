@@ -304,23 +304,7 @@ namespace CitiSoft
             venProblemHistory.Text = "Client Problem History";
             venProblemHistory.UseVisualStyleBackColor = true;
             venTab.Controls.Add(venProblemHistory);
-            //venProblemHistory.Controls.Add(venProblemHistoryData);
-            /*
-            //
-            // venProblemHistoryData
-            //
-
-            venProblemHistoryData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            venProblemHistoryData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            venProblemHistoryData.Location = new System.Drawing.Point(3, 3);
-            venProblemHistoryData.Name = "venProblemHistoryData";
-            venProblemHistoryData.Size = new System.Drawing.Size(604, 660);
-            venProblemHistoryData.TabIndex = 0;
-
-            dataBinding("Functionality.mdf", "SELECT \r\n    u.fn AS 'First name',\r\n    pid AS 'Problem ID',\r\n    date AS 'Date', \r\n    [desc] AS 'Description',\r\n    isClosed AS 'IsClosed',\r\n    lstRevDate AS 'Last Review Date'\r\nFROM ProblemHistory\r\nJOIN [User] AS u \r\n    ON u.uid = ProblemHistory.uid;", venProblemHistoryData);
-            */
+           
             ProblemHistoryForm problemHistoryForm = new ProblemHistoryForm();
             AddForm(problemHistoryForm, venProblemHistory);
         }
