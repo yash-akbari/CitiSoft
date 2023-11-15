@@ -607,11 +607,25 @@ namespace CitiSoft
                 // No direct way to get the result of the validation, assuming it shows a MessageBox and handles the correction internally
             }
 
-            string[] data = new string[50];
-            int i = 0;
-            foreach (Control con in venAdd.Controls)
+            if (isValid)
             {
-                data[i] = con.Text; i++;
+                // Proceed with submitting the data
+                string[] data = new string[50];
+                int i = 0;
+                foreach (Control con in venAdd.Controls)
+                {
+                    if (con is TextBox || con is RichTextBox) // Ensure only text-based controls are included
+                    {
+                        data[i] = con.Text;
+                        i++;
+                    }
+                }
+                // ... submit data
+            }
+            else
+            {
+                // Handle the case where validation fails
+                MessageBox.Show("Please correct the highlighted errors before submitting.");
             }
 
         }
