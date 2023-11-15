@@ -304,8 +304,8 @@ namespace CitiSoft
             venProblemHistory.Text = "Client Problem History";
             venProblemHistory.UseVisualStyleBackColor = true;
             venTab.Controls.Add(venProblemHistory);
-            venProblemHistory.Controls.Add(venProblemHistoryData);
-
+            //venProblemHistory.Controls.Add(venProblemHistoryData);
+            /*
             //
             // venProblemHistoryData
             //
@@ -320,7 +320,9 @@ namespace CitiSoft
             venProblemHistoryData.TabIndex = 0;
 
             dataBinding("Functionality.mdf", "SELECT \r\n    u.fn AS 'First name',\r\n    pid AS 'Problem ID',\r\n    date AS 'Date', \r\n    [desc] AS 'Description',\r\n    isClosed AS 'IsClosed',\r\n    lstRevDate AS 'Last Review Date'\r\nFROM ProblemHistory\r\nJOIN [User] AS u \r\n    ON u.uid = ProblemHistory.uid;", venProblemHistoryData);
-
+            */
+            ProblemHistoryForm problemHistoryForm = new ProblemHistoryForm();
+            AddForm(problemHistoryForm, venProblemHistory);
         }
 
         // takes database name, query and DataGridView instance to display a table
@@ -590,19 +592,21 @@ namespace CitiSoft
             venModifyClient.UseVisualStyleBackColor = true;
             venTab.Controls.Add(venModifyClient);
 
-
-            // adds the form inside the tab
             ModifyClientForm modifyClientForm = new ModifyClientForm();
-            modifyClientForm.TopLevel = false;
-            modifyClientForm.FormBorderStyle = FormBorderStyle.None;
-            modifyClientForm.Dock = DockStyle.Fill;
-
-            venModifyClient.Controls.Add(modifyClientForm);
-
-            modifyClientForm.Show();
+            AddForm(modifyClientForm, venModifyClient);
 
         }
-        
+
+        // adds the form inside the tab
+        public static void AddForm(Form form, TabPage page)
+        {
+            form.TopLevel = false;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.Dock = DockStyle.Fill;
+            page.Controls.Add(form);
+            form.Show();
+        }
+
         private void InitializeUserProfilePanel()
         {
             userProfilePanel = new Panel
@@ -643,8 +647,6 @@ namespace CitiSoft
                     venReminderFunc();
                     venProblemHistoryFunc();
                     venModifyClientFunc();
-                    ProblemHistoryForm problemHistoryForm = new ProblemHistoryForm();
-                    problemHistoryForm.ShowDialog();
                     // visible
                     break;
                 case 3:

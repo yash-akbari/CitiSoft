@@ -52,6 +52,7 @@
             this.ProblemHistoryDgv.RowTemplate.Height = 33;
             this.ProblemHistoryDgv.Size = new System.Drawing.Size(755, 476);
             this.ProblemHistoryDgv.TabIndex = 0;
+            RuntimeUI.dataBinding("Functionality.mdf", "SELECT \r\n    u.fn AS 'First name',\r\n    pid AS 'Problem ID',\r\n    date AS 'Date', \r\n    [desc] AS 'Description',\r\n    isClosed AS 'IsClosed',\r\n    lstRevDate AS 'Last Review Date'\r\nFROM ProblemHistory\r\nJOIN [User] AS u \r\n    ON u.uid = ProblemHistory.uid;", ProblemHistoryDgv);
             // 
             // addClientBtn
             // 
@@ -61,7 +62,7 @@
             this.addClientBtn.TabIndex = 1;
             this.addClientBtn.Text = "Add Client";
             this.addClientBtn.UseVisualStyleBackColor = true;
-            this.addClientBtn.Click += new System.EventHandler(this.button1_Click);
+            this.addClientBtn.Click += new System.EventHandler(this.addClientBtn_Click);
             // 
             // descriptionTxtBox
             // 
@@ -108,7 +109,7 @@
             this.finishProblemBtn.TabIndex = 6;
             this.finishProblemBtn.Text = "Finish Problem";
             this.finishProblemBtn.UseVisualStyleBackColor = true;
-            this.finishProblemBtn.Click += new System.EventHandler(this.button1_Click_1);
+            this.finishProblemBtn.Click += new System.EventHandler(this.finishProblemBtn_Click_1);
             // 
             // problemIDLabel
             // 
