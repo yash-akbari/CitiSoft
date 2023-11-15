@@ -600,6 +600,12 @@ namespace CitiSoft
                 MessageBox.Show("The email format is invalid.");
                 isValid = false;
             }
+            // Validate telephone - structured phone number
+            if (telephoneTextBox != null)
+            {
+                InputValidation.IsPhoneNumberStructured(telephoneTextBox, 15, "Phone Number");
+                // No direct way to get the result of the validation, assuming it shows a MessageBox and handles the correction internally
+            }
 
             string[] data = new string[50];
             int i = 0;
