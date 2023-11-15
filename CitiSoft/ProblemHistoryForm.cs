@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -89,6 +90,14 @@ namespace CitiSoft
 
         private void finishProblemBtn_Click_1(object sender, EventArgs e)
         {
+
+            if (!InputValidation.CheckValueExists("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30", "ProblemHistory", "pid", problemIDTxtBox.Text))
+            {
+                MessageBox.Show($"Problem with id: {problemIDTxtBox.Text}, does not exist");
+                problemIDTxtBox.Text = "";
+                return;
+            }
+
             using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
             {
                 connection.Open();
@@ -134,7 +143,34 @@ namespace CitiSoft
 
         private void viewProblemBtn_Click(object sender, EventArgs e)
         {
+            if(!InputValidation.CheckValueExists("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30", "ProblemHistory", "pid", problemIDTxtBox.Text))
+            {
+                MessageBox.Show($"Problem with id: {problemIDTxtBox.Text}, does not exist");
+                problemIDTxtBox.Text = "";
+                return;
+            }
+
             RuntimeUI.dataBinding("Functionality.mdf", "SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid", ProblemHistoryDgv, int.Parse(problemIDTxtBox.Text), "p.pid ");
+            // updates the lstRevDate (Last review date)
+            using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                try
+                {
+                    using (SqlCommand command = new SqlCommand($"UPDATE ProblemHistory SET lstRevDate = {DateTime.Today.ToString("yyyy-MM-dd")}  WHERE cid = @ClientID;", connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@ClientID", problemIDTxtBox.Text);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    transaction.Rollback(); // Rollback on error
+                    MessageBox.Show("An error occurred while updating the Last review date: " + ex.Message);
+                }
+            }
         }
 
         private void viewAllProblemsBtn_Click(object sender, EventArgs e)
