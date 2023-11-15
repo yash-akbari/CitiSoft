@@ -56,19 +56,60 @@ namespace CitiSoft
             venMenu.Size = new System.Drawing.Size(200, 50);
             venMenu.TabIndex = 1;
             venMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            venMenu.Click += VenMenu_Click;
+            venMenu.Click += venMenu_Click;
 
         }
-        private void VenMenu_Click(object sender, EventArgs e)
+
+        private void venMenu_Click(object sender, EventArgs e)
         {
-            // Hide the user profile panel and any other panels
-            userProfilePanel.Visible = false;
-            // ... hide other panels
-
-            // Show the "Vendor" panel
-            venPan.Visible = true;
-            // ... show other controls related to "Vendor"
+            panSelector("venPan");
         }
+        public void panSelector(String panName) 
+        {
+            foreach (Control con in mainPan.Controls) //will iterate through each controls added in mainPan
+            {
+                if (con.Name == panName)
+                {
+                    con.Visible = true;
+                }
+                else
+                {
+                    con.Visible = false;
+                }
+            }
+        }
+
+        /*private void VenMenu_Click(object sender, EventArgs e)
+{
+   // Hide the user profile panel and any other panels
+   userProfilePanel.Visible = false;
+   // ... hide other panels
+
+   // Show the "Vendor" panel
+   venPan.Visible = true;
+   // ... show other controls related to "Vendor"
+}*/
+
+        private void UserProfileMenuFunc()
+        {
+            // Create the User Profile menu label
+            var userProfileMenu = new Label
+            {
+                Text = "User Profile",
+                Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0))),
+                Location = new Point(0, menuYLoc),
+                Size = new Size(200, 50),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            userProfileMenu.Click += UserProfileMenu_Click; // Event handler for click action
+            menuPan.Controls.Add(userProfileMenu);
+            menuYLoc += 50; // Update the location for the next menu item
+        }
+        private void UserProfileMenu_Click(object sender, EventArgs e)
+        {
+            panSelector("userProfileMenu");
+        }
+
 
         public void softMenuFunc()
         {//Software Menu
@@ -114,8 +155,6 @@ namespace CitiSoft
             venTab.SelectedIndex = 0;
             venTab.Size = new System.Drawing.Size(618, 692);
             venTab.TabIndex = 2;
-            
-            
         }
 
         public void venViewFunc()
@@ -563,28 +602,7 @@ namespace CitiSoft
             modifyClientForm.Show();
 
         }
-        private void UserProfileMenuFunc()
-        {
-            // Create the User Profile menu label
-            var userProfileMenu = new Label
-            {
-                Text = "User Profile",
-                Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0))),
-                Location = new Point(0, menuYLoc),
-                Size = new Size(200, 50),
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-            userProfileMenu.Click += UserProfileMenu_Click; // Event handler for click action
-            menuPan.Controls.Add(userProfileMenu);
-            menuYLoc += 50; // Update the location for the next menu item
-        }
-        private void UserProfileMenu_Click(object sender, EventArgs e)
-        {
-            // Hide all other panels and show only the User Profile panel
-            venPan.Visible = false; // Example of hiding another panel
-                                    // ... code to hide other panels
-            userProfilePanel.Visible = true; // Show the User Profile panel
-        }
+        
         private void InitializeUserProfilePanel()
         {
             userProfilePanel = new Panel
