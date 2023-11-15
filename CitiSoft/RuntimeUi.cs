@@ -594,6 +594,13 @@ namespace CitiSoft
                 // No direct way to get the result of the validation, assuming it shows a MessageBox and handles the correction internally
             }
 
+            // Validate email - since IsValidEmail returns a bool, you can use it to set the isValid flag
+            if (emailTextBox != null && !InputValidation.IsValidEmail(emailTextBox.Text))
+            {
+                MessageBox.Show("The email format is invalid.");
+                isValid = false;
+            }
+
             string[] data = new string[50];
             int i = 0;
             foreach (Control con in venAdd.Controls)
