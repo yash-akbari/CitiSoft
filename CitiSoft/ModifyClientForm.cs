@@ -190,8 +190,10 @@ namespace CitiSoft
 
         }
 
-        // checks only after the enter key was pressed
-        private void emailTextBox_KeyDown(object sender, KeyEventArgs e)
+     
+
+            // checks only after the enter key was pressed
+            private void emailTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
