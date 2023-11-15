@@ -70,6 +70,8 @@
             this.descriptionTxtBox.Name = "descriptionTxtBox";
             this.descriptionTxtBox.Size = new System.Drawing.Size(288, 135);
             this.descriptionTxtBox.TabIndex = 2;
+            this.descriptionTxtBox.TextChanged += new System.EventHandler(this.descriptionTxtBox_TextChanged);
+
             // 
             // descriptionLabel
             // 
@@ -124,7 +126,6 @@
             this.problemIDTxtBox.Size = new System.Drawing.Size(100, 31);
             this.problemIDTxtBox.TabIndex = 8;
             this.problemIDTxtBox.TextChanged += new System.EventHandler(this.problemIDTxtBox_TextChanged);
-
             // 
             // ProblemHistoryForm
             // 

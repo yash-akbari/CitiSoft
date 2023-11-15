@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace CitiSoft
 {
@@ -22,7 +23,31 @@ namespace CitiSoft
 
         }
 
-        private void descriptionLabel_Click(object sender, EventArgs e)
+        private void clientIDPHTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsOnlyNumbers(textBox);
+        }
+
+        private void problemIDTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsOnlyNumbers(textBox);
+        }
+
+        private void descriptionTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            int length = 100;
+            InputValidation.LimitLength(textBox, length, "Description text");
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void clientIDPHLabel_Click(object sender, EventArgs e)
         {
 
         }

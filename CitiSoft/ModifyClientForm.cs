@@ -161,32 +161,32 @@ namespace CitiSoft
         private void clientIDTxtBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.isOnlyNumbers(textBox);
+            InputValidation.IsOnlyNumbers(textBox);
         }
 
         private void companyNameTxtBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.isOnlyLettersAndSpaces(textBox, 30, "Company");
+            InputValidation.IsOnlyLettersAndSpaces(textBox, 30, "Company");
         }
 
         private void countryTxtBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.isOnlyLetters(textBox, 30, "Country");
+            InputValidation.IsOnlyLetters(textBox, 30, "Country");
         }
 
         private void cityTxtBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.isOnlyLetters(textBox, 30, "City");
+            InputValidation.IsOnlyLetters(textBox, 30, "City");
 
         }
 
         private void streetTxtBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.isOnlyAlphanumericOrWithDots(textBox, 30, "Street");
+            InputValidation.IsOnlyAlphanumericOrWithDots(textBox, 30, "Street");
 
         }
 
@@ -212,13 +212,13 @@ namespace CitiSoft
         private void phoneTxtBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.isPhoneNumberStructured(textBox, 15, "Phone number");
+            InputValidation.IsPhoneNumberStructured(textBox, 15, "Phone number");
         }
 
         private void deleteIDTxtBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.isOnlyNumbers(textBox);
+            InputValidation.IsOnlyNumbers(textBox);
         }
     }
 }

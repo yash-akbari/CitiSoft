@@ -5,13 +5,12 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace CitiSoft
 {
     internal class InputValidation
     {
-        public static void isOnlyNumbers(System.Windows.Forms.TextBox textBox)
+        public static void IsOnlyNumbers(TextBox textBox)
         {
             if (textBox != null)
             {
@@ -22,7 +21,7 @@ namespace CitiSoft
                     {
                         // Show a message or handle the invalid character
                         MessageBox.Show("Only numbers are allowed.");
-                        autoCorrection(textBox, input);
+                        AutoCorrection(textBox, input);
 
                         break;
                     }
@@ -30,7 +29,7 @@ namespace CitiSoft
             }
         }
 
-        public static void isOnlyLettersAndSpaces(System.Windows.Forms.TextBox textBox, int length, string name)
+        public static void IsOnlyLettersAndSpaces(TextBox textBox, int length, string name)
         {
             if (textBox != null)
             {
@@ -39,7 +38,7 @@ namespace CitiSoft
                 if (textBox.Text.Length > length)
                 {
                     MessageBox.Show($"{name} name is too long");
-                    autoCorrection(textBox, input);
+                    AutoCorrection(textBox, input);
                 }
                 else
                 {
@@ -49,7 +48,7 @@ namespace CitiSoft
                         {
                             // Show a message or handle the invalid character
                             MessageBox.Show("Only letters and spaces are allowed.");
-                            autoCorrection(textBox, input);
+                            AutoCorrection(textBox, input);
 
                             break;
                         }
@@ -58,7 +57,7 @@ namespace CitiSoft
             }
         }
 
-        public static void isOnlyLetters(System.Windows.Forms.TextBox textBox, int length, string name)
+        public static void IsOnlyLetters(TextBox textBox, int length, string name)
         {
             if (textBox != null)
             {
@@ -67,7 +66,7 @@ namespace CitiSoft
                 if (input.Length > length)
                 {
                     MessageBox.Show($"{name} name is too long");
-                    autoCorrection(textBox, input);
+                    AutoCorrection(textBox, input);
                 }
                 else
                 {
@@ -77,7 +76,7 @@ namespace CitiSoft
                         {
                             // Show a message or handle the invalid character
                             MessageBox.Show("Only letters are allowed.");
-                            autoCorrection(textBox, input);
+                            AutoCorrection(textBox, input);
 
                             break;
                         }
@@ -86,7 +85,7 @@ namespace CitiSoft
             }
         }
 
-        public static void isOnlyAlphanumericOrWithDots(System.Windows.Forms.TextBox textBox, int length, string name)
+        public static void IsOnlyAlphanumericOrWithDots(TextBox textBox, int length, string name)
         {
             if (textBox != null)
             {
@@ -95,7 +94,7 @@ namespace CitiSoft
                 if (input.Length > length)
                 {
                     MessageBox.Show($"{name} address is too long");
-                    autoCorrection(textBox, input);
+                    AutoCorrection(textBox, input);
                 }
                 else
                 {
@@ -105,7 +104,7 @@ namespace CitiSoft
                         {
                             // Show a message or handle the invalid character
                             MessageBox.Show("Only letters, spaces and numbers are allowed.");
-                            autoCorrection(textBox, input);
+                            AutoCorrection(textBox, input);
 
                             break;
                         }
@@ -147,7 +146,7 @@ namespace CitiSoft
             }
         }
 
-        public static void isPhoneNumberStructured(System.Windows.Forms.TextBox textBox, int length, string name)
+        public static void IsPhoneNumberStructured(TextBox textBox, int length, string name)
         {
             if (textBox != null)
             {
@@ -157,7 +156,7 @@ namespace CitiSoft
                 if (input.Length > length)
                 {
                     MessageBox.Show($"{name} is too long");
-                    autoCorrection(textBox, input);
+                    AutoCorrection(textBox, input);
                 }
                 else
                 {
@@ -167,7 +166,7 @@ namespace CitiSoft
                         {
                             // Show a message or handle the invalid character
                             MessageBox.Show("Please don't inlcude any letters.");
-                            autoCorrection(textBox, input);
+                            AutoCorrection(textBox, input);
 
                             break;
                         }
@@ -176,7 +175,7 @@ namespace CitiSoft
             }
         }
 
-        private static void autoCorrection(System.Windows.Forms.TextBox textBox, string input)
+        private static void AutoCorrection(TextBox textBox, string input)
         {
             // Remove the last character
             textBox.Text = input.Substring(0, input.Length - 1);
@@ -185,6 +184,19 @@ namespace CitiSoft
             textBox.SelectionStart = textBox.Text.Length;
             textBox.SelectionLength = 0;
         }
+
+        public static void LimitLength(TextBox textBox, int length, string name)
+        {
+            if (textBox != null)
+            {
+                string input = textBox.Text;
+                // checks for length
+                if (input.Length > length)
+                {
+                    MessageBox.Show($"{name} is too long, should be less than {length} characters");
+                    AutoCorrection(textBox, input);
+                }
+            }
+        }
     }
 }
-
