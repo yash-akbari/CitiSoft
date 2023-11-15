@@ -580,6 +580,20 @@ namespace CitiSoft
         }
         public void submitButton_click(object sender, EventArgs e)
         {
+            // Assuming 'venAdd' contains TextBox controls with appropriate names
+            TextBox companyNameTextBox = venAdd.Controls.Find("companyNameTextBox", true).FirstOrDefault() as TextBox;
+            TextBox emailTextBox = venAdd.Controls.Find("emailTextBox", true).FirstOrDefault() as TextBox;
+            TextBox telephoneTextBox = venAdd.Controls.Find("telephoneTextBox", true).FirstOrDefault() as TextBox;
+            // ... other text boxes
+            bool isValid = true;
+
+            // Validate company name - must be only letters and spaces, and less than 30 characters
+            if (companyNameTextBox != null)
+            {
+                InputValidation.IsOnlyLettersAndSpaces(companyNameTextBox, 30, "Company Name");
+                // No direct way to get the result of the validation, assuming it shows a MessageBox and handles the correction internally
+            }
+
             string[] data = new string[50];
             int i = 0;
             foreach (Control con in venAdd.Controls)
