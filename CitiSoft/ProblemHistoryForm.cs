@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
+
 
 namespace CitiSoft
 {
@@ -21,6 +21,16 @@ namespace CitiSoft
 
         private void addClientBtn_Click(object sender, EventArgs e)
         {
+            if (!InputValidation.CheckValueExists("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30", "Client", "cid", clientIDPHTxtBox.Text))
+            {
+                MessageBox.Show("Client ID you have provided does not exist");
+                return;
+            }
+            if (!InputValidation.CheckValueExists("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30", "User", "uid", userIDPHTxtBox.Text))
+            {
+                MessageBox.Show("Your ID does not exist");
+                return;
+            }
             using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
             {
                 connection.Open();
@@ -124,7 +134,7 @@ namespace CitiSoft
 
         private void viewProblemBtn_Click(object sender, EventArgs e)
         {
-            RuntimeUI.dataBinding("Functionality.mdf", $"SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid", ProblemHistoryDgv, int.Parse(problemIDTxtBox.Text), "p.pid ");
+            RuntimeUI.dataBinding("Functionality.mdf", "SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid", ProblemHistoryDgv, int.Parse(problemIDTxtBox.Text), "p.pid ");
         }
 
         private void viewAllProblemsBtn_Click(object sender, EventArgs e)
