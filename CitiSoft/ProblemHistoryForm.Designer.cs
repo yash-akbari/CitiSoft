@@ -54,12 +54,12 @@
             this.ProblemHistoryDgv.ReadOnly = true;
             this.ProblemHistoryDgv.RowHeadersWidth = 82;
             this.ProblemHistoryDgv.RowTemplate.Height = 33;
-            this.ProblemHistoryDgv.Size = new System.Drawing.Size(755, 476);
+            this.ProblemHistoryDgv.Size = new System.Drawing.Size(1053, 1243);
             this.ProblemHistoryDgv.TabIndex = 0;
             // 
             // addClientBtn
             // 
-            this.addClientBtn.Location = new System.Drawing.Point(929, 475);
+            this.addClientBtn.Location = new System.Drawing.Point(1223, 379);
             this.addClientBtn.Name = "addClientBtn";
             this.addClientBtn.Size = new System.Drawing.Size(175, 54);
             this.addClientBtn.TabIndex = 1;
@@ -69,7 +69,7 @@
             // 
             // descriptionTxtBox
             // 
-            this.descriptionTxtBox.Location = new System.Drawing.Point(816, 315);
+            this.descriptionTxtBox.Location = new System.Drawing.Point(1110, 226);
             this.descriptionTxtBox.Multiline = true;
             this.descriptionTxtBox.Name = "descriptionTxtBox";
             this.descriptionTxtBox.Size = new System.Drawing.Size(288, 135);
@@ -79,7 +79,7 @@
             // descriptionLabel
             // 
             this.descriptionLabel.AutoSize = true;
-            this.descriptionLabel.Location = new System.Drawing.Point(811, 272);
+            this.descriptionLabel.Location = new System.Drawing.Point(1105, 184);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(120, 25);
             this.descriptionLabel.TabIndex = 3;
@@ -87,7 +87,7 @@
             // 
             // clientIDPHTxtBox
             // 
-            this.clientIDPHTxtBox.Location = new System.Drawing.Point(1004, 195);
+            this.clientIDPHTxtBox.Location = new System.Drawing.Point(1298, 100);
             this.clientIDPHTxtBox.Name = "clientIDPHTxtBox";
             this.clientIDPHTxtBox.Size = new System.Drawing.Size(100, 31);
             this.clientIDPHTxtBox.TabIndex = 4;
@@ -96,7 +96,7 @@
             // clientIDPHLabel
             // 
             this.clientIDPHLabel.AutoSize = true;
-            this.clientIDPHLabel.Location = new System.Drawing.Point(811, 201);
+            this.clientIDPHLabel.Location = new System.Drawing.Point(1105, 100);
             this.clientIDPHLabel.Name = "clientIDPHLabel";
             this.clientIDPHLabel.Size = new System.Drawing.Size(93, 25);
             this.clientIDPHLabel.TabIndex = 5;
@@ -105,9 +105,9 @@
             // 
             // finishProblemBtn
             // 
-            this.finishProblemBtn.Location = new System.Drawing.Point(29, 559);
+            this.finishProblemBtn.Location = new System.Drawing.Point(1220, 660);
             this.finishProblemBtn.Name = "finishProblemBtn";
-            this.finishProblemBtn.Size = new System.Drawing.Size(218, 44);
+            this.finishProblemBtn.Size = new System.Drawing.Size(178, 44);
             this.finishProblemBtn.TabIndex = 6;
             this.finishProblemBtn.Text = "Finish Problem";
             this.finishProblemBtn.UseVisualStyleBackColor = true;
@@ -116,7 +116,7 @@
             // problemIDLabel
             // 
             this.problemIDLabel.AutoSize = true;
-            this.problemIDLabel.Location = new System.Drawing.Point(24, 513);
+            this.problemIDLabel.Location = new System.Drawing.Point(1105, 560);
             this.problemIDLabel.Name = "problemIDLabel";
             this.problemIDLabel.Size = new System.Drawing.Size(117, 25);
             this.problemIDLabel.TabIndex = 7;
@@ -124,7 +124,7 @@
             // 
             // problemIDTxtBox
             // 
-            this.problemIDTxtBox.Location = new System.Drawing.Point(147, 513);
+            this.problemIDTxtBox.Location = new System.Drawing.Point(1298, 554);
             this.problemIDTxtBox.Name = "problemIDTxtBox";
             this.problemIDTxtBox.Size = new System.Drawing.Size(100, 31);
             this.problemIDTxtBox.TabIndex = 8;
@@ -133,7 +133,7 @@
             // userIDPHLabel
             // 
             this.userIDPHLabel.AutoSize = true;
-            this.userIDPHLabel.Location = new System.Drawing.Point(811, 150);
+            this.userIDPHLabel.Location = new System.Drawing.Point(1105, 40);
             this.userIDPHLabel.Name = "userIDPHLabel";
             this.userIDPHLabel.Size = new System.Drawing.Size(84, 25);
             this.userIDPHLabel.TabIndex = 9;
@@ -141,7 +141,7 @@
             // 
             // userIDPHTxtBox
             // 
-            this.userIDPHTxtBox.Location = new System.Drawing.Point(1004, 144);
+            this.userIDPHTxtBox.Location = new System.Drawing.Point(1298, 40);
             this.userIDPHTxtBox.Name = "userIDPHTxtBox";
             this.userIDPHTxtBox.Size = new System.Drawing.Size(100, 31);
             this.userIDPHTxtBox.TabIndex = 10;
@@ -149,7 +149,7 @@
             // 
             // viewProblemBtn
             // 
-            this.viewProblemBtn.Location = new System.Drawing.Point(268, 559);
+            this.viewProblemBtn.Location = new System.Drawing.Point(1220, 610);
             this.viewProblemBtn.Name = "viewProblemBtn";
             this.viewProblemBtn.Size = new System.Drawing.Size(178, 44);
             this.viewProblemBtn.TabIndex = 11;
@@ -159,20 +159,19 @@
             // 
             // viewAllProblemsBtn
             // 
-            this.viewAllProblemsBtn.Location = new System.Drawing.Point(469, 559);
+            this.viewAllProblemsBtn.Location = new System.Drawing.Point(1220, 710);
             this.viewAllProblemsBtn.Name = "viewAllProblemsBtn";
-            this.viewAllProblemsBtn.Size = new System.Drawing.Size(179, 44);
+            this.viewAllProblemsBtn.Size = new System.Drawing.Size(178, 44);
             this.viewAllProblemsBtn.TabIndex = 12;
             this.viewAllProblemsBtn.Text = "View all";
             this.viewAllProblemsBtn.UseVisualStyleBackColor = true;
             this.viewAllProblemsBtn.Click += new System.EventHandler(this.viewAllProblemsBtn_Click);
-
             // 
             // ProblemHistoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1119, 620);
+            this.ClientSize = new System.Drawing.Size(1515, 1284);
             this.Controls.Add(this.viewAllProblemsBtn);
             this.Controls.Add(this.viewProblemBtn);
             this.Controls.Add(this.userIDPHTxtBox);
