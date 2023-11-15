@@ -580,6 +580,12 @@ namespace CitiSoft
         }
         public void submitButton_click(object sender, EventArgs e)
         {
+            // Assuming 'venAdd' contains TextBox controls with appropriate names
+            TextBox companyNameTextBox = venAdd.Controls.Find("companyNameTextBox", true).FirstOrDefault() as TextBox;
+            TextBox emailTextBox = venAdd.Controls.Find("emailTextBox", true).FirstOrDefault() as TextBox;
+            TextBox telephoneTextBox = venAdd.Controls.Find("telephoneTextBox", true).FirstOrDefault() as TextBox;
+            // ... other text boxes
+
             string[] data = new string[50];
             int i = 0;
             foreach (Control con in venAdd.Controls)
