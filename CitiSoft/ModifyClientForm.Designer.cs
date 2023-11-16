@@ -84,7 +84,7 @@ namespace CitiSoft
             this.ModifyClientDgv.RowTemplate.Height = 33;
             this.ModifyClientDgv.Size = new System.Drawing.Size(909, 1243);
             this.ModifyClientDgv.TabIndex = 2;
-            RuntimeUI.dataBinding("Functionality.mdf", "SELECT Client.cid AS 'Client ID', compName AS 'Company name', phone AS 'Phone', email AS 'Email', Street, City, Cointry AS 'Country'\r\nFROM Client\r\nJOIN CustAddress\r\n  ON Client.cid=CustAddress.cid;", ModifyClientDgv);
+            RuntimeUI.dataBinding(Variables.functionalityConnectionString, "SELECT Client.cid AS 'Client ID', compName AS 'Company name', phone AS 'Phone', email AS 'Email', Street, City, Cointry AS 'Country'\r\nFROM Client\r\nJOIN CustAddress\r\n  ON Client.cid=CustAddress.cid;", ModifyClientDgv);
 
             // 
             // clientIDTxtBox

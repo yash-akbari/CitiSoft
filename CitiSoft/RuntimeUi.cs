@@ -286,7 +286,7 @@ namespace CitiSoft
             venRemData.Size = new System.Drawing.Size(604, 660);
             venRemData.TabIndex = 0;
 
-            dataBinding("CitiSoftDatabase.mdf", "SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo", venRemData);
+            dataBinding(Variables.citiSoftDatabaseConnectionString, "SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo", venRemData);
         }
 
         public void venProblemHistoryFunc()
@@ -306,10 +306,8 @@ namespace CitiSoft
 
         // takes database name, query and DataGridView instance to display a table. Also takes optional argument,
         // which enables to display a particular row
-        public static void dataBinding(string databaseName, string baseQuery, DataGridView table, int? id = null, string idName = null)
+        public static void dataBinding(string connectionString, string baseQuery, DataGridView table, int? id = null, string idName = null)
         {
-            string connectionString = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\{databaseName};Integrated Security=True;Connect Timeout=30";
-
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
