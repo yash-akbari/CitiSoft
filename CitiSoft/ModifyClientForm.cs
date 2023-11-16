@@ -27,9 +27,7 @@ namespace CitiSoft
                 return; // Exit if no client ID is provided
             }
 
-            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
@@ -116,7 +114,7 @@ namespace CitiSoft
 
         private void deleteClientBtn_Click(object sender, EventArgs e)
         {
-            using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
+            using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
