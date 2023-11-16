@@ -20,19 +20,20 @@ namespace CitiSoft
             InitializeComponent();
         }
 
+        // adds the client to the ProblemHistory table
         private void addClientBtn_Click(object sender, EventArgs e)
         {
-            if (!InputValidation.CheckValueExists("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30", "Client", "cid", clientIDPHTxtBox.Text))
+            if (!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "Client", "cid", clientIDPHTxtBox.Text))
             {
                 MessageBox.Show("Client ID you have provided does not exist");
                 return;
             }
-            if (!InputValidation.CheckValueExists("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30", "User", "uid", userIDPHTxtBox.Text))
+            if (!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "User", "uid", userIDPHTxtBox.Text))
             {
                 MessageBox.Show("Your ID does not exist");
                 return;
             }
-            using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
+            using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
@@ -88,17 +89,18 @@ namespace CitiSoft
             InputValidation.LimitLength(textBox, length, "Description text");
         }
 
+        // changes the isClosed to True
         private void finishProblemBtn_Click_1(object sender, EventArgs e)
         {
 
-            if (!InputValidation.CheckValueExists("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30", "ProblemHistory", "pid", problemIDTxtBox.Text))
+            if (!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "ProblemHistory", "pid", problemIDTxtBox.Text))
             {
                 MessageBox.Show($"Problem with id: {problemIDTxtBox.Text}, does not exist");
                 problemIDTxtBox.Text = "";
                 return;
             }
 
-            using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
+            using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
@@ -129,7 +131,7 @@ namespace CitiSoft
                 }
             }
         }
-
+        
         private void userIDPHTxtBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -141,9 +143,10 @@ namespace CitiSoft
 
         }
 
+        // displays a particular problem and updates the lstRevDate to True
         private void viewProblemBtn_Click(object sender, EventArgs e)
         {
-            if(!InputValidation.CheckValueExists("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30", "ProblemHistory", "pid", problemIDTxtBox.Text))
+            if(!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "ProblemHistory", "pid", problemIDTxtBox.Text))
             {
                 MessageBox.Show($"Problem with id: {problemIDTxtBox.Text}, does not exist");
                 problemIDTxtBox.Text = "";
@@ -152,7 +155,7 @@ namespace CitiSoft
 
             RuntimeUI.dataBinding("Functionality.mdf", "SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid", ProblemHistoryDgv, int.Parse(problemIDTxtBox.Text), "p.pid ");
             // updates the lstRevDate (Last review date)
-            using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Functionality.mdf;Integrated Security=True;Connect Timeout=30"))
+            using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
@@ -173,6 +176,7 @@ namespace CitiSoft
             }
         }
 
+        // displays all columns to the datagrid
         private void viewAllProblemsBtn_Click(object sender, EventArgs e)
         {
             RuntimeUI.dataBinding("Functionality.mdf", "SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid;", ProblemHistoryDgv);
