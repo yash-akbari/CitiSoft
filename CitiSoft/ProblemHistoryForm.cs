@@ -23,6 +23,11 @@ namespace CitiSoft
         // adds the client to the ProblemHistory table
         private void addClientBtn_Click(object sender, EventArgs e)
         {
+            if (clientIDPHTxtBox.Text == "" && descriptionTxtBox.Text == "" && userIDPHTxtBox.Text == "")
+            {
+                MessageBox.Show("Please fill in all text boxes");
+                return;
+            }
             if (!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "Client", "cid", clientIDPHTxtBox.Text))
             {
                 MessageBox.Show("Client ID you have provided does not exist");
@@ -88,11 +93,20 @@ namespace CitiSoft
             int length = 10000; // 10000 only characters can= be in a description text
             InputValidation.LimitLength(textBox, length, "Description text");
         }
+        private void userIDPHTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsOnlyNumbers(textBox);
+        }
 
         // changes the isClosed to True
         private void finishProblemBtn_Click_1(object sender, EventArgs e)
         {
-
+            if (problemIDTxtBox.Text == "")
+            {
+                MessageBox.Show("Please enter the ID");
+                return;
+            }
             if (!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "ProblemHistory", "pid", problemIDTxtBox.Text))
             {
                 MessageBox.Show($"Problem with id: {problemIDTxtBox.Text}, does not exist");
@@ -132,11 +146,7 @@ namespace CitiSoft
             }
         }
         
-        private void userIDPHTxtBox_TextChanged(object sender, EventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            InputValidation.IsOnlyNumbers(textBox);
-        }
+        
 
         private void clientIDPHLabel_Click(object sender, EventArgs e)
         {
@@ -146,6 +156,12 @@ namespace CitiSoft
         // displays a particular problem and updates the lstRevDate to True
         private void viewProblemBtn_Click(object sender, EventArgs e)
         {
+            if (problemIDTxtBox.Text == "")
+            {
+                MessageBox.Show("Please enter the ID");
+                return;
+            }
+            
             if(!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "ProblemHistory", "pid", problemIDTxtBox.Text))
             {
                 MessageBox.Show($"Problem with id: {problemIDTxtBox.Text}, does not exist");
