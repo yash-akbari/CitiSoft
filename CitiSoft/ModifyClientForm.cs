@@ -114,6 +114,12 @@ namespace CitiSoft
 
         private void deleteClientBtn_Click(object sender, EventArgs e)
         {
+            if(deleteIDTextBox.Text == "")
+            {
+                MessageBox.Show("Please provide client ID");
+                return;
+            }
+
             using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
             {
                 connection.Open();
@@ -188,10 +194,8 @@ namespace CitiSoft
 
         }
 
-     
-
-            // checks only after the enter key was pressed
-            private void emailTextBox_KeyDown(object sender, KeyEventArgs e)
+        // checks only after the enter key was pressed
+        private void emailTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
