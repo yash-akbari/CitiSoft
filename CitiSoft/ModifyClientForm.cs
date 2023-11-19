@@ -152,16 +152,6 @@ namespace CitiSoft
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void ModifyClientForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void clientIDTxtBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
