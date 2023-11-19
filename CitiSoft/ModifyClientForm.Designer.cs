@@ -252,7 +252,6 @@ namespace CitiSoft
             this.MinimizeBox = false;
             this.Name = "ModifyClientForm";
             this.Text = "Modify Client";
-            this.Load += new System.EventHandler(this.ModifyClientForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ModifyClientDgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
