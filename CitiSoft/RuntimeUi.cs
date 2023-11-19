@@ -54,7 +54,7 @@ namespace CitiSoft
             venMenu.TabIndex = 1;
             venMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             venMenu.Click += venMenu_Click;
-
+            venPanFunc();
         }
 
         void venMenu_Click(object sender, EventArgs e)
@@ -91,7 +91,11 @@ namespace CitiSoft
             viewParentTabPage.Dock = System.Windows.Forms.DockStyle.Fill;
             viewParentTabPage.Name = "viewParentTabPage";
             viewParentTabPage.Text = "View";
+            venViewChildTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            viewParentTabPage.Controls.Add(venViewChildTabControl);
         }
+
+
         public void modifyParentTabPageFunc()
         {
             // 
@@ -100,6 +104,8 @@ namespace CitiSoft
             modifyParentTabPage.Dock = System.Windows.Forms.DockStyle.Fill;
             modifyParentTabPage.Name = "modifyParentTabPage";
             modifyParentTabPage.Text = "Modify";
+            venModifyChildTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            modifyParentTabPage.Controls.Add(venModifyChildTabControl);
         }
 
         public void viewTabPageFunc()
@@ -107,22 +113,11 @@ namespace CitiSoft
             // 
             // viewTabPage
             // 
-            viewTabPage.Controls.Add(venViewData);
             viewTabPage.Name = "viewTabPage";
             viewTabPage.Text = "View Vendor";
-            viewParentTabPage.Controls.Add(venViewChildTabControl);
-
-
-            // 
-            // venViewData
-            // 
-            venViewData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            venViewData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            venViewData.Location = new System.Drawing.Point(3, 3);
-            venViewData.Name = "venVieData";
-            venViewData.Size = new System.Drawing.Size(604, 660);
+            vendorView venView = new vendorView();
+            AddForm(venView,viewTabPage);
+            
         }
         public void searchTabPageFunc()
         {
@@ -394,10 +389,11 @@ namespace CitiSoft
                     mainPan.Controls.Add(venPan);
                     
                     menuPan.Controls.Add(venMenu);
-                    venPanFunc();
                     venMenuFunc();
                     venTabControlFunc();
+                    viewParentTabPageFunc();
                     viewTabPageFunc();
+                    modifyParentTabPageFunc();
                     searchTabPageFunc();
                     addVendorTabPageFunc();
                     venReminderFunc();
