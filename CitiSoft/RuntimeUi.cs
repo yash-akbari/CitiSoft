@@ -24,8 +24,8 @@ namespace CitiSoft
         TabPage modifyParentTabPage = new TabPage();
 
         TabControl venViewChildTabControl = new TabControl();
-        TabPage viewTabPage = new TabPage();
-        TabPage searchTabPage = new TabPage();
+        TabPage viewVendorTabPage = new TabPage();
+        TabPage searchVendorTabPage = new TabPage();
         TabPage clientProblemHistory = new TabPage();
 
         TabControl venModifyChildTabControl = new TabControl();
@@ -40,10 +40,7 @@ namespace CitiSoft
         TabPage modifyClientTabPage = new TabPage();
         /// </ClientMenu>
 
-
         Panel userProfilePanel;
-
-
 
         int menuYLoc = 0;
 
@@ -102,12 +99,13 @@ namespace CitiSoft
             modifyParentTabPage.Controls.Add(venModifyChildTabControl);
         }
 
-        public void viewTabPageFunc()
+        public void viewVendorTabPageFunc()
         {
-            viewTabPage.Name = "viewTabPage";
-            viewTabPage.Text = "View Vendor";
-            vendorView venView = new vendorView();
-            AddForm(venView, viewTabPage);
+            venViewChildTabControl.Controls.Add(viewVendorTabPage);
+            viewVendorTabPage.Name = "viewVendorTabPage";
+            viewVendorTabPage.Text = "View Vendor";
+            viewVendor venView = new viewVendor();
+            AddForm(venView, viewVendorTabPage);
         }
 
 
@@ -116,19 +114,19 @@ namespace CitiSoft
             addVendorTabPage.Name = "addVendorTabPage";
             addVendorTabPage.Text = "Add Vendor";
             venModifyChildTabControl.Controls.Add(addVendorTabPage);
-            vendorAdd add = new vendorAdd();
+            addVendor add = new addVendor();
             AddForm(add, addVendorTabPage);
         }
 
 
 
-        public void searchTabPageFunc()
+        public void searchVendorTabPageFunc()
         {
-            searchTabPage.Name = "searchTabPage";
-            searchTabPage.Text = "Search";
-            venViewChildTabControl.Controls.Add(searchTabPage);
-            vendorSearch venSearch = new vendorSearch();
-            AddForm(venSearch, searchTabPage);
+            searchVendorTabPage.Name = "searchVendorTabPage";
+            searchVendorTabPage.Text = "Search";
+            venViewChildTabControl.Controls.Add(searchVendorTabPage);
+            searchVendor venSearch = new searchVendor();
+            AddForm(venSearch, searchVendorTabPage);
         }
 
         public void venReminderFunc()
@@ -393,9 +391,9 @@ namespace CitiSoft
                     venMenuFunc();
                     venTabControlFunc();
                     viewParentTabPageFunc();
-                    viewTabPageFunc();
+                    viewVendorTabPageFunc();
                     modifyParentTabPageFunc();
-                    searchTabPageFunc();
+                    searchVendorTabPageFunc();
                     addVendorTabPageFunc();
                     venReminderFunc();
                     clientProblemHistoryFunc();
