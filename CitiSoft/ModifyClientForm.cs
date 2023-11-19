@@ -174,14 +174,12 @@ namespace CitiSoft
         {
             TextBox textBox = sender as TextBox;
             InputValidation.IsOnlyLetters(textBox, 30, "City");
-
         }
 
         private void streetTxtBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
             InputValidation.IsOnlyAlphanumericOrWithDots(textBox, 30, "Street");
-
         }
 
         // checks only after the enter key was pressed
