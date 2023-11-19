@@ -36,14 +36,12 @@ namespace CitiSoft
             this.closeBtn = new System.Windows.Forms.Button();
             this.menuPan = new System.Windows.Forms.Panel();
             this.venViewData = new System.Windows.Forms.DataGridView();
-            this.venSerData = new System.Windows.Forms.DataGridView();
             this.venRemData = new System.Windows.Forms.DataGridView();
             this.venProblemHistoryData = new System.Windows.Forms.DataGridView();
             this.venModifyClientData = new System.Windows.Forms.DataGridView();
             this.mainPan = new System.Windows.Forms.Panel();
             this.headPan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.venViewData)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.venSerData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.venRemData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.venProblemHistoryData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.venModifyClientData)).BeginInit();
@@ -135,15 +133,6 @@ namespace CitiSoft
             this.venViewData.Size = new System.Drawing.Size(240, 150);
             this.venViewData.TabIndex = 0;
             // 
-            // venSerData
-            // 
-            this.venSerData.ColumnHeadersHeight = 46;
-            this.venSerData.Location = new System.Drawing.Point(0, 0);
-            this.venSerData.Name = "venSerData";
-            this.venSerData.RowHeadersWidth = 82;
-            this.venSerData.Size = new System.Drawing.Size(240, 150);
-            this.venSerData.TabIndex = 0;
-            // 
             // venRemData
             // 
             this.venRemData.ColumnHeadersHeight = 46;
@@ -197,7 +186,6 @@ namespace CitiSoft
             this.Text = "CitiSoft";
             this.headPan.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.venViewData)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.venSerData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.venRemData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.venProblemHistoryData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.venModifyClientData)).EndInit();
@@ -213,7 +201,6 @@ namespace CitiSoft
         private System.Windows.Forms.Button maximizeBtn;
         private System.Windows.Forms.Button minimizeBtn;
         protected System.Windows.Forms.DataGridView venViewData;
-        protected System.Windows.Forms.DataGridView venSerData;
         protected System.Windows.Forms.DataGridView venRemData;
         protected System.Windows.Forms.DataGridView venProblemHistoryData;
         protected System.Windows.Forms.DataGridView venModifyClientData;
