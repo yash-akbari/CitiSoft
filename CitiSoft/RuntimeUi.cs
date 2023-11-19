@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Data.SqlClient;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace CitiSoft
 {
@@ -14,27 +10,37 @@ namespace CitiSoft
     {
 
         Label setMenu = new Label();
-        Label venMenu = new Label();
-        Label softMenu = new Label();
         Label notiMenu = new Label();
 
 
+
+
+
+        /// <VendorMenu>
+        Label venMenu = new Label();
+        Panel venPan = new Panel();
         TabControl venTabControl = new TabControl();
         TabPage viewParentTabPage = new TabPage();
         TabPage modifyParentTabPage = new TabPage();
 
-        TabControl venViewChildTabControl = new TabControl(); 
+        TabControl venViewChildTabControl = new TabControl();
         TabPage viewTabPage = new TabPage();
         TabPage searchTabPage = new TabPage();
-        TabPage venProblemHistory = new TabPage();
+        TabPage clientProblemHistory = new TabPage();
 
         TabControl venModifyChildTabControl = new TabControl();
         TabPage addVendorTabPage = new TabPage();
         TabPage venRemind = new TabPage();
-        TabPage venModifyClient = new TabPage();
+        /// </VendorMenu>
+
+        /// <ClientMenu>
+        Label clientMenu = new Label();
+        Panel clientPan = new Panel();
+        TabControl clientTabControl = new TabControl();
+        TabPage modifyClientTabPage = new TabPage();
+        /// </ClientMenu>
 
 
-        Panel venPan = new Panel();
         Panel userProfilePanel;
 
 
@@ -54,7 +60,13 @@ namespace CitiSoft
             venMenu.TabIndex = 1;
             venMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             venMenu.Click += venMenu_Click;
-            venPanFunc();
+
+            menuPan.Controls.Add(venMenu);
+
+            mainPan.Controls.Add(venPan);
+
+            venPan.Dock = System.Windows.Forms.DockStyle.Fill;
+            venPan.Name = "venPan";
         }
 
         void venMenu_Click(object sender, EventArgs e)
@@ -62,22 +74,10 @@ namespace CitiSoft
             panSelector("venPan");
         }
 
-        public void venPanFunc()
-        {
-            //
-            // venPan
-            //
-            venPan.Dock = System.Windows.Forms.DockStyle.Fill;
-            venPan.Name = "venPan";
-        }
         public void venTabControlFunc()
-        {   // 
-            // venTabControl
-            //
+        {
             venTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            venTabControl.BackColor = System.Drawing.Color.Red;
-            venTabControl.Name = "venTab";
-            venTabControl.SelectedIndex = 0;
+            venTabControl.Name = "venTabControl";
             venTabControl.Controls.Add(viewParentTabPage);
             venTabControl.Controls.Add(modifyParentTabPage);
             venPan.Controls.Add(venTabControl);
@@ -85,9 +85,6 @@ namespace CitiSoft
 
         public void viewParentTabPageFunc()
         {
-            // 
-            // viewParentTabPage
-            //
             viewParentTabPage.Dock = System.Windows.Forms.DockStyle.Fill;
             viewParentTabPage.Name = "viewParentTabPage";
             viewParentTabPage.Text = "View";
@@ -98,9 +95,6 @@ namespace CitiSoft
 
         public void modifyParentTabPageFunc()
         {
-            // 
-            // venViewTab
-            //
             modifyParentTabPage.Dock = System.Windows.Forms.DockStyle.Fill;
             modifyParentTabPage.Name = "modifyParentTabPage";
             modifyParentTabPage.Text = "Modify";
@@ -110,26 +104,31 @@ namespace CitiSoft
 
         public void viewTabPageFunc()
         {
-            // 
-            // viewTabPage
-            // 
             viewTabPage.Name = "viewTabPage";
             viewTabPage.Text = "View Vendor";
             vendorView venView = new vendorView();
-            AddForm(venView,viewTabPage);
-            
+            AddForm(venView, viewTabPage);
         }
+
+
+        public void addVendorTabPageFunc()
+        {
+            addVendorTabPage.Name = "addVendorTabPage";
+            addVendorTabPage.Text = "Add Vendor";
+            venModifyChildTabControl.Controls.Add(addVendorTabPage);
+            vendorAdd add = new vendorAdd();
+            AddForm(add, addVendorTabPage);
+        }
+
+
+
         public void searchTabPageFunc()
         {
-            // 
-            // searchTabPage
-            // 
             searchTabPage.Name = "searchTabPage";
             searchTabPage.Text = "Search";
-            searchTabPage.UseVisualStyleBackColor = true;
             venViewChildTabControl.Controls.Add(searchTabPage);
             vendorSearch venSearch = new vendorSearch();
-            AddForm(venSearch,searchTabPage);
+            AddForm(venSearch, searchTabPage);
         }
 
         public void venReminderFunc()
@@ -164,55 +163,80 @@ namespace CitiSoft
             dataBinding(Variables.citiSoftDatabaseConnectionString, "SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo", venRemData);
         }
 
-        public void venProblemHistoryFunc()
-        {
-            venProblemHistory.Location = new System.Drawing.Point(4, 22);
-            venProblemHistory.Name = "venProblemHistory";
-            venProblemHistory.Padding = new System.Windows.Forms.Padding(3);
-            venProblemHistory.Size = new System.Drawing.Size(610, 666);
-            venProblemHistory.TabIndex = 0;
-            venProblemHistory.Text = "Client Problem History";
-            venProblemHistory.UseVisualStyleBackColor = true;
-            venViewChildTabControl.Controls.Add(venProblemHistory);
+        
 
-            ProblemHistoryForm problemHistoryForm = new ProblemHistoryForm();
-            AddForm(problemHistoryForm, venProblemHistory);
-        }
-        public void addVendorTabPageFunc()
-        {
-            addVendorTabPage = new TabPage
-            {
-                Location = new System.Drawing.Point(4, 22),
-                Name = "addVendorTabPage",
-                Padding = new System.Windows.Forms.Padding(3),
-                Size = new System.Drawing.Size(610, 666),
-                TabIndex = 0,
-                Text = "Add Vendor",
-                UseVisualStyleBackColor = true,
-            };
 
-            venViewChildTabControl.Controls.Add(addVendorTabPage);
-            vendorAdd add = new vendorAdd();
-            AddForm(add, addVendorTabPage);
 
+
+
+
+        public void clientMenuFunc()
+        {//Settings Menu
+            clientMenu.Text = "Client";
+            menuPan.Controls.Add(clientMenu);
+            clientMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            clientMenu.Location = new System.Drawing.Point(0, menuYLoc);
+            menuYLoc = menuYLoc + 50;
+            clientMenu.Size = new System.Drawing.Size(200, 50);
+            clientMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            clientMenu.Click += clientMenu_Click;
+
+            mainPan.Controls.Add(clientPan);
+
+
+            clientPan.Dock = System.Windows.Forms.DockStyle.Fill;
+            clientPan.Name = "clientPan";
+            clientPan.Controls.Add(clientTabControl);
         }
 
-
-        public void venModifyClientFunc()
+        private void clientMenu_Click(object sender, EventArgs e)
         {
-            venModifyClient.Location = new System.Drawing.Point(4, 22);
-            venModifyClient.Name = "venModifyClient";
-            venModifyClient.Padding = new System.Windows.Forms.Padding(3);
-            venModifyClient.Size = new System.Drawing.Size(610, 666);
-            venModifyClient.TabIndex = 0;
-            venModifyClient.Text = "Modify Client";
-            venModifyClient.UseVisualStyleBackColor = true;
-            venViewChildTabControl.Controls.Add(venModifyClient);
+            panSelector("clientPan");
+        }
+
+        void clientTabControlFunc()
+        {
+            clientTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            clientTabControl.Name = "clientTabControl";
+        }
+
+        public void modifyClientTabPageFunc()
+        {
+            clientTabControl.Controls.Add(modifyClientTabPage);
+            modifyClientTabPage.Location = new System.Drawing.Point(4, 22);
+            modifyClientTabPage.Name = "modifyClientTabPage";
+            modifyClientTabPage.Padding = new System.Windows.Forms.Padding(3);
+            modifyClientTabPage.Size = new System.Drawing.Size(610, 666);
+            modifyClientTabPage.TabIndex = 0;
+            modifyClientTabPage.Text = "Modify Client";
+            modifyClientTabPage.UseVisualStyleBackColor = true;
 
             ModifyClientForm modifyClientForm = new ModifyClientForm();
-            AddForm(modifyClientForm, venModifyClient);
-
+            AddForm(modifyClientForm, modifyClientTabPage);
         }
+        public void clientProblemHistoryFunc()
+        {
+            clientProblemHistory.Location = new System.Drawing.Point(4, 22);
+            clientProblemHistory.Name = "clientProblemHistory";
+            clientProblemHistory.Padding = new System.Windows.Forms.Padding(3);
+            clientProblemHistory.Size = new System.Drawing.Size(610, 666);
+            clientProblemHistory.TabIndex = 0;
+            clientProblemHistory.Text = "Client Problem History";
+            clientProblemHistory.UseVisualStyleBackColor = true;
+            clientTabControl.Controls.Add(clientProblemHistory);
+
+            ProblemHistoryForm problemHistoryForm = new ProblemHistoryForm();
+            AddForm(problemHistoryForm, clientProblemHistory);
+        }
+
+
+
+
+
+
+
+
+
 
         // adds the form inside the tab
         public static void AddForm(Form form, TabPage page)
@@ -236,14 +260,7 @@ namespace CitiSoft
             };
         }
 
-
-
-
-
-
-
-
-        public void panSelector(String panName) 
+        public void panSelector(String panName)
         {
             foreach (Control con in mainPan.Controls) //will iterate through each controls added in mainPan
             {
@@ -279,29 +296,15 @@ namespace CitiSoft
             panSelector("userProfileMenu");
         }
 
-
-        public void softMenuFunc()
-        {//Software Menu
-            softMenu.Text = "Software";
-            menuPan.Controls.Add(softMenu);
-            softMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            softMenu.Location = new System.Drawing.Point(0, menuYLoc);
-            menuYLoc = menuYLoc + 50;
-            softMenu.Size = new System.Drawing.Size(200, 50);
-            softMenu.TabIndex = 1;
-            softMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        }
-        
         public void notiMenuFunc()
         {//notification Menu
-            
+
             notiMenu.Text = "Notifications";
             menuPan.Controls.Add(notiMenu);
             notiMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             notiMenu.Location = new System.Drawing.Point(0, menuYLoc);
             menuYLoc = menuYLoc + 50;
             notiMenu.Size = new System.Drawing.Size(200, 50);
-            notiMenu.TabIndex = 1;
             notiMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         }
 
@@ -313,7 +316,6 @@ namespace CitiSoft
             setMenu.Location = new System.Drawing.Point(0, menuYLoc);
             menuYLoc = menuYLoc + 50;
             setMenu.Size = new System.Drawing.Size(200, 50);
-            setMenu.TabIndex = 1;
             setMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         }
 
@@ -369,7 +371,7 @@ namespace CitiSoft
             }
         }
 
-       
+
         public RuntimeUI()
         {
 
@@ -386,9 +388,8 @@ namespace CitiSoft
                     // not visible
                     break;
                 case 2:
-                    mainPan.Controls.Add(venPan);
-                    
-                    menuPan.Controls.Add(venMenu);
+
+
                     venMenuFunc();
                     venTabControlFunc();
                     viewParentTabPageFunc();
@@ -397,8 +398,11 @@ namespace CitiSoft
                     searchTabPageFunc();
                     addVendorTabPageFunc();
                     venReminderFunc();
-                    venProblemHistoryFunc();
-                    venModifyClientFunc();
+                    clientProblemHistoryFunc();
+                    clientMenuFunc();
+                    clientTabControlFunc();
+                    modifyClientTabPageFunc();
+
                     // visible
                     break;
                 case 3:
@@ -412,13 +416,6 @@ namespace CitiSoft
                     // Add , Deletable, Editable, Visible
                     break;
             }
-
-        }
-
-        
-
-        void CitiSoft_Load(object sender, EventArgs e)
-        {
 
         }
     }
