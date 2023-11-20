@@ -30,6 +30,9 @@ namespace CitiSoft
 
         TabControl venModifyChildTabControl = new TabControl();
         TabPage addVendorTabPage = new TabPage();
+        TabPage addSoftwareTabPage = new TabPage();
+        TabPage modifyVendorTabPage = new TabPage();
+
         TabPage venRemind = new TabPage();
         /// </VendorMenu>
 
@@ -45,7 +48,7 @@ namespace CitiSoft
         int menuYLoc = 0;
 
 
-
+      
         public void venMenuFunc()
         {// Vendor Menu
             venMenu.Text = "Vendor";
@@ -108,18 +111,6 @@ namespace CitiSoft
             AddForm(venView, viewVendorTabPage);
         }
 
-
-        public void addVendorTabPageFunc()
-        {
-            addVendorTabPage.Name = "addVendorTabPage";
-            addVendorTabPage.Text = "Add Vendor";
-            venModifyChildTabControl.Controls.Add(addVendorTabPage);
-            addVendor add = new addVendor();
-            AddForm(add, addVendorTabPage);
-        }
-
-
-
         public void searchVendorTabPageFunc()
         {
             searchVendorTabPage.Name = "searchVendorTabPage";
@@ -129,12 +120,34 @@ namespace CitiSoft
             AddForm(venSearch, searchVendorTabPage);
         }
 
+
+        public void addVendorTabPageFunc()
+        {
+            addVendorTabPage.Name = "addVendorTabPage";
+            addVendorTabPage.Text = "Add Vendor";
+            addVendor addVen = new addVendor();
+            AddForm(addVen, addVendorTabPage);
+            venModifyChildTabControl.Controls.Add(addVendorTabPage);
+        }
+
+        public void addSoftwareTabPageFunc()
+        {
+            addSoftwareTabPage.Name = "addSoftwareTabPage";
+            addSoftwareTabPage.Text = "Add Software";
+            addSoftware addSoft = new addSoftware();
+            AddForm(addSoft, addSoftwareTabPage);
+            venModifyChildTabControl.Controls.Add(addSoftwareTabPage);
+        }
+
+
+
+
+
         public void venReminderFunc()
         {
             // 
             // venRemind
             // 
-
             venRemind.Location = new System.Drawing.Point(4, 22);
             venRemind.Name = "venRemind";
             venRemind.Padding = new System.Windows.Forms.Padding(3);
@@ -395,6 +408,7 @@ namespace CitiSoft
                     modifyParentTabPageFunc();
                     searchVendorTabPageFunc();
                     addVendorTabPageFunc();
+                    addSoftwareTabPageFunc();
                     venReminderFunc();
                     clientProblemHistoryFunc();
                     clientMenuFunc();

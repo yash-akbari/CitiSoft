@@ -9,6 +9,7 @@ namespace CitiSoft
 {
     public partial class addVendor : Form 
     {
+
         Label companyNameLabel = new Label();
         TextBox companyNameTextBox = new TextBox();
         
@@ -25,8 +26,7 @@ namespace CitiSoft
         TextBox emailTextBox = new TextBox();
         Label telephoneLabel = new Label();
         TextBox telephoneTextBox = new TextBox();
-        ListBox addressListBox = new ListBox();
-        Button addAddressButton = new Button();
+        CustomListBox addressCustomListBox = new CustomListBox();
         Label employeesLabel = new Label();
         TextBox employeesTextBox = new TextBox();
         Label internalServicesLabel = new Label();
@@ -49,9 +49,9 @@ namespace CitiSoft
 
         void InitializeComponent() 
         {
-            
+            AutoScroll = true;
 
-            addAddressButton.Text = "Add Address";
+            
 
             internalServicesComboBox.Items.Add("Yes");
             internalServicesComboBox.Items.Add("No");
@@ -60,8 +60,8 @@ namespace CitiSoft
             Controls.AddRange(new Control[]
             {
                 companyNameLabel, companyNameTextBox,
-                companyEstablishedLabel, companyEstablishedTextBox,addressListBox,
-                streetLabel,streetTextBox,addAddressButton,
+                companyEstablishedLabel, companyEstablishedTextBox,addressCustomListBox,
+                streetLabel,streetTextBox,
                 cityLabel, cityTextBox,
                 countryLabel, countryTextBox,
                 emailLabel, emailTextBox,
@@ -76,8 +76,8 @@ namespace CitiSoft
             string[] venControlVarName = new string[]
             {
                 "companyNameLabel", "companyNameTextBox",
-                "companyEstablishedLabel", "companyEstablishedTextBox", "addressListBox",
-                "streetLabel","streetTextBox","addAddressButton" ,
+                "companyEstablishedLabel", "companyEstablishedTextBox", "addressCustomListBox",
+                "streetLabel","streetTextBox",
                 "cityLabel", "cityTextBox",
                 "countryLabel", "countryTextBox",
                 "emailLabel", "emailTextBox",
@@ -104,7 +104,7 @@ namespace CitiSoft
                 "Document to attach?",
             };
             int venAddxLoc = 10;
-            int venAddyLoc = 20;
+            int venAddyLoc = 11;
             int venAddHeight = 30;
             int venAddWidth = 200;
             int i = 0, j = 0;
@@ -129,22 +129,12 @@ namespace CitiSoft
                     con.Top = venAddyLoc;
                     venAddyLoc = venAddyLoc + 120;
                 }
-                else if (con is ListBox)
+                else if (con is CustomListBox)
                 {
-                    con.Width = venAddWidth;
-                    con.Height = venAddHeight + 100;
-
+                    //addressCustomListBox.listBox.Size=
                     con.Left = venAddxLoc + 210 + 100 + 210;
                     con.Top = venAddyLoc;
-                    venAddyLoc = venAddyLoc;
-                }
-                else if (con.Name is "addAddressButton")
-                {
-                    con.Width = venAddWidth;
-                    con.Height = venAddHeight;
-
-                    con.Left = venAddxLoc + 210 + 100 + 210;
-                    con.Top = venAddyLoc+90;
+                    
                 }
                 else
                 {
@@ -158,8 +148,7 @@ namespace CitiSoft
 
             }
             submitButton.Click += new EventHandler(submitButton_click);
-            addressListBox.SelectedIndexChanged += new EventHandler(addressListToAddressText);
-            addAddressButton.Click += new EventHandler(addAddressButton_click);
+           
         }
 
         private void addressListToAddressText(object sender, EventArgs e)
@@ -193,7 +182,7 @@ namespace CitiSoft
                     phone[phone.Length - 1] = con.Text;
             }
 
-            addressListBox.Items.Add(street[street.Length - 1] + ", " + city[city.Length - 1] + ", " + country[country.Length - 1] + ", " + email[email.Length - 1] + ", " + phone[phone.Length - 1]);
+            //addressListBox.Items.Add(street[street.Length - 1] + ", " + city[city.Length - 1] + ", " + country[country.Length - 1] + ", " + email[email.Length - 1] + ", " + phone[phone.Length - 1]);
 
         }
         public void submitButton_click(object sender, EventArgs e)

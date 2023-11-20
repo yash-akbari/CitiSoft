@@ -9,7 +9,10 @@ namespace CitiSoft
 {
     internal class addSoftware : Form
     {
-        public addSoftware() { }
+        public addSoftware() 
+        {
+            InitializeComponents();
+        }
 
         Label softwareNameLabel = new Label();
         TextBox softwareNameTextBox = new TextBox();
@@ -22,23 +25,19 @@ namespace CitiSoft
 
         Label typeOfSoftwareLabel = new Label();
         TextBox typeOfSoftwareTextBox = new TextBox();
-        ListBox typeOfSoftwareListBox = new ListBox();
-        Button typeOfSoftwareButton = new Button();
+        CustomListBox typeOfSoftwareCustomListBox = new CustomListBox();
 
         Label businessAreasLabel = new Label();
         TextBox businessAreasTextBox = new TextBox();
-        ListBox businessAreasListBox = new ListBox();
-        Button businessAreasButton = new Button();
+        CustomListBox buisenessAreasCustomListBox = new CustomListBox();
 
         Label modulesLabel = new Label();
         TextBox modulesTextBox = new TextBox();
-        ListBox modulesListBox = new ListBox();
-        Button modulesButton = new Button();
+        CustomListBox modulesCustomListBox = new CustomListBox();
 
         Label financialServicesLabel = new Label();
         TextBox financialServicesTextBox = new TextBox();
-        ListBox financialServicesListBox = new ListBox();
-        Button financialServicesButton = new Button();
+        CustomListBox financialServicesCustomListBox = new CustomListBox();
 
         Label cloudLabel = new Label();
         ComboBox cloudComboBox = new ComboBox();
@@ -48,25 +47,26 @@ namespace CitiSoft
 
         private void InitializeComponents()
         {
+            AutoScroll = true;
             Controls.AddRange(new Control[] {
                 softwareNameLabel, softwareNameTextBox,
                 companyWebsiteLabel, companyWebsiteTextBox,
-                typeOfSoftwareLabel, typeOfSoftwareTextBox, typeOfSoftwareListBox, typeOfSoftwareButton,
+                typeOfSoftwareLabel, typeOfSoftwareTextBox, typeOfSoftwareCustomListBox,
                 descriptionLabel, descriptionRichTextBox,
-                businessAreasLabel, businessAreasTextBox, businessAreasListBox, businessAreasButton,
-                modulesLabel, modulesTextBox, modulesListBox,modulesButton,
-                financialServicesLabel, financialServicesTextBox, financialServicesListBox, financialServicesButton,
+                businessAreasLabel, businessAreasTextBox, buisenessAreasCustomListBox,
+                modulesLabel, modulesTextBox, modulesCustomListBox,
+                financialServicesLabel, financialServicesTextBox, financialServicesCustomListBox,
                 cloudLabel, cloudComboBox,
                 additionalInfoLabel, additionalInfoRichTextBox,
                 });
             string[] softControlVarName = new string[] {
                 "softwareNameLabel", "softwareNameTextBox",
                 "companyWebsiteLabel", "companyWebsiteTextBox",
-                "typeOfSoftwareLabel", "typeOfSoftwareTextBox", "typeOfSoftwareListBox", "typeOfSoftwareButton",
+                "typeOfSoftwareLabel", "typeOfSoftwareTextBox", "typeOfSoftwareCustomListBox",
                 "descriptionLabel", "descriptionRichTextBox",
-                "businessAreasLabel", "businessAreasTextBox", "businessAreasListBox", "businessAreasButton",
-                "modulesLabel", "modulesTextBox", "modulesListBox", "modulesButton",
-                "financialServicesLabel", "financialServicesTextBox", "financialServicesListBox", "financialServicesButton",
+                "businessAreasLabel", "businessAreasTextBox", "buisenessAreasCustomListBox",
+                "modulesLabel", "modulesTextBox", "modulesCustomListBox",
+                "financialServicesLabel", "financialServicesTextBox", "financialServicesCustomListBox",
                 "cloudLabel", "cloudComboBox",
                 "additionalInfoLabel", "additionalInfoRichTextBox",
             };
@@ -74,23 +74,24 @@ namespace CitiSoft
             {
                 "Software Name:",
                 "Company Website:",
-                "Type of Software:", "Add Type",
+                "Type of Software:",
                 "Description:",
-                "Business Areas:", "Add Areas",
-                "Modules:", "Add Modules",
-                "Financial Services Client Types:", "Add Type",
+                "Business Areas:",
+                "Modules:",
+                "Financial Services Client Types:",
                 "Cloud (Enabled/Native/Based):",
                 "Additional Information:",
 
             };
+            
             int softAddxLoc = 10;
             int softAddyLoc = 11;
-            int softAddHeight = 21;
+            int softAddHeight = 30;
             int softAddWidth = 200;
             int i = 0, j = 0;
             foreach (Control con in Controls)
             {
-                con.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                con.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                 con.Name = softControlVarName.ElementAt(i++);
                 if (con is Label)
                 {
@@ -103,31 +104,22 @@ namespace CitiSoft
                 else if (con is RichTextBox)
                 {
                     con.Width = softAddWidth + 100;
-                    con.Height = softAddHeight + 80;
+                    con.Height = softAddHeight + 60;
 
                     con.Left = softAddxLoc + 210;
                     con.Top = softAddyLoc;
-                    softAddyLoc = softAddyLoc + 120;
+                    softAddyLoc = softAddyLoc + 100;
                 }
-                else if (con is ListBox)
+                else if (con is CustomListBox)
                 {
-                    con.Width = softAddWidth;
-                    con.Height = softAddHeight + 80;
+                    //con.Width = softAddWidth;
+                    //con.Height = softAddHeight + 60;
 
-                    con.Left = softAddxLoc + 210 + 100 + 210;
-                    con.Top = softAddyLoc + 80;
-
+                    con.Left = softAddxLoc + 530;
+                    con.Top = softAddyLoc-50;
+                    softAddyLoc = softAddyLoc + 60;
                 }
-                else if (con is Button)
-                {
-                    con.Text = softControlText[j++];
 
-                    con.Width = softAddWidth-150;
-                    con.Height = softAddHeight;
-
-                    con.Left = softAddxLoc + 210 + 100 + 210+ 180;
-                    con.Top = softAddyLoc;
-                }
                 else
                 {
                     con.Width = softAddWidth + 100;
@@ -135,10 +127,11 @@ namespace CitiSoft
 
                     con.Left = softAddxLoc + 210;
                     con.Top = softAddyLoc;
-                    softAddyLoc = softAddyLoc + 30;
+                    softAddyLoc = softAddyLoc + 50;
                 }
 
             }
+            
 
         }
     }
