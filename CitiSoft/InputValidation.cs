@@ -227,10 +227,10 @@ namespace CitiSoft
                         int exists = (int)command.ExecuteScalar();
                         return exists > 0;
                     }
-                    catch (SqlException ex)
+                    catch (SqlException)
                     {
                         // Handle exceptions as appropriate for your application
-                        MessageBox.Show("An error occurred accessing the database: " + ex.Message);
+                        MessageBox.Show("An error occurred accessing the database");
                         return false;
                     }
                 }

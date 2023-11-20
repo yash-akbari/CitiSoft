@@ -73,10 +73,10 @@ namespace CitiSoft
                         }
                     }
                 }
-                catch (SqlException ex)
+                catch (SqlException)
                 {
                     transaction.Rollback(); // Rollback on error
-                    MessageBox.Show("An error occurred while adding the problem: " + ex.Message);
+                    MessageBox.Show("An error occurred while adding the problem");
                 }
             }
         }
@@ -144,10 +144,10 @@ namespace CitiSoft
                         }
                     }
                 }
-                catch (SqlException ex)
+                catch (SqlException)
                 {
                     transaction.Rollback(); // Rollback on error
-                    MessageBox.Show("An error occurred while finishing the problem: " + ex.Message);
+                    MessageBox.Show("An error occurred while finishing the problem");
                 }
             }
         }
@@ -190,10 +190,10 @@ namespace CitiSoft
                         int rowsAffected = command.ExecuteNonQuery();
                     }
                 }
-                catch (SqlException ex)
+                catch (SqlException)
                 {
                     transaction.Rollback(); // Rollback on error
-                    MessageBox.Show("An error occurred while updating the Last review date: " + ex.Message);
+                    MessageBox.Show("An error occurred while updating the Last review date");
                 }
             }
         }
@@ -202,6 +202,11 @@ namespace CitiSoft
         private void viewAllProblemsBtn_Click(object sender, EventArgs e)
         {
             RuntimeUI.dataBinding(Variables.functionalityConnectionString, "SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid;", ProblemHistoryDgv);
+        }
+
+        private void ProblemHistoryForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

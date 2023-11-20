@@ -54,7 +54,7 @@ namespace CitiSoft
             // 
             // updateClientBtn
             // 
-            this.updateClientBtn.Location = new System.Drawing.Point(1256, 545);
+            this.updateClientBtn.Location = new System.Drawing.Point(1580, 515);
             this.updateClientBtn.Name = "updateClientBtn";
             this.updateClientBtn.Size = new System.Drawing.Size(139, 50);
             this.updateClientBtn.TabIndex = 0;
@@ -64,7 +64,7 @@ namespace CitiSoft
             // 
             // deleteClientBtn
             // 
-            this.deleteClientBtn.Location = new System.Drawing.Point(1256, 704);
+            this.deleteClientBtn.Location = new System.Drawing.Point(1580, 674);
             this.deleteClientBtn.Name = "deleteClientBtn";
             this.deleteClientBtn.Size = new System.Drawing.Size(139, 44);
             this.deleteClientBtn.TabIndex = 1;
@@ -77,19 +77,18 @@ namespace CitiSoft
             this.ModifyClientDgv.AllowUserToAddRows = false;
             this.ModifyClientDgv.AllowUserToDeleteRows = false;
             this.ModifyClientDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ModifyClientDgv.Location = new System.Drawing.Point(12, 12);
+            this.ModifyClientDgv.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ModifyClientDgv.Location = new System.Drawing.Point(0, 0);
             this.ModifyClientDgv.Name = "ModifyClientDgv";
             this.ModifyClientDgv.ReadOnly = true;
             this.ModifyClientDgv.RowHeadersWidth = 82;
             this.ModifyClientDgv.RowTemplate.Height = 33;
-            this.ModifyClientDgv.Size = new System.Drawing.Size(909, 1243);
+            this.ModifyClientDgv.Size = new System.Drawing.Size(1072, 1284);
             this.ModifyClientDgv.TabIndex = 2;
-            RuntimeUI.dataBinding(Variables.functionalityConnectionString, "SELECT Client.cid AS 'Client ID', compName AS 'Company name', phone AS 'Phone', email AS 'Email', Street, City, Cointry AS 'Country'\r\nFROM Client\r\nJOIN CustAddress\r\n  ON Client.cid=CustAddress.cid;", ModifyClientDgv);
-
             // 
             // clientIDTxtBox
             // 
-            this.clientIDTxtBox.Location = new System.Drawing.Point(1120, 57);
+            this.clientIDTxtBox.Location = new System.Drawing.Point(1444, 27);
             this.clientIDTxtBox.Name = "clientIDTxtBox";
             this.clientIDTxtBox.Size = new System.Drawing.Size(275, 31);
             this.clientIDTxtBox.TabIndex = 3;
@@ -97,7 +96,7 @@ namespace CitiSoft
             // 
             // companyNameTxtBox
             // 
-            this.companyNameTxtBox.Location = new System.Drawing.Point(1120, 120);
+            this.companyNameTxtBox.Location = new System.Drawing.Point(1444, 90);
             this.companyNameTxtBox.Name = "companyNameTxtBox";
             this.companyNameTxtBox.Size = new System.Drawing.Size(275, 31);
             this.companyNameTxtBox.TabIndex = 4;
@@ -105,7 +104,7 @@ namespace CitiSoft
             // 
             // countryTxtBox
             // 
-            this.countryTxtBox.Location = new System.Drawing.Point(1120, 484);
+            this.countryTxtBox.Location = new System.Drawing.Point(1444, 454);
             this.countryTxtBox.Name = "countryTxtBox";
             this.countryTxtBox.Size = new System.Drawing.Size(275, 31);
             this.countryTxtBox.TabIndex = 5;
@@ -113,7 +112,7 @@ namespace CitiSoft
             // 
             // cityTxtBox
             // 
-            this.cityTxtBox.Location = new System.Drawing.Point(1120, 413);
+            this.cityTxtBox.Location = new System.Drawing.Point(1444, 383);
             this.cityTxtBox.Name = "cityTxtBox";
             this.cityTxtBox.Size = new System.Drawing.Size(275, 31);
             this.cityTxtBox.TabIndex = 6;
@@ -121,7 +120,7 @@ namespace CitiSoft
             // 
             // streetTxtBox
             // 
-            this.streetTxtBox.Location = new System.Drawing.Point(1120, 335);
+            this.streetTxtBox.Location = new System.Drawing.Point(1444, 305);
             this.streetTxtBox.Name = "streetTxtBox";
             this.streetTxtBox.Size = new System.Drawing.Size(275, 31);
             this.streetTxtBox.TabIndex = 7;
@@ -129,7 +128,7 @@ namespace CitiSoft
             // 
             // emailTxtBox
             // 
-            this.emailTxtBox.Location = new System.Drawing.Point(1120, 261);
+            this.emailTxtBox.Location = new System.Drawing.Point(1444, 231);
             this.emailTxtBox.Name = "emailTxtBox";
             this.emailTxtBox.Size = new System.Drawing.Size(275, 31);
             this.emailTxtBox.TabIndex = 8;
@@ -137,7 +136,7 @@ namespace CitiSoft
             // 
             // phoneTxtBox
             // 
-            this.phoneTxtBox.Location = new System.Drawing.Point(1120, 186);
+            this.phoneTxtBox.Location = new System.Drawing.Point(1444, 156);
             this.phoneTxtBox.Name = "phoneTxtBox";
             this.phoneTxtBox.Size = new System.Drawing.Size(275, 31);
             this.phoneTxtBox.TabIndex = 9;
@@ -146,7 +145,7 @@ namespace CitiSoft
             // idLabel
             // 
             this.idLabel.AutoSize = true;
-            this.idLabel.Location = new System.Drawing.Point(949, 57);
+            this.idLabel.Location = new System.Drawing.Point(1273, 27);
             this.idLabel.Name = "idLabel";
             this.idLabel.Size = new System.Drawing.Size(90, 25);
             this.idLabel.TabIndex = 10;
@@ -155,7 +154,7 @@ namespace CitiSoft
             // phoneLabel
             // 
             this.phoneLabel.AutoSize = true;
-            this.phoneLabel.Location = new System.Drawing.Point(949, 192);
+            this.phoneLabel.Location = new System.Drawing.Point(1273, 162);
             this.phoneLabel.Name = "phoneLabel";
             this.phoneLabel.Size = new System.Drawing.Size(74, 25);
             this.phoneLabel.TabIndex = 12;
@@ -164,7 +163,7 @@ namespace CitiSoft
             // emailLabel
             // 
             this.emailLabel.AutoSize = true;
-            this.emailLabel.Location = new System.Drawing.Point(949, 267);
+            this.emailLabel.Location = new System.Drawing.Point(1273, 237);
             this.emailLabel.Name = "emailLabel";
             this.emailLabel.Size = new System.Drawing.Size(65, 25);
             this.emailLabel.TabIndex = 13;
@@ -173,7 +172,7 @@ namespace CitiSoft
             // cityLabel
             // 
             this.cityLabel.AutoSize = true;
-            this.cityLabel.Location = new System.Drawing.Point(949, 416);
+            this.cityLabel.Location = new System.Drawing.Point(1273, 386);
             this.cityLabel.Name = "cityLabel";
             this.cityLabel.Size = new System.Drawing.Size(49, 25);
             this.cityLabel.TabIndex = 15;
@@ -182,7 +181,7 @@ namespace CitiSoft
             // countryLabel
             // 
             this.countryLabel.AutoSize = true;
-            this.countryLabel.Location = new System.Drawing.Point(949, 490);
+            this.countryLabel.Location = new System.Drawing.Point(1273, 460);
             this.countryLabel.Name = "countryLabel";
             this.countryLabel.Size = new System.Drawing.Size(87, 25);
             this.countryLabel.TabIndex = 16;
@@ -191,7 +190,7 @@ namespace CitiSoft
             // companyNameLabel
             // 
             this.companyNameLabel.AutoSize = true;
-            this.companyNameLabel.Location = new System.Drawing.Point(949, 120);
+            this.companyNameLabel.Location = new System.Drawing.Point(1273, 90);
             this.companyNameLabel.Name = "companyNameLabel";
             this.companyNameLabel.Size = new System.Drawing.Size(165, 25);
             this.companyNameLabel.TabIndex = 11;
@@ -200,7 +199,7 @@ namespace CitiSoft
             // streetLabel
             // 
             this.streetLabel.AutoSize = true;
-            this.streetLabel.Location = new System.Drawing.Point(949, 341);
+            this.streetLabel.Location = new System.Drawing.Point(1273, 311);
             this.streetLabel.Name = "streetLabel";
             this.streetLabel.Size = new System.Drawing.Size(69, 25);
             this.streetLabel.TabIndex = 14;
@@ -208,7 +207,7 @@ namespace CitiSoft
             // 
             // deleteIDTextBox
             // 
-            this.deleteIDTextBox.Location = new System.Drawing.Point(1256, 650);
+            this.deleteIDTextBox.Location = new System.Drawing.Point(1580, 620);
             this.deleteIDTextBox.Name = "deleteIDTextBox";
             this.deleteIDTextBox.Size = new System.Drawing.Size(135, 31);
             this.deleteIDTextBox.TabIndex = 17;
@@ -217,7 +216,7 @@ namespace CitiSoft
             // clientIDLabel
             // 
             this.clientIDLabel.AutoSize = true;
-            this.clientIDLabel.Location = new System.Drawing.Point(1100, 656);
+            this.clientIDLabel.Location = new System.Drawing.Point(1424, 626);
             this.clientIDLabel.Name = "clientIDLabel";
             this.clientIDLabel.Size = new System.Drawing.Size(90, 25);
             this.clientIDLabel.TabIndex = 18;
@@ -227,7 +226,7 @@ namespace CitiSoft
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1515, 1284);
+            this.ClientSize = new System.Drawing.Size(1865, 1284);
             this.Controls.Add(this.clientIDLabel);
             this.Controls.Add(this.deleteIDTextBox);
             this.Controls.Add(this.countryLabel);
@@ -250,8 +249,10 @@ namespace CitiSoft
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.AutoScroll = true;
             this.Name = "ModifyClientForm";
             this.Text = "Modify Client";
+            this.Load += new System.EventHandler(this.ModifyClientForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ModifyClientDgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
