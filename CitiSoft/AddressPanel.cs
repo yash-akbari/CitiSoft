@@ -1,12 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace CitiSoft
 {
+
+    public class AddressList {
+
+        public String AddressLine1 { get; set; }
+        public String AddressLine2 { get; set; }
+        public String City { get; set; }
+        public String Country { get; set; }
+        public String PostCode { get; set; }
+        public String Email { get; set; }
+        public String Phone { get; set; }
+    }
+
     public partial class AddressPanel : Panel
     {
         Label addressLine1Label = new Label();
@@ -32,7 +46,9 @@ namespace CitiSoft
 
         CustomListBox addressCustomListBox = new CustomListBox();
 
+        List<AddressList> addressList = new List<AddressList>();
 
+        int index = 0;
 
 
 
@@ -114,35 +130,132 @@ namespace CitiSoft
             cityTextBox.TextChanged += CityTextBox_TextChanged;
             countryTextBox.TextChanged += CountryTextBox_TextChanged;
             postCodeTextBox.TextChanged += PostCodeTextBox_TextChanged;
-            emailTextBox.TextChanged += EmailTextBox_TextChanged;
+            emailTextBox.Leave += EmailTextBox_Leave;
             telephoneTextBox.TextChanged += TelephoneTextBox_TextChanged;
             addressCustomListBox.add.Click += Add_Click;
             addressCustomListBox.remove.Click += Remove_Click;
             addressCustomListBox.clear.Click += Clear_Click;
+            addressCustomListBox.update.Click += Update_Click;
+            addressCustomListBox.listBox.SelectedIndexChanged += ListBox_SelectedIndexChanged;
 
         }
 
-        private void Clear_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+        
 
-        private void Remove_Click(object sender, EventArgs e)
+        private void ListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            
+            if (addressCustomListBox.listBox.SelectedItem != null)
+            {
+                index= addressCustomListBox.listBox.SelectedIndex;
+                AddressList instance = addressList[index] as AddressList;
+                addressLine1TextBox.Text = instance.AddressLine1;
+                addressLine2TextBox.Text = instance.AddressLine2;
+                cityTextBox.Text = instance.City;
+                countryTextBox.Text = instance.Country;
+                postCodeTextBox.Text = instance.PostCode;
+                emailTextBox .Text = instance.Email;
+                telephoneTextBox.Text = instance.Phone;
+                addressCustomListBox.add.Visible = false;
+                addressCustomListBox.update.Visible = true;
+                addressCustomListBox.clear.Visible = false;
+                
+            }
+
         }
 
         private void Add_Click(object sender, EventArgs e)
         {
-            String address = "";
-            String[] addressTobeSend = new String[20];
-            foreach (TextBox tb in Controls)
+            if (addressLine1TextBox.Text.Trim() != "" || addressLine2TextBox.Text.Trim() != "" || cityTextBox.Text.Trim() != "" || countryTextBox.Text.Trim() != "" || postCodeTextBox.Text.Trim() != "" || emailTextBox.Text.Trim() != "" || telephoneTextBox.Text.Trim() != "")
             {
-                address = address + tb.Text;
-                //addressTobeSend = addressTobeSend
+                addressList.Add(new AddressList
+                {
+                    AddressLine1 = addressLine1TextBox.Text,
+                    AddressLine2 = addressLine2TextBox.Text,
+                    City = cityTextBox.Text,
+                    Country = countryTextBox.Text,
+                    PostCode = postCodeTextBox.Text,
+                    Email = emailTextBox.Text,
+                    Phone = telephoneTextBox.Text
+                });
+                foreach (Control con in Controls)
+                {
+                    if (con is TextBox)
+                    {
+                        con.Text = "";
+                    }
+                }
+                AddressList instance = addressList[addressList.Count - 1] as AddressList;
+                addressCustomListBox.listBox.Items.Add(instance.AddressLine1 + " " + instance.AddressLine2 + " " + instance.City + " " + instance.Country + " " + instance.PostCode + " " + instance.Email + " " + instance.Phone);
             }
-            addressCustomListBox.listBox.Items.Add("");
+            else
+            {
+                MessageBox.Show("Empty Textboxes.");
+            }
         }
+
+        private void Clear_Click(object sender, EventArgs e)
+        {
+            foreach (Control con in Controls)
+            {
+                if (con is TextBox)
+                {
+                    con.Text = "";
+                }
+            }
+        }
+
+        private void Remove_Click(object sender, EventArgs e)
+        {
+            addressCustomListBox.listBox.Items.RemoveAt(index);
+            addressList.RemoveAt(index);
+            addressCustomListBox.add.Visible = true;
+            addressCustomListBox.update.Visible = false;
+            addressCustomListBox.clear.Visible = true;
+            foreach (Control con in Controls)
+            {
+                if (con is TextBox)
+                {
+                    con.Text = "";
+                }
+            }
+        }
+
+        private void Update_Click(object sender, EventArgs e)
+        {
+            if (addressLine1TextBox.Text.Trim() != "" || addressLine2TextBox.Text.Trim() != "" || cityTextBox.Text.Trim() != "" || countryTextBox.Text.Trim() != "" || postCodeTextBox.Text.Trim() != "" || emailTextBox.Text.Trim() != "" || telephoneTextBox.Text.Trim() != "")
+            {
+                addressList[index]=(new AddressList
+                {
+                    AddressLine1 = addressLine1TextBox.Text,
+                    AddressLine2 = addressLine2TextBox.Text,
+                    City = cityTextBox.Text,
+                    Country = countryTextBox.Text,
+                    PostCode = postCodeTextBox.Text,
+                    Email = emailTextBox.Text,
+                    Phone = telephoneTextBox.Text
+                });
+                foreach (Control con in Controls)
+                {
+                    if (con is TextBox)
+                    {
+                        con.Text = "";
+                    }
+                }
+                AddressList instance = addressList[index] as AddressList;
+                addressCustomListBox.listBox.Items.RemoveAt(index);
+                addressCustomListBox.listBox.Items.Insert(index,(instance.AddressLine1 + " " + instance.AddressLine2 + " " + instance.City + " " + instance.Country + " " + instance.PostCode + " " + instance.Email + " " + instance.Phone));
+                addressCustomListBox.add.Visible = true;
+                addressCustomListBox.update.Visible = false;
+                addressCustomListBox.clear.Visible = true;
+                
+            }
+            else
+            {
+                MessageBox.Show("Empty Textboxes.");
+            }
+        }
+
 
         private void AddressLine1TextBox_TextChanged(object sender, EventArgs e)
         {
@@ -174,10 +287,23 @@ namespace CitiSoft
             InputValidation.IsOnlyAlphanumericOrWithDots(textBox, 12, "PostCode");
         }
 
-        private void EmailTextBox_TextChanged(object sender, EventArgs e)
+        private void EmailTextBox_Leave(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.IsValidEmail(textBox.Text);
+            if (textBox.Text != " " && !string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                // checks for length
+                if (textBox.Text.Length > 30)
+                {
+                    MessageBox.Show("Email is too long.");
+                    textBox.Focus();
+                }
+                if (textBox != null && !InputValidation.IsValidEmail(textBox.Text))
+                {
+                    MessageBox.Show("Invalid email format.");
+                    textBox.Focus();
+                }
+            }
         }
 
         private void TelephoneTextBox_TextChanged(object sender, EventArgs e)

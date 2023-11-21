@@ -102,9 +102,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddressPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="AddressPanel.cs" />
     <Compile Include="addSoftware.cs">
       <SubType>Form</SubType>
     </Compile>
