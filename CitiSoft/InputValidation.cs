@@ -86,6 +86,62 @@ namespace CitiSoft
             }
         }
 
+        public static void IsOnlyAlphanumericWithDashAt(TextBox textBox, int length, string name)
+        {
+            if (textBox != null)
+            {
+                string input = textBox.Text;
+                // checks for length
+                if (input.Length > length)
+                {
+                    MessageBox.Show($"{name} address is too long");
+                    AutoCorrection(textBox, input);
+                }
+                else
+                {
+                    foreach (char c in input)
+                    {
+                        if (!char.IsLetterOrDigit(c) && c != ' ' && c != '-' && c != '@') // Allow letters, spaces, numbers, dash and at(@)
+                        {
+                            // Show a message or handle the invalid character
+                            MessageBox.Show("Only letters, spaces, numbers,  dash and at(@) are allowed.");
+                            AutoCorrection(textBox, input);
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void IsOnlyAlphanumericWithDash(TextBox textBox, int length, string name)
+        {
+            if (textBox != null)
+            {
+                string input = textBox.Text;
+                // checks for length
+                if (input.Length > length)
+                {
+                    MessageBox.Show($"{name} address is too long");
+                    AutoCorrection(textBox, input);
+                }
+                else
+                {
+                    foreach (char c in input)
+                    {
+                        if (!char.IsLetterOrDigit(c) && c != ' ' && c != '-') // Allow letters, spaces, numbers and dash
+                        {
+                            // Show a message or handle the invalid character
+                            MessageBox.Show("Only letters, spaces, numbers and dash are allowed.");
+                            AutoCorrection(textBox, input);
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         public static void IsOnlyAlphanumericOrWithDots(TextBox textBox, int length, string name)
         {
             if (textBox != null)

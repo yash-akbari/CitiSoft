@@ -134,7 +134,7 @@ namespace CitiSoft
             telephoneTextBox.TextChanged += TelephoneTextBox_TextChanged;
             addressCustomListBox.add.Click += Add_Click;
             addressCustomListBox.remove.Click += Remove_Click;
-            addressCustomListBox.clear.Click += Clear_Click;
+            addressCustomListBox.reset.Click += Reset_Click;
             addressCustomListBox.update.Click += Update_Click;
             addressCustomListBox.listBox.SelectedIndexChanged += ListBox_SelectedIndexChanged;
 
@@ -158,7 +158,7 @@ namespace CitiSoft
                 telephoneTextBox.Text = instance.Phone;
                 addressCustomListBox.add.Visible = false;
                 addressCustomListBox.update.Visible = true;
-                addressCustomListBox.clear.Visible = false;
+                addressCustomListBox.reset.Visible = false;
                 
             }
 
@@ -194,7 +194,7 @@ namespace CitiSoft
             }
         }
 
-        private void Clear_Click(object sender, EventArgs e)
+        private void Reset_Click(object sender, EventArgs e)
         {
             foreach (Control con in Controls)
             {
@@ -211,7 +211,7 @@ namespace CitiSoft
             addressList.RemoveAt(index);
             addressCustomListBox.add.Visible = true;
             addressCustomListBox.update.Visible = false;
-            addressCustomListBox.clear.Visible = true;
+            addressCustomListBox.reset.Visible = true;
             foreach (Control con in Controls)
             {
                 if (con is TextBox)
@@ -247,7 +247,7 @@ namespace CitiSoft
                 addressCustomListBox.listBox.Items.Insert(index,(instance.AddressLine1 + " " + instance.AddressLine2 + " " + instance.City + " " + instance.Country + " " + instance.PostCode + " " + instance.Email + " " + instance.Phone));
                 addressCustomListBox.add.Visible = true;
                 addressCustomListBox.update.Visible = false;
-                addressCustomListBox.clear.Visible = true;
+                addressCustomListBox.reset.Visible = true;
                 
             }
             else
@@ -311,8 +311,5 @@ namespace CitiSoft
             TextBox textBox = sender as TextBox;
             InputValidation.IsPhoneNumberStructured(textBox,14,"Phone Number");
         }
-
-
-
     }
 }

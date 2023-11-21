@@ -106,9 +106,7 @@
     <Compile Include="addSoftware.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="addVendor.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="addVendor.cs" />
     <Compile Include="CustomListBox.cs">
       <SubType>Component</SubType>
     </Compile>

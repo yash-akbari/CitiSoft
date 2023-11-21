@@ -7,6 +7,19 @@ using System.Windows.Forms;
 
 namespace CitiSoft
 {
+    public class addVenVar 
+    {
+        public String CompanyName { get; set; }
+        public String CompanyEstablished { get; set; }
+        public int  Employees { get; set; }
+        public bool internalServices { get; set; }
+        public String lastDemoDate { get; set; }
+        public String lastReviewInt { get; set; }
+        public String lastReviewedDate { get; set;}
+
+
+
+    }
     public partial class addVendor : Form 
     {
 
@@ -17,18 +30,25 @@ namespace CitiSoft
         TextBox companyEstablishedTextBox = new TextBox();
         
         AddressPanel addressPanel = new AddressPanel();
+
         Label employeesLabel = new Label();
         TextBox employeesTextBox = new TextBox();
+
         Label internalServicesLabel = new Label();
         ComboBox internalServicesComboBox = new ComboBox();
+
         Label lastDemoDateLabel = new Label();
         DateTimePicker lastDemoDatePicker = new DateTimePicker();
+
         Label lastReviewIntLabel = new Label();
-        TextBox lastReviewIntText = new TextBox();
+        TextBox lastReviewIntTextBox = new TextBox();
+
         Label lastReviewedDateLabel = new Label();
         DateTimePicker lastReviewedDatePicker = new DateTimePicker();
+
         Label docAttachLabel = new Label();
         Button docAttachBrowseButton= new Button();
+
         Button submitButton = new Button(); 
 
 
@@ -52,6 +72,7 @@ namespace CitiSoft
                 employeesLabel, employeesTextBox,
                 internalServicesLabel, internalServicesComboBox,
                 lastDemoDateLabel, lastDemoDatePicker,
+                lastReviewIntLabel,lastReviewIntTextBox,
                 lastReviewedDateLabel, lastReviewedDatePicker,
                 docAttachLabel, docAttachBrowseButton,
                 submitButton
@@ -64,6 +85,7 @@ namespace CitiSoft
                 "employeesLabel", "employeesTextBox",
                 "internalServicesLabel", "internalServicesComboBox",
                 "lastDemoDateLabel", "lastDemoDatePicker",
+                "lastReviewIntLabel","lastReviewIntTextBox",
                 "lastReviewedDateLabel", "lastReviewedDatePicker",
                 "docAttachLabel", "docAttachBrowseButton",
                 "submitButton"
@@ -74,6 +96,7 @@ namespace CitiSoft
                 "No. of Employees:",
                 "Internal Professional Services:",
                 "Last Demo Date:",
+                "Last Reviewe Date Interval:",
                 "Last Reviewed Date:",
                 "Document to attach?",
             };
@@ -122,59 +145,56 @@ namespace CitiSoft
             submitButton.Click += new EventHandler(submitButton_click);
             companyNameTextBox.TextChanged += CompanyNameTextBox_TextChanged;
             companyEstablishedTextBox.TextChanged += CompanyEstablishedTextBox_TextChanged;
+            employeesTextBox.TextChanged += EmployeesTextBox_TextChanged;
+            internalServicesComboBox.SelectedIndexChanged += InternalServicesComboBox_SelectedIndexChanged;
+            lastDemoDatePicker.Leave += LastDemoDatePicker_Leave;
+            lastReviewIntTextBox.TextChanged += LastReviewIntTextBox_TextChanged;
+            lastReviewedDatePicker.Leave += LastReviewedDatePicker_Leave;
                 
+
+        }
+
+        private void LastReviewedDatePicker_Leave(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void LastReviewIntTextBox_TextChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void LastDemoDatePicker_Leave(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void InternalServicesComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void EmployeesTextBox_TextChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsOnlyAlphanumericWithDash(textBox,15,"Employees Number");
         }
+
 
 
         private void CompanyEstablishedTextBox_TextChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsOnlyNumbers(textBox);
         }
 
         private void CompanyNameTextBox_TextChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsOnlyAlphanumericWithDashAt(textBox, 20, "Company Name");
         }
 
-        private void addressListToAddressText(object sender, EventArgs e)
-        {
 
-        }
-        private void addAddressButton_click(object sender, EventArgs e)
-        {
-            string[] controls = {"streetTextBox",
-                "cityTextBox",
-                "countryTextBox",
-                "emailTextBox",
-                "telephoneTextBox"};
-
-            string[] street = new string[20];
-            string[] city = new string[20];
-            string[] country = new string[20];
-            string[] email = new string[20];
-            string[] phone = new string[20];
-            foreach (Control con in Controls)
-            {
-                if (con.Name == "streetTextBox")
-                    street[street.Length - 1] = con.Text;
-                else if (con.Name == "cityTextBox")
-                    city[city.Length - 1] = con.Text;
-                else if (con.Name == "countryTextBox")
-                    country[country.Length - 1] = con.Text;
-                else if (con.Name == "emailTextBox")
-                    email[email.Length - 1] = con.Text;
-                else if (con.Name == "phoneTextBox")
-                    phone[phone.Length - 1] = con.Text;
-            }
-
-            //addressListBox.Items.Add(street[street.Length - 1] + ", " + city[city.Length - 1] + ", " + country[country.Length - 1] + ", " + email[email.Length - 1] + ", " + phone[phone.Length - 1]);
-
-        }
         public void submitButton_click(object sender, EventArgs e)
         {
             // Assuming 'venAdd' contains TextBox controls with appropriate names
