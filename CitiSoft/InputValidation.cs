@@ -114,6 +114,37 @@ namespace CitiSoft
             }
         }
 
+
+
+        public static void IsOnlyAlphanumericWithSpaceDashComma(TextBox textBox, int length, string name)
+        {
+            if (textBox != null)
+            {
+                string input = textBox.Text;
+                // checks for length
+                if (input.Length > length)
+                {
+                    MessageBox.Show($"{name} address is too long");
+                    AutoCorrection(textBox, input);
+                }
+                else
+                {
+                    foreach (char c in input)
+                    {
+                        if (!char.IsLetterOrDigit(c) && c != ' ' && c != '.' && c != ',' && c != '-' ) // Allow letters, spaces, numbers,commas, dots and dash                        {
+                        {    // Show a message or handle the invalid character
+                            MessageBox.Show("Only letters, spaces, numbers,commas, dots and dash are allowed.");
+                            AutoCorrection(textBox, input);
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+
+
         // checks if the text is email structured
         public static bool IsValidEmail(string email)
         {

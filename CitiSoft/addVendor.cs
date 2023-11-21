@@ -16,17 +16,7 @@ namespace CitiSoft
         Label companyEstablishedLabel = new Label();
         TextBox companyEstablishedTextBox = new TextBox();
         
-        Label streetLabel = new Label();
-        TextBox streetTextBox = new TextBox();
-        Label cityLabel = new Label();
-        TextBox cityTextBox = new TextBox();
-        Label countryLabel = new Label();
-        TextBox countryTextBox = new TextBox();
-        Label emailLabel = new Label();
-        TextBox emailTextBox = new TextBox();
-        Label telephoneLabel = new Label();
-        TextBox telephoneTextBox = new TextBox();
-        CustomListBox addressCustomListBox = new CustomListBox();
+        AddressPanel addressPanel = new AddressPanel();
         Label employeesLabel = new Label();
         TextBox employeesTextBox = new TextBox();
         Label internalServicesLabel = new Label();
@@ -38,7 +28,7 @@ namespace CitiSoft
         Label lastReviewedDateLabel = new Label();
         DateTimePicker lastReviewedDatePicker = new DateTimePicker();
         Label docAttachLabel = new Label();
-        ComboBox docAttachComboBox = new ComboBox();
+        Button docAttachBrowseButton= new Button();
         Button submitButton = new Button(); 
 
 
@@ -50,9 +40,6 @@ namespace CitiSoft
         void InitializeComponent() 
         {
             AutoScroll = true;
-
-            
-
             internalServicesComboBox.Items.Add("Yes");
             internalServicesComboBox.Items.Add("No");
             submitButton.Text = "Submit";
@@ -60,43 +47,30 @@ namespace CitiSoft
             Controls.AddRange(new Control[]
             {
                 companyNameLabel, companyNameTextBox,
-                companyEstablishedLabel, companyEstablishedTextBox,addressCustomListBox,
-                streetLabel,streetTextBox,
-                cityLabel, cityTextBox,
-                countryLabel, countryTextBox,
-                emailLabel, emailTextBox,
-                telephoneLabel, telephoneTextBox,
+                companyEstablishedLabel, companyEstablishedTextBox,
+                addressPanel,
                 employeesLabel, employeesTextBox,
                 internalServicesLabel, internalServicesComboBox,
                 lastDemoDateLabel, lastDemoDatePicker,
                 lastReviewedDateLabel, lastReviewedDatePicker,
-                docAttachLabel, docAttachComboBox,
+                docAttachLabel, docAttachBrowseButton,
                 submitButton
             });
             string[] venControlVarName = new string[]
             {
                 "companyNameLabel", "companyNameTextBox",
-                "companyEstablishedLabel", "companyEstablishedTextBox", "addressCustomListBox",
-                "streetLabel","streetTextBox",
-                "cityLabel", "cityTextBox",
-                "countryLabel", "countryTextBox",
-                "emailLabel", "emailTextBox",
-                "telephoneLabel", "telephoneTextBox",
+                "companyEstablishedLabel", "companyEstablishedTextBox",
+                "addressPanel",
                 "employeesLabel", "employeesTextBox",
                 "internalServicesLabel", "internalServicesComboBox",
                 "lastDemoDateLabel", "lastDemoDatePicker",
                 "lastReviewedDateLabel", "lastReviewedDatePicker",
-                "docAttachLabel", "docAttachComboBox",
+                "docAttachLabel", "docAttachBrowseButton",
                 "submitButton"
             };
             string[] venControlText = new string[]
             {   "Company Name:",
                 "Company Established:",
-                "Street:",
-                "City:",
-                "Country:",
-                "Email address:",
-                "Telephone No.:",
                 "No. of Employees:",
                 "Internal Professional Services:",
                 "Last Demo Date:",
@@ -129,12 +103,11 @@ namespace CitiSoft
                     con.Top = venAddyLoc;
                     venAddyLoc = venAddyLoc + 120;
                 }
-                else if (con is CustomListBox)
+                else if (con is AddressPanel)
                 {
-                    //addressCustomListBox.listBox.Size=
-                    con.Left = venAddxLoc + 210 + 100 + 210;
+                    con.Left = venAddxLoc;
                     con.Top = venAddyLoc;
-                    
+                    venAddyLoc = venAddyLoc + 350;
                 }
                 else
                 {
@@ -145,10 +118,27 @@ namespace CitiSoft
                     con.Top = venAddyLoc;
                     venAddyLoc = venAddyLoc + 50;
                 }
-
             }
             submitButton.Click += new EventHandler(submitButton_click);
-           
+            companyNameTextBox.TextChanged += CompanyNameTextBox_TextChanged;
+            companyEstablishedTextBox.TextChanged += CompanyEstablishedTextBox_TextChanged;
+                
+        }
+
+        private void EmployeesTextBox_TextChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        private void CompanyEstablishedTextBox_TextChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CompanyNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void addressListToAddressText(object sender, EventArgs e)

@@ -44,7 +44,6 @@ namespace CitiSoft
         /// </ClientMenu>
 
         Panel userProfilePanel;
-
         int menuYLoc = 0;
 
 
@@ -428,6 +427,19 @@ namespace CitiSoft
                     // Add , Deletable, Editable, Visible
                     break;
             }
+
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // RuntimeUI
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.ClientSize = new System.Drawing.Size(820, 572);
+            this.Name = "RuntimeUI";
+            this.ResumeLayout(false);
 
         }
     }
