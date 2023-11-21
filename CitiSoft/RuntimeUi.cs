@@ -303,7 +303,12 @@ namespace CitiSoft
         }
         void UserProfileMenu_Click(object sender, EventArgs e)
         {
-            panSelector("userProfileMenu");
+            // В RuntimeUI.cs
+
+            
+                UserProfileForm userProfileForm = new UserProfileForm();
+                userProfileForm.Show(); 
+                panSelector("userProfileMenu");
         }
 
         public void notiMenuFunc()

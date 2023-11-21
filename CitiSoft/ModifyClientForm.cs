@@ -104,10 +104,10 @@ namespace CitiSoft
                         }
                     }
                 }
-                catch (SqlException ex)
+                catch (SqlException)
                 {
                     transaction.Rollback(); // Rollback on error
-                    MessageBox.Show("An error occurred while updating the client: " + ex.Message);
+                    MessageBox.Show("An error occurred while updating the client");
                 }
             }
         }
@@ -144,10 +144,10 @@ namespace CitiSoft
                         }
                     }
                 }
-                catch (SqlException ex)
+                catch (SqlException)
                 {
                     transaction.Rollback(); // Rollback on error
-                    MessageBox.Show("An error occurred while deleting the client: " + ex.Message);
+                    MessageBox.Show("An error occurred while deleting the client");
                 }
             }
         }
@@ -211,6 +211,11 @@ namespace CitiSoft
         {
             TextBox textBox = sender as TextBox;
             InputValidation.IsOnlyNumbers(textBox);
+        }
+
+        private void ModifyClientForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

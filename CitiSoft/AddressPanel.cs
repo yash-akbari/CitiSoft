@@ -139,7 +139,7 @@ namespace CitiSoft
             foreach (TextBox tb in Controls)
             {
                 address = address + tb.Text;
-                addressTobeSend
+                //addressTobeSend = addressTobeSend
             }
             addressCustomListBox.listBox.Items.Add("");
         }

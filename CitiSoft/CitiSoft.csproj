@@ -145,6 +145,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserProfileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserProfileForm.Designer.cs">
+      <DependentUpon>UserProfileForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Variables.cs" />
     <Compile Include="searchVendor.cs">
       <SubType>Form</SubType>
@@ -158,6 +164,9 @@
     <EmbeddedResource Include="ModifyClientForm.resx">
       <DependentUpon>ModifyClientForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ProblemHistoryForm.resx">
+      <DependentUpon>ProblemHistoryForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -170,9 +179,6 @@
     </Compile>
     <EmbeddedResource Include="ReminderForm.resx">
       <DependentUpon>ReminderForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RuntimeUi.resx">
-      <DependentUpon>RuntimeUi.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
