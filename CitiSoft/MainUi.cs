@@ -7,14 +7,13 @@ using System.Windows.Forms;
     
 namespace CitiSoft
 {
-    public partial class CitiSoft : Form
+    public partial class MainUI : Form
     {
         int menuYLoc = 0;
-        public CitiSoft()
+        public MainUI()
         {
             
             InitializeComponent();
-            tblSelector(2);
 
             //reminderTimer.Interval = 60000; // Check every minute
             //reminderTimer.Tick += ReminderTimer_Tick;
@@ -57,31 +56,6 @@ namespace CitiSoft
         }
 
         private List<Reminder> reminders = new List<Reminder>();
-
-        private void btnAddReminder_Click(object sender, EventArgs e)
-        {
-            ReminderForm reminderForm = new ReminderForm();
-            if (reminderForm.ShowDialog() == DialogResult.OK)
-            {
-                reminders.Add(new Reminder { Message = reminderForm.Message, Date = reminderForm.Date });
-                venVieData.DataSource = null;
-                venVieData.DataSource = reminders;
-            }
-        }
-        private void ReminderTimer_Tick(object sender, EventArgs e)
-        {
-            DateTime now = DateTime.Now;
-            foreach (var reminder in reminders)
-            {
-                if (reminder.Date <= now)
-                {
-                    MessageBox.Show("Reminder: " + reminder.Message);
-                    reminders.Remove(reminder);
-                    venVieData.DataSource = null;
-                    venVieData.DataSource = reminders;
-                    break; // Only show one reminder per tick
-                }
-            }
-        }
+        
     }
 }

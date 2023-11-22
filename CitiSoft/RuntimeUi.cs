@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace CitiSoft
 {
-    public partial class CitiSoft : Form
+    public partial class RuntimeUI : MainUI
     {
 
         private System.Windows.Forms.Label setMenu = new System.Windows.Forms.Label();
@@ -21,7 +21,10 @@ namespace CitiSoft
         private System.Windows.Forms.ComboBox venFilCombo = new System.Windows.Forms.ComboBox();
         private System.Windows.Forms.Button venSerBtn = new System.Windows.Forms.Button();
         private System.Windows.Forms.TextBox venSerTex = new System.Windows.Forms.TextBox();
+
         private System.Windows.Forms.Panel venPan = new System.Windows.Forms.Panel();
+
+        int menuYLoc = 0;
 
        
 
@@ -209,6 +212,11 @@ namespace CitiSoft
             venSerTex.Size = new System.Drawing.Size(409, 23);
             venSerTex.TabIndex = 0;
         }
+        public RuntimeUI() 
+        {
+            tblSelector(2);
+        }
+
         public void tblSelector(int val)
         {
             switch (val)
@@ -242,6 +250,50 @@ namespace CitiSoft
             }
 
         }
+       /* private void AccessButton_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(_vendorDocsGridView.Text, out int vendorId))
+            {
+                var docPath = _manager.AccessVendorDocs(vendorId);
+                if (docPath != null)
+                {
+                    _statusLabel.Text = $"Document Path: {docPath}";
+                }
+                else
+                {
+                    _statusLabel.Text = "Document not found!";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid Vendor ID!");
+            }
+        }
+
+        private void RemoveButton_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(_vendorDocsGridView.Text, out int vendorId))
+            {
+                if (_manager.RemoveVendorDocs(vendorId))
+                {
+                    _statusLabel.Text = "Document removed successfully!";
+                }
+                else
+                {
+                    _statusLabel.Text = "Failed to remove document!";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid Vendor ID!");
+            }
+        }*/
+
+        private void _statusLabel_Click(object sender, EventArgs e)
+        {
+
+        }
 
     }
 }
+

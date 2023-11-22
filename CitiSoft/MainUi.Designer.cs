@@ -2,7 +2,7 @@
 
 namespace CitiSoft
 {
-    partial class CitiSoft
+    partial class MainUI
     {
         /// <summary>
         /// Required designer variable.
@@ -38,14 +38,9 @@ namespace CitiSoft
             this.venViewData = new System.Windows.Forms.DataGridView();
             this.venSerData = new System.Windows.Forms.DataGridView();
             this.mainPan = new System.Windows.Forms.Panel();
-            this.btnAddReminder = new System.Windows.Forms.Button();
-            this.venVieData = new System.Windows.Forms.DataGridView();
             this.headPan.SuspendLayout();
-            this.menuPan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.venViewData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.venSerData)).BeginInit();
-            this.mainPan.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.venVieData)).BeginInit();
             this.SuspendLayout();
             // 
             // headPan
@@ -60,9 +55,8 @@ namespace CitiSoft
             this.headPan.Dock = System.Windows.Forms.DockStyle.Top;
             this.headPan.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.headPan.Location = new System.Drawing.Point(0, 0);
-            this.headPan.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.headPan.Name = "headPan";
-            this.headPan.Size = new System.Drawing.Size(1640, 246);
+            this.headPan.Size = new System.Drawing.Size(820, 128);
             this.headPan.TabIndex = 0;
             this.headPan.MouseDown += new System.Windows.Forms.MouseEventHandler(this.headPan_MouseDown);
             // 
@@ -73,10 +67,9 @@ namespace CitiSoft
             this.minimizeBtn.Cursor = System.Windows.Forms.Cursors.Default;
             this.minimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.minimizeBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.minimizeBtn.Location = new System.Drawing.Point(1404, 23);
-            this.minimizeBtn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.minimizeBtn.Location = new System.Drawing.Point(702, 12);
             this.minimizeBtn.Name = "minimizeBtn";
-            this.minimizeBtn.Size = new System.Drawing.Size(44, 44);
+            this.minimizeBtn.Size = new System.Drawing.Size(22, 23);
             this.minimizeBtn.TabIndex = 2;
             this.minimizeBtn.Text = "🗕";
             this.minimizeBtn.UseVisualStyleBackColor = false;
@@ -90,10 +83,9 @@ namespace CitiSoft
             this.maximizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.maximizeBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.maximizeBtn.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.maximizeBtn.Location = new System.Drawing.Point(1460, 23);
-            this.maximizeBtn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.maximizeBtn.Location = new System.Drawing.Point(730, 12);
             this.maximizeBtn.Name = "maximizeBtn";
-            this.maximizeBtn.Size = new System.Drawing.Size(72, 44);
+            this.maximizeBtn.Size = new System.Drawing.Size(36, 23);
             this.maximizeBtn.TabIndex = 1;
             this.maximizeBtn.Text = "🗖";
             this.maximizeBtn.UseVisualStyleBackColor = false;
@@ -107,10 +99,9 @@ namespace CitiSoft
             this.closeBtn.Cursor = System.Windows.Forms.Cursors.Default;
             this.closeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.closeBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.closeBtn.Location = new System.Drawing.Point(1544, 23);
-            this.closeBtn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.closeBtn.Location = new System.Drawing.Point(772, 12);
             this.closeBtn.Name = "closeBtn";
-            this.closeBtn.Size = new System.Drawing.Size(72, 44);
+            this.closeBtn.Size = new System.Drawing.Size(36, 23);
             this.closeBtn.TabIndex = 0;
             this.closeBtn.Text = "X";
             this.closeBtn.UseVisualStyleBackColor = false;
@@ -118,12 +109,10 @@ namespace CitiSoft
             // 
             // menuPan
             // 
-            this.menuPan.Controls.Add(this.btnAddReminder);
             this.menuPan.Dock = System.Windows.Forms.DockStyle.Left;
-            this.menuPan.Location = new System.Drawing.Point(0, 246);
-            this.menuPan.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.menuPan.Location = new System.Drawing.Point(0, 128);
             this.menuPan.Name = "menuPan";
-            this.menuPan.Size = new System.Drawing.Size(404, 1331);
+            this.menuPan.Size = new System.Drawing.Size(202, 444);
             this.menuPan.TabIndex = 1;
             // 
             // venViewData
@@ -146,54 +135,28 @@ namespace CitiSoft
             // 
             // mainPan
             // 
-            this.mainPan.Controls.Add(this.venVieData);
             this.mainPan.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainPan.Location = new System.Drawing.Point(404, 246);
-            this.mainPan.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.mainPan.Location = new System.Drawing.Point(202, 128);
             this.mainPan.Name = "mainPan";
-            this.mainPan.Size = new System.Drawing.Size(1236, 1331);
+            this.mainPan.Size = new System.Drawing.Size(618, 444);
             this.mainPan.TabIndex = 2;
-            // 
-            // btnAddReminder
-            // 
-            this.btnAddReminder.Location = new System.Drawing.Point(106, 47);
-            this.btnAddReminder.Name = "btnAddReminder";
-            this.btnAddReminder.Size = new System.Drawing.Size(192, 54);
-            this.btnAddReminder.TabIndex = 0;
-            this.btnAddReminder.Text = "Add Reminder";
-            this.btnAddReminder.UseVisualStyleBackColor = true;
-            this.btnAddReminder.Click += new System.EventHandler(this.btnAddReminder_Click);
-            // 
-            // venVieData
-            // 
-            this.venVieData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.venVieData.Location = new System.Drawing.Point(65, 56);
-            this.venVieData.Name = "venVieData";
-            this.venVieData.RowHeadersWidth = 82;
-            this.venVieData.RowTemplate.Height = 33;
-            this.venVieData.Size = new System.Drawing.Size(1081, 610);
-            this.venVieData.TabIndex = 0;
             // 
             // CitiSoft
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1640, 1577);
+            this.ClientSize = new System.Drawing.Size(820, 572);
             this.ControlBox = false;
             this.Controls.Add(this.mainPan);
             this.Controls.Add(this.menuPan);
             this.Controls.Add(this.headPan);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.MinimumSize = new System.Drawing.Size(1640, 1577);
+            this.MinimumSize = new System.Drawing.Size(820, 536);
             this.Name = "CitiSoft";
             this.Text = "CitiSoft";
             this.headPan.ResumeLayout(false);
-            this.menuPan.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.venViewData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.venSerData)).EndInit();
-            this.mainPan.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.venVieData)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -202,14 +165,12 @@ namespace CitiSoft
 
         private System.Windows.Forms.Panel headPan;
         private System.Windows.Forms.Button closeBtn;
-        private System.Windows.Forms.Panel menuPan;
+        protected System.Windows.Forms.Panel menuPan;
         private System.Windows.Forms.Button maximizeBtn;
         private System.Windows.Forms.Button minimizeBtn;
-        private System.Windows.Forms.DataGridView venViewData;
-        private System.Windows.Forms.DataGridView venSerData;
-        private Panel mainPan;
-        private Button btnAddReminder;
-        private DataGridView venVieData;
+        protected System.Windows.Forms.DataGridView venViewData;
+        protected System.Windows.Forms.DataGridView venSerData;
+        protected Panel mainPan;
     }
 }
 
