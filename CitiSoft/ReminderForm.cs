@@ -38,6 +38,9 @@ namespace CitiSoft
 
         }
 
+        private void txtMessage_TextChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }

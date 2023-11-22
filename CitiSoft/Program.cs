@@ -19,7 +19,6 @@ namespace CitiSoft
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new RuntimeUI());
-            VendorDocsUI vendorDocsUI = new VendorDocsUI();
         }
 
     }

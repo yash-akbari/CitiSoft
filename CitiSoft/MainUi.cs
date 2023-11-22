@@ -9,7 +9,7 @@ namespace CitiSoft
 {
     public partial class MainUI : Form
     {
-        int menuYLoc = 0;
+        
         public MainUI()
         {
             
@@ -55,7 +55,38 @@ namespace CitiSoft
             SendMessge(this.Handle, 0x112, 0xf012, 0);
         }
 
+
+        private void mainPan_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
         private List<Reminder> reminders = new List<Reminder>();
-        
+
+        private void btnAddReminder_Click(object sender, EventArgs e)
+        {
+            ReminderForm reminderForm = new ReminderForm();
+            if (reminderForm.ShowDialog() == DialogResult.OK)
+            {
+                reminders.Add(new Reminder { Message = reminderForm.Message, Date = reminderForm.Date });
+                venVieData.DataSource = null;
+                venVieData.DataSource = reminders;
+            }
+        }
+        private void ReminderTimer_Tick(object sender, EventArgs e)
+        {
+            DateTime now = DateTime.Now;
+            foreach (var reminder in reminders)
+            {
+                if (reminder.Date <= now)
+                {
+                    MessageBox.Show("Reminder: " + reminder.Message);
+                    reminders.Remove(reminder);
+                    venVieData.DataSource = null;
+                    venVieData.DataSource = reminders;
+                    break; // Only show one reminder per tick
+                }
+            }
+        }
     }
 }

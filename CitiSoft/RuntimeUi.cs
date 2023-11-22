@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace CitiSoft
@@ -10,35 +9,45 @@ namespace CitiSoft
     public partial class RuntimeUI : MainUI
     {
 
-        private System.Windows.Forms.Label setMenu = new System.Windows.Forms.Label();
-        private System.Windows.Forms.Label venMenu = new System.Windows.Forms.Label();
-        private System.Windows.Forms.Label softMenu = new System.Windows.Forms.Label();
-        private System.Windows.Forms.Label notiMenu = new System.Windows.Forms.Label();
-        private System.Windows.Forms.TabControl venTab = new System.Windows.Forms.TabControl();
-        private System.Windows.Forms.TabPage venView = new System.Windows.Forms.TabPage();
-        private System.Windows.Forms.TabPage venSearch = new System.Windows.Forms.TabPage();
-        private System.Windows.Forms.TabPage venAdd = new System.Windows.Forms.TabPage();
-        private System.Windows.Forms.ComboBox venFilCombo = new System.Windows.Forms.ComboBox();
-        private System.Windows.Forms.Button venSerBtn = new System.Windows.Forms.Button();
-        private System.Windows.Forms.TextBox venSerTex = new System.Windows.Forms.TextBox();
+        Label setMenu = new Label();
+        Label notiMenu = new Label();
 
-        private System.Windows.Forms.Panel venPan = new System.Windows.Forms.Panel();
 
+
+
+
+        /// <VendorMenu>
+        Label venMenu = new Label();
+        Panel venPan = new Panel();
+        TabControl venTabControl = new TabControl();
+        TabPage viewParentTabPage = new TabPage();
+        TabPage modifyParentTabPage = new TabPage();
+
+        TabControl venViewChildTabControl = new TabControl();
+        TabPage viewVendorTabPage = new TabPage();
+        TabPage searchVendorTabPage = new TabPage();
+        TabPage clientProblemHistory = new TabPage();
+
+        TabControl venModifyChildTabControl = new TabControl();
+        TabPage addVendorTabPage = new TabPage();
+        TabPage addSoftwareTabPage = new TabPage();
+        TabPage modifyVendorTabPage = new TabPage();
+
+        TabPage venRemind = new TabPage();
+        /// </VendorMenu>
+
+        /// <ClientMenu>
+        Label clientMenu = new Label();
+        Panel clientPan = new Panel();
+        TabControl clientTabControl = new TabControl();
+        TabPage modifyClientTabPage = new TabPage();
+        /// </ClientMenu>
+
+        Panel userProfilePanel;
         int menuYLoc = 0;
 
-       
 
-        public void setMenuFunc()
-        {//Settings Menu
-            setMenu.Text = "Settings";
-            menuPan.Controls.Add(setMenu);
-            setMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            setMenu.Location = new System.Drawing.Point(0, menuYLoc);
-            menuYLoc = menuYLoc + 50;
-            setMenu.Size = new System.Drawing.Size(200, 50);
-            setMenu.TabIndex = 1;
-            setMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        }
+      
         public void venMenuFunc()
         {// Vendor Menu
             venMenu.Text = "Vendor";
@@ -49,168 +58,341 @@ namespace CitiSoft
             venMenu.Size = new System.Drawing.Size(200, 50);
             venMenu.TabIndex = 1;
             venMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            venMenu.Click += venMenu_Click;
+
+            menuPan.Controls.Add(venMenu);
+
+            mainPan.Controls.Add(venPan);
+
+            venPan.Dock = System.Windows.Forms.DockStyle.Fill;
+            venPan.Name = "venPan";
         }
-        public void softMenuFunc()
-        {//Software Menu
-            softMenu.Text = "Software";
-            menuPan.Controls.Add(softMenu);
-            softMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            softMenu.Location = new System.Drawing.Point(0, menuYLoc);
-            menuYLoc = menuYLoc + 50;
-            softMenu.Size = new System.Drawing.Size(200, 50);
-            softMenu.TabIndex = 1;
-            softMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+
+        void venMenu_Click(object sender, EventArgs e)
+        {
+            panSelector("venPan");
         }
+
+        public void venTabControlFunc()
+        {
+            venTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            venTabControl.Name = "venTabControl";
+            venTabControl.Controls.Add(viewParentTabPage);
+            venTabControl.Controls.Add(modifyParentTabPage);
+            venPan.Controls.Add(venTabControl);
+        }
+
+        public void viewParentTabPageFunc()
+        {
+            viewParentTabPage.Dock = System.Windows.Forms.DockStyle.Fill;
+            viewParentTabPage.Name = "viewParentTabPage";
+            viewParentTabPage.Text = "View";
+            venViewChildTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            viewParentTabPage.Controls.Add(venViewChildTabControl);
+        }
+
+
+        public void modifyParentTabPageFunc()
+        {
+            modifyParentTabPage.Dock = System.Windows.Forms.DockStyle.Fill;
+            modifyParentTabPage.Name = "modifyParentTabPage";
+            modifyParentTabPage.Text = "Modify";
+            venModifyChildTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            modifyParentTabPage.Controls.Add(venModifyChildTabControl);
+        }
+
+        public void viewVendorTabPageFunc()
+        {
+            venViewChildTabControl.Controls.Add(viewVendorTabPage);
+            viewVendorTabPage.Name = "viewVendorTabPage";
+            viewVendorTabPage.Text = "View Vendor";
+            viewVendor venView = new viewVendor();
+            AddForm(venView, viewVendorTabPage);
+        }
+
+        public void searchVendorTabPageFunc()
+        {
+            searchVendorTabPage.Name = "searchVendorTabPage";
+            searchVendorTabPage.Text = "Search";
+            venViewChildTabControl.Controls.Add(searchVendorTabPage);
+            searchVendor venSearch = new searchVendor();
+            AddForm(venSearch, searchVendorTabPage);
+        }
+
+
+        public void addVendorTabPageFunc()
+        {
+            addVendorTabPage.Name = "addVendorTabPage";
+            addVendorTabPage.Text = "Add Vendor";
+            addVendor addVen = new addVendor();
+            AddForm(addVen, addVendorTabPage);
+            venModifyChildTabControl.Controls.Add(addVendorTabPage);
+        }
+
+        public void addSoftwareTabPageFunc()
+        {
+            addSoftwareTabPage.Name = "addSoftwareTabPage";
+            addSoftwareTabPage.Text = "Add Software";
+            addSoftware addSoft = new addSoftware();
+            AddForm(addSoft, addSoftwareTabPage);
+            venModifyChildTabControl.Controls.Add(addSoftwareTabPage);
+        }
+
+
+
+
+
+        public void venReminderFunc()
+        {
+            // 
+            // venRemind
+            // 
+            venRemind.Location = new System.Drawing.Point(4, 22);
+            venRemind.Name = "venRemind";
+            venRemind.Padding = new System.Windows.Forms.Padding(3);
+            venRemind.Size = new System.Drawing.Size(610, 666);
+            venRemind.TabIndex = 0;
+            venRemind.Text = "Remind";
+            venRemind.UseVisualStyleBackColor = true;
+            venRemind.Controls.Add(venRemData);
+            venViewChildTabControl.Controls.Add(venRemind);
+
+            // 
+            // venRemData
+            // 
+
+            venRemData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            venRemData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            venRemData.Location = new System.Drawing.Point(3, 3);
+            venRemData.Name = "venRemData";
+            venRemData.Size = new System.Drawing.Size(604, 660);
+            venRemData.TabIndex = 0;
+
+            dataBinding(Variables.citiSoftDatabaseConnectionString, "SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo", venRemData);
+        }
+
         
+
+
+
+
+
+
+        public void clientMenuFunc()
+        {//Settings Menu
+            clientMenu.Text = "Client";
+            menuPan.Controls.Add(clientMenu);
+            clientMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            clientMenu.Location = new System.Drawing.Point(0, menuYLoc);
+            menuYLoc = menuYLoc + 50;
+            clientMenu.Size = new System.Drawing.Size(200, 50);
+            clientMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            clientMenu.Click += clientMenu_Click;
+
+            mainPan.Controls.Add(clientPan);
+
+
+            clientPan.Dock = System.Windows.Forms.DockStyle.Fill;
+            clientPan.Name = "clientPan";
+            clientPan.Controls.Add(clientTabControl);
+        }
+
+        private void clientMenu_Click(object sender, EventArgs e)
+        {
+            panSelector("clientPan");
+        }
+
+        void clientTabControlFunc()
+        {
+            clientTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            clientTabControl.Name = "clientTabControl";
+        }
+
+        public void modifyClientTabPageFunc()
+        {
+            clientTabControl.Controls.Add(modifyClientTabPage);
+            modifyClientTabPage.Location = new System.Drawing.Point(4, 22);
+            modifyClientTabPage.Name = "modifyClientTabPage";
+            modifyClientTabPage.Padding = new System.Windows.Forms.Padding(3);
+            modifyClientTabPage.Size = new System.Drawing.Size(610, 666);
+            modifyClientTabPage.TabIndex = 0;
+            modifyClientTabPage.Text = "Modify Client";
+            modifyClientTabPage.UseVisualStyleBackColor = true;
+
+            ModifyClientForm modifyClientForm = new ModifyClientForm();
+            AddForm(modifyClientForm, modifyClientTabPage);
+        }
+        public void clientProblemHistoryFunc()
+        {
+            clientProblemHistory.Location = new System.Drawing.Point(4, 22);
+            clientProblemHistory.Name = "clientProblemHistory";
+            clientProblemHistory.Padding = new System.Windows.Forms.Padding(3);
+            clientProblemHistory.Size = new System.Drawing.Size(610, 666);
+            clientProblemHistory.TabIndex = 0;
+            clientProblemHistory.Text = "Client Problem History";
+            clientProblemHistory.UseVisualStyleBackColor = true;
+            clientTabControl.Controls.Add(clientProblemHistory);
+
+            ProblemHistoryForm problemHistoryForm = new ProblemHistoryForm();
+            AddForm(problemHistoryForm, clientProblemHistory);
+        }
+
+
+
+
+
+
+
+
+
+
+        // adds the form inside the tab
+        public static void AddForm(Form form, TabPage page)
+        {
+            form.TopLevel = false;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.Dock = DockStyle.Fill;
+            page.Controls.Add(form);
+            form.Show();
+        }
+
+        void InitializeUserProfilePanel()
+        {
+            userProfilePanel = new Panel
+            {
+                // Set properties according to your layout needs
+                Size = new Size(600, 400),
+                Location = new Point(200, 50), // Adjust the location as needed
+                BorderStyle = BorderStyle.FixedSingle,
+                Visible = false // Start as hidden
+            };
+        }
+
+        public void panSelector(String panName)
+        {
+            foreach (Control con in mainPan.Controls) //will iterate through each controls added in mainPan
+            {
+                if (con.Name == panName)
+                {
+                    con.Visible = true;
+                }
+                else
+                {
+                    con.Visible = false;
+                }
+            }
+        }
+
+
+        void UserProfileMenuFunc()
+        {
+            // Create the User Profile menu label
+            var userProfileMenu = new Label
+            {
+                Text = "User Profile",
+                Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0))),
+                Location = new Point(0, menuYLoc),
+                Size = new Size(200, 50),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            userProfileMenu.Click += UserProfileMenu_Click; // Event handler for click action
+            menuPan.Controls.Add(userProfileMenu);
+            menuYLoc += 50; // Update the location for the next menu item
+        }
+        void UserProfileMenu_Click(object sender, EventArgs e)
+        {
+            // В RuntimeUI.cs
+
+            
+                UserProfileForm userProfileForm = new UserProfileForm();
+                userProfileForm.Show(); 
+                panSelector("userProfileMenu");
+        }
+
         public void notiMenuFunc()
         {//notification Menu
-            
+
             notiMenu.Text = "Notifications";
             menuPan.Controls.Add(notiMenu);
             notiMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             notiMenu.Location = new System.Drawing.Point(0, menuYLoc);
             menuYLoc = menuYLoc + 50;
             notiMenu.Size = new System.Drawing.Size(200, 50);
-            notiMenu.TabIndex = 1;
             notiMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         }
-        public void venPanFunc() 
-        {
 
-            venPan.Dock = System.Windows.Forms.DockStyle.Fill;
-           // venPan.Location = new System.Drawing.Point(0, 0);
-            venPan.Name = "venPan";
-            venPan.Size = new System.Drawing.Size(618, 692);
-            venPan.TabIndex = 2;
-        }
-        public void venTabFunc()
-        {   // 
-            // venTab
-            //
-            venTab.Dock = System.Windows.Forms.DockStyle.Fill;
-            venTab.BackColor = System.Drawing.Color.Red;
-            //venTab.Location = new System.Drawing.Point(202, 128);
-            venTab.Name = "venTab";
-            venTab.SelectedIndex = 0;
-            venTab.Size = new System.Drawing.Size(618, 692);
-            venTab.TabIndex = 2;
-            
-            
-        }
-        public void venAddFunc()
-        {
-            // 
-            // venAdd
-            // 
-
-            venAdd.Location = new System.Drawing.Point(4, 22);
-            venAdd.Name = "venAdd";
-            venAdd.Padding = new System.Windows.Forms.Padding(3);
-            venAdd.Size = new System.Drawing.Size(610, 666);
-            venAdd.TabIndex = 0;
-            venAdd.Text = "Add";
-            venAdd.UseVisualStyleBackColor = true;
-            venTab.Controls.Add(venAdd);
+        public void setMenuFunc()
+        {//Settings Menu
+            setMenu.Text = "Settings";
+            menuPan.Controls.Add(setMenu);
+            setMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            setMenu.Location = new System.Drawing.Point(0, menuYLoc);
+            menuYLoc = menuYLoc + 50;
+            setMenu.Size = new System.Drawing.Size(200, 50);
+            setMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         }
 
-        public void venViewFunc()
+        // takes database name, query and DataGridView instance to display a table. Also takes optional argument,
+        // which enables to display a particular row
+        public static void dataBinding(string connectionString, string baseQuery, DataGridView table, int? id = null, string idName = null)
         {
-            // 
-            // venView
-            // 
-            
-            venView.Controls.Add(venViewData);
-            venView.Location = new System.Drawing.Point(4, 22);
-            venView.Name = "venView";
-            venView.Padding = new System.Windows.Forms.Padding(3);
-            venView.Size = new System.Drawing.Size(610, 666);
-            venView.TabIndex = 0;
-            venView.Text = "View";
-            venView.UseVisualStyleBackColor = true;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
 
-            venTab.Controls.Add(venView);
+                    SqlCommand command = new SqlCommand(baseQuery, connection);
 
-            // 
-            // venViewData
-            // 
-            venViewData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            venViewData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            venViewData.Location = new System.Drawing.Point(3, 3);
-            venViewData.Name = "venVieData";
-            venViewData.Size = new System.Drawing.Size(604, 660);
-            venViewData.TabIndex = 0;
+                    // Modify the query and add parameter if 'id' is provided
+                    if (id.HasValue && idName != null)
+                    {
+                        command.CommandText += $" WHERE {idName} = @Id";
+                        command.Parameters.AddWithValue("@Id", id.Value);
+                    }
+
+                    DataTable table1 = new DataTable();
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        adapter.Fill(table1);
+                    }
+
+                    if (id.HasValue && table1.Rows.Count == 0)
+                    {
+                        // Handle the case where no data is found for the provided id
+                        MessageBox.Show($"No data found for ID: {id.Value}");
+                    }
+                    else
+                    {
+                        DataTable mergedTable = new DataTable();
+                        mergedTable.Merge(table1);
+
+                        table.DataSource = mergedTable;
+                    }
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                // Handle SQL-specific errors here
+                MessageBox.Show("SQL Error: " + sqlEx.Message);
+            }
+            catch (Exception ex)
+            {
+                // Handle other types of errors here
+                MessageBox.Show("General Error: " + ex.Message);
+            }
         }
-        public void venSearchFunc()
+
+
+        public RuntimeUI()
         {
-            // 
-            // venSearch
-            // 
-            venSearch.Controls.Add(venSerData);
-            venSearch.Controls.Add(venFilCombo);
-            venSearch.Controls.Add(venSerBtn);
-            venSearch.Controls.Add(venSerTex);
-            venSearch.Location = new System.Drawing.Point(4, 22);
-            venSearch.Name = "venSearch";
-            venSearch.Padding = new System.Windows.Forms.Padding(3);
-            venSearch.Size = new System.Drawing.Size(610, 666);
-            venSearch.TabIndex = 1;
-            venSearch.Text = "Search";
-            venSearch.UseVisualStyleBackColor = true;
 
-            venTab.Controls.Add(venSearch);
-
-            // 
-            // venSerData
-            // 
-
-            venSerData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            venSerData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            venSerData.Location = new System.Drawing.Point(0, 34);
-            venSerData.Name = "venSerData";
-            venSerData.Size = new System.Drawing.Size(610, 632);
-            venSerData.TabIndex = 1;
-            // 
-            // venFilCombo
-            // 
-            
-            venFilCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            venFilCombo.FormattingEnabled = true;
-            venFilCombo.ImeMode = System.Windows.Forms.ImeMode.Off;
-            venFilCombo.Location = new System.Drawing.Point(418, 5);
-            venFilCombo.MaximumSize = new System.Drawing.Size(100, 0);
-            venFilCombo.MinimumSize = new System.Drawing.Size(100, 0);
-            venFilCombo.Name = "venFilCombo";
-            venFilCombo.Size = new System.Drawing.Size(100, 23);
-            venFilCombo.TabIndex = 2;
-            // 
-            // venSerBtn
-            // 
-            
-            venSerBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            venSerBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            venSerBtn.Location = new System.Drawing.Point(524, 5);
-            venSerBtn.MaximumSize = new System.Drawing.Size(82, 23);
-            venSerBtn.MinimumSize = new System.Drawing.Size(82, 23);
-            venSerBtn.Name = "venSerBtn";
-            venSerBtn.Size = new System.Drawing.Size(82, 23);
-            venSerBtn.TabIndex = 1;
-            venSerBtn.Text = "Search";
-            venSerBtn.UseVisualStyleBackColor = true;
-            // 
-            // venSerTex
-            //
-            venSerTex.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            venSerTex.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            venSerTex.Location = new System.Drawing.Point(4, 5);
-            venSerTex.MaximumSize = new System.Drawing.Size(520, 24);
-            venSerTex.MinimumSize = new System.Drawing.Size(409, 24);
-            venSerTex.Name = "venSerTex";
-            venSerTex.Size = new System.Drawing.Size(409, 23);
-            venSerTex.TabIndex = 0;
+            InitializeUserProfilePanel(); // Initialize the panel
+            tblSelector(2);
+            UserProfileMenuFunc(); // Initialize menu items
         }
         public RuntimeUI() 
         {
@@ -226,15 +408,22 @@ namespace CitiSoft
                     // not visible
                     break;
                 case 2:
-                    mainPan.Controls.Add(venPan);
-                    venPan.Controls.Add(venTab);
-                    menuPan.Controls.Add(venMenu);
-                    venPanFunc();
+
+
                     venMenuFunc();
-                    venTabFunc();
-                    venViewFunc();
-                    venSearchFunc();
-                    venAddFunc();
+                    venTabControlFunc();
+                    viewParentTabPageFunc();
+                    viewVendorTabPageFunc();
+                    modifyParentTabPageFunc();
+                    searchVendorTabPageFunc();
+                    addVendorTabPageFunc();
+                    addSoftwareTabPageFunc();
+                    venReminderFunc();
+                    clientProblemHistoryFunc();
+                    clientMenuFunc();
+                    clientTabControlFunc();
+                    modifyClientTabPageFunc();
+
                     // visible
                     break;
                 case 3:
@@ -294,6 +483,17 @@ namespace CitiSoft
 
         }
 
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // RuntimeUI
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.ClientSize = new System.Drawing.Size(820, 572);
+            this.Name = "RuntimeUI";
+            this.ResumeLayout(false);
+
+        }
     }
 }
-
