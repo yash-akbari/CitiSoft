@@ -394,6 +394,11 @@ namespace CitiSoft
             tblSelector(2);
             UserProfileMenuFunc(); // Initialize menu items
         }
+        public RuntimeUI() 
+        {
+            tblSelector(2);
+        }
+
         public void tblSelector(int val)
         {
             switch (val)
@@ -433,6 +438,49 @@ namespace CitiSoft
                     // Add , Deletable, Editable, Visible
                     break;
             }
+
+        }
+       /* private void AccessButton_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(_vendorDocsGridView.Text, out int vendorId))
+            {
+                var docPath = _manager.AccessVendorDocs(vendorId);
+                if (docPath != null)
+                {
+                    _statusLabel.Text = $"Document Path: {docPath}";
+                }
+                else
+                {
+                    _statusLabel.Text = "Document not found!";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid Vendor ID!");
+            }
+        }
+
+        private void RemoveButton_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(_vendorDocsGridView.Text, out int vendorId))
+            {
+                if (_manager.RemoveVendorDocs(vendorId))
+                {
+                    _statusLabel.Text = "Document removed successfully!";
+                }
+                else
+                {
+                    _statusLabel.Text = "Failed to remove document!";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid Vendor ID!");
+            }
+        }*/
+
+        private void _statusLabel_Click(object sender, EventArgs e)
+        {
 
         }
 

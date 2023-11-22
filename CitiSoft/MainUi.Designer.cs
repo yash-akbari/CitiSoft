@@ -59,7 +59,7 @@ namespace CitiSoft
             this.headPan.Location = new System.Drawing.Point(0, 0);
             this.headPan.Margin = new System.Windows.Forms.Padding(6);
             this.headPan.Name = "headPan";
-            this.headPan.Size = new System.Drawing.Size(1640, 246);
+            this.headPan.Size = new System.Drawing.Size(820, 128);
             this.headPan.TabIndex = 0;
             this.headPan.MouseDown += new System.Windows.Forms.MouseEventHandler(this.headPan_MouseDown);
             // 
@@ -73,7 +73,7 @@ namespace CitiSoft
             this.minimizeBtn.Location = new System.Drawing.Point(1404, 23);
             this.minimizeBtn.Margin = new System.Windows.Forms.Padding(6);
             this.minimizeBtn.Name = "minimizeBtn";
-            this.minimizeBtn.Size = new System.Drawing.Size(44, 44);
+            this.minimizeBtn.Size = new System.Drawing.Size(22, 23);
             this.minimizeBtn.TabIndex = 2;
             this.minimizeBtn.Text = "🗕";
             this.minimizeBtn.UseVisualStyleBackColor = false;
@@ -90,7 +90,7 @@ namespace CitiSoft
             this.maximizeBtn.Location = new System.Drawing.Point(1460, 23);
             this.maximizeBtn.Margin = new System.Windows.Forms.Padding(6);
             this.maximizeBtn.Name = "maximizeBtn";
-            this.maximizeBtn.Size = new System.Drawing.Size(72, 44);
+            this.maximizeBtn.Size = new System.Drawing.Size(36, 23);
             this.maximizeBtn.TabIndex = 1;
             this.maximizeBtn.Text = "🗖";
             this.maximizeBtn.UseVisualStyleBackColor = false;
@@ -107,7 +107,7 @@ namespace CitiSoft
             this.closeBtn.Location = new System.Drawing.Point(1544, 23);
             this.closeBtn.Margin = new System.Windows.Forms.Padding(6);
             this.closeBtn.Name = "closeBtn";
-            this.closeBtn.Size = new System.Drawing.Size(72, 44);
+            this.closeBtn.Size = new System.Drawing.Size(36, 23);
             this.closeBtn.TabIndex = 0;
             this.closeBtn.Text = "X";
             this.closeBtn.UseVisualStyleBackColor = false;
@@ -161,7 +161,7 @@ namespace CitiSoft
             // 
             // MainUI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1640, 1100);
             this.ControlBox = false;
