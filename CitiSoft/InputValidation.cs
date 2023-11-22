@@ -11,6 +11,7 @@ namespace CitiSoft
 {
     internal class InputValidation
     {
+
         public static void IsOnlyNumbers(TextBox textBox)
         {
             if (textBox != null)
@@ -29,6 +30,7 @@ namespace CitiSoft
                 }
             }
         }
+ 
 
         public static void IsOnlyLettersAndSpaces(TextBox textBox, int length, string name)
         {
@@ -171,8 +173,28 @@ namespace CitiSoft
         }
 
 
+        public static void IsValid(TextBox textBox, int length, String message, String pattern = @"^[a-zA-Z\s]+$") // by default it will accept a-z,A-Z and spaces
+        {
+            if (textBox.Text.Length > 0)
+            {
+                string input = textBox.Text;
+                Regex regex = new Regex(pattern);
+                // checks for length
+                if (!regex.IsMatch(input))
+                {
+                    MessageBox.Show( $"{message} are allowed.");
+                    AutoCorrection(textBox, input);
+                }
+                else if (input.Length > length)
+                {
+                    MessageBox.Show( "Too Long");
+                    AutoCorrection(textBox, input);
+                }
+            }
+        }
 
-        public static void IsOnlyAlphanumericWithSpaceDashComma(TextBox textBox, int length, string name)
+
+                public static void IsOnlyAlphanumericWithSpaceDashComma(TextBox textBox, int length, string name)
         {
             if (textBox != null)
             {
@@ -266,12 +288,15 @@ namespace CitiSoft
         private static void AutoCorrection(TextBox textBox, string input)
         {
             // Remove the last character
-            textBox.Text = input.Substring(0, input.Length - 1);
+            if (textBox.Text.Length >0)
+            {
+                textBox.Text = input.Substring(0, input.Length - 1);
 
-            // Set the cursor position to the end of the text
-            textBox.SelectionStart = textBox.Text.Length;
-            textBox.SelectionLength = 0;
-        }
+                // Set the cursor position to the end of the text
+                textBox.SelectionStart = textBox.Text.Length;
+                textBox.SelectionLength = 0;
+            }
+        }  
 
         public static void LimitLength(TextBox textBox, int length, string name)
         {

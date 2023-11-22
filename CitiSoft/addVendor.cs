@@ -146,104 +146,39 @@ namespace CitiSoft
             companyNameTextBox.TextChanged += CompanyNameTextBox_TextChanged;
             companyEstablishedTextBox.TextChanged += CompanyEstablishedTextBox_TextChanged;
             employeesTextBox.TextChanged += EmployeesTextBox_TextChanged;
-            internalServicesComboBox.SelectedIndexChanged += InternalServicesComboBox_SelectedIndexChanged;
-            lastDemoDatePicker.Leave += LastDemoDatePicker_Leave;
             lastReviewIntTextBox.TextChanged += LastReviewIntTextBox_TextChanged;
-            lastReviewedDatePicker.Leave += LastReviewedDatePicker_Leave;
+            
                 
 
         }
 
-        private void LastReviewedDatePicker_Leave(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void LastReviewIntTextBox_TextChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
-        }
-
-        private void LastDemoDatePicker_Leave(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void InternalServicesComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsValid(textBox, 3, "Only Numbers", @"^[0-9]+$"); ;
         }
 
         private void EmployeesTextBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.IsOnlyAlphanumericWithDash(textBox,15,"Employees Number");
+            InputValidation.IsValid(textBox, 25, "Only Number, Space and dashes", @"^[0-9 -]+$");
         }
-
-
 
         private void CompanyEstablishedTextBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.IsOnlyNumbers(textBox);
+            InputValidation.IsValid(textBox,8, "Only Numbers", @"^[0-9]+$"); ;
         }
 
         private void CompanyNameTextBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.IsOnlyAlphanumericWithDashAt(textBox, 20, "Company Name");
+            InputValidation.IsValid(textBox,20,"Only AlphabetsNumbers, at(@) and Spaces", @"^[a-zA-Z\d\s]*$");//@"^[a-zA-Z0-9\s]+$"
         }
 
 
         public void submitButton_click(object sender, EventArgs e)
-        {
-            // Assuming 'venAdd' contains TextBox controls with appropriate names
-            TextBox companyNameTextBox = Controls.Find("companyNameTextBox", true).FirstOrDefault() as TextBox;
-            TextBox emailTextBox = Controls.Find("emailTextBox", true).FirstOrDefault() as TextBox;
-            TextBox telephoneTextBox = Controls.Find("telephoneTextBox", true).FirstOrDefault() as TextBox;
-            // ... other text boxes
-            bool isValid = true;
-
-            // Validate company name - must be only letters and spaces, and less than 30 characters
-            if (companyNameTextBox != null)
-            {
-                InputValidation.IsOnlyLettersAndSpaces(companyNameTextBox, 30, "Company Name");
-                // No direct way to get the result of the validation, assuming it shows a MessageBox and handles the correction internally
-            }
-
-            // Validate email - since IsValidEmail returns a bool, you can use it to set the isValid flag
-            if (emailTextBox != null && !InputValidation.IsValidEmail(emailTextBox.Text))
-            {
-                MessageBox.Show("The email format is invalid.");
-                isValid = false;
-            }
-            // Validate telephone - structured phone number
-            if (telephoneTextBox != null)
-            {
-                InputValidation.IsPhoneNumberStructured(telephoneTextBox, 15, "Phone Number");
-                // No direct way to get the result of the validation, assuming it shows a MessageBox and handles the correction internally
-            }
-
-            if (isValid)
-            {
-                // Proceed with submitting the data
-                string[] data = new string[50];
-                int i = 0;
-                foreach (Control con in Controls)
-                {
-                    if (con is TextBox || con is RichTextBox) // Ensure only text-based controls are included
-                    {
-                        data[i] = con.Text;
-                        i++;
-                    }
-                }
-                // ... submit data
-            }
-            else
-            {
-                // Handle the case where validation fails
-                MessageBox.Show("Please correct the highlighted errors before submitting.");
-            }
+        { 
 
         }
 
