@@ -5,11 +5,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-
 namespace CitiSoft
 {
-
     public class AddressList {
 
         public String AddressLine1 { get; set; }
@@ -125,6 +122,7 @@ namespace CitiSoft
                     addyLoc = addyLoc + 50;
                 }
             }
+
             addressLine1TextBox.TextChanged += AddressLine1TextBox_TextChanged;
             addressLine2TextBox.TextChanged += AddressLine2TextBox_TextChanged;
             cityTextBox.TextChanged += CityTextBox_TextChanged;
@@ -133,10 +131,13 @@ namespace CitiSoft
             emailTextBox.Leave += EmailTextBox_Leave;
             telephoneTextBox.TextChanged += TelephoneTextBox_TextChanged;
             addressCustomListBox.add.Click += Add_Click;
+
             addressCustomListBox.remove.Click += Remove_Click;
-            addressCustomListBox.reset.Click += Reset_Click;
+
             addressCustomListBox.update.Click += Update_Click;
-            addressCustomListBox.listBox.SelectedIndexChanged += ListBox_SelectedIndexChanged;
+
+            addressCustomListBox.edit.Click += Edit_Click;
+
 
         }
 
@@ -157,14 +158,14 @@ namespace CitiSoft
                 emailTextBox .Text = instance.Email;
                 telephoneTextBox.Text = instance.Phone;
                 addressCustomListBox.add.Visible = false;
-                addressCustomListBox.update.Visible = true;
-                addressCustomListBox.reset.Visible = false;
+                addressCustomListBox.edit.Visible = true;
+                addressCustomListBox.update.Visible = false;
                 
             }
 
         }
 
-        private void Add_Click(object sender, EventArgs e)
+        public void Add_Click(object sender, EventArgs e)
         {
             if (addressLine1TextBox.Text.Trim() != "" || addressLine2TextBox.Text.Trim() != "" || cityTextBox.Text.Trim() != "" || countryTextBox.Text.Trim() != "" || postCodeTextBox.Text.Trim() != "" || emailTextBox.Text.Trim() != "" || telephoneTextBox.Text.Trim() != "")
             {
@@ -194,30 +195,48 @@ namespace CitiSoft
             }
         }
 
-        private void Reset_Click(object sender, EventArgs e)
+        private void Edit_Click(object sender, EventArgs e)
         {
-            foreach (Control con in Controls)
+            index = addressCustomListBox.listBox.SelectedIndex;
+            if (index > -1 )
             {
-                if (con is TextBox)
-                {
-                    con.Text = "";
-                }
+                AddressList instance = addressList[index] as AddressList;
+                addressLine1TextBox.Text = instance.AddressLine1;
+                addressLine2TextBox.Text = instance.AddressLine2;
+                cityTextBox.Text = instance.City;
+                countryTextBox.Text = instance.Country;
+                postCodeTextBox.Text = instance.PostCode;
+                emailTextBox.Text = instance.Email;
+                telephoneTextBox.Text = instance.Phone;
+                addressCustomListBox.add.Visible = false;
+                addressCustomListBox.edit.Visible = false;
+                addressCustomListBox.update.Visible = true;
+                addressCustomListBox.remove.Visible = false;
+            }
+            else
+            {
+                MessageBox.Show("No Entries Found Or Please Select the Entry.");
             }
         }
 
         private void Remove_Click(object sender, EventArgs e)
         {
-            addressCustomListBox.listBox.Items.RemoveAt(index);
-            addressList.RemoveAt(index);
-            addressCustomListBox.add.Visible = true;
-            addressCustomListBox.update.Visible = false;
-            addressCustomListBox.reset.Visible = true;
-            foreach (Control con in Controls)
+            index = addressCustomListBox.listBox.SelectedIndex;
+            if (index > -1)
             {
-                if (con is TextBox)
+                addressCustomListBox.listBox.Items.RemoveAt(index);
+                addressList.RemoveAt(index);
+                foreach (Control con in Controls)
                 {
-                    con.Text = "";
+                    if (con is TextBox)
+                    {
+                        con.Text = "";
+                    }
                 }
+            }
+            else
+            {
+                MessageBox.Show("No Element Selected");
             }
         }
 
@@ -246,9 +265,9 @@ namespace CitiSoft
                 addressCustomListBox.listBox.Items.RemoveAt(index);
                 addressCustomListBox.listBox.Items.Insert(index,(instance.AddressLine1 + " " + instance.AddressLine2 + " " + instance.City + " " + instance.Country + " " + instance.PostCode + " " + instance.Email + " " + instance.Phone));
                 addressCustomListBox.add.Visible = true;
-                addressCustomListBox.update.Visible = false;
-                addressCustomListBox.reset.Visible = true;
-                
+                addressCustomListBox.edit.Visible = true;
+                addressCustomListBox.remove.Visible = true;
+                addressCustomListBox.update.Visible = false;   
             }
             else
             {
@@ -260,31 +279,31 @@ namespace CitiSoft
         private void AddressLine1TextBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.IsOnlyAlphanumericWithSpaceDashComma(textBox,30,"Address Line 1");
+            InputValidation.IsValid(textBox, 30, "Only Text,Numbers, Space, Hyphen(-) and Comma(,)", @"^[a-zA-Z0-9 ,-]+$"); ;
         }
 
         private void AddressLine2TextBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.IsOnlyAlphanumericWithSpaceDashComma(textBox, 30, "Address Line 2");
+            InputValidation.IsValid(textBox, 30, "Only Text,Numbers, Space, Hyphen(-) and Comma(,)", @"^[a-zA-Z0-9 ,-]+$"); ;
         }
 
         private void CityTextBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.IsOnlyLetters(textBox, 20, "City");
+            InputValidation.IsValid(textBox, 60, "Only Text", @"^[a-zA-Z]+$");
         }
 
         private void CountryTextBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.IsOnlyLetters(textBox, 20, "Country");
+            InputValidation.IsValid(textBox, 45, "Only Text", @"^[a-zA-Z]+$");
         }
 
         private void PostCodeTextBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.IsOnlyAlphanumericOrWithDots(textBox, 12, "PostCode");
+            InputValidation.IsValid(textBox, 12, "Only Text, Numbers and space", @"^[a-zA-Z0-9 ]+$");
         }
 
         private void EmailTextBox_Leave(object sender, EventArgs e)
@@ -309,7 +328,7 @@ namespace CitiSoft
         private void TelephoneTextBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.IsPhoneNumberStructured(textBox,14,"Phone Number");
+            InputValidation.IsValid(textBox, 14, "Only Numbers and Plus(+) ", @"^[0-9 +]+$");
         }
     }
 }

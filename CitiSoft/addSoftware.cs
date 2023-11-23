@@ -14,6 +14,8 @@ namespace CitiSoft
             InitializeComponents();
         }
 
+        
+
         Label softwareNameLabel = new Label();
         TextBox softwareNameTextBox = new TextBox();
 
@@ -25,19 +27,22 @@ namespace CitiSoft
 
         Label typeOfSoftwareLabel = new Label();
         TextBox typeOfSoftwareTextBox = new TextBox();
-        CustomListBox typeOfSoftwareCustomListBox = new CustomListBox();
+        CustomListBox typeOfSoftwareCustomListBox;
 
         Label businessAreasLabel = new Label();
         TextBox businessAreasTextBox = new TextBox();
-        CustomListBox buisenessAreasCustomListBox = new CustomListBox();
+        CustomListBox buisenessAreasCustomListBox;
+        
 
         Label modulesLabel = new Label();
         TextBox modulesTextBox = new TextBox();
-        CustomListBox modulesCustomListBox = new CustomListBox();
+        CustomListBox modulesCustomListBox;
+       
 
         Label financialServicesLabel = new Label();
         TextBox financialServicesTextBox = new TextBox();
-        CustomListBox financialServicesCustomListBox = new CustomListBox();
+        CustomListBox financialServicesCustomListBox;
+      
 
         Label cloudLabel = new Label();
         ComboBox cloudComboBox = new ComboBox();
@@ -47,6 +52,10 @@ namespace CitiSoft
 
         private void InitializeComponents()
         {
+            typeOfSoftwareCustomListBox = new CustomListBox(typeOfSoftwareTextBox);
+            buisenessAreasCustomListBox = new CustomListBox(businessAreasTextBox);
+            modulesCustomListBox = new CustomListBox(modulesTextBox);
+            financialServicesCustomListBox = new CustomListBox(financialServicesTextBox);
             AutoScroll = true;
             Controls.AddRange(new Control[] {
                 softwareNameLabel, softwareNameTextBox,
@@ -131,8 +140,11 @@ namespace CitiSoft
                 }
 
             }
+
             
 
         }
+
     }
+
 }
