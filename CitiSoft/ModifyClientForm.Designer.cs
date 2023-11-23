@@ -83,7 +83,7 @@ namespace CitiSoft
             this.ModifyClientDgv.ReadOnly = true;
             this.ModifyClientDgv.RowHeadersWidth = 82;
             this.ModifyClientDgv.RowTemplate.Height = 33;
-            this.ModifyClientDgv.Size = new System.Drawing.Size(1072, 1284);
+            this.ModifyClientDgv.Size = new System.Drawing.Size(1237, 1284);
             this.ModifyClientDgv.TabIndex = 2;
             // 
             // clientIDTxtBox
@@ -226,6 +226,7 @@ namespace CitiSoft
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1865, 1284);
             this.Controls.Add(this.clientIDLabel);
             this.Controls.Add(this.deleteIDTextBox);
@@ -249,7 +250,6 @@ namespace CitiSoft
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.AutoScroll = true;
             this.Name = "ModifyClientForm";
             this.Text = "Modify Client";
             this.Load += new System.EventHandler(this.ModifyClientForm_Load);
