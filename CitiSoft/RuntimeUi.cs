@@ -394,10 +394,7 @@ namespace CitiSoft
             tblSelector(2);
             UserProfileMenuFunc(); // Initialize menu items
         }
-        public RuntimeUI() 
-        {
-            tblSelector(2);
-        }
+      
 
         public void tblSelector(int val)
         {
@@ -423,8 +420,8 @@ namespace CitiSoft
                     clientMenuFunc();
                     clientTabControlFunc();
                     modifyClientTabPageFunc();
-                    ModifyDocumentsForm modifyDocumentsForm = new ModifyDocumentsForm();
-                    modifyDocumentsForm.ShowDialog();
+                    //ModifyDocumentsForm modifyDocumentsForm = new ModifyDocumentsForm();
+                   // modifyDocumentsForm.ShowDialog();
                     // visible
                     break;
                 case 3:
