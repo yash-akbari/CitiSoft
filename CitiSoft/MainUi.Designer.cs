@@ -60,6 +60,7 @@ namespace CitiSoft
             this.headPan.Name = "headPan";
             this.headPan.Size = new System.Drawing.Size(780, 128);
             this.headPan.TabIndex = 3;
+            this.headPan.MouseDown += HeadPan_MouseDown;
             // 
             // minimizeBtn
             // 

@@ -76,7 +76,7 @@ namespace CitiSoft
             }
         }
 
-        private void headPan_MouseDown(object sender, MouseEventArgs e)
+        private void HeadPan_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
             SendMessge(this.Handle, 0x112, 0xf012, 0);
