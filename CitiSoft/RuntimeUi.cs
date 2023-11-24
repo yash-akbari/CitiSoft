@@ -258,17 +258,19 @@ namespace CitiSoft
             form.Show();
         }
 
-        void InitializeUserProfilePanel()
+        private void InitializeUserProfilePanel()
         {
             userProfilePanel = new Panel
             {
-                // Set properties according to your layout needs
-                Size = new Size(600, 400),
+                Size = new Size(600, 400), // Adjust the size as needed
                 Location = new Point(200, 50), // Adjust the location as needed
                 BorderStyle = BorderStyle.FixedSingle,
                 Visible = false // Start as hidden
             };
+            this.Controls.Add(userProfilePanel); // Add userProfilePanel to the main form's controls only once
+            userProfilePanel.BringToFront();
         }
+
 
         public void panSelector(String panName)
         {
@@ -301,14 +303,29 @@ namespace CitiSoft
             menuPan.Controls.Add(userProfileMenu);
             menuYLoc += 50; // Update the location for the next menu item
         }
-        void UserProfileMenu_Click(object sender, EventArgs e)
+        private void UserProfileMenu_Click(object sender, EventArgs e)
         {
-            // В RuntimeUI.cs
 
-            
-                UserProfileForm userProfileForm = new UserProfileForm();
-                userProfileForm.Show(); 
-                panSelector("userProfileMenu");
+            if (userProfilePanel.Controls.ContainsKey("userProfileForm"))
+            {
+                userProfilePanel.Controls["userProfileForm"].BringToFront();
+            }
+            else
+            {
+
+                UserProfileForm userProfileForm = new UserProfileForm
+                {
+                    TopLevel = false,
+                    Dock = DockStyle.Fill,
+                    FormBorderStyle = FormBorderStyle.None
+                };
+
+                userProfilePanel.Controls.Add(userProfileForm); // Add the form to the panel
+                userProfileForm.Show();
+            }
+
+            userProfilePanel.Visible = true;
+            userProfilePanel.BringToFront();
         }
 
         public void notiMenuFunc()
@@ -389,12 +406,12 @@ namespace CitiSoft
 
         public RuntimeUI()
         {
-
-            InitializeUserProfilePanel(); // Initialize the panel
+            InitializeComponent();
+            InitializeUserProfilePanel();
             tblSelector(2);
             UserProfileMenuFunc(); // Initialize menu items
         }
-      
+
 
         public void tblSelector(int val)
         {
