@@ -262,6 +262,7 @@ namespace CitiSoft
         {
             userProfilePanel = new Panel
             {
+                Dock = DockStyle.Fill, // Make sure the panel also fills its container
                 Size = new Size(600, 400), // Adjust the size as needed
                 Location = new Point(200, 50), // Adjust the location as needed
                 BorderStyle = BorderStyle.FixedSingle,
@@ -315,17 +316,19 @@ namespace CitiSoft
 
                 UserProfileForm userProfileForm = new UserProfileForm
                 {
+                    Name = "userProfileForm",
                     TopLevel = false,
                     Dock = DockStyle.Fill,
                     FormBorderStyle = FormBorderStyle.None
                 };
-
                 userProfilePanel.Controls.Add(userProfileForm); // Add the form to the panel
                 userProfileForm.Show();
             }
 
             userProfilePanel.Visible = true;
             userProfilePanel.BringToFront();
+
+          
         }
 
         public void notiMenuFunc()
