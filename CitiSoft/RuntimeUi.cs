@@ -70,6 +70,7 @@ namespace CitiSoft
 
         void venMenu_Click(object sender, EventArgs e)
         {
+            HideAllPanels();
             panSelector("venPan");
         }
 
@@ -202,6 +203,8 @@ namespace CitiSoft
         private void clientMenu_Click(object sender, EventArgs e)
         {
             panSelector("clientPan");
+            HideAllPanels();
+            clientPan.Visible = true;
         }
 
         void clientTabControlFunc()
@@ -262,6 +265,7 @@ namespace CitiSoft
         {
             userProfilePanel = new Panel
             {
+                Dock = DockStyle.Fill, // Make sure the panel also fills its container
                 Size = new Size(600, 400), // Adjust the size as needed
                 Location = new Point(200, 50), // Adjust the location as needed
                 BorderStyle = BorderStyle.FixedSingle,
@@ -305,28 +309,42 @@ namespace CitiSoft
         }
         private void UserProfileMenu_Click(object sender, EventArgs e)
         {
+            // Hide all panels first.
+            HideAllPanels();
 
-            if (userProfilePanel.Controls.ContainsKey("userProfileForm"))
+            // Check if the UserProfileForm already exists; if not, create it.
+            if (!userProfilePanel.Controls.ContainsKey("userProfileForm"))
             {
-                userProfilePanel.Controls["userProfileForm"].BringToFront();
-            }
-            else
-            {
-
                 UserProfileForm userProfileForm = new UserProfileForm
                 {
+                    Name = "userProfileForm",
                     TopLevel = false,
                     Dock = DockStyle.Fill,
                     FormBorderStyle = FormBorderStyle.None
                 };
-
                 userProfilePanel.Controls.Add(userProfileForm); // Add the form to the panel
                 userProfileForm.Show();
             }
+            else
+            {
+                // If the form is already created, just show it.
+                userProfilePanel.Controls["userProfileForm"].BringToFront();
+            }
 
-            userProfilePanel.Visible = true;
-            userProfilePanel.BringToFront();
+            userProfilePanel.Visible = true; // Make the user profile panel visible
+            userProfilePanel.BringToFront(); // Bring the user profile panel to the front
         }
+
+        // Method to hide all panels.
+        private void HideAllPanels()
+        {
+            venPan.Visible = false;
+            clientPan.Visible = false;
+            userProfilePanel.Visible = false;
+            // Hide other panels as needed...
+        }
+
+
 
         public void notiMenuFunc()
         {//notification Menu
