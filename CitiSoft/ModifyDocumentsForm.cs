@@ -93,6 +93,13 @@ namespace CitiSoft
                 return;
             }
 
+             if (!InputValidation.CheckValueExists(Variables.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
+            {
+                MessageBox.Show("Vendor ID you have provided does not exist");
+                vendorIDTxtBox.Text = string.Empty;
+                return;
+            }
+
             using (SqlConnection connection = new SqlConnection(Variables.citiSoftDatabaseConnectionString))
             {
                 connection.Open();
@@ -109,11 +116,13 @@ namespace CitiSoft
                         {
                             MessageBox.Show("Delete successful.");
                             transaction.Commit(); // Only commit if no errors occurred
+                            vendorIDTxtBox.Text = string.Empty;
                         }
                         else
                         {
                             MessageBox.Show("No document deleted. It's possible that the vendor ID did not exist.");
                             transaction.Rollback(); // Rollback if no rows affected
+                            vendorIDTxtBox.Text = string.Empty;
                         }
                     }
                 }
@@ -121,6 +130,7 @@ namespace CitiSoft
                 {
                     transaction.Rollback(); // Rollback on error
                     MessageBox.Show("An error occurred while deleting the document");
+                    vendorIDTxtBox.Text = string.Empty;
                 }
             }
         }
