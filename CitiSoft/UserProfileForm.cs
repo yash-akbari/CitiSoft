@@ -21,6 +21,7 @@ namespace CitiSoft
 
         private void btnForgotPassword_Click(object sender, EventArgs e)
         {
+            InitializeComponent();
             ForgotPasswordForm forgotPasswordForm = new ForgotPasswordForm(); // Assuming you have a form for this
             forgotPasswordForm.ShowDialog();
         }
