@@ -394,10 +394,7 @@ namespace CitiSoft
             tblSelector(2);
             UserProfileMenuFunc(); // Initialize menu items
         }
-        public RuntimeUI() 
-        {
-            tblSelector(2);
-        }
+       
 
         public void tblSelector(int val)
         {
