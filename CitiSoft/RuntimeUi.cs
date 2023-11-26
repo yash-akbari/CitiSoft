@@ -437,10 +437,6 @@ namespace CitiSoft
                     clientMenuFunc();
                     clientTabControlFunc();
                     modifyClientTabPageFunc();
-
-                    //Class1.insertValues();
-                    ModifyDocumentsForm modifyDocumentsForm = new ModifyDocumentsForm();
-                    modifyDocumentsForm.ShowDialog();
                     // visible
                     break;
                 case 3:
