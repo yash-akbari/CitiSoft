@@ -23,11 +23,12 @@ namespace CitiSoft
         private void InitializeDragDrop()
         {
             fileDropPBox.AllowDrop = true;
-            fileDropPBox.DragEnter += new DragEventHandler(fileDropPBoxl_DragEnter);
+            fileDropPBox.DragEnter += new DragEventHandler(fileDropPBox_DragEnter);
             fileDropPBox.DragDrop += new DragEventHandler(fileDropPBox_DragDrop);
         }
 
-        void fileDropPBoxl_DragEnter(object sender, DragEventArgs e)
+        // the following two methods are used to enable drag and drop functionality to upload document
+        void fileDropPBox_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 e.Effect = DragDropEffects.Copy;
@@ -40,7 +41,7 @@ namespace CitiSoft
                 MessageBox.Show("Please provide vendor ID first");
                 return;
             }
-            if (InputValidation.CheckValueExists(Variables.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
+            if (!InputValidation.CheckValueExists(Variables.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("Provided vendor ID does not exist");
                 return;
@@ -65,7 +66,6 @@ namespace CitiSoft
                         }
                     }
                     MessageBox.Show("File was successfully added");
-                    // Optionally update the UI to indicate success
                 }
                 catch (Exception)
                 {
@@ -78,6 +78,11 @@ namespace CitiSoft
         {
             TextBox textBox = sender as TextBox;
             InputValidation.IsOnlyNumbers(textBox);
+        }
+
+        private void dragAndDropLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

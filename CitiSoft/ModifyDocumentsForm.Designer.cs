@@ -1,4 +1,7 @@
-﻿namespace CitiSoft
+﻿using System.Windows.Forms;
+using System.Xml.Linq;
+
+namespace CitiSoft
 {
     partial class ModifyDocumentsForm
     {
@@ -54,6 +57,7 @@
             this.dragAndDropLabel.Size = new System.Drawing.Size(352, 25);
             this.dragAndDropLabel.TabIndex = 1;
             this.dragAndDropLabel.Text = "Drag and drop your document here:";
+            this.dragAndDropLabel.Click += new System.EventHandler(this.dragAndDropLabel_Click);
             // 
             // vendorIDLabel
             // 
@@ -78,13 +82,14 @@
             this.addDocumentDgv.AllowUserToDeleteRows = false;
             this.addDocumentDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.addDocumentDgv.Dock = System.Windows.Forms.DockStyle.Left;
-            this.addDocumentDgv.Location = new System.Drawing.Point(12, 12);
+            this.addDocumentDgv.Location = new System.Drawing.Point(0, 0);
             this.addDocumentDgv.Name = "addDocumentDgv";
             this.addDocumentDgv.ReadOnly = true;
             this.addDocumentDgv.RowHeadersWidth = 82;
             this.addDocumentDgv.RowTemplate.Height = 33;
             this.addDocumentDgv.Size = new System.Drawing.Size(1237, 1284);
             this.addDocumentDgv.TabIndex = 4;
+            RuntimeUI.dataBinding(Variables.citiSoftDatabaseConnectionString, "SELECT * FROM VendorInfo", addDocumentDgv);
             // 
             // ModifyDocumentsForm
             // 
