@@ -36,6 +36,7 @@ namespace CitiSoft
             this.vendorIDLabel = new System.Windows.Forms.Label();
             this.vendorIDTxtBox = new System.Windows.Forms.TextBox();
             this.addDocumentDgv = new System.Windows.Forms.DataGridView();
+            this.removeDocumentBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.fileDropPBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.addDocumentDgv)).BeginInit();
             this.SuspendLayout();
@@ -70,7 +71,7 @@ namespace CitiSoft
             // 
             // vendorIDTxtBox
             // 
-            this.vendorIDTxtBox.Location = new System.Drawing.Point(1442, 394);
+            this.vendorIDTxtBox.Location = new System.Drawing.Point(1471, 394);
             this.vendorIDTxtBox.Name = "vendorIDTxtBox";
             this.vendorIDTxtBox.Size = new System.Drawing.Size(100, 31);
             this.vendorIDTxtBox.TabIndex = 3;
@@ -89,7 +90,16 @@ namespace CitiSoft
             this.addDocumentDgv.RowTemplate.Height = 33;
             this.addDocumentDgv.Size = new System.Drawing.Size(1237, 1284);
             this.addDocumentDgv.TabIndex = 4;
-            RuntimeUI.dataBinding(Variables.citiSoftDatabaseConnectionString, "SELECT * FROM VendorInfo", addDocumentDgv);
+            // 
+            // removeDocumentBtn
+            // 
+            this.removeDocumentBtn.Location = new System.Drawing.Point(1344, 454);
+            this.removeDocumentBtn.Name = "removeDocumentBtn";
+            this.removeDocumentBtn.Size = new System.Drawing.Size(227, 43);
+            this.removeDocumentBtn.TabIndex = 5;
+            this.removeDocumentBtn.Text = "Remove Document";
+            this.removeDocumentBtn.UseVisualStyleBackColor = true;
+            this.removeDocumentBtn.Click += new System.EventHandler(this.removeDocumentBtn_Click);
             // 
             // ModifyDocumentsForm
             // 
@@ -97,6 +107,7 @@ namespace CitiSoft
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1865, 1284);
+            this.Controls.Add(this.removeDocumentBtn);
             this.Controls.Add(this.addDocumentDgv);
             this.Controls.Add(this.vendorIDTxtBox);
             this.Controls.Add(this.vendorIDLabel);
@@ -118,5 +129,6 @@ namespace CitiSoft
         private System.Windows.Forms.Label vendorIDLabel;
         private System.Windows.Forms.TextBox vendorIDTxtBox;
         private System.Windows.Forms.DataGridView addDocumentDgv;
+        private Button removeDocumentBtn;
     }
 }

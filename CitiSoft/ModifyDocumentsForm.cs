@@ -84,5 +84,45 @@ namespace CitiSoft
         {
 
         }
+
+        private void removeDocumentBtn_Click(object sender, EventArgs e)
+        {
+            if (vendorIDTxtBox.Text == "")
+            {
+                MessageBox.Show("Please provide vendor ID first");
+                return;
+            }
+
+            using (SqlConnection connection = new SqlConnection(Variables.citiSoftDatabaseConnectionString))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                
+                try
+                {
+                    using (SqlCommand command = new SqlCommand("UPDATE VendorInfo SET docAttach = NULL WHERE vid = @VendorID;", connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Delete successful.");
+                            transaction.Commit(); // Only commit if no errors occurred
+                        }
+                        else
+                        {
+                            MessageBox.Show("No document deleted. It's possible that the vendor ID did not exist.");
+                            transaction.Rollback(); // Rollback if no rows affected
+                        }
+                    }
+                }
+                catch (SqlException)
+                {
+                    transaction.Rollback(); // Rollback on error
+                    MessageBox.Show("An error occurred while deleting the document");
+                }
+            }
+        }
     }
 }
