@@ -111,8 +111,16 @@
     <Compile Include="AddVendor.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="addVendor.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="CustomListBox.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ForgotPasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ForgotPasswordForm.Designer.cs">
+      <DependentUpon>ForgotPasswordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InputValidation.cs" />
     <Compile Include="Controller.cs" />
@@ -198,6 +206,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RuntimeUi.resx">
       <DependentUpon>RuntimeUi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserProfileForm.resx">
+      <DependentUpon>UserProfileForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

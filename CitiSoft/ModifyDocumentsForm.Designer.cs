@@ -1,4 +1,7 @@
-﻿namespace CitiSoft
+﻿using System.Windows.Forms;
+using System.Xml.Linq;
+
+namespace CitiSoft
 {
     partial class ModifyDocumentsForm
     {
@@ -33,6 +36,7 @@
             this.vendorIDLabel = new System.Windows.Forms.Label();
             this.vendorIDTxtBox = new System.Windows.Forms.TextBox();
             this.addDocumentDgv = new System.Windows.Forms.DataGridView();
+            this.removeDocumentBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.fileDropPBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.addDocumentDgv)).BeginInit();
             this.SuspendLayout();
@@ -54,6 +58,7 @@
             this.dragAndDropLabel.Size = new System.Drawing.Size(352, 25);
             this.dragAndDropLabel.TabIndex = 1;
             this.dragAndDropLabel.Text = "Drag and drop your document here:";
+            this.dragAndDropLabel.Click += new System.EventHandler(this.dragAndDropLabel_Click);
             // 
             // vendorIDLabel
             // 
@@ -66,7 +71,7 @@
             // 
             // vendorIDTxtBox
             // 
-            this.vendorIDTxtBox.Location = new System.Drawing.Point(1442, 394);
+            this.vendorIDTxtBox.Location = new System.Drawing.Point(1471, 394);
             this.vendorIDTxtBox.Name = "vendorIDTxtBox";
             this.vendorIDTxtBox.Size = new System.Drawing.Size(100, 31);
             this.vendorIDTxtBox.TabIndex = 3;
@@ -78,7 +83,7 @@
             this.addDocumentDgv.AllowUserToDeleteRows = false;
             this.addDocumentDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.addDocumentDgv.Dock = System.Windows.Forms.DockStyle.Left;
-            this.addDocumentDgv.Location = new System.Drawing.Point(12, 12);
+            this.addDocumentDgv.Location = new System.Drawing.Point(0, 0);
             this.addDocumentDgv.Name = "addDocumentDgv";
             this.addDocumentDgv.ReadOnly = true;
             this.addDocumentDgv.RowHeadersWidth = 82;
@@ -86,12 +91,23 @@
             this.addDocumentDgv.Size = new System.Drawing.Size(1237, 1284);
             this.addDocumentDgv.TabIndex = 4;
             // 
+            // removeDocumentBtn
+            // 
+            this.removeDocumentBtn.Location = new System.Drawing.Point(1344, 454);
+            this.removeDocumentBtn.Name = "removeDocumentBtn";
+            this.removeDocumentBtn.Size = new System.Drawing.Size(227, 43);
+            this.removeDocumentBtn.TabIndex = 5;
+            this.removeDocumentBtn.Text = "Remove Document";
+            this.removeDocumentBtn.UseVisualStyleBackColor = true;
+            this.removeDocumentBtn.Click += new System.EventHandler(this.removeDocumentBtn_Click);
+            // 
             // ModifyDocumentsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1865, 1284);
+            this.Controls.Add(this.removeDocumentBtn);
             this.Controls.Add(this.addDocumentDgv);
             this.Controls.Add(this.vendorIDTxtBox);
             this.Controls.Add(this.vendorIDLabel);
@@ -113,5 +129,6 @@
         private System.Windows.Forms.Label vendorIDLabel;
         private System.Windows.Forms.TextBox vendorIDTxtBox;
         private System.Windows.Forms.DataGridView addDocumentDgv;
+        private Button removeDocumentBtn;
     }
 }

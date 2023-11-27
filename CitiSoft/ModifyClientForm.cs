@@ -21,13 +21,19 @@ namespace CitiSoft
 
         private void updateClientBtn_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(clientIDTxtBox.Text))
+            if (clientIDTxtBox.Text == "")
             {
                 MessageBox.Show("Please provide client id");
                 return; // Exit if no client ID is provided
             }
 
-            using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
+            if (!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "Client", "cid", clientIDTxtBox.Text))
+            {
+                MessageBox.Show("Client ID you have provided does not exist");
+                clientIDTxtBox.Text = string.Empty;
+                return;
+            }
+            using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
@@ -120,7 +126,14 @@ namespace CitiSoft
                 return;
             }
 
-            using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
+            if (!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "Client", "cid", deleteIDTextBox.Text))
+            {
+                MessageBox.Show("Client ID you have provided does not exist");
+                deleteIDTextBox.Text = string.Empty;
+                return;
+            }
+
+            using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
@@ -136,11 +149,13 @@ namespace CitiSoft
                         {
                             MessageBox.Show("Delete successful.");
                             transaction.Commit(); // Only commit if no errors occurred
+                            deleteIDTextBox.Text = "";
                         }
                         else
                         {
                             MessageBox.Show("No rows deleted. It's possible that the client did not exist.");
                             transaction.Rollback(); // Rollback if no rows affected
+                            deleteIDTextBox.Text = "";
                         }
                     }
                 }

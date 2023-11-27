@@ -23,7 +23,7 @@ namespace CitiSoft
         // adds the client to the ProblemHistory table
         private void addClientBtn_Click(object sender, EventArgs e)
         {
-            if (clientIDPHTxtBox.Text == "" && descriptionTxtBox.Text == "" && userIDPHTxtBox.Text == "")
+            if (clientIDPHTxtBox.Text == "" || descriptionTxtBox.Text == "" || userIDPHTxtBox.Text == "")
             {
                 MessageBox.Show("Please fill in all text boxes");
                 return;
@@ -31,16 +31,13 @@ namespace CitiSoft
             if (!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "Client", "cid", clientIDPHTxtBox.Text))
             {
                 MessageBox.Show("Client ID you have provided does not exist");
+                clientIDPHTxtBox.Text = string.Empty;
                 return;
             }
             if (!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "User", "uid", userIDPHTxtBox.Text))
             {
                 MessageBox.Show("Your ID does not exist");
-                return;
-            }
-            if (descriptionTxtBox.Text == "")
-            {
-                MessageBox.Show("Please provide some description");
+                userIDPHTxtBox.Text = string.Empty;
                 return;
             }
 
@@ -65,11 +62,16 @@ namespace CitiSoft
                         {
                             MessageBox.Show("Problem Added.");
                             transaction.Commit(); // Only commit if no errors occurred
+                            descriptionLabel.Text = string.Empty;
+                            clientIDPHTxtBox.Text = string.Empty;
+                            userIDPHTxtBox.Text = string.Empty;
                         }
                         else
                         {
                             MessageBox.Show("Nothing was added. Probably you have provided wrong IDs.");
                             transaction.Rollback(); // Rollback if no rows affected
+                            clientIDPHTxtBox.Text = string.Empty;
+                            userIDPHTxtBox.Text = string.Empty;
                         }
                     }
                 }
@@ -77,6 +79,8 @@ namespace CitiSoft
                 {
                     transaction.Rollback(); // Rollback on error
                     MessageBox.Show("An error occurred while adding the problem");
+                    clientIDPHTxtBox.Text = string.Empty;
+                    userIDPHTxtBox.Text = string.Empty;
                 }
             }
         }

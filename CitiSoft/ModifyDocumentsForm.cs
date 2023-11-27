@@ -23,11 +23,12 @@ namespace CitiSoft
         private void InitializeDragDrop()
         {
             fileDropPBox.AllowDrop = true;
-            fileDropPBox.DragEnter += new DragEventHandler(fileDropPBoxl_DragEnter);
+            fileDropPBox.DragEnter += new DragEventHandler(fileDropPBox_DragEnter);
             fileDropPBox.DragDrop += new DragEventHandler(fileDropPBox_DragDrop);
         }
 
-        void fileDropPBoxl_DragEnter(object sender, DragEventArgs e)
+        // the following two methods are used to enable drag and drop functionality to upload document
+        void fileDropPBox_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 e.Effect = DragDropEffects.Copy;
@@ -40,7 +41,7 @@ namespace CitiSoft
                 MessageBox.Show("Please provide vendor ID first");
                 return;
             }
-            if (InputValidation.CheckValueExists(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
+            if (!InputValidation.CheckValueExists(Variables.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("Provided vendor ID does not exist");
                 return;
@@ -65,7 +66,6 @@ namespace CitiSoft
                         }
                     }
                     MessageBox.Show("File was successfully added");
-                    // Optionally update the UI to indicate success
                 }
                 catch (Exception)
                 {
@@ -78,6 +78,61 @@ namespace CitiSoft
         {
             TextBox textBox = sender as TextBox;
             InputValidation.IsOnlyNumbers(textBox);
+        }
+
+        private void dragAndDropLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void removeDocumentBtn_Click(object sender, EventArgs e)
+        {
+            if (vendorIDTxtBox.Text == "")
+            {
+                MessageBox.Show("Please provide vendor ID first");
+                return;
+            }
+
+             if (!InputValidation.CheckValueExists(Variables.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
+            {
+                MessageBox.Show("Vendor ID you have provided does not exist");
+                vendorIDTxtBox.Text = string.Empty;
+                return;
+            }
+
+            using (SqlConnection connection = new SqlConnection(Variables.citiSoftDatabaseConnectionString))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                
+                try
+                {
+                    using (SqlCommand command = new SqlCommand("UPDATE VendorInfo SET docAttach = NULL WHERE vid = @VendorID;", connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Delete successful.");
+                            transaction.Commit(); // Only commit if no errors occurred
+                            vendorIDTxtBox.Text = string.Empty;
+                        }
+                        else
+                        {
+                            MessageBox.Show("No document deleted. It's possible that the vendor ID did not exist.");
+                            transaction.Rollback(); // Rollback if no rows affected
+                            vendorIDTxtBox.Text = string.Empty;
+                        }
+                    }
+                }
+                catch (SqlException)
+                {
+                    transaction.Rollback(); // Rollback on error
+                    MessageBox.Show("An error occurred while deleting the document");
+                    vendorIDTxtBox.Text = string.Empty;
+                }
+            }
         }
     }
 }
