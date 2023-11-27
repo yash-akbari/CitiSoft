@@ -106,7 +106,7 @@ namespace CitiSoft
             venViewChildTabControl.Controls.Add(viewVendorTabPage);
             viewVendorTabPage.Name = "viewVendorTabPage";
             viewVendorTabPage.Text = "View Vendor";
-            viewVendor venView = new viewVendor();
+            ViewDataByVendor venView = new ViewDataByVendor();
             AddForm(venView, viewVendorTabPage);
         }
 
@@ -124,7 +124,7 @@ namespace CitiSoft
         {
             addVendorTabPage.Name = "addVendorTabPage";
             addVendorTabPage.Text = "Add Vendor";
-            addVendor addVen = new addVendor();
+            AddVendor addVen = new AddVendor();
             AddForm(addVen, addVendorTabPage);
             venModifyChildTabControl.Controls.Add(addVendorTabPage);
         }
@@ -133,7 +133,7 @@ namespace CitiSoft
         {
             addSoftwareTabPage.Name = "addSoftwareTabPage";
             addSoftwareTabPage.Text = "Add Software";
-            addSoftware addSoft = new addSoftware();
+            AddSoftware addSoft = new AddSoftware();
             AddForm(addSoft, addSoftwareTabPage);
             venModifyChildTabControl.Controls.Add(addSoftwareTabPage);
         }
@@ -170,7 +170,7 @@ namespace CitiSoft
             venRemData.Size = new System.Drawing.Size(604, 660);
             venRemData.TabIndex = 0;
 
-            dataBinding(Variables.citiSoftDatabaseConnectionString, "SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo", venRemData);
+            dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo", venRemData);
         }
 
         
@@ -502,10 +502,14 @@ namespace CitiSoft
         {
             this.SuspendLayout();
             // 
+            // mainPan
+            // 
+            this.mainPan.Size = new System.Drawing.Size(600, 652);
+            // 
             // RuntimeUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(820, 572);
+            this.ClientSize = new System.Drawing.Size(820, 800);
             this.Name = "RuntimeUI";
             this.ResumeLayout(false);
 

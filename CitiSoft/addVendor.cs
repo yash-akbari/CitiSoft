@@ -7,52 +7,45 @@ using System.Windows.Forms;
 
 namespace CitiSoft
 {
-    public class addVenVar 
-    {
-        public String CompanyName { get; set; }
-        public String CompanyEstablished { get; set; }
-        public int  Employees { get; set; }
-        public bool internalServices { get; set; }
-        public String lastDemoDate { get; set; }
-        public String lastReviewInt { get; set; }
-        public String lastReviewedDate { get; set;}
-
-
-
-    }
-    public partial class addVendor : Form 
+ 
+    public partial class AddVendor : Form 
     {
 
-        Label companyNameLabel = new Label();
-        TextBox companyNameTextBox = new TextBox();
+        public Label companyNameLabel = new Label();
+        public TextBox companyNameTextBox = new TextBox();
         
-        Label companyEstablishedLabel = new Label();
-        TextBox companyEstablishedTextBox = new TextBox();
+        public Label companyEstablishedLabel = new Label();
+        public TextBox companyEstablishedTextBox = new TextBox();
         
-        AddressPanel addressPanel = new AddressPanel();
+        public AddressPanel addressPanel = new AddressPanel();
 
-        Label employeesLabel = new Label();
-        TextBox employeesTextBox = new TextBox();
+        public Label employeesLabel = new Label();
+        public TextBox employeesTextBox = new TextBox();
 
-        Label internalServicesLabel = new Label();
-        ComboBox internalServicesComboBox = new ComboBox();
+        public Label internalServicesLabel = new Label();
+        public ComboBox internalServicesComboBox = new ComboBox();
 
-        Label lastDemoDateLabel = new Label();
-        DateTimePicker lastDemoDatePicker = new DateTimePicker();
+        public Label lastDemoDateLabel = new Label();
+        public DateTimePicker lastDemoDatePicker = new DateTimePicker();
 
-        Label lastReviewIntLabel = new Label();
-        TextBox lastReviewIntTextBox = new TextBox();
+        public Label lastReviewIntLabel = new Label();
+        public TextBox lastReviewIntTextBox = new TextBox();
 
-        Label lastReviewedDateLabel = new Label();
-        DateTimePicker lastReviewedDatePicker = new DateTimePicker();
+        public Label lastReviewedDateLabel = new Label();
+        public DateTimePicker lastReviewedDatePicker = new DateTimePicker();
 
-        Label docAttachLabel = new Label();
-        Button docAttachBrowseButton= new Button();
+        public Label docAttachLabel = new Label();
+        public Button docAttachBrowseButton= new Button();
 
-        Button submitButton = new Button(); 
+        public Button submitButton = new Button();
+
+        // Events for CRUD operations
+        public event EventHandler InsertVendor;
+        public event EventHandler UpdateVendor;
+        public event EventHandler DeleteVendor;
 
 
-        public addVendor()
+        public AddVendor()
         {
             InitializeComponent();
         }
@@ -147,9 +140,6 @@ namespace CitiSoft
             companyEstablishedTextBox.TextChanged += CompanyEstablishedTextBox_TextChanged;
             employeesTextBox.TextChanged += EmployeesTextBox_TextChanged;
             lastReviewIntTextBox.TextChanged += LastReviewIntTextBox_TextChanged;
-            
-                
-
         }
 
         private void LastReviewIntTextBox_TextChanged(object sender, EventArgs e)
@@ -178,8 +168,7 @@ namespace CitiSoft
 
 
         public void submitButton_click(object sender, EventArgs e)
-        { 
-
+        {
         }
 
     }

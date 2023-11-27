@@ -40,7 +40,7 @@ namespace CitiSoft
                 MessageBox.Show("Please provide vendor ID first");
                 return;
             }
-            if (InputValidation.CheckValueExists(Variables.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
+            if (InputValidation.CheckValueExists(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("Provided vendor ID does not exist");
                 return;
@@ -52,7 +52,7 @@ namespace CitiSoft
                 {
                     byte[] fileData = File.ReadAllBytes(file);
 
-                    using (SqlConnection connection = new SqlConnection(Variables.citiSoftDatabaseConnectionString))
+                    using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
                     {
                         string query = "INSERT INTO VendorInfo (docAttach) VALUES (@Data) WHERE vid = @VendorID;";
                         using (SqlCommand command = new SqlCommand(query, connection))

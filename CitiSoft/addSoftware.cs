@@ -7,14 +7,17 @@ using System.Windows.Forms;
 
 namespace CitiSoft
 {
-    internal class addSoftware : Form
+    
+    internal class AddSoftware : Form
     {
-        public addSoftware() 
+        public AddSoftware() 
         {
             InitializeComponents();
         }
 
-        
+
+        Label compNameLabel = new Label();
+        ComboBox compNameComboBox = new ComboBox();
 
         Label softwareNameLabel = new Label();
         TextBox softwareNameTextBox = new TextBox();
@@ -50,6 +53,8 @@ namespace CitiSoft
         Label additionalInfoLabel = new Label();
         RichTextBox additionalInfoRichTextBox = new RichTextBox();
 
+
+
         private void InitializeComponents()
         {
             typeOfSoftwareCustomListBox = new CustomListBox(typeOfSoftwareTextBox);
@@ -58,6 +63,7 @@ namespace CitiSoft
             financialServicesCustomListBox = new CustomListBox(financialServicesTextBox);
             AutoScroll = true;
             Controls.AddRange(new Control[] {
+                compNameLabel, compNameComboBox,
                 softwareNameLabel, softwareNameTextBox,
                 companyWebsiteLabel, companyWebsiteTextBox,
                 typeOfSoftwareLabel, typeOfSoftwareTextBox, typeOfSoftwareCustomListBox,
@@ -69,6 +75,7 @@ namespace CitiSoft
                 additionalInfoLabel, additionalInfoRichTextBox,
                 });
             string[] softControlVarName = new string[] {
+                "compNameLabel","compNameComboBox",
                 "softwareNameLabel", "softwareNameTextBox",
                 "companyWebsiteLabel", "companyWebsiteTextBox",
                 "typeOfSoftwareLabel", "typeOfSoftwareTextBox", "typeOfSoftwareCustomListBox",
@@ -81,6 +88,7 @@ namespace CitiSoft
             };
             string[] softControlText = new string[]
             {
+                "Comapany Name:",
                 "Software Name:",
                 "Company Website:",
                 "Type of Software:",
@@ -90,7 +98,6 @@ namespace CitiSoft
                 "Financial Services Client Types:",
                 "Cloud (Enabled/Native/Based):",
                 "Additional Information:",
-
             };
             
             int softAddxLoc = 10;
@@ -140,9 +147,65 @@ namespace CitiSoft
                 }
 
             }
+            softwareNameTextBox.TextChanged += SoftwareNameTextBox_TextChanged;
+            companyWebsiteTextBox.TextChanged += CompanyWebsiteTextBox_TextChanged;
+            typeOfSoftwareTextBox.TextChanged += TypeOfSoftwareTextBox_TextChanged;
+            descriptionRichTextBox.TextChanged += DescriptionRichTextBox_TextChanged;
+            businessAreasTextBox.TextChanged += BusinessAreasTextBox_TextChanged;
+            modulesTextBox.TextChanged += ModulesTextBox_TextChanged;
+            financialServicesTextBox.TextChanged += FinancialServicesTextBox_TextChanged;
+            additionalInfoRichTextBox.TextChanged += AdditionalInfoRichTextBox_TextChanged;
 
             
 
+        }
+
+        private void SoftwareNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsValid(textBox,30,"Only Text, Space and Hyphen(-)", @"^[a-zA-Z -]+$");
+        }
+        private void CompanyWebsiteTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsValid(textBox, 40, "Only Text, Numbers and Special Characters like these  /&?=:%$-_.+!*'(),", @"^[a-zA-Z0-9/&?=:%$-_.+!*'(),]+$");
+        }
+
+        private void TypeOfSoftwareTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsValid(textBox, 30, "Only Text and Space", @"^[a-zA-Z ]+$");
+        }
+
+        private void DescriptionRichTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsValid(textBox, 255, "Only Text, Numbers and Special Characters like these  /&?=:%$-_.+!*'(),", @"^[a-zA-Z0-9/&?=:%$£-_.+!*'(),]+$");
+        }
+
+        
+        private void BusinessAreasTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsValid(textBox, 30, "Only Text and Space", @"^[a-zA-Z ]+$");
+        }
+  
+        private void ModulesTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsValid(textBox, 30, "Only Text and Space", @"^[a-zA-Z ]+$");
+        }
+
+        private void FinancialServicesTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsValid(textBox, 30, "Only Text and Space", @"^[a-zA-Z ]+$");
+        }
+
+        private void AdditionalInfoRichTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsValid(textBox, 255, "Only Text, Numbers and Special Characters like these  /&?=:%$-_.+!*'(),", @"^[a-zA-Z0-9/&?=:%$£-_.+!*'(),]+$");
         }
 
     }

@@ -27,7 +27,7 @@ namespace CitiSoft
                 return; // Exit if no client ID is provided
             }
 
-            using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
+            using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
@@ -120,7 +120,7 @@ namespace CitiSoft
                 return;
             }
 
-            using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
+            using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();

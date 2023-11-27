@@ -28,12 +28,12 @@ namespace CitiSoft
                 MessageBox.Show("Please fill in all text boxes");
                 return;
             }
-            if (!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "Client", "cid", clientIDPHTxtBox.Text))
+            if (!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "Client", "cid", clientIDPHTxtBox.Text))
             {
                 MessageBox.Show("Client ID you have provided does not exist");
                 return;
             }
-            if (!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "User", "uid", userIDPHTxtBox.Text))
+            if (!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "User", "uid", userIDPHTxtBox.Text))
             {
                 MessageBox.Show("Your ID does not exist");
                 return;
@@ -44,7 +44,7 @@ namespace CitiSoft
                 return;
             }
 
-            using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
+            using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
@@ -113,14 +113,14 @@ namespace CitiSoft
                 MessageBox.Show("Please enter the ID");
                 return;
             }
-            if (!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "ProblemHistory", "pid", problemIDTxtBox.Text))
+            if (!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "ProblemHistory", "pid", problemIDTxtBox.Text))
             {
                 MessageBox.Show($"Problem with id: {problemIDTxtBox.Text}, does not exist");
                 problemIDTxtBox.Text = "";
                 return;
             }
 
-            using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
+            using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
@@ -168,16 +168,16 @@ namespace CitiSoft
                 return;
             }
             
-            if(!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "ProblemHistory", "pid", problemIDTxtBox.Text))
+            if(!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "ProblemHistory", "pid", problemIDTxtBox.Text))
             {
                 MessageBox.Show($"Problem with id: {problemIDTxtBox.Text}, does not exist");
                 problemIDTxtBox.Text = "";
                 return;
             }
 
-            RuntimeUI.dataBinding(Variables.functionalityConnectionString, "SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid", ProblemHistoryDgv, int.Parse(problemIDTxtBox.Text), "p.pid ");
+            RuntimeUI.dataBinding(DataBaseManager.functionalityConnectionString, "SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid", ProblemHistoryDgv, int.Parse(problemIDTxtBox.Text), "p.pid ");
             // updates the lstRevDate (Last review date)
-            using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
+            using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
@@ -201,7 +201,7 @@ namespace CitiSoft
         // displays all columns to the datagrid
         private void viewAllProblemsBtn_Click(object sender, EventArgs e)
         {
-            RuntimeUI.dataBinding(Variables.functionalityConnectionString, "SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid;", ProblemHistoryDgv);
+            RuntimeUI.dataBinding(DataBaseManager.functionalityConnectionString, "SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid;", ProblemHistoryDgv);
         }
 
         private void ProblemHistoryForm_Load(object sender, EventArgs e)
