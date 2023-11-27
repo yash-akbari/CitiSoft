@@ -16,7 +16,7 @@ namespace CitiSoft
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(Variables.citiSoftDatabaseConnectionString))
+                using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
                 {
                     string query = @"
                 INSERT INTO VendorInfo (compName, est, empCount, intProfServ, lstDemoDt, lstRevInt, lstRevDt) 

@@ -27,13 +27,13 @@ namespace CitiSoft
                 return; // Exit if no client ID is provided
             }
 
-            if (!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "Client", "cid", clientIDTxtBox.Text))
+            if (!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "Client", "cid", clientIDTxtBox.Text))
             {
                 MessageBox.Show("Client ID you have provided does not exist");
                 clientIDTxtBox.Text = string.Empty;
                 return;
             }
-            using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
+            using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
@@ -126,14 +126,14 @@ namespace CitiSoft
                 return;
             }
 
-            if (!InputValidation.CheckValueExists(Variables.functionalityConnectionString, "Client", "cid", deleteIDTextBox.Text))
+            if (!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "Client", "cid", deleteIDTextBox.Text))
             {
                 MessageBox.Show("Client ID you have provided does not exist");
                 deleteIDTextBox.Text = string.Empty;
                 return;
             }
 
-            using (SqlConnection connection = new SqlConnection(Variables.functionalityConnectionString))
+            using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();

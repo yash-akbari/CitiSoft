@@ -41,7 +41,7 @@ namespace CitiSoft
                 MessageBox.Show("Please provide vendor ID first");
                 return;
             }
-            if (!InputValidation.CheckValueExists(Variables.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
+            if (!InputValidation.CheckValueExists(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("Provided vendor ID does not exist");
                 return;
@@ -93,14 +93,14 @@ namespace CitiSoft
                 return;
             }
 
-             if (!InputValidation.CheckValueExists(Variables.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
+             if (!InputValidation.CheckValueExists(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("Vendor ID you have provided does not exist");
                 vendorIDTxtBox.Text = string.Empty;
                 return;
             }
 
-            using (SqlConnection connection = new SqlConnection(Variables.citiSoftDatabaseConnectionString))
+            using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
