@@ -107,6 +107,7 @@ namespace CitiSoft
             venViewChildTabControl.Controls.Add(viewVendorTabPage);
             viewVendorTabPage.Name = "viewVendorTabPage";
             viewVendorTabPage.Text = "View Vendor";
+            viewVendorTabPage.AutoScroll = true; 
             ViewDataByVendor venView = new ViewDataByVendor();
             AddForm(venView, viewVendorTabPage);
         }

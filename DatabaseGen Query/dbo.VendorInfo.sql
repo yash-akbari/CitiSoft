@@ -1,16 +1,13 @@
-﻿CREATE TABLE [dbo].[VendorInfo]
-(
-	[vid] INT NOT NULL PRIMARY KEY, 
-    [compName] VARCHAR(20) NULL, 
-    [compWeb] VARCHAR(40) NULL, 
-    [desc] NVARCHAR(MAX) NULL, 
-    [est] SMALLINT NULL, 
-    [empCount] VARCHAR(20) NULL, 
-    [intProfServ] BIT NULL, 
-    [lstDemoDt] DATE NULL, 
-    [lstRevDt] DATE NULL, 
-    [cloud] BINARY(2) NULL, 
-    [addnfo] NVARCHAR(MAX) NULL, 
-    [docAttach] BIT NULL, 
-    [finSerClieTyp] NVARCHAR(MAX) NULL
-)
+﻿CREATE TABLE [dbo].[VendorInfo] (
+    [vid]         INT             IDENTITY (1, 1) NOT NULL,
+    [compName]    VARCHAR (20)    NOT NULL,
+    [est]         SMALLINT        NULL,
+    [empCount]    NVARCHAR (25)   NULL,
+    [intProfServ] VARCHAR (3)     NULL,
+    [lstDemoDt]   DATE            NULL,
+    [lstRevInt]   SMALLINT        NULL,
+    [lstRevDt]    DATE            NULL,
+    [docAttach]   VARBINARY (MAX) NULL,
+    PRIMARY KEY CLUSTERED ([vid] ASC)
+);
+

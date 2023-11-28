@@ -14,7 +14,15 @@ namespace CitiSoft
         public static void vendorDelivered() 
         {
             ViewDataByVendor vendor = new ViewDataByVendor();
-            vendor.venViewData.DataSource = Controller.getDeliverVendor();
+            vendor.VendorDataGridView.DataSource = Controller.getDeliverVendor();
         }
+
+        public static void addressDelivered(int vid)
+        {
+            ViewDataByVendor vendor = new ViewDataByVendor();
+           
+            vendor.AddressDataGridView.DataSource = Controller.getDeliverAddress(vid); 
+        }
+
     }
 }

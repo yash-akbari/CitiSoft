@@ -33,7 +33,7 @@ namespace CitiSoft
 
         CustomListBox addressCustomListBox = new CustomListBox();
 
-        List<AddressModels> addressList = new List<AddressModels>();
+        List<AddressModel> addressList = new List<AddressModel>();
 
         int index = 0;
 
@@ -136,14 +136,14 @@ namespace CitiSoft
             if (addressCustomListBox.listBox.SelectedItem != null)
             {
                 index= addressCustomListBox.listBox.SelectedIndex;
-                AddressModels instance = addressList[index] as AddressModels;
+                AddressModel instance = addressList[index] as AddressModel;
                 addressLine1TextBox.Text = instance.AddressLine1;
                 addressLine2TextBox.Text = instance.AddressLine2;
                 cityTextBox.Text = instance.City;
                 countryTextBox.Text = instance.Country;
                 postCodeTextBox.Text = instance.PostCode;
                 emailTextBox .Text = instance.Email;
-                telephoneTextBox.Text = instance.Phone;
+                telephoneTextBox.Text = instance.Telephone;
                 addressCustomListBox.add.Visible = false;
                 addressCustomListBox.edit.Visible = true;
                 addressCustomListBox.update.Visible = false;
@@ -157,7 +157,7 @@ namespace CitiSoft
             if (addressLine1TextBox.Text.Trim() != "" || addressLine2TextBox.Text.Trim() != "" || cityTextBox.Text.Trim() != "" || countryTextBox.Text.Trim() != "" || postCodeTextBox.Text.Trim() != "" || emailTextBox.Text.Trim() != "" || telephoneTextBox.Text.Trim() != "")
             {
                 
-                addressList.Add(new AddressModels
+                addressList.Add(new AddressModel
                 {
                     AddressLine1 = addressLine1TextBox.Text,
                     AddressLine2 = addressLine2TextBox.Text,
@@ -165,7 +165,7 @@ namespace CitiSoft
                     Country = countryTextBox.Text,
                     PostCode = postCodeTextBox.Text,
                     Email = emailTextBox.Text,
-                    Phone = telephoneTextBox.Text
+                    Telephone = telephoneTextBox.Text
                 });
                 foreach (Control con in Controls)
                 {
@@ -174,8 +174,8 @@ namespace CitiSoft
                         con.Text = "";
                     }
                 }
-                AddressModels instance = addressList[addressList.Count - 1] as AddressModels;
-                addressCustomListBox.listBox.Items.Add(instance.AddressLine1 + " " + instance.AddressLine2 + " " + instance.City + " " + instance.Country + " " + instance.PostCode + " " + instance.Email + " " + instance.Phone);
+                AddressModel instance = addressList[addressList.Count - 1] as AddressModel;
+                addressCustomListBox.listBox.Items.Add(instance.AddressLine1 + " " + instance.AddressLine2 + " " + instance.City + " " + instance.Country + " " + instance.PostCode + " " + instance.Email + " " + instance.Telephone);
             }
             else
             {
@@ -188,14 +188,14 @@ namespace CitiSoft
             index = addressCustomListBox.listBox.SelectedIndex;
             if (index > -1 )
             {
-                AddressModels instance = addressList[index] as AddressModels;
+                AddressModel instance = addressList[index] as AddressModel;
                 addressLine1TextBox.Text = instance.AddressLine1;
                 addressLine2TextBox.Text = instance.AddressLine2;
                 cityTextBox.Text = instance.City;
                 countryTextBox.Text = instance.Country;
                 postCodeTextBox.Text = instance.PostCode;
                 emailTextBox.Text = instance.Email;
-                telephoneTextBox.Text = instance.Phone;
+                telephoneTextBox.Text = instance.Telephone;
                 addressCustomListBox.add.Visible = false;
                 addressCustomListBox.edit.Visible = false;
                 addressCustomListBox.update.Visible = true;
@@ -232,7 +232,7 @@ namespace CitiSoft
         {
             if (addressLine1TextBox.Text.Trim() != "" || addressLine2TextBox.Text.Trim() != "" || cityTextBox.Text.Trim() != "" || countryTextBox.Text.Trim() != "" || postCodeTextBox.Text.Trim() != "" || emailTextBox.Text.Trim() != "" || telephoneTextBox.Text.Trim() != "")
             {
-                addressList[index]=(new AddressModels
+                addressList[index]=(new AddressModel
                 {
                     AddressLine1 = addressLine1TextBox.Text,
                     AddressLine2 = addressLine2TextBox.Text,
@@ -240,7 +240,7 @@ namespace CitiSoft
                     Country = countryTextBox.Text,
                     PostCode = postCodeTextBox.Text,
                     Email = emailTextBox.Text,
-                    Phone = telephoneTextBox.Text
+                    Telephone = telephoneTextBox.Text
                 });
                 foreach (Control con in Controls)
                 {
@@ -249,9 +249,9 @@ namespace CitiSoft
                         con.Text = "";
                     }
                 }
-                AddressModels instance = addressList[index] as AddressModels;
+                AddressModel instance = addressList[index] as AddressModel;
                 addressCustomListBox.listBox.Items.RemoveAt(index);
-                addressCustomListBox.listBox.Items.Insert(index,(instance.AddressLine1 + " " + instance.AddressLine2 + " " + instance.City + " " + instance.Country + " " + instance.PostCode + " " + instance.Email + " " + instance.Phone));
+                addressCustomListBox.listBox.Items.Insert(index,(instance.AddressLine1 + " " + instance.AddressLine2 + " " + instance.City + " " + instance.Country + " " + instance.PostCode + " " + instance.Email + " " + instance.Telephone));
                 addressCustomListBox.add.Visible = true;
                 addressCustomListBox.edit.Visible = true;
                 addressCustomListBox.remove.Visible = true;
