@@ -126,7 +126,6 @@ namespace CitiSoft
             this.Controls.Add(this.fileDropPBox);
             this.Name = "ModifyDocumentsForm";
             this.Text = "ModifyDocumentsForm";
-            this.Load += new System.EventHandler(this.ModifyDocumentsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.fileDropPBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.addDocumentDgv)).EndInit();
             this.ResumeLayout(false);

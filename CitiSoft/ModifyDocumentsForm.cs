@@ -139,40 +139,6 @@ namespace CitiSoft
             RuntimeUI.dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT vid, compName, est, empCount, intProfServ, lstDemoDt, lstRevInt, lstRevDt FROM VendorInfo;", addDocumentDgv);
         }
 
-        private void ModifyDocumentsForm_Load(object sender, EventArgs e)
-        {
-            LoadDocuments();
-        }
-
-        private void LoadDocuments()
-        {
-            using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
-            {
-                connection.Open();
-                SqlTransaction transaction = connection.BeginTransaction();
-                try
-                {
-                    using (SqlCommand command = new SqlCommand("SELECT DocumentID, DocumentName FROM Documents", connection))
-                    {
-                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                        {
-                            DataTable dataTable = new DataTable();
-                            adapter.Fill(dataTable);
-
-                            // Bind data to DataGridView
-                            addDocumentDgv.DataSource = dataTable;
-                            transaction.Commit();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error loading documents: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    transaction.Rollback();
-                }
-            }
-        }
-
         private void DownloadDocument()
         {
             if (addDocumentDgv.SelectedRows.Count > 0)

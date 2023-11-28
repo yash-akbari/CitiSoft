@@ -100,7 +100,7 @@ namespace CitiSoft
         private void descriptionTxtBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            int length = 10000; // 10000 only characters can= be in a description text
+            int length = 255; // 255 only characters can be in a description text
             InputValidation.LimitLength(textBox, length, "Description text");
         }
         private void userIDPHTxtBox_TextChanged(object sender, EventArgs e)

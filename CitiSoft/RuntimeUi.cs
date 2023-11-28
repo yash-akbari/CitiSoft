@@ -373,7 +373,7 @@ namespace CitiSoft
 
         // takes database name, query and DataGridView instance to display a table. Also takes optional argument,
         // which enables to display a particular row
-        public static void dataBinding(string connectionString, string baseQuery, DataGridView table, int? id = null, string idName = null)
+        /*public static void dataBinding(string connectionString, string baseQuery, DataGridView table, int? id = null, string idName = null)
         {
             try
             {
@@ -423,6 +423,55 @@ namespace CitiSoft
                             transaction.Rollback();
                             MessageBox.Show("Transaction Rolled Back. Error: " + ex.Message);
                         }
+                    }
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                // Handle SQL-specific errors here
+                MessageBox.Show("SQL Error: " + sqlEx.Message);
+            }
+            catch (Exception ex)
+            {
+                // Handle other types of errors here
+                MessageBox.Show("General Error: " + ex.Message);
+            }
+        }*/
+        public static void dataBinding(string connectionString, string baseQuery, DataGridView table, int? id = null, string idName = null)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand(baseQuery, connection);
+
+                    // Modify the query and add parameter if 'id' is provided
+                    if (id.HasValue && idName != null)
+                    {
+                        command.CommandText += $" WHERE {idName} = @Id";
+                        command.Parameters.AddWithValue("@Id", id.Value);
+                    }
+
+                    DataTable table1 = new DataTable();
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        adapter.Fill(table1);
+                    }
+
+                    if (id.HasValue && table1.Rows.Count == 0)
+                    {
+                        // Handle the case where no data is found for the provided id
+                        MessageBox.Show($"No data found for ID: {id.Value}");
+                    }
+                    else
+                    {
+                        DataTable mergedTable = new DataTable();
+                        mergedTable.Merge(table1);
+
+                        table.DataSource = mergedTable;
                     }
                 }
             }
