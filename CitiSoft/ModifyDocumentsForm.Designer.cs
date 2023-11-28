@@ -37,6 +37,7 @@ namespace CitiSoft
             this.vendorIDTxtBox = new System.Windows.Forms.TextBox();
             this.addDocumentDgv = new System.Windows.Forms.DataGridView();
             this.removeDocumentBtn = new System.Windows.Forms.Button();
+            this.downloadDocumentBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.fileDropPBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.addDocumentDgv)).BeginInit();
             this.SuspendLayout();
@@ -58,7 +59,6 @@ namespace CitiSoft
             this.dragAndDropLabel.Size = new System.Drawing.Size(352, 25);
             this.dragAndDropLabel.TabIndex = 1;
             this.dragAndDropLabel.Text = "Drag and drop your document here:";
-            this.dragAndDropLabel.Click += new System.EventHandler(this.dragAndDropLabel_Click);
             // 
             // vendorIDLabel
             // 
@@ -101,12 +101,23 @@ namespace CitiSoft
             this.removeDocumentBtn.UseVisualStyleBackColor = true;
             this.removeDocumentBtn.Click += new System.EventHandler(this.removeDocumentBtn_Click);
             // 
+            // downloadDocumentBtn
+            // 
+            this.downloadDocumentBtn.Location = new System.Drawing.Point(1344, 512);
+            this.downloadDocumentBtn.Name = "downloadDocumentBtn";
+            this.downloadDocumentBtn.Size = new System.Drawing.Size(227, 43);
+            this.downloadDocumentBtn.TabIndex = 6;
+            this.downloadDocumentBtn.Text = "Download Document";
+            this.downloadDocumentBtn.UseVisualStyleBackColor = true;
+            this.downloadDocumentBtn.Click += new System.EventHandler(this.downloadDocumentBtn_Click);
+            // 
             // ModifyDocumentsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1865, 1284);
+            this.Controls.Add(this.downloadDocumentBtn);
             this.Controls.Add(this.removeDocumentBtn);
             this.Controls.Add(this.addDocumentDgv);
             this.Controls.Add(this.vendorIDTxtBox);
@@ -115,6 +126,7 @@ namespace CitiSoft
             this.Controls.Add(this.fileDropPBox);
             this.Name = "ModifyDocumentsForm";
             this.Text = "ModifyDocumentsForm";
+            this.Load += new System.EventHandler(this.ModifyDocumentsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.fileDropPBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.addDocumentDgv)).EndInit();
             this.ResumeLayout(false);
@@ -130,5 +142,6 @@ namespace CitiSoft
         private System.Windows.Forms.TextBox vendorIDTxtBox;
         private System.Windows.Forms.DataGridView addDocumentDgv;
         private Button removeDocumentBtn;
+        private Button downloadDocumentBtn;
     }
 }

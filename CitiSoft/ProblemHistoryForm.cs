@@ -190,8 +190,8 @@ namespace CitiSoft
                     using (SqlCommand command = new SqlCommand($"UPDATE ProblemHistory SET lstRevDate = {DateTime.Today.ToString("yyyy-MM-dd")}  WHERE cid = @ClientID;", connection, transaction))
                     {
                         command.Parameters.AddWithValue("@ClientID", problemIDTxtBox.Text);
-
                         int rowsAffected = command.ExecuteNonQuery();
+                        transaction.Commit();
                     }
                 }
                 catch (SqlException)

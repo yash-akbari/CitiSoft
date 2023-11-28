@@ -225,9 +225,6 @@ namespace CitiSoft
             modifyClientTabPage.Text = "Modify Client";
             modifyClientTabPage.UseVisualStyleBackColor = true;
 
-            
-           
-
             ModifyClientForm modifyClientForm = new ModifyClientForm();
             modifyClientForm.showDataInTable();
             AddForm(modifyClientForm, modifyClientTabPage);
@@ -384,33 +381,48 @@ namespace CitiSoft
                 {
                     connection.Open();
 
-                    SqlCommand command = new SqlCommand(baseQuery, connection);
-
-                    // Modify the query and add parameter if 'id' is provided
-                    if (id.HasValue && idName != null)
+                    using (SqlTransaction transaction = connection.BeginTransaction())
                     {
-                        command.CommandText += $" WHERE {idName} = @Id";
-                        command.Parameters.AddWithValue("@Id", id.Value);
-                    }
+                        try
+                        {
+                            SqlCommand command = new SqlCommand(baseQuery, connection, transaction);
 
-                    DataTable table1 = new DataTable();
+                            // Modify the query and add parameter if 'id' is provided
+                            if (id.HasValue && idName != null)
+                            {
+                                command.CommandText += $" WHERE {idName} = @Id";
+                                command.Parameters.AddWithValue("@Id", id.Value);
+                            }
 
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        adapter.Fill(table1);
-                    }
+                            DataTable table1 = new DataTable();
 
-                    if (id.HasValue && table1.Rows.Count == 0)
-                    {
-                        // Handle the case where no data is found for the provided id
-                        MessageBox.Show($"No data found for ID: {id.Value}");
-                    }
-                    else
-                    {
-                        DataTable mergedTable = new DataTable();
-                        mergedTable.Merge(table1);
+                            using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                            {
+                                adapter.Fill(table1);
+                            }
 
-                        table.DataSource = mergedTable;
+                            if (id.HasValue && table1.Rows.Count == 0)
+                            {
+                                // Handle the case where no data is found for the provided id
+                                MessageBox.Show($"No data found for ID: {id.Value}");
+                            }
+                            else
+                            {
+                                DataTable mergedTable = new DataTable();
+                                mergedTable.Merge(table1);
+
+                                table.DataSource = mergedTable;
+                            }
+
+                            // Commit the transaction if everything is successful
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            // An error occurred, rollback the transaction
+                            transaction.Rollback();
+                            MessageBox.Show("Transaction Rolled Back. Error: " + ex.Message);
+                        }
                     }
                 }
             }
@@ -425,6 +437,7 @@ namespace CitiSoft
                 MessageBox.Show("General Error: " + ex.Message);
             }
         }
+
 
 
         public RuntimeUI()

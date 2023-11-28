@@ -18,6 +18,7 @@ namespace CitiSoft
         {
             InitializeComponent();
             InitializeDragDrop();
+            showDataInTable();
 
         }
         private void InitializeDragDrop()
@@ -55,7 +56,10 @@ namespace CitiSoft
 
                     using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
                     {
-                        string query = "INSERT INTO VendorInfo (docAttach) VALUES (@Data) WHERE vid = @VendorID;";
+                        //string query = "INSERT INTO VendorInfo (docAttach) VALUES (@Data) WHERE vid = @VendorID;";
+                        string query = "UPDATE VendorInfo SET docAttach = @Data WHERE vid = @VendorID";
+
+
                         using (SqlCommand command = new SqlCommand(query, connection))
                         {
                             command.Parameters.Add("@Data", SqlDbType.VarBinary, -1).Value = fileData;
@@ -67,9 +71,9 @@ namespace CitiSoft
                     }
                     MessageBox.Show("File was successfully added");
                 }
-                catch (Exception)
+                catch (Exception exc)
                 {
-                    MessageBox.Show("Error uploading file");
+                    MessageBox.Show("Error uploading file" + exc);
                 }
             }
         }
@@ -78,11 +82,6 @@ namespace CitiSoft
         {
             TextBox textBox = sender as TextBox;
             InputValidation.IsOnlyNumbers(textBox);
-        }
-
-        private void dragAndDropLabel_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void removeDocumentBtn_Click(object sender, EventArgs e)
@@ -133,6 +132,92 @@ namespace CitiSoft
                     vendorIDTxtBox.Text = string.Empty;
                 }
             }
+        }
+
+        public void showDataInTable()
+        { 
+            RuntimeUI.dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT vid, compName, est, empCount, intProfServ, lstDemoDt, lstRevInt, lstRevDt FROM VendorInfo;", addDocumentDgv);
+        }
+
+        private void ModifyDocumentsForm_Load(object sender, EventArgs e)
+        {
+            LoadDocuments();
+        }
+
+        private void LoadDocuments()
+        {
+            using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                try
+                {
+                    using (SqlCommand command = new SqlCommand("SELECT DocumentID, DocumentName FROM Documents", connection))
+                    {
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                        {
+                            DataTable dataTable = new DataTable();
+                            adapter.Fill(dataTable);
+
+                            // Bind data to DataGridView
+                            addDocumentDgv.DataSource = dataTable;
+                            transaction.Commit();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading documents: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    transaction.Rollback();
+                }
+            }
+        }
+
+        private void DownloadDocument()
+        {
+            if (addDocumentDgv.SelectedRows.Count > 0)
+            {
+                string documentName = addDocumentDgv.SelectedRows[0].Cells["DocumentName"].Value.ToString();
+
+                using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
+                {
+                    connection.Open();
+                    SqlTransaction transaction = connection.BeginTransaction();
+                    try
+                    {
+                        using (SqlCommand command = new SqlCommand("SELECT docAttach FROM VendorInfo WHERE vid = @VendorID", connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
+
+                            byte[] documentData = (byte[])command.ExecuteScalar();
+
+                            // Save document to a file
+                            SaveFileDialog saveFileDialog = new SaveFileDialog();
+                            saveFileDialog.FileName = documentName;
+                            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                File.WriteAllBytes(saveFileDialog.FileName, documentData);
+                                MessageBox.Show("Document downloaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                transaction.Commit();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error downloading document: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        transaction.Rollback();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a document to download.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void downloadDocumentBtn_Click(object sender, EventArgs e)
+        {
+            DownloadDocument();
         }
     }
 }
