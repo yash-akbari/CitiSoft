@@ -152,7 +152,7 @@ namespace CitiSoft
                 // checks for length
                 if (input.Length > length)
                 {
-                    MessageBox.Show($"{name} address is too long");
+                    MessageBox.Show($"{name} is too long");
                     AutoCorrection(textBox, input);
                 }
                 else

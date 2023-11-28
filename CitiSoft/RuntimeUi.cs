@@ -224,7 +224,11 @@ namespace CitiSoft
             modifyClientTabPage.Text = "Modify Client";
             modifyClientTabPage.UseVisualStyleBackColor = true;
 
+            
+           
+
             ModifyClientForm modifyClientForm = new ModifyClientForm();
+            modifyClientForm.showDataInTable();
             AddForm(modifyClientForm, modifyClientTabPage);
         }
         public void clientProblemHistoryFunc()
