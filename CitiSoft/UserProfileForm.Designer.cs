@@ -28,18 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnForgotPassword = new System.Windows.Forms.Button();
-            this.SuspendLayout();
-            // 
-            // btnForgotPassword
-            // 
-            this.btnForgotPassword.Location = new System.Drawing.Point(83, 25);
-            this.btnForgotPassword.Name = "btnForgotPassword";
-            this.btnForgotPassword.Size = new System.Drawing.Size(181, 59);
-            this.btnForgotPassword.TabIndex = 0;
-            this.btnForgotPassword.Text = "Forgot Password?";
-            this.btnForgotPassword.UseVisualStyleBackColor = true;
-            this.btnForgotPassword.Click += new System.EventHandler(this.btnForgotPassword_Click);
+           
+           
             // 
             // UserProfileForm
             // 
