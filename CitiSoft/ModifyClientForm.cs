@@ -53,14 +53,23 @@ namespace CitiSoft
                     if (!string.IsNullOrWhiteSpace(emailTxtBox.Text))
                         addressUpdates.Add("email = @Email");
 
-                    if (!string.IsNullOrWhiteSpace(streetTxtBox.Text))
-                        addressUpdates.Add("Street = @Street");
+                    //if (!string.IsNullOrWhiteSpace(streetTxtBox.Text))
+                        //addressUpdates.Add("Street = @Street");
+
+                    if (!string.IsNullOrWhiteSpace(addressLine1TxtBox.Text))
+                        addressUpdates.Add("AddressLine1 = @addressLine1");
+
+                    if (!string.IsNullOrWhiteSpace(addressLine2TxtBox.Text))
+                        addressUpdates.Add("AddressLine2 = @addressLine2");
 
                     if (!string.IsNullOrWhiteSpace(cityTxtBox.Text))
                         addressUpdates.Add("City = @City");
 
                     if (!string.IsNullOrWhiteSpace(countryTxtBox.Text))
-                        addressUpdates.Add("Cointry = @Country");
+                        addressUpdates.Add("Country = @Country");
+
+                    if(!string.IsNullOrWhiteSpace(postcodeTxtBox.Text))
+                        addressUpdates.Add("PostCode = @Postcode");
 
                     if (clientUpdates.Count == 0 && addressUpdates.Count == 0)
                     {
@@ -88,14 +97,23 @@ namespace CitiSoft
                         if (!string.IsNullOrWhiteSpace(emailTxtBox.Text))
                             command.Parameters.AddWithValue("@Email", emailTxtBox.Text);
 
-                        if (!string.IsNullOrWhiteSpace(streetTxtBox.Text))
-                            command.Parameters.AddWithValue("@Street", streetTxtBox.Text);
+                        //if (!string.IsNullOrWhiteSpace(streetTxtBox.Text))
+                            //command.Parameters.AddWithValue("@Street", streetTxtBox.Text);
+
+                        if(!string.IsNullOrWhiteSpace(addressLine1TxtBox.Text))
+                            command.Parameters.AddWithValue("@AddressLine1", addressLine1TxtBox.Text);
+
+                        if (!string.IsNullOrWhiteSpace(addressLine2TxtBox.Text))
+                            command.Parameters.AddWithValue("@AddressLine2", addressLine2TxtBox.Text);
 
                         if (!string.IsNullOrWhiteSpace(cityTxtBox.Text))
                             command.Parameters.AddWithValue("@City", cityTxtBox.Text);
 
                         if (!string.IsNullOrWhiteSpace(countryTxtBox.Text))
                             command.Parameters.AddWithValue("@Country", countryTxtBox.Text);
+
+                        if (!string.IsNullOrWhiteSpace(postcodeTxtBox.Text))
+                            command.Parameters.AddWithValue("@Postcode", postcodeTxtBox.Text);
 
                         int rowsAffected = command.ExecuteNonQuery();
                         if (rowsAffected > 0)
@@ -191,12 +209,6 @@ namespace CitiSoft
             InputValidation.IsOnlyLetters(textBox, 30, "City");
         }
 
-        private void streetTxtBox_TextChanged(object sender, EventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            InputValidation.IsOnlyAlphanumericOrWithDots(textBox, 30, "Street");
-        }
-
         // checks only after the enter key was pressed
         private void emailTextBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -222,15 +234,44 @@ namespace CitiSoft
             InputValidation.IsPhoneNumberStructured(textBox, 15, "Phone number");
         }
 
+        private void addressLine1TxtBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsOnlyAlphanumericOrWithDots(textBox, 30, "Address Line 1");
+        }
+
+        private void addressLine2TxtBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsOnlyAlphanumericOrWithDots(textBox, 30, "Address Line 2");
+        }
+
         private void deleteIDTxtBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
             InputValidation.IsOnlyNumbers(textBox);
         }
 
+        private void postcodeTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsOnlyAlphanumericOrWithDots(textBox, 30, "Postcode");
+        }
+
         private void ModifyClientForm_Load(object sender, EventArgs e)
         {
 
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public void showDataInTable()
+        {
+            RuntimeUI.dataBinding(DataBaseManager.functionalityConnectionString, "SELECT c.cid AS 'Client ID', c.compName AS 'Company Name', cu.phone AS 'Phone', cu.email AS 'Email', CONCAT(cu.addressLine1, ' ', cu.addressLine2) AS 'Address', cu.city AS 'City', cu.country AS 'Country', cu.postCode AS 'Postcode' FROM Client c JOIN CustAddress cu ON c.cid = cu.cid; ", ModifyClientDgv);
+        }
+
     }
 }

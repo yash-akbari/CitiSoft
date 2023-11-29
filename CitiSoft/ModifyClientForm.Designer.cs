@@ -37,7 +37,6 @@ namespace CitiSoft
             this.companyNameTxtBox = new System.Windows.Forms.TextBox();
             this.countryTxtBox = new System.Windows.Forms.TextBox();
             this.cityTxtBox = new System.Windows.Forms.TextBox();
-            this.streetTxtBox = new System.Windows.Forms.TextBox();
             this.emailTxtBox = new System.Windows.Forms.TextBox();
             this.phoneTxtBox = new System.Windows.Forms.TextBox();
             this.idLabel = new System.Windows.Forms.Label();
@@ -46,17 +45,22 @@ namespace CitiSoft
             this.cityLabel = new System.Windows.Forms.Label();
             this.countryLabel = new System.Windows.Forms.Label();
             this.companyNameLabel = new System.Windows.Forms.Label();
-            this.streetLabel = new System.Windows.Forms.Label();
             this.deleteIDTextBox = new System.Windows.Forms.TextBox();
             this.clientIDLabel = new System.Windows.Forms.Label();
+            this.addressLine1TxtBox = new System.Windows.Forms.TextBox();
+            this.addressLine2TxtBox = new System.Windows.Forms.TextBox();
+            this.addressLine1Label = new System.Windows.Forms.Label();
+            this.addressLine2Label = new System.Windows.Forms.Label();
+            this.postcodeLabel = new System.Windows.Forms.Label();
+            this.postcodeTxtBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.ModifyClientDgv)).BeginInit();
             this.SuspendLayout();
             // 
             // updateClientBtn
             // 
-            this.updateClientBtn.Location = new System.Drawing.Point(1580, 515);
+            this.updateClientBtn.Location = new System.Drawing.Point(1621, 656);
             this.updateClientBtn.Name = "updateClientBtn";
-            this.updateClientBtn.Size = new System.Drawing.Size(139, 50);
+            this.updateClientBtn.Size = new System.Drawing.Size(172, 50);
             this.updateClientBtn.TabIndex = 0;
             this.updateClientBtn.Text = "Update";
             this.updateClientBtn.UseVisualStyleBackColor = true;
@@ -64,7 +68,7 @@ namespace CitiSoft
             // 
             // deleteClientBtn
             // 
-            this.deleteClientBtn.Location = new System.Drawing.Point(1580, 674);
+            this.deleteClientBtn.Location = new System.Drawing.Point(1430, 1033);
             this.deleteClientBtn.Name = "deleteClientBtn";
             this.deleteClientBtn.Size = new System.Drawing.Size(139, 44);
             this.deleteClientBtn.TabIndex = 1;
@@ -88,7 +92,7 @@ namespace CitiSoft
             // 
             // clientIDTxtBox
             // 
-            this.clientIDTxtBox.Location = new System.Drawing.Point(1444, 27);
+            this.clientIDTxtBox.Location = new System.Drawing.Point(1522, 23);
             this.clientIDTxtBox.Name = "clientIDTxtBox";
             this.clientIDTxtBox.Size = new System.Drawing.Size(275, 31);
             this.clientIDTxtBox.TabIndex = 3;
@@ -96,7 +100,7 @@ namespace CitiSoft
             // 
             // companyNameTxtBox
             // 
-            this.companyNameTxtBox.Location = new System.Drawing.Point(1444, 90);
+            this.companyNameTxtBox.Location = new System.Drawing.Point(1522, 86);
             this.companyNameTxtBox.Name = "companyNameTxtBox";
             this.companyNameTxtBox.Size = new System.Drawing.Size(275, 31);
             this.companyNameTxtBox.TabIndex = 4;
@@ -104,7 +108,7 @@ namespace CitiSoft
             // 
             // countryTxtBox
             // 
-            this.countryTxtBox.Location = new System.Drawing.Point(1444, 454);
+            this.countryTxtBox.Location = new System.Drawing.Point(1522, 515);
             this.countryTxtBox.Name = "countryTxtBox";
             this.countryTxtBox.Size = new System.Drawing.Size(275, 31);
             this.countryTxtBox.TabIndex = 5;
@@ -112,23 +116,15 @@ namespace CitiSoft
             // 
             // cityTxtBox
             // 
-            this.cityTxtBox.Location = new System.Drawing.Point(1444, 383);
+            this.cityTxtBox.Location = new System.Drawing.Point(1522, 444);
             this.cityTxtBox.Name = "cityTxtBox";
             this.cityTxtBox.Size = new System.Drawing.Size(275, 31);
             this.cityTxtBox.TabIndex = 6;
             this.cityTxtBox.TextChanged += new System.EventHandler(this.cityTxtBox_TextChanged);
             // 
-            // streetTxtBox
-            // 
-            this.streetTxtBox.Location = new System.Drawing.Point(1444, 305);
-            this.streetTxtBox.Name = "streetTxtBox";
-            this.streetTxtBox.Size = new System.Drawing.Size(275, 31);
-            this.streetTxtBox.TabIndex = 7;
-            this.streetTxtBox.TextChanged += new System.EventHandler(this.streetTxtBox_TextChanged);
-            // 
             // emailTxtBox
             // 
-            this.emailTxtBox.Location = new System.Drawing.Point(1444, 231);
+            this.emailTxtBox.Location = new System.Drawing.Point(1522, 227);
             this.emailTxtBox.Name = "emailTxtBox";
             this.emailTxtBox.Size = new System.Drawing.Size(275, 31);
             this.emailTxtBox.TabIndex = 8;
@@ -136,7 +132,7 @@ namespace CitiSoft
             // 
             // phoneTxtBox
             // 
-            this.phoneTxtBox.Location = new System.Drawing.Point(1444, 156);
+            this.phoneTxtBox.Location = new System.Drawing.Point(1522, 152);
             this.phoneTxtBox.Name = "phoneTxtBox";
             this.phoneTxtBox.Size = new System.Drawing.Size(275, 31);
             this.phoneTxtBox.TabIndex = 9;
@@ -172,7 +168,7 @@ namespace CitiSoft
             // cityLabel
             // 
             this.cityLabel.AutoSize = true;
-            this.cityLabel.Location = new System.Drawing.Point(1273, 386);
+            this.cityLabel.Location = new System.Drawing.Point(1273, 451);
             this.cityLabel.Name = "cityLabel";
             this.cityLabel.Size = new System.Drawing.Size(49, 25);
             this.cityLabel.TabIndex = 15;
@@ -181,7 +177,7 @@ namespace CitiSoft
             // countryLabel
             // 
             this.countryLabel.AutoSize = true;
-            this.countryLabel.Location = new System.Drawing.Point(1273, 460);
+            this.countryLabel.Location = new System.Drawing.Point(1273, 525);
             this.countryLabel.Name = "countryLabel";
             this.countryLabel.Size = new System.Drawing.Size(87, 25);
             this.countryLabel.TabIndex = 16;
@@ -196,18 +192,9 @@ namespace CitiSoft
             this.companyNameLabel.TabIndex = 11;
             this.companyNameLabel.Text = "Company Name";
             // 
-            // streetLabel
-            // 
-            this.streetLabel.AutoSize = true;
-            this.streetLabel.Location = new System.Drawing.Point(1273, 311);
-            this.streetLabel.Name = "streetLabel";
-            this.streetLabel.Size = new System.Drawing.Size(69, 25);
-            this.streetLabel.TabIndex = 14;
-            this.streetLabel.Text = "Street";
-            // 
             // deleteIDTextBox
             // 
-            this.deleteIDTextBox.Location = new System.Drawing.Point(1580, 620);
+            this.deleteIDTextBox.Location = new System.Drawing.Point(1430, 979);
             this.deleteIDTextBox.Name = "deleteIDTextBox";
             this.deleteIDTextBox.Size = new System.Drawing.Size(135, 31);
             this.deleteIDTextBox.TabIndex = 17;
@@ -216,11 +203,62 @@ namespace CitiSoft
             // clientIDLabel
             // 
             this.clientIDLabel.AutoSize = true;
-            this.clientIDLabel.Location = new System.Drawing.Point(1424, 626);
+            this.clientIDLabel.Location = new System.Drawing.Point(1274, 985);
             this.clientIDLabel.Name = "clientIDLabel";
             this.clientIDLabel.Size = new System.Drawing.Size(90, 25);
             this.clientIDLabel.TabIndex = 18;
             this.clientIDLabel.Text = "Client id";
+            // 
+            // addressLine1TxtBox
+            // 
+            this.addressLine1TxtBox.Location = new System.Drawing.Point(1522, 300);
+            this.addressLine1TxtBox.Name = "addressLine1TxtBox";
+            this.addressLine1TxtBox.Size = new System.Drawing.Size(275, 31);
+            this.addressLine1TxtBox.TabIndex = 19;
+            this.addressLine1TxtBox.TextChanged += new System.EventHandler(this.addressLine1TxtBox_TextChanged);
+            // 
+            // addressLine2TxtBox
+            // 
+            this.addressLine2TxtBox.Location = new System.Drawing.Point(1522, 370);
+            this.addressLine2TxtBox.Name = "addressLine2TxtBox";
+            this.addressLine2TxtBox.Size = new System.Drawing.Size(275, 31);
+            this.addressLine2TxtBox.TabIndex = 20;
+            this.addressLine2TxtBox.TextChanged += new System.EventHandler(this.addressLine2TxtBox_TextChanged);
+            // 
+            // addressLine1Label
+            // 
+            this.addressLine1Label.AutoSize = true;
+            this.addressLine1Label.Location = new System.Drawing.Point(1273, 306);
+            this.addressLine1Label.Name = "addressLine1Label";
+            this.addressLine1Label.Size = new System.Drawing.Size(156, 25);
+            this.addressLine1Label.TabIndex = 21;
+            this.addressLine1Label.Text = "Address Line 1";
+            // 
+            // addressLine2Label
+            // 
+            this.addressLine2Label.AutoSize = true;
+            this.addressLine2Label.Location = new System.Drawing.Point(1273, 376);
+            this.addressLine2Label.Name = "addressLine2Label";
+            this.addressLine2Label.Size = new System.Drawing.Size(156, 25);
+            this.addressLine2Label.TabIndex = 22;
+            this.addressLine2Label.Text = "Address Line 2";
+            // 
+            // postcodeLabel
+            // 
+            this.postcodeLabel.AutoSize = true;
+            this.postcodeLabel.Location = new System.Drawing.Point(1273, 589);
+            this.postcodeLabel.Name = "postcodeLabel";
+            this.postcodeLabel.Size = new System.Drawing.Size(102, 25);
+            this.postcodeLabel.TabIndex = 23;
+            this.postcodeLabel.Text = "Postcode";
+            // 
+            // postcodeTxtBox
+            // 
+            this.postcodeTxtBox.Location = new System.Drawing.Point(1522, 583);
+            this.postcodeTxtBox.Name = "postcodeTxtBox";
+            this.postcodeTxtBox.Size = new System.Drawing.Size(275, 31);
+            this.postcodeTxtBox.TabIndex = 24;
+            this.postcodeTxtBox.TextChanged += new System.EventHandler(this.postcodeTxtBox_TextChanged);
             // 
             // ModifyClientForm
             // 
@@ -228,18 +266,22 @@ namespace CitiSoft
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1865, 1284);
+            this.Controls.Add(this.postcodeTxtBox);
+            this.Controls.Add(this.postcodeLabel);
+            this.Controls.Add(this.addressLine2Label);
+            this.Controls.Add(this.addressLine1Label);
+            this.Controls.Add(this.addressLine2TxtBox);
+            this.Controls.Add(this.addressLine1TxtBox);
             this.Controls.Add(this.clientIDLabel);
             this.Controls.Add(this.deleteIDTextBox);
             this.Controls.Add(this.countryLabel);
             this.Controls.Add(this.cityLabel);
-            this.Controls.Add(this.streetLabel);
             this.Controls.Add(this.emailLabel);
             this.Controls.Add(this.phoneLabel);
             this.Controls.Add(this.companyNameLabel);
             this.Controls.Add(this.idLabel);
             this.Controls.Add(this.phoneTxtBox);
             this.Controls.Add(this.emailTxtBox);
-            this.Controls.Add(this.streetTxtBox);
             this.Controls.Add(this.cityTxtBox);
             this.Controls.Add(this.countryTxtBox);
             this.Controls.Add(this.companyNameTxtBox);
@@ -269,7 +311,6 @@ namespace CitiSoft
         private System.Windows.Forms.TextBox companyNameTxtBox;
         private System.Windows.Forms.TextBox countryTxtBox;
         private System.Windows.Forms.TextBox cityTxtBox;
-        private System.Windows.Forms.TextBox streetTxtBox;
         private System.Windows.Forms.TextBox emailTxtBox;
         private System.Windows.Forms.TextBox phoneTxtBox;
 
@@ -279,10 +320,14 @@ namespace CitiSoft
         private System.Windows.Forms.Label cityLabel;
         private System.Windows.Forms.Label countryLabel;
         private System.Windows.Forms.Label companyNameLabel;
-        private System.Windows.Forms.Label streetLabel;
 
         private System.Windows.Forms.TextBox deleteIDTextBox;
         private System.Windows.Forms.Label clientIDLabel;
-
+        private TextBox addressLine1TxtBox;
+        private TextBox addressLine2TxtBox;
+        private Label addressLine1Label;
+        private Label addressLine2Label;
+        private Label postcodeLabel;
+        private TextBox postcodeTxtBox;
     }
 }
