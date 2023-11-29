@@ -194,7 +194,7 @@ namespace CitiSoft
         }
 
 
-                public static void IsOnlyAlphanumericWithSpaceDashComma(TextBox textBox, int length, string name)
+        public static void IsOnlyAlphanumericWithSpaceDashComma(TextBox textBox, int length, string name)
         {
             if (textBox != null)
             {
