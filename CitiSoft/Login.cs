@@ -32,7 +32,7 @@ namespace CitiSoft
             }
 
 
-            string query = "SELECT email,password,uType FROM User WHERE email='" + textBox1.Text + "' AND password='" + textBox2.Text + "'";
+            string query = "SELECT email,pwd,uType FROM [User] WHERE email='" + textBox1.Text + "' AND [pwd]='" + textBox2.Text + "'";
             SqlCommand cmd = new SqlCommand(query, conn);
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
