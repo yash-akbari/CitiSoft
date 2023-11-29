@@ -19,6 +19,9 @@ namespace CitiSoft
         public ForgotPasswordForm()
         {
             InitializeComponent();
+            //no maximize buttonm
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
         }
         private void InitializeComponent()
         {

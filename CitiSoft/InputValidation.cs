@@ -194,7 +194,7 @@ namespace CitiSoft
         }
 
 
-                public static void IsOnlyAlphanumericWithSpaceDashComma(TextBox textBox, int length, string name)
+        public static void IsOnlyAlphanumericWithSpaceDashComma(TextBox textBox, int length, string name)
         {
             if (textBox != null)
             {
@@ -356,6 +356,83 @@ namespace CitiSoft
             // Perform checks against known good values, patterns, or metadata
             // For the sake of this example, we only allow alphanumeric characters and underscores
             return Regex.IsMatch(input, @"^\w+$");
+        }
+        
+        // checks if the value is NULL
+        public static bool IsValueNull(string connectionString, string tableName, string columnName, string idValue)
+        {
+            bool isNull = false; // Default assumption is that the value is not NULL
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+                    using (SqlCommand command = new SqlCommand($"SELECT {columnName} FROM {tableName} WHERE vid = @VendorID;", connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@VendorID", idValue);
+
+                        object result = command.ExecuteScalar();
+
+                        // Check if the result is DBNull or null
+                        if (result == DBNull.Value || result == null)
+                        {
+                            isNull = true;
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (SqlException ex)
+                {
+                    transaction.Rollback();
+                    MessageBox.Show($"An error occurred: {ex.Message}");
+                }
+            }
+
+            return isNull;
+        }
+        public static bool IsValidPassword(string password)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("Password cannot be empty.");
+                return false;
+            }
+
+            if (password.Length < 8)
+            {
+                MessageBox.Show("Password must be at least 8 characters long.");
+                return false;
+            }
+
+            if (!Regex.IsMatch(password, @"[A-Z]"))
+            {
+                MessageBox.Show("Password must contain at least one uppercase letter.");
+                return false;
+            }
+
+            if (!Regex.IsMatch(password, @"[a-z]"))
+            {
+                MessageBox.Show("Password must contain at least one lowercase letter.");
+                return false;
+            }
+
+            if (!Regex.IsMatch(password, @"[0-9]"))
+            {
+                MessageBox.Show("Password must contain at least one digit.");
+                return false;
+            }
+
+            if (!Regex.IsMatch(password, @"[\W_]"))
+            {
+                MessageBox.Show("Password must contain at least one special character.");
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -77,7 +77,6 @@ namespace CitiSoft
                 }
             }
         }
-
         private void vendorIDTxtBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -92,10 +91,15 @@ namespace CitiSoft
                 return;
             }
 
-             if (!InputValidation.CheckValueExists(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
+            if (!InputValidation.CheckValueExists(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("Vendor ID you have provided does not exist");
                 vendorIDTxtBox.Text = string.Empty;
+                return;
+            }
+            if (InputValidation.IsValueNull(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "docAttach", vendorIDTxtBox.Text))
+            {
+                MessageBox.Show("This Vendor has no document attached");
                 return;
             }
 
@@ -103,7 +107,7 @@ namespace CitiSoft
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
-                
+
                 try
                 {
                     using (SqlCommand command = new SqlCommand("UPDATE VendorInfo SET docAttach = NULL WHERE vid = @VendorID;", connection, transaction))
@@ -133,9 +137,8 @@ namespace CitiSoft
                 }
             }
         }
-
         public void showDataInTable()
-        { 
+        {
             RuntimeUI.dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT vid, compName, est, empCount, intProfServ, lstDemoDt, lstRevInt, lstRevDt FROM VendorInfo;", addDocumentDgv);
         }
 
@@ -180,9 +183,24 @@ namespace CitiSoft
                 MessageBox.Show("Please select a document to download.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-
         private void downloadDocumentBtn_Click(object sender, EventArgs e)
         {
+            if (vendorIDTxtBox.Text == "")
+            {
+                MessageBox.Show("Please provide vendor ID first");
+                return;
+            }
+            if (!InputValidation.CheckValueExists(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
+            {
+                MessageBox.Show("Provided vendor ID does not exist");
+                vendorIDTxtBox.Text = string.Empty;
+                return;
+            }
+            if (InputValidation.IsValueNull(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "docAttach", vendorIDTxtBox.Text))
+            {
+                MessageBox.Show("This Vendor has no document attached");
+                return;
+            }
             DownloadDocument();
         }
     }

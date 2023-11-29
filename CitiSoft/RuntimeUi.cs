@@ -34,6 +34,15 @@ namespace CitiSoft
         TabPage modifyVendorTabPage = new TabPage();
 
         TabPage venRemind = new TabPage();
+
+
+        //dashboard
+        Label dashboardMenu = new Label();
+        Panel dashboardPan = new Panel();
+        TabControl dashboardTabControl = new TabControl();
+        TabPage dashboardFunctionality = new TabPage();
+
+
         /// </VendorMenu>
 
         /// <ClientMenu>
@@ -112,6 +121,50 @@ namespace CitiSoft
             ViewDataByVendor venView = new ViewDataByVendor();
             
             AddForm(venView, viewVendorTabPage);
+        }
+
+        void dashboardMenuFunc()
+        {
+            dashboardMenu.Text = "Dashboard";
+            menuPan.Controls.Add(dashboardMenu);
+            dashboardMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dashboardMenu.Location = new System.Drawing.Point(0, menuYLoc);
+            menuYLoc = menuYLoc + 50;
+            dashboardMenu.Size = new System.Drawing.Size(200, 50);
+            dashboardMenu.TabIndex = 1;
+            dashboardMenu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            dashboardMenu.Click += dashboardMenu_Click;
+
+            mainPan.Controls.Add(dashboardPan);
+
+
+            dashboardPan.Dock = System.Windows.Forms.DockStyle.Fill;
+            dashboardPan.Name = "dashboardPan";
+            dashboardPan.Controls.Add(dashboardTabControl);
+        }
+        void dasboardTabControlFunc()
+        {
+            dashboardTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            dashboardTabControl.Name = "dashboardTabControl";
+        }
+        private void dashboardMenu_Click(object sender, EventArgs e)
+        {
+            panSelector("dashboardPan");
+        }
+
+        public void dashboardFunctionalityFunc()
+        {
+            dashboardTabControl.Controls.Add(dashboardFunctionality);
+            dashboardFunctionality.Location = new System.Drawing.Point(4, 22);
+            dashboardFunctionality.Name = "dashboardFunctionality";
+            dashboardFunctionality.Padding = new System.Windows.Forms.Padding(3);
+            dashboardFunctionality.Size = new System.Drawing.Size(610, 666);
+            dashboardFunctionality.TabIndex = 0;
+            dashboardFunctionality.Text = "Functionality";
+            dashboardFunctionality.UseVisualStyleBackColor = true;
+
+            dashboard dashboardForm = new dashboard();
+            AddForm(dashboardForm, dashboardFunctionality);
         }
 
         public void searchVendorTabPageFunc()
@@ -269,11 +322,11 @@ namespace CitiSoft
         {
             userProfilePanel = new Panel
             {
-                Dock = DockStyle.Fill, // Make sure the panel also fills its container
-                Size = new Size(600, 400), // Adjust the size as needed
-                Location = new Point(200, 50), // Adjust the location as needed
+                Dock = DockStyle.Fill, 
+                Size = new Size(600, 400), 
+                Location = new Point(200, 50), 
                 BorderStyle = BorderStyle.FixedSingle,
-                Visible = false // Start as hidden
+                Visible = false 
             };
             this.Controls.Add(userProfilePanel); // Add userProfilePanel to the main form's controls only once
             userProfilePanel.BringToFront();
@@ -524,6 +577,9 @@ namespace CitiSoft
                     clientMenuFunc();
                     clientTabControlFunc();
                     modifyClientTabPageFunc();
+                    dashboardMenuFunc();
+                    dashboardFunctionalityFunc();
+                    dasboardTabControlFunc();
                     //ModifyDocumentsForm modifyDocumentsForm = new ModifyDocumentsForm();
                     //modifyDocumentsForm.ShowDialog();
                     // visible

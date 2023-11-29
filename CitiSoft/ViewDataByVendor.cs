@@ -187,7 +187,7 @@ namespace CitiSoft
         }
 
 
-        //Done By Ilyass
+        //All following made by Ilyas, SID: 2216574. part of code from: ModifyDocumentForm.cs
         private void InitializeDragDrop()
         {
             fileDropPBox.AllowDrop = true;
@@ -265,6 +265,11 @@ namespace CitiSoft
                 vendorIDTxtBox.Text = string.Empty;
                 return;
             }
+            if (InputValidation.IsValueNull(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "docAttach", vendorIDTxtBox.Text))
+            {
+                MessageBox.Show("This Vendor has no document attached");
+                return;
+            }
 
             using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
             {
@@ -301,44 +306,60 @@ namespace CitiSoft
             }
         }
 
-
-
         private void DownloadDocument()
         {
                
-                using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
+            using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                try
                 {
-                    connection.Open();
-                    SqlTransaction transaction = connection.BeginTransaction();
-                    try
+                    using (SqlCommand command = new SqlCommand("SELECT docAttach FROM VendorInfo WHERE vid = @VendorID", connection, transaction))
                     {
-                        using (SqlCommand command = new SqlCommand("SELECT docAttach FROM VendorInfo WHERE vid = @VendorID", connection, transaction))
+                        command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
+
+                        byte[] documentData = (byte[])command.ExecuteScalar();
+
+                        // Save document to a file
+                        SaveFileDialog saveFileDialog = new SaveFileDialog();
+                        saveFileDialog.FileName = DocName;
+                        if (saveFileDialog.ShowDialog() == DialogResult.OK)
                         {
-                            command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
-
-                            byte[] documentData = (byte[])command.ExecuteScalar();
-
-                            // Save document to a file
-                            SaveFileDialog saveFileDialog = new SaveFileDialog();
-                            saveFileDialog.FileName = DocName;
-                            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                            {
-                                System.IO.File.WriteAllBytes(saveFileDialog.FileName, documentData);
-                                MessageBox.Show("Document downloaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                transaction.Commit();
-                            }
+                            System.IO.File.WriteAllBytes(saveFileDialog.FileName, documentData);
+                            MessageBox.Show("Document downloaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            transaction.Commit();
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error downloading document: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        transaction.Rollback();
-                    }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error downloading document: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    transaction.Rollback();
+                }
+            }
         }
+
+        
 
         private void downloadDocumentBtn_Click(object sender, EventArgs e)
         {
+            if (vendorIDTxtBox.Text == "")
+            {
+                MessageBox.Show("Please provide vendor ID first");
+                return;
+            }
+            if (!InputValidation.CheckValueExists(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
+            {
+                MessageBox.Show("Provided vendor ID does not exist");
+                vendorIDTxtBox.Text = string.Empty;
+                return;
+            }
+            if (InputValidation.IsValueNull(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "docAttach", vendorIDTxtBox.Text))
+            {
+                MessageBox.Show("This Vendor has no document attached");
+                return;
+            }
             DownloadDocument();
         }
     }
