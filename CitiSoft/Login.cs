@@ -20,7 +20,7 @@ namespace CitiSoft
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(@"C:\USERS\KMAXO\DOWNLOADS\CITISOFT-MASTER (3)\CITISOFT-MASTER\CITISOFT\FUNCTIONALITY.MDF");
+            SqlConnection conn = new SqlConnection(DataBaseManager.functionalityConnectionString);
             try
             {
                 conn.Open();
@@ -37,7 +37,6 @@ namespace CitiSoft
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             adapter.Fill(dt);
-
 
 
             //int result = Convert.ToInt32(cmd.ExecuteScalar());

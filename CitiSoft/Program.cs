@@ -18,8 +18,20 @@ namespace CitiSoft
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new RuntimeUI());
+            using (var loginForm = new Login()) 
+            {
+               
+                if (loginForm.ShowDialog() == DialogResult.OK)
+                {
+                    
+                    Application.Run(new RuntimeUI());
+                }
+                else
+                {
+                    
+                    Application.Exit();
+                }
+            }
         }
-
     }
 }
