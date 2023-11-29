@@ -7,6 +7,7 @@ namespace CitiSoft
     public partial class UserProfileForm : Form
     {
         private Button changePasswordButton;
+        private Button logoutButton;
         public UserProfileForm()
         {
             InitializeComponent();
@@ -30,9 +31,26 @@ namespace CitiSoft
 
             InitializeComponent();
             ChangePasswordForm changePasswordForm = new ChangePasswordForm();
-            changePasswordForm.ShowDialog(this); // Show the form as a modal dialog
+            changePasswordForm.ShowDialog(this);
+        }
+        private void InitializeLogoutButton()
+        {
+            logoutButton = new Button
+            {
+                Text = "Logout",
+                Size = new Size(100, 30),
+                Location = new Point(10, 10) 
+            };
+            logoutButton.Click += LogoutButton_Click;
+            Controls.Add(logoutButton);
         }
 
-       
+        private void LogoutButton_Click(object sender, EventArgs e)
+        {
+            
+            this.DialogResult = DialogResult.Abort; 
+            this.Close();
+        }
+
     }
 }
