@@ -177,7 +177,6 @@
     <Compile Include="searchVendor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View.cs" />
     <Compile Include="ViewDataByVendor.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace CitiSoft
@@ -49,16 +50,16 @@ namespace CitiSoft
             {
                 if (vendorModel.Vid == -1)
                 {
-                    string sql = "INSERT INTO VendorInfo (compName, est, empCount, intProfServ, lstDemoDt, lstRevInt, lstRevDt) VALUES (@CompanyName, @CompanyEstablished, @Employees, @InternalServices, @LastDemoDate, @LastReviewInt, @LastReviewedDate)";
+                    string sql = "INSERT INTO VendorInfo (compName, est, empCount, intProfServ, lstDemoDt, lstRevInt, lstRevDt) VALUES (@CompanyName, @CompanyEstablished, @EmployeesCount, @InternalProfessionalServices, @LastDemoDate, @LastReviewedInterval, @LastReviewedDate)";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue("@compName", vendorModel.CompanyName);
-                        cmd.Parameters.AddWithValue("@est", vendorModel.CompanyEstablished);
-                        cmd.Parameters.AddWithValue("@empCount", vendorModel.EmployeesCount);
-                        cmd.Parameters.AddWithValue("@intProfServ", vendorModel.InternalProfessionalServices);
-                        cmd.Parameters.AddWithValue("@lstDemoDt", vendorModel.LastDemoDate);
-                        cmd.Parameters.AddWithValue("@lstRevInt", vendorModel.LastReviewedInterval);
-                        cmd.Parameters.AddWithValue("@lstRevDt", vendorModel.LastReviewedDate);
+                        cmd.Parameters.AddWithValue("@CompanyName", vendorModel.CompanyName);
+                        cmd.Parameters.AddWithValue("@CompanyEstablished", vendorModel.CompanyEstablished);
+                        cmd.Parameters.AddWithValue("@EmployeesCount", vendorModel.EmployeesCount);
+                        cmd.Parameters.AddWithValue("@InternalProfessionalServices", vendorModel.InternalProfessionalServices);
+                        cmd.Parameters.AddWithValue("@LastDemoDate", vendorModel.LastDemoDate);
+                        cmd.Parameters.AddWithValue("@LastReviewedInterval", vendorModel.LastReviewedInterval);
+                        cmd.Parameters.AddWithValue("@LastReviewedDate", vendorModel.LastReviewedDate);
                         try
                         {
                             con.Open();
@@ -87,10 +88,10 @@ namespace CitiSoft
                 }
                 else if (vendorModel.CompanyName.Equals(null)) 
                 {
-                    string sql = "Delete From VendorInfo WHERE vid = @vid";
+                    string sql = "Delete From VendorInfo WHERE vid = @Vid";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue("@vid", vendorModel.Vid);
+                        cmd.Parameters.AddWithValue("@Vid", vendorModel.Vid);
                         try
                         {
                             con.Open();
@@ -118,17 +119,17 @@ namespace CitiSoft
                 }
                 else
                 {
-                    string sql = "UPDATE VendorInfo SET compName = @compName, est = @est, empCount = @empCount, intProfServ = @intProfServ, lstDemoDt = @lstDemoDt, lstRevInt = @lstRevInt, lstRevDt = @lstRevDt WHERE vid = @vid";
+                    string sql = "UPDATE VendorInfo SET compName = @CompanyName, est = @CompanyEstablished, empCount = @EmployeesCount, intProfServ = @InternalProfessionalServices, lstDemoDt = @LastDemoDate, lstRevInt = @LastReviewedInterval, lstRevDt = @LastReviewedDate WHERE vid = @Vid";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue("@vid", vendorModel.Vid);
-                        cmd.Parameters.AddWithValue("@compName", vendorModel.CompanyName);
-                        cmd.Parameters.AddWithValue("@est", vendorModel.CompanyEstablished);
-                        cmd.Parameters.AddWithValue("@empCount", vendorModel.EmployeesCount);
-                        cmd.Parameters.AddWithValue("@intProfServ", vendorModel.InternalProfessionalServices);
-                        cmd.Parameters.AddWithValue("@lstDemoDt", vendorModel.LastDemoDate);
-                        cmd.Parameters.AddWithValue("@lstRevInt", vendorModel.LastReviewedInterval);
-                        cmd.Parameters.AddWithValue("@lstRevDt", vendorModel.LastReviewedDate);
+                        cmd.Parameters.AddWithValue("@Vid", vendorModel.Vid);
+                        cmd.Parameters.AddWithValue("@CompanyName", vendorModel.CompanyName);
+                        cmd.Parameters.AddWithValue("@CompanyEstablished", vendorModel.CompanyEstablished);
+                        cmd.Parameters.AddWithValue("@EmployeesCount", vendorModel.EmployeesCount);
+                        cmd.Parameters.AddWithValue("@InternalProfessionalServices", vendorModel.InternalProfessionalServices);
+                        cmd.Parameters.AddWithValue("@LastDemoDate", vendorModel.LastDemoDate);
+                        cmd.Parameters.AddWithValue("LastReviewedInterval", vendorModel.LastReviewedInterval);
+                        cmd.Parameters.AddWithValue("@LastReviewedDate", vendorModel.LastReviewedDate);
                         try
                         {
                             con.Open();
@@ -168,21 +169,22 @@ namespace CitiSoft
             SqlCommand cmd;
             SqlDataReader dataReader;
             string sql;
-            sql = "SELECT * FROM VendorInfo";
+            sql = "SELECT * FROM Address";
             cmd = new SqlCommand(sql, con);
             dataReader = cmd.ExecuteReader();
             while (dataReader.Read())
             {
                 addressModelList.Add(new AddressModel
-                {
-                    Vid = Convert.ToInt32(dataReader.GetValue(0)),
-                    AddressLine1= Convert.ToString(dataReader.GetValue(1)),
-                    AddressLine2 = Convert.ToString(dataReader.GetValue(2)),
-                    City = Convert.ToString(dataReader.GetValue(3)),
-                    Country = Convert.ToString(dataReader.GetValue(4)),
-                    PostCode = Convert.ToString(dataReader.GetValue(5)),
-                    Email = Convert.ToString(dataReader.GetValue(6)),
-                    Telephone = Convert.ToString(dataReader.GetValue(7))
+                {   
+                    addressId = Convert.ToInt32(dataReader.GetValue(0)),
+                    Vid = Convert.ToInt32(dataReader.GetValue(1)),
+                    AddressLine1= Convert.ToString(dataReader.GetValue(2)),
+                    AddressLine2 = Convert.ToString(dataReader.GetValue(3)),
+                    City = Convert.ToString(dataReader.GetValue(4)),
+                    Country = Convert.ToString(dataReader.GetValue(5)),
+                    PostCode = Convert.ToString(dataReader.GetValue(6)),
+                    Email = Convert.ToString(dataReader.GetValue(7)),
+                    Telephone = Convert.ToString(dataReader.GetValue(8))
                 });
             }
             dataReader.Close();
@@ -199,17 +201,17 @@ namespace CitiSoft
             {
                 if (addressModel.addressId == -1)
                 {
-                    string sql = "INSERT INTO Address (vid, addressLine1, addressLine2, city, country, postcode, email, telephone) VALUES (@vid, @addressLine1, @addressLine2, @city, @country, @postcode, @email, @telephone)";
+                    string sql = "INSERT INTO Address (vid, addressLine1, addressLine2, city, country, postcode, email, telephone) VALUES (@Vid, @AddressLine1, @AddressLine2, @City, @Country, @PostCode, @Email, @Telephone)";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue("@vid", addressModel.Vid);
-                        cmd.Parameters.AddWithValue("@addressLine1", addressModel.AddressLine1);
-                        cmd.Parameters.AddWithValue("@addressLine2",addressModel.AddressLine2);
-                        cmd.Parameters.AddWithValue("@city", addressModel.City);
-                        cmd.Parameters.AddWithValue("@country", addressModel.Country);
-                        cmd.Parameters.AddWithValue("@postcode", addressModel.PostCode);
-                        cmd.Parameters.AddWithValue("@email", addressModel.Email);
-                        cmd.Parameters.AddWithValue("@telephone", addressModel.Telephone);
+                        cmd.Parameters.AddWithValue("@Vid", addressModel.Vid);
+                        cmd.Parameters.AddWithValue("@AddressLine1", addressModel.AddressLine1);
+                        cmd.Parameters.AddWithValue("@AddressLine2",addressModel.AddressLine2);
+                        cmd.Parameters.AddWithValue("@City", addressModel.City);
+                        cmd.Parameters.AddWithValue("@Country", addressModel.Country);
+                        cmd.Parameters.AddWithValue("@PostCode", addressModel.PostCode);
+                        cmd.Parameters.AddWithValue("@Email", addressModel.Email);
+                        cmd.Parameters.AddWithValue("@Telephone", addressModel.Telephone);
                         try
                         {
                             con.Open();
@@ -241,7 +243,7 @@ namespace CitiSoft
                     string sql = "Delete From Address WHERE addressId = @addressId";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue("@vid", addressModel.addressId);
+                        cmd.Parameters.AddWithValue("@addressId", addressModel.addressId);
                         try
                         {
                             con.Open();
@@ -269,17 +271,18 @@ namespace CitiSoft
                 }
                 else 
                 { 
-                    string sql = "INSERT INTO Address (vid, addressLine1, addressLine2, city, country, postcode, email, telephone) VALUES (@vid, @addressLine1, @addressLine2, @city, @country, @postcode, @email, @telephone)";
+                    string sql = "UPDATE Address SET vid = @Vid, addressLine1 = @AddressLine1, addressLine2 = @AddressLine2, city = @City, country = @Country, postcode = @PostCode, email = @Email, telephone = @Telephone WHERE aqddressId = @AddressId";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue("@vid", addressModel.Vid);
-                        cmd.Parameters.AddWithValue("@addressLine1", addressModel.AddressLine1);
-                        cmd.Parameters.AddWithValue("@addressLine2", addressModel.AddressLine2);
-                        cmd.Parameters.AddWithValue("@city", addressModel.City);
-                        cmd.Parameters.AddWithValue("@country", addressModel.Country);
-                        cmd.Parameters.AddWithValue("@postcode", addressModel.PostCode);
-                        cmd.Parameters.AddWithValue("@email", addressModel.Email);
-                        cmd.Parameters.AddWithValue("@telephone", addressModel.Telephone);
+                        cmd.Parameters.AddWithValue("@AddressId", addressModel.addressId);
+                        cmd.Parameters.AddWithValue("@Vid", addressModel.Vid);
+                        cmd.Parameters.AddWithValue("@AddressLine1", addressModel.AddressLine1);
+                        cmd.Parameters.AddWithValue("@AddressLine2", addressModel.AddressLine2);
+                        cmd.Parameters.AddWithValue("@City", addressModel.City);
+                        cmd.Parameters.AddWithValue("@Country", addressModel.Country);
+                        cmd.Parameters.AddWithValue("@PostCode", addressModel.PostCode);
+                        cmd.Parameters.AddWithValue("@Email", addressModel.Email);
+                        cmd.Parameters.AddWithValue("@Telephone", addressModel.Telephone);
                         try
                         {
                             con.Open();
@@ -308,5 +311,278 @@ namespace CitiSoft
             }
         }
     }
+    public partial class SoftwareRepository
+    {
+        public static List<SoftwareModel> GetAllSoftware()
+        {
+            List<SoftwareModel> softwareModelList = new List<SoftwareModel>();
+            SqlConnection con;
+            con = DataBaseManager.GetCitiSoftConnection();
+            con.Open();
+            SqlCommand cmd;
+            SqlDataReader dataReader;
+            string sql;
+            sql = "SELECT * FROM SoftName";
+            cmd = new SqlCommand(sql, con);
+            dataReader = cmd.ExecuteReader();
+            while (dataReader.Read())
+            {
+                softwareModelList.Add(new SoftwareModel
+                {
+                    Vid = Convert.ToInt32(dataReader.GetValue(0)),
+                    SoftwareId = Convert.ToInt32(dataReader.GetValue(1)),
+                    SoftwareName = Convert.ToString(dataReader.GetValue(2)),
+                    SoftwareWebsite = Convert.ToString(dataReader.GetValue(3)),
+                    Description = Convert.ToString(dataReader.GetValue(4)),
+                    Cloud = Convert.ToString(dataReader.GetValue(5)),
+                    AdditionalInfo = Convert.ToString(dataReader.GetValue(6)),
+                    BusinessAreas =JoinProperty(Controller.getBusinessAreasBySid(Convert.ToInt32(dataReader.GetValue(1))), "BusinessAreas"),
+                    Modules = JoinProperty(Controller.getModulesBySid(Convert.ToInt32(dataReader.GetValue(1))),"Modules"),
+                    FinancialServices = JoinProperty(Controller.getFinancialServicesBySid(Convert.ToInt32(dataReader.GetValue(1))),"FinancialService"),
+                    TypeOfSoftware = JoinProperty(Controller.getTypeOfSoftwareBySid(Convert.ToInt32(dataReader.GetValue(1))), "TypeOfSoftware")
+                });
+            }
+            dataReader.Close();
+            cmd.Dispose();
+            con.Close();
+            return softwareModelList;
+        }
+
+
+        static string JoinProperty<T>(List<T> list, string propertyName) //chatgpt
+        {
+            PropertyInfo propertyInfo = typeof(T).GetProperty(propertyName);
+
+            if (propertyInfo != null)
+            {
+                IEnumerable<string> values = list.Select(item => propertyInfo.GetValue(item)?.ToString());
+                return string.Join(", ", values);
+            }
+
+            return string.Empty;
+        }
+
+        public static List<ModulesModel> getModules()
+        {
+            List<ModulesModel> modulesModelList = new List<ModulesModel>();
+            SqlConnection con;
+            con = DataBaseManager.GetCitiSoftConnection();
+            con.Open();
+            SqlCommand cmd;
+            SqlDataReader dataReader;
+            string sql;
+            sql = "SELECT * FROM Modules";
+            cmd = new SqlCommand(sql, con);
+            dataReader = cmd.ExecuteReader();
+            while (dataReader.Read())
+            {
+                modulesModelList.Add(new ModulesModel
+                {
+                    id = Convert.ToInt32(dataReader.GetValue(0)),
+                    Sid = Convert.ToInt32(dataReader.GetValue(1)),
+                    Modules = Convert.ToString(dataReader.GetValue(2)),
+                });
+            }
+            dataReader.Close();
+            cmd.Dispose();
+            con.Close();
+            return modulesModelList;
+        }
+
+        public static List<BusinessAreasModel> getBusinessArea() 
+        {
+            List<BusinessAreasModel> businessAreasModelList = new List<BusinessAreasModel>();
+            SqlConnection con;
+            con = DataBaseManager.GetCitiSoftConnection();
+            con.Open();
+            SqlCommand cmd;
+            SqlDataReader dataReader;
+            string sql;
+            sql = "SELECT * FROM Business";
+            cmd = new SqlCommand(sql, con);
+            dataReader = cmd.ExecuteReader();
+            while (dataReader.Read())
+            {
+                businessAreasModelList.Add(new BusinessAreasModel
+                {
+                    id = Convert.ToInt32(dataReader.GetValue(0)),
+                    Sid = Convert.ToInt32(dataReader.GetValue(1)),
+                    BusinessAreas = Convert.ToString(dataReader.GetValue(2)),
+                });
+            }
+            dataReader.Close();
+            cmd.Dispose();
+            con.Close();
+            return businessAreasModelList;
+        }
+        public static List<FinancialServicesModel> getFinancialServices()
+        {
+            List<FinancialServicesModel> financialServicesModelList = new List<FinancialServicesModel>();
+            SqlConnection con;
+            con = DataBaseManager.GetCitiSoftConnection();
+            con.Open();
+            SqlCommand cmd;
+            SqlDataReader dataReader;
+            string sql;
+            sql = "SELECT * FROM ClientTypes";
+            cmd = new SqlCommand(sql, con);
+            dataReader = cmd.ExecuteReader();
+            while (dataReader.Read())
+            {
+                financialServicesModelList.Add(new FinancialServicesModel
+                {
+                    id = Convert.ToInt32(dataReader.GetValue(0)),
+                    Sid = Convert.ToInt32(dataReader.GetValue(1)),
+                    FinancialService = Convert.ToString(dataReader.GetValue(2)),
+                });
+            }
+            dataReader.Close();
+            cmd.Dispose();
+            con.Close();
+            return financialServicesModelList;
+        }
+
+        public static List<TypeOfSoftwareModel> getTypeOfSoftware()
+        {
+            List<TypeOfSoftwareModel> typeOfSoftwareModelList = new List<TypeOfSoftwareModel>();
+            SqlConnection con;
+            con = DataBaseManager.GetCitiSoftConnection();
+            con.Open();
+            SqlCommand cmd;
+            SqlDataReader dataReader;
+            string sql;
+            sql = "SELECT * FROM SoftTypes";
+            cmd = new SqlCommand(sql, con);
+            dataReader = cmd.ExecuteReader();
+            while (dataReader.Read())
+            {
+                typeOfSoftwareModelList.Add(new TypeOfSoftwareModel
+                {
+                    id = Convert.ToInt32(dataReader.GetValue(0)),
+                    Sid = Convert.ToInt32(dataReader.GetValue(1)),
+                    TypeOfSoftware = Convert.ToString(dataReader.GetValue(2)),
+                });
+            }
+            dataReader.Close();
+            cmd.Dispose();
+            con.Close();
+            return typeOfSoftwareModelList;
+        }
+
+        public static void insertUpdateDeleteSoftware(List<SoftwareModel> softwareModelList)
+        {
+            SqlConnection con;
+            con = DataBaseManager.GetCitiSoftConnection();
+            foreach (SoftwareModel softwareModel in softwareModelList)
+            {
+                if (softwareModel.SoftwareId == -1)
+                {
+                    string sql = "INSERT INTO SoftName (vid,softName, softWeb, desc, cloud, addInfo) VALUES (@Vid, @SoftwareName, @SoftwareWebsite, @Description, @Cloud, @AdditionalInfo)";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Vid", softwareModel.Vid);
+                        cmd.Parameters.AddWithValue("@SoftwareName", softwareModel.SoftwareName);
+                        cmd.Parameters.AddWithValue("@softwareWebsite", softwareModel.SoftwareWebsite);
+                        cmd.Parameters.AddWithValue("@Description", softwareModel.Description);
+                        cmd.Parameters.AddWithValue("@Cloud", softwareModel.Cloud);
+                        cmd.Parameters.AddWithValue("@AdditionalInfo", softwareModel.AdditionalInfo);
+                        try
+                        {
+                            con.Open();
+                            int rowsAffected = cmd.ExecuteNonQuery();
+
+                            // Check if the update was successful
+                            if (rowsAffected > 0)
+                            {
+                                MessageBox.Show("Record updated successfully!");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Record not found or update failed.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+
+                    }
+                }
+                else if (softwareModel.SoftwareName.Equals(null))
+                {
+                    string sql = "Delete From SoftName WHERE sid = @SoftwareId";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@sid", softwareModel.SoftwareId);
+                        try
+                        {
+                            con.Open();
+                            int rowsAffected = cmd.ExecuteNonQuery();
+
+                            // Check if the update was successful
+                            if (rowsAffected > 0)
+                            {
+                                MessageBox.Show("Record updated successfully!");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Record not found or update failed.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+                    }
+                }
+                else
+                {
+                    string sql = "UPDATE VendorInfo SET SoftName = @SoftwareName, softWeb = @SoftwareWebsite, desc = @Description, cloud = @Cloud, addInfo = @AdditionalInfo WHERE vid = @Vid";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Vid", softwareModel.Vid);
+                        cmd.Parameters.AddWithValue("@SoftwareName", softwareModel.SoftwareName);
+                        cmd.Parameters.AddWithValue("@softwareWebsite", softwareModel.SoftwareWebsite);
+                        cmd.Parameters.AddWithValue("@Description", softwareModel.Description);
+                        cmd.Parameters.AddWithValue("@Cloud", softwareModel.Cloud);
+                        cmd.Parameters.AddWithValue("@AdditionalInfo", softwareModel.AdditionalInfo);
+                        try
+                        {
+                            con.Open();
+                            int rowsAffected = cmd.ExecuteNonQuery();
+
+                            // Check if the update was successful
+                            if (rowsAffected > 0)
+                            {
+                                MessageBox.Show("Record updated successfully!");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Record not found or update failed.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+
 }
 

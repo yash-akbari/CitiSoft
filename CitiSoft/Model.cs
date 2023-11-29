@@ -12,8 +12,12 @@ namespace CitiSoft
         public int SoftwareId { get; set; }
         public int Vid { get; set; }
         public String SoftwareName { get; set; }
-        public String CompanyWebsite { get; set; }
+        public String TypeOfSoftware { get; set; }
+        public String SoftwareWebsite { get; set; }
         public String Description { get; set; }
+        public String BusinessAreas { get; set; }
+        public String Modules { get; set; }
+        public String FinancialServices { get; set; }
         public String Cloud { get; set; }
         public String AdditionalInfo { get; set; }
     }
