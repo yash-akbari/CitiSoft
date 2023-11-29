@@ -61,6 +61,7 @@ namespace CitiSoft
             SoftwareDataGridView.CellContentClick += SoftwareDataGridView_CellContentClick;
 
 
+            InitializeDragDrop();
             this.fileDropPBox.BackColor = System.Drawing.SystemColors.Info;
             this.fileDropPBox.Name = "fileDropPBox";
             this.fileDropPBox.Size = new System.Drawing.Size(461, 314);
