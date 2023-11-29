@@ -524,8 +524,8 @@ namespace CitiSoft
                     clientMenuFunc();
                     clientTabControlFunc();
                     modifyClientTabPageFunc();
-                    ModifyDocumentsForm modifyDocumentsForm = new ModifyDocumentsForm();
-                    modifyDocumentsForm.ShowDialog();
+                    //ModifyDocumentsForm modifyDocumentsForm = new ModifyDocumentsForm();
+                    //modifyDocumentsForm.ShowDialog();
                     // visible
                     break;
                 case 3:
