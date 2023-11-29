@@ -77,5 +77,65 @@ namespace CitiSoft
                 }
             }
         }
+        private void vendorIDTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            InputValidation.IsOnlyNumbers(textBox);
+        }
+
+        private void removeDocumentBtn_Click(object sender, EventArgs e)
+        {
+            if (vendorIDTxtBox.Text == "")
+            {
+                MessageBox.Show("Please provide vendor ID first");
+                return;
+            }
+
+            if (!InputValidation.CheckValueExists(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
+            {
+                MessageBox.Show("Vendor ID you have provided does not exist");
+                vendorIDTxtBox.Text = string.Empty;
+                return;
+            }
+            if (InputValidation.IsValueNull(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "docAttach", vendorIDTxtBox.Text))
+            {
+                MessageBox.Show("This Vendor has no document attached");
+                return;
+            }
+
+            using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+                    using (SqlCommand command = new SqlCommand("UPDATE VendorInfo SET docAttach = NULL WHERE vid = @VendorID;", connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Delete successful.");
+                            transaction.Commit(); // Only commit if no errors occurred
+                            vendorIDTxtBox.Text = string.Empty;
+                        }
+                        else
+                        {
+                            MessageBox.Show("No document deleted. It's possible that the vendor ID did not exist.");
+                            transaction.Rollback(); // Rollback if no rows affected
+                            vendorIDTxtBox.Text = string.Empty;
+                        }
+                    }
+                }
+                catch (SqlException)
+                {
+                    transaction.Rollback(); // Rollback on error
+                    MessageBox.Show("An error occurred while deleting the document");
+                    vendorIDTxtBox.Text = string.Empty;
+                }
+            }
+        }
     }
 }
