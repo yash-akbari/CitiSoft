@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -34,8 +35,6 @@ namespace CitiSoft
         public Label lastReviewedDateLabel = new Label();
         public DateTimePicker lastReviewedDatePicker = new DateTimePicker();
 
-        public Label docAttachLabel = new Label();
-        public Button docAttachBrowseButton= new Button();
 
         public Button submitButton = new Button();
 
@@ -66,8 +65,7 @@ namespace CitiSoft
                 internalServicesLabel, internalServicesComboBox,
                 lastDemoDateLabel, lastDemoDatePicker,
                 lastReviewIntLabel,lastReviewIntTextBox,
-                lastReviewedDateLabel, lastReviewedDatePicker,
-                docAttachLabel, docAttachBrowseButton,
+                lastReviewedDateLabel, lastReviewedDatePicker,               
                 submitButton
             });
             string[] venControlVarName = new string[]
@@ -80,7 +78,6 @@ namespace CitiSoft
                 "lastDemoDateLabel", "lastDemoDatePicker",
                 "lastReviewIntLabel","lastReviewIntTextBox",
                 "lastReviewedDateLabel", "lastReviewedDatePicker",
-                "docAttachLabel", "docAttachBrowseButton",
                 "submitButton"
             };
             string[] venControlText = new string[]
@@ -91,7 +88,6 @@ namespace CitiSoft
                 "Last Demo Date:",
                 "Last Reviewe Date Interval:",
                 "Last Reviewed Date:",
-                "Document to attach?",
             };
             int venAddxLoc = 10;
             int venAddyLoc = 11;
@@ -112,6 +108,7 @@ namespace CitiSoft
                 }
                 else if (con is RichTextBox)
                 {
+                    con.TabStop = false;
                     con.Width = venAddWidth + 100;
                     con.Height = venAddHeight + 90;
 
@@ -121,12 +118,14 @@ namespace CitiSoft
                 }
                 else if (con is AddressPanel)
                 {
+                    con.TabStop = false;
                     con.Left = venAddxLoc;
                     con.Top = venAddyLoc;
                     venAddyLoc = venAddyLoc + 350;
                 }
                 else
                 {
+                    con.TabStop = false;
                     con.Width = venAddWidth + 100;
                     con.Height = venAddHeight;
 
@@ -140,6 +139,7 @@ namespace CitiSoft
             companyEstablishedTextBox.TextChanged += CompanyEstablishedTextBox_TextChanged;
             employeesTextBox.TextChanged += EmployeesTextBox_TextChanged;
             lastReviewIntTextBox.TextChanged += LastReviewIntTextBox_TextChanged;
+            internalServicesComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void LastReviewIntTextBox_TextChanged(object sender, EventArgs e)
@@ -166,9 +166,64 @@ namespace CitiSoft
             InputValidation.IsValid(textBox,20,"Only AlphabetsNumbers, at(@) and Spaces", @"^[a-zA-Z\d\s]*$");//@"^[a-zA-Z0-9\s]+$"
         }
 
-
+        private static string GetStringValueOrNullOrWhitespace(string input)
+        {
+            // If the input is not null, empty, or consists of only whitespace, return the input; otherwise, return null
+            return !string.IsNullOrWhiteSpace(input) ? input :"None";
+        }
+        private static int ParseStringToIntOrZero(string input)
+        {
+            // If the input is not null, attempt to parse it to an integer; otherwise, return 0
+            return !string.IsNullOrEmpty(input) && int.TryParse(input, out int result) ? result : 0;
+        }
         public void submitButton_click(object sender, EventArgs e)
         {
+            Random rand= new Random();
+            int random = rand.Next(int.MinValue, 0);
+            if (companyNameTextBox.Text != null && companyNameTextBox.Text != " " && companyNameTextBox.Text.Length > 0)
+            { 
+                try
+                {
+                    Controller.vendorModelList.Add(new VendorModel
+                    {
+                        Vid = random,
+                        CompanyName = companyNameTextBox.Text,
+                        CompanyEstablished = ParseStringToIntOrZero((companyEstablishedTextBox.Text)),
+                        EmployeesCount = GetStringValueOrNullOrWhitespace(employeesTextBox.Text),
+                        InternalProfessionalServices = Convert.ToString(internalServicesComboBox.SelectedValue),
+                        LastDemoDate = lastDemoDatePicker.Value,
+                        LastReviewedInterval = ParseStringToIntOrZero(lastReviewIntTextBox.Text),
+                        LastReviewedDate = lastReviewedDatePicker.Value
+                    });
+                    foreach (AddressModel address in addressPanel.addressList)
+                    {
+                        Controller.addressModelList.Add
+                        (new AddressModel
+                        {
+                            Vid = -1,
+                            addressId = random,
+                            AddressLine1 = address.AddressLine1,
+                            AddressLine2 = address.AddressLine2,
+                            City = address.City,
+                            Country = address.Country,
+                            PostCode = address.PostCode,
+                            Email = address.Email,
+                            Telephone = address.Telephone,
+                        });
+                    }
+                    VendorRepository.insertUpdateDeleteVendor(Controller.vendorModelList);
+
+                    ViewDataByVendor viewDataByVendor = new ViewDataByVendor(1); 
+                }
+                catch (FormatException fe)
+                {
+                    MessageBox.Show(fe.Message);                
+                }  
+            }
+            else 
+            {
+                MessageBox.Show("Company Name is Empty");
+            }
         }
 
     }

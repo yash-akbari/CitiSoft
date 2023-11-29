@@ -10,30 +10,30 @@ namespace CitiSoft
 
     public partial class AddressPanel : Panel
     {
-        Label addressLine1Label = new Label();
-        TextBox addressLine1TextBox = new TextBox();
+        public Label addressLine1Label = new Label();
+        public TextBox addressLine1TextBox = new TextBox();
 
-        Label addressLine2Label = new Label();
-        TextBox addressLine2TextBox = new TextBox();
+        public Label addressLine2Label = new Label();
+        public TextBox addressLine2TextBox = new TextBox();
 
-        Label cityLabel = new Label();
-        TextBox cityTextBox = new TextBox();
+        public Label cityLabel = new Label();
+        public TextBox cityTextBox = new TextBox();
 
-        Label countryLabel = new Label();
-        TextBox countryTextBox = new TextBox();
+        public Label countryLabel = new Label();
+        public TextBox countryTextBox = new TextBox();
 
-        Label postCodeLabel = new Label();
-        TextBox postCodeTextBox = new TextBox();
+        public Label postCodeLabel = new Label();
+        public TextBox postCodeTextBox = new TextBox();
 
-        Label emailLabel = new Label();
-        TextBox emailTextBox = new TextBox();
+        public Label emailLabel = new Label();
+        public TextBox emailTextBox = new TextBox();
 
-        Label telephoneLabel = new Label();
-        TextBox telephoneTextBox = new TextBox();
+        public Label telephoneLabel = new Label();
+        public TextBox telephoneTextBox = new TextBox();
 
         CustomListBox addressCustomListBox = new CustomListBox();
 
-        List<AddressModel> addressList = new List<AddressModel>();
+        public List<AddressModel> addressList = new List<AddressModel>();
 
         int index = 0;
 
@@ -98,12 +98,14 @@ namespace CitiSoft
                 }
                 else if (con is CustomListBox)
                 {
+                    con.TabStop = false;
                     addressCustomListBox.setHeightWidth(600, 325);
                     con.Left = addxLoc + 210 + 100 + 210;
                     con.Top = addyLoc- 50;
                 }
                 else
                 {
+                    con.TabStop = false;
                     con.Width = addWidth + 100;
                     con.Height = addHeight;
 
@@ -124,8 +126,6 @@ namespace CitiSoft
             addressCustomListBox.remove.Click += Remove_Click;
             addressCustomListBox.update.Click += Update_Click;
             addressCustomListBox.edit.Click += Edit_Click;
-
-
         }
 
         

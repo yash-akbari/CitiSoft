@@ -16,6 +16,11 @@ namespace CitiSoft
         {
             Controls.AddRange(new Control[] { listBox, add, remove, edit, update });
             Size = new System.Drawing.Size(width, height);
+            listBox.TabStop = false;
+            add.TabStop = false;
+            update.TabStop = false;
+            remove.TabStop = false;
+            edit.TabStop = false;
         }
 
         public CustomListBox(TextBox tb)

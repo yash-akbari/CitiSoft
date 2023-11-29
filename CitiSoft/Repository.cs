@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -31,9 +32,9 @@ namespace CitiSoft
                     CompanyEstablished = Convert.ToInt32(dataReader.GetValue(2)),
                     EmployeesCount = Convert.ToString(dataReader.GetValue(3)),
                     InternalProfessionalServices = Convert.ToString(dataReader.GetValue(4)),
-                    LastDemoDate = Convert.ToString(dataReader.GetValue(5)),
-                    LastReviewedDate = Convert.ToString(dataReader.GetValue(6)),
-                    LastReviewedInterval = Convert.ToString(dataReader.GetValue(7)),
+                    LastDemoDate = Convert.ToDateTime(dataReader.GetValue(5)),
+                    LastReviewedInterval = Convert.ToInt32(dataReader.GetValue(6)),
+                    LastReviewedDate = Convert.ToDateTime(dataReader.GetValue(7)),
                 }) ;
             }
             dataReader.Close();
@@ -48,42 +49,62 @@ namespace CitiSoft
             con = DataBaseManager.GetCitiSoftConnection();
             foreach (VendorModel vendorModel in vendorModelList)
             {
-                if (vendorModel.Vid == -1)
+                if (vendorModel.Vid < 0)
                 {
-                    string sql = "INSERT INTO VendorInfo (compName, est, empCount, intProfServ, lstDemoDt, lstRevInt, lstRevDt) VALUES (@CompanyName, @CompanyEstablished, @EmployeesCount, @InternalProfessionalServices, @LastDemoDate, @LastReviewedInterval, @LastReviewedDate)";
-                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    
+                    try { 
+                    con.Open();
+                        using (SqlTransaction transaction = con.BeginTransaction())
+                        {
+                            string sql = "INSERT INTO VendorInfo (compName, est, empCount, intProfServ, lstDemoDt, lstRevInt, lstRevDt) VALUES (@CompanyName, @CompanyEstablished, @EmployeesCount, @InternalProfessionalServices, @LastDemoDate, @LastReviewedInterval, @LastReviewedDate);";
+
+                            using (SqlCommand cmd = new SqlCommand(sql, con,transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@CompanyName", vendorModel.CompanyName);
+                                cmd.Parameters.AddWithValue("@CompanyEstablished", vendorModel.CompanyEstablished);
+                                cmd.Parameters.AddWithValue("@EmployeesCount", vendorModel.EmployeesCount);
+                                cmd.Parameters.AddWithValue("@InternalProfessionalServices", vendorModel.InternalProfessionalServices);
+                                cmd.Parameters.AddWithValue("@LastDemoDate", vendorModel.LastDemoDate);
+                                cmd.Parameters.AddWithValue("@LastReviewedInterval", vendorModel.LastReviewedInterval);
+                                cmd.Parameters.AddWithValue("@LastReviewedDate", vendorModel.LastReviewedDate);
+                                MessageBox.Show(vendorModel.CompanyName+" "+ vendorModel.InternalProfessionalServices.ToString());
+                                try
+                                {
+                                    int res = (cmd.ExecuteNonQuery());
+                                    transaction.Commit();
+                                    cmd.Dispose();
+                                    con.Close();
+                                    MessageBox.Show(res.ToString());
+                                    int venId = 0;// Convert.ToInt32(res);
+                                    MessageBox.Show(venId.ToString() + " " + res);
+                                    foreach (AddressModel add in Controller.addressModelList)
+                                    {
+                                        if (vendorModel.Vid == add.addressId)
+                                        {
+                                            add.Vid = venId;
+                                        }
+                                    }
+                                    
+                                }
+                                catch (Exception ex)
+                                {
+                                    transaction.Rollback();
+                                    MessageBox.Show("Error: " + ex.Message);
+                                    
+                                }
+
+                            }
+                        }
+                        
+                    }
+                    catch (Exception ex)
                     {
-                        cmd.Parameters.AddWithValue("@CompanyName", vendorModel.CompanyName);
-                        cmd.Parameters.AddWithValue("@CompanyEstablished", vendorModel.CompanyEstablished);
-                        cmd.Parameters.AddWithValue("@EmployeesCount", vendorModel.EmployeesCount);
-                        cmd.Parameters.AddWithValue("@InternalProfessionalServices", vendorModel.InternalProfessionalServices);
-                        cmd.Parameters.AddWithValue("@LastDemoDate", vendorModel.LastDemoDate);
-                        cmd.Parameters.AddWithValue("@LastReviewedInterval", vendorModel.LastReviewedInterval);
-                        cmd.Parameters.AddWithValue("@LastReviewedDate", vendorModel.LastReviewedDate);
-                        try
-                        {
-                            con.Open();
-                            int rowsAffected = cmd.ExecuteNonQuery();
-
-                            // Check if the update was successful
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show("Record updated successfully!");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Record not found or update failed.");
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Error: " + ex.Message);
-                        }
-                        finally
-                        {
-                            con.Close();
-                        }
-
+                        MessageBox.Show("Error: " + ex.Message);
+                    }
+                    finally
+                    {
+                        // Always close the database connection, even if an exception occurs
+                        con.Close();
                     }
                 }
                 else if (vendorModel.CompanyName.Equals(null)) 
@@ -100,7 +121,7 @@ namespace CitiSoft
                             // Check if the update was successful
                             if (rowsAffected > 0)
                             {
-                                MessageBox.Show("Record updated successfully!");
+                                MessageBox.Show("Record Deleted successfully!");
                             }
                             else
                             {
@@ -133,17 +154,7 @@ namespace CitiSoft
                         try
                         {
                             con.Open();
-                            int rowsAffected = cmd.ExecuteNonQuery();
-
-                            // Check if the update was successful
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show("Record updated successfully!");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Record not found or update failed.");
-                            }
+                            cmd.ExecuteNonQuery();
                         }
                         catch (Exception ex)
                         {
@@ -199,7 +210,7 @@ namespace CitiSoft
             con = DataBaseManager.GetCitiSoftConnection();
             foreach (AddressModel addressModel in addressModelList)
             {
-                if (addressModel.addressId == -1)
+                if (addressModel.addressId < 0)
                 {
                     string sql = "INSERT INTO Address (vid, addressLine1, addressLine2, city, country, postcode, email, telephone) VALUES (@Vid, @AddressLine1, @AddressLine2, @City, @Country, @PostCode, @Email, @Telephone)";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
@@ -220,7 +231,7 @@ namespace CitiSoft
                             // Check if the update was successful
                             if (rowsAffected > 0)
                             {
-                                MessageBox.Show("Record updated successfully!");
+                                MessageBox.Show("Address updated successfully!");
                             }
                             else
                             {
@@ -252,7 +263,7 @@ namespace CitiSoft
                             // Check if the update was successful
                             if (rowsAffected > 0)
                             {
-                                MessageBox.Show("Record updated successfully!");
+                                MessageBox.Show("Address updated successfully!");
                             }
                             else
                             {
@@ -291,7 +302,7 @@ namespace CitiSoft
                             // Check if the update was successful
                             if (rowsAffected > 0)
                             {
-                                MessageBox.Show("Record updated successfully!");
+                                MessageBox.Show("Address updated successfully!");
                             }
                             else
                             {
@@ -475,7 +486,7 @@ namespace CitiSoft
             con = DataBaseManager.GetCitiSoftConnection();
             foreach (SoftwareModel softwareModel in softwareModelList)
             {
-                if (softwareModel.SoftwareId == -1)
+                if (softwareModel.SoftwareId < 0)
                 {
                     string sql = "INSERT INTO SoftName (vid,softName, softWeb, desc, cloud, addInfo) VALUES (@Vid, @SoftwareName, @SoftwareWebsite, @Description, @Cloud, @AdditionalInfo)";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
@@ -490,6 +501,38 @@ namespace CitiSoft
                         {
                             con.Open();
                             int rowsAffected = cmd.ExecuteNonQuery();
+                            cmd.CommandText = "Select SCOPE_INDENTITY();";
+                            int sId = Convert.ToInt32(cmd.ExecuteScalar());
+                            foreach (BusinessAreasModel business in Controller.businessAreasModelList)
+                            {
+                                if (softwareModel.SoftwareId == business.id)
+                                {
+                                    business.Sid = sId;
+                                }
+                                sql = "INSERT INTO Business(sid,BusinessArea)";
+
+                            }
+                            foreach (TypeOfSoftwareModel type in Controller.typeOfSoftwareModelList)
+                            {
+                                if (softwareModel.SoftwareId == type.id)
+                                {
+                                    type.Sid = sId;
+                                }
+                            }
+                            foreach (ModulesModel modules in Controller.modulesModelList)
+                            {
+                                if (softwareModel.SoftwareId == modules.id)
+                                {
+                                    modules.Sid = sId;
+                                }
+                            }
+                            foreach (FinancialServicesModel fin in Controller.financialServicesModelList)
+                            {
+                                if (softwareModel.SoftwareId == fin.id)
+                                {
+                                    fin.Sid = sId;
+                                }
+                            }
 
                             // Check if the update was successful
                             if (rowsAffected > 0)
@@ -517,7 +560,7 @@ namespace CitiSoft
                     string sql = "Delete From SoftName WHERE sid = @SoftwareId";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue("@sid", softwareModel.SoftwareId);
+                        cmd.Parameters.AddWithValue("@SoftwareId", softwareModel.SoftwareId);
                         try
                         {
                             con.Open();

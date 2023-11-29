@@ -25,7 +25,10 @@ namespace CitiSoft
             this.InitializeComponent();
             
         }
-    
+        public ViewDataByVendor(int i)
+        {
+            VendorDataGridView.DataSource = Controller.getDeliverVendor();
+        }    
         private void InitializeComponent() 
         {
             VendorDataGridView.DataSource = Controller.getDeliverVendor();
