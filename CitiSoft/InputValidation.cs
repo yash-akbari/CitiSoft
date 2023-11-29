@@ -394,5 +394,45 @@ namespace CitiSoft
 
             return isNull;
         }
+        public static bool IsValidPassword(string password)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("Password cannot be empty.");
+                return false;
+            }
+
+            if (password.Length < 8)
+            {
+                MessageBox.Show("Password must be at least 8 characters long.");
+                return false;
+            }
+
+            if (!Regex.IsMatch(password, @"[A-Z]"))
+            {
+                MessageBox.Show("Password must contain at least one uppercase letter.");
+                return false;
+            }
+
+            if (!Regex.IsMatch(password, @"[a-z]"))
+            {
+                MessageBox.Show("Password must contain at least one lowercase letter.");
+                return false;
+            }
+
+            if (!Regex.IsMatch(password, @"[0-9]"))
+            {
+                MessageBox.Show("Password must contain at least one digit.");
+                return false;
+            }
+
+            if (!Regex.IsMatch(password, @"[\W_]"))
+            {
+                MessageBox.Show("Password must contain at least one special character.");
+                return false;
+            }
+
+            return true;
+        }
     }
 }
