@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -83,18 +85,71 @@ namespace CitiSoft
 
         private void ChangePasswordButton_Click(object sender, EventArgs e)
         {
-            if (newPasswordTextBox.Text == confirmNewPasswordTextBox.Text)
+            string oldPassword = oldPasswordTextBox.Text;
+            string newPassword = newPasswordTextBox.Text;
+            string confirmNewPassword = confirmNewPasswordTextBox.Text;
+
+            if (!InputValidation.IsValidPassword(newPassword))
             {
-                MessageBox.Show("Password changed successfully.");
-                this.Close();
+                // Валидация нового пароля
+                return;
             }
-            else
+
+            if (newPassword != confirmNewPassword)
             {
                 MessageBox.Show("The new passwords do not match.");
+                return;
+            }
+
+            /*if (!IsOldPasswordCorrect(oldPassword))
+            {
+                MessageBox.Show("The old password is incorrect.");
+                return;
+            }
+
+            UpdatePasswordInDatabase(newPassword);*/
+        }
+        /*private bool IsOldPasswordCorrect(string oldPassword)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var query = "SELECT pwd FROM User WHERE uid = @uid";
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@uid", currentUsername);
+                    var storedPassword = command.ExecuteScalar()?.ToString();
+
+                    return HashPassword(oldPassword) == storedPassword;
+                }
+            }
+        }
+        private void UpdatePasswordInDatabase(string newPassword)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var query = "UPDATE User SET pwd = @newPwd WHERE uid = @uid";
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@newPwd", HashPassword(newPassword));
+                    command.Parameters.AddWithValue("@uid", currentUsername);
+                    command.ExecuteNonQuery();
+                }
             }
         }
 
-            private void ForgotPasswordButton_Click(object sender, EventArgs e)
+        private string HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                var hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLowerInvariant();
+                return hash;
+            }
+        }*/
+
+        private void ForgotPasswordButton_Click(object sender, EventArgs e)
         {
            
             ForgotPasswordForm forgotPasswordForm = new ForgotPasswordForm();

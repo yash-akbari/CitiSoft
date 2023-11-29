@@ -120,7 +120,6 @@
     <Compile Include="ChangePasswordForm.Designer.cs">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="CustomListBox.cs">
       <SubType>Component</SubType>
     </Compile>
