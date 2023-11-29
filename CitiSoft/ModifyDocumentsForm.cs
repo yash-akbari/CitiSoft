@@ -183,5 +183,25 @@ namespace CitiSoft
                 MessageBox.Show("Please select a document to download.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+        private void downloadDocumentBtn_Click(object sender, EventArgs e)
+        {
+            if (vendorIDTxtBox.Text == "")
+            {
+                MessageBox.Show("Please provide vendor ID first");
+                return;
+            }
+            if (!InputValidation.CheckValueExists(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
+            {
+                MessageBox.Show("Provided vendor ID does not exist");
+                vendorIDTxtBox.Text = string.Empty;
+                return;
+            }
+            if (InputValidation.IsValueNull(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "docAttach", vendorIDTxtBox.Text))
+            {
+                MessageBox.Show("This Vendor has no document attached");
+                return;
+            }
+            DownloadDocument();
+        }
     }
 }
