@@ -269,11 +269,11 @@ namespace CitiSoft
         {
             userProfilePanel = new Panel
             {
-                Dock = DockStyle.Fill, // Make sure the panel also fills its container
-                Size = new Size(600, 400), // Adjust the size as needed
-                Location = new Point(200, 50), // Adjust the location as needed
+                Dock = DockStyle.Fill, 
+                Size = new Size(600, 400), 
+                Location = new Point(200, 50), 
                 BorderStyle = BorderStyle.FixedSingle,
-                Visible = false // Start as hidden
+                Visible = false 
             };
             this.Controls.Add(userProfilePanel); // Add userProfilePanel to the main form's controls only once
             userProfilePanel.BringToFront();
