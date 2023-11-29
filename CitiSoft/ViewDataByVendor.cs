@@ -262,7 +262,7 @@ namespace CitiSoft
                 vendorIDTxtBox.Text = string.Empty;
                 return;
             }
-            if (IsValueNull(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "docAttach", vendorIDTxtBox.Text))
+            if (InputValidation.IsValueNull(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "docAttach", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("This Vendor has no document attached");
                 return;
@@ -303,8 +303,6 @@ namespace CitiSoft
             }
         }
 
-
-
         private void DownloadDocument()
         {
                
@@ -339,41 +337,7 @@ namespace CitiSoft
             }
         }
 
-        public static bool IsValueNull(string connectionString, string tableName, string columnName, string idValue)
-        {
-            bool isNull = false; // Default assumption is that the value is not NULL
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                SqlTransaction transaction = connection.BeginTransaction();
-
-                try
-                {
-                    using (SqlCommand command = new SqlCommand($"SELECT {columnName} FROM {tableName} WHERE vid = @VendorID;", connection, transaction))
-                    {
-                        command.Parameters.AddWithValue("@VendorID", idValue);
-
-                        object result = command.ExecuteScalar();
-
-                        // Check if the result is DBNull or null
-                        if (result == DBNull.Value || result == null)
-                        {
-                            isNull = true;
-                        }
-                    }
-
-                    transaction.Commit();
-                }
-                catch (SqlException ex)
-                {
-                    transaction.Rollback();
-                    MessageBox.Show($"An error occurred: {ex.Message}");
-                }
-            }
-
-            return isNull;
-        }
+        
 
         private void downloadDocumentBtn_Click(object sender, EventArgs e)
         {
@@ -388,7 +352,7 @@ namespace CitiSoft
                 vendorIDTxtBox.Text = string.Empty;
                 return;
             }
-            if (IsValueNull(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "docAttach", vendorIDTxtBox.Text))
+            if (InputValidation.IsValueNull(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "docAttach", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("This Vendor has no document attached");
                 return;

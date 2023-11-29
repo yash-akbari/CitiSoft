@@ -357,5 +357,42 @@ namespace CitiSoft
             // For the sake of this example, we only allow alphanumeric characters and underscores
             return Regex.IsMatch(input, @"^\w+$");
         }
+        
+        // checks if the value is NULL
+        public static bool IsValueNull(string connectionString, string tableName, string columnName, string idValue)
+        {
+            bool isNull = false; // Default assumption is that the value is not NULL
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+                    using (SqlCommand command = new SqlCommand($"SELECT {columnName} FROM {tableName} WHERE vid = @VendorID;", connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@VendorID", idValue);
+
+                        object result = command.ExecuteScalar();
+
+                        // Check if the result is DBNull or null
+                        if (result == DBNull.Value || result == null)
+                        {
+                            isNull = true;
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (SqlException ex)
+                {
+                    transaction.Rollback();
+                    MessageBox.Show($"An error occurred: {ex.Message}");
+                }
+            }
+
+            return isNull;
+        }
     }
 }
