@@ -137,5 +137,51 @@ namespace CitiSoft
                 }
             }
         }
+        public void showDataInTable()
+        {
+            RuntimeUI.dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT vid, compName, est, empCount, intProfServ, lstDemoDt, lstRevInt, lstRevDt FROM VendorInfo;", addDocumentDgv);
+        }
+
+        private void DownloadDocument()
+        {
+            if (addDocumentDgv.SelectedRows.Count > 0)
+            {
+                string documentName = addDocumentDgv.SelectedRows[0].Cells["DocumentName"].Value.ToString();
+
+                using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
+                {
+                    connection.Open();
+                    SqlTransaction transaction = connection.BeginTransaction();
+                    try
+                    {
+                        using (SqlCommand command = new SqlCommand("SELECT docAttach FROM VendorInfo WHERE vid = @VendorID", connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
+
+                            byte[] documentData = (byte[])command.ExecuteScalar();
+
+                            // Save document to a file
+                            SaveFileDialog saveFileDialog = new SaveFileDialog();
+                            saveFileDialog.FileName = documentName;
+                            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                File.WriteAllBytes(saveFileDialog.FileName, documentData);
+                                MessageBox.Show("Document downloaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                transaction.Commit();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error downloading document: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        transaction.Rollback();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a document to download.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }
