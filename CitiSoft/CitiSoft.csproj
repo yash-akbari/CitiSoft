@@ -124,6 +124,12 @@
     <Compile Include="CustomListBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dashboard.Designer.cs">
+      <DependentUpon>dashboard.cs</DependentUpon>
+    </Compile>
     <Compile Include="ForgotPasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,6 +138,12 @@
     </Compile>
     <Compile Include="InputValidation.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model.cs" />
     <Compile Include="ModifyClientForm.cs">
       <SubType>Form</SubType>
@@ -186,6 +198,12 @@
     <Compile Include="ViewDataByVendor.cs">
       <SubType>Form</SubType>
     </Compile>
+    <EmbeddedResource Include="dashboard.resx">
+      <DependentUpon>dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainUi.resx">
       <DependentUpon>MainUi.cs</DependentUpon>
     </EmbeddedResource>
@@ -248,6 +266,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>Functionality.mdf</DependentUpon>
     </Content>
+    <None Include="Resources\logociti.jpg" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
