@@ -657,14 +657,20 @@ namespace CitiSoft
             // 
             // mainPan
             // 
-            this.mainPan.Size = new System.Drawing.Size(600, 652);
+            this.mainPan.Size = new System.Drawing.Size(749, 652);
             // 
             // RuntimeUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(820, 800);
+            this.ClientSize = new System.Drawing.Size(969, 800);
             this.Name = "RuntimeUI";
+            this.Load += new System.EventHandler(this.RuntimeUI_Load);
             this.ResumeLayout(false);
+
+        }
+
+        private void RuntimeUI_Load(object sender, EventArgs e)
+        {
 
         }
     }
