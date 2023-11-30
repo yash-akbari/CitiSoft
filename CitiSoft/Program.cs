@@ -18,6 +18,7 @@ namespace CitiSoft
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Login());
 
             while (true) // Infinite loop to re-display the LoginForm
             {

@@ -61,7 +61,12 @@ namespace CitiSoft
                     form2.Show();
                 }
 
-
+                if (dt.Rows.Count > 0) // Проверяем, есть ли возвращаемые строки
+                {
+                    this.Hide();
+                    RuntimeUI form = new RuntimeUI(); // Создаем и отображаем RuntimeUI
+                    form.Show();
+                }
             }
             else
             {
