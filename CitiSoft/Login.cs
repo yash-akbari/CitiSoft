@@ -47,18 +47,15 @@ namespace CitiSoft
                 this.Hide();
                 if (dt.Rows[0][2].ToString() == "admin")
                 {
-                    MainUI form = new MainUI();
-                    form.Show();
+                    Application.Run(new RuntimeUI());
                 }
                 else if (dt.Rows[0][2].ToString() == "manager")
                 {
-                    MainUI form2 = new MainUI();
-                    form2.Show();
+                    Application.Run(new RuntimeUI());
                 }
                 else if (dt.Rows[0][2].ToString() == "user")
                 {
-                    MainUI form2 = new MainUI();
-                    form2.Show();
+                    Application.Run(new RuntimeUI());
                 }
 
 
@@ -72,6 +69,6 @@ namespace CitiSoft
         private void button2_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        }
+        } 
     }
 }
