@@ -6,12 +6,14 @@ namespace CitiSoft
 {
     public partial class UserProfileForm : Form
     {
+        public event EventHandler UserLoggedOut;
         private Button changePasswordButton;
         private Button logoutButton;
         public UserProfileForm()
         {
             InitializeComponent();
             InitializeChangePasswordButton();
+            InitializeLogoutButton();
             this.Dock = DockStyle.Fill;
 
         }
@@ -38,8 +40,8 @@ namespace CitiSoft
             logoutButton = new Button
             {
                 Text = "Logout",
-                Size = new Size(100, 30),
-                Location = new Point(10, 10) 
+                Size = new Size(120, 40),
+                Location = new Point(10, 70) 
             };
             logoutButton.Click += LogoutButton_Click;
             Controls.Add(logoutButton);
@@ -47,8 +49,8 @@ namespace CitiSoft
 
         private void LogoutButton_Click(object sender, EventArgs e)
         {
-            
-            this.DialogResult = DialogResult.Abort; 
+            UserLoggedOut?.Invoke(this, EventArgs.Empty);
+            this.DialogResult = DialogResult.OK; 
             this.Close();
         }
 

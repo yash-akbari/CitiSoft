@@ -8,7 +8,7 @@ namespace CitiSoft
 {
     public partial class RuntimeUI : MainUI
     {
-
+        public bool LoggedOut { get; private set; }
         Label setMenu = new Label();
         Label notiMenu = new Label();
 
@@ -349,7 +349,7 @@ namespace CitiSoft
             }
         }
 
-
+      
         void UserProfileMenuFunc()
         {
             // Create the User Profile menu label
@@ -370,28 +370,35 @@ namespace CitiSoft
             // Hide all panels first.
             HideAllPanels();
 
-            panSelector("userProfilePanel");
-           
+
+            UserProfileForm userProfileForm;
+
             if (!userProfilePanel.Controls.ContainsKey("userProfileForm"))
             {
-                UserProfileForm userProfileForm = new UserProfileForm
+                 userProfileForm = new UserProfileForm
                 {
                     Name = "userProfileForm",
                     TopLevel = false,
                     Dock = DockStyle.Fill,
                     FormBorderStyle = FormBorderStyle.None
                 };
-                userProfilePanel.Controls.Add(userProfileForm); // Add the form to the panel
+                userProfileForm.UserLoggedOut += (s, args) =>
+                {
+                    this.Close(); // Закрываем RuntimeUI при выходе из профиля
+                };
+
+                userProfilePanel.Controls.Add(userProfileForm);
                 userProfileForm.Show();
             }
             else
             {
-                // If the form is already created, just show it.
-                userProfilePanel.Controls["userProfileForm"].BringToFront();
+                userProfileForm = (UserProfileForm)userProfilePanel.Controls["userProfileForm"];
+                userProfileForm.BringToFront();
             }
 
-            userProfilePanel.Visible = true; // Make the user profile panel visible
-            userProfilePanel.BringToFront(); // Bring the user profile panel to the front
+            userProfilePanel.Visible = true;
+
+
         }
 
         // Method to hide all panels.
