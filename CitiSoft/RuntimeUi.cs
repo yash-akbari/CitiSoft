@@ -149,6 +149,7 @@ namespace CitiSoft
         }
         private void dashboardMenu_Click(object sender, EventArgs e)
         {
+            HideAllPanels();
             panSelector("dashboardPan");
         }
 
@@ -369,7 +370,8 @@ namespace CitiSoft
             // Hide all panels first.
             HideAllPanels();
 
-            // Check if the UserProfileForm already exists; if not, create it.
+            panSelector("userProfilePanel");
+           
             if (!userProfilePanel.Controls.ContainsKey("userProfileForm"))
             {
                 UserProfileForm userProfileForm = new UserProfileForm
@@ -395,6 +397,7 @@ namespace CitiSoft
         // Method to hide all panels.
         private void HideAllPanels()
         {
+            dashboardPan.Visible = false;   
             venPan.Visible = false;
             clientPan.Visible = false;
             userProfilePanel.Visible = false;
