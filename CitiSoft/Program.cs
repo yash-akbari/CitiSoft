@@ -29,7 +29,7 @@ namespace CitiSoft
                         // If the login is not successful, exit the application
                         break;
                     }
-                }
+                    }
 
                 // Show the main application window after successful login
                 var userForm = new UserProfileForm();

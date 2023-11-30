@@ -641,7 +641,7 @@ namespace CitiSoft
 
         private void _statusLabel_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void InitializeComponent()
