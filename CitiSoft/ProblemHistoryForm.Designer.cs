@@ -103,7 +103,6 @@
             this.clientIDPHLabel.Size = new System.Drawing.Size(93, 25);
             this.clientIDPHLabel.TabIndex = 5;
             this.clientIDPHLabel.Text = "Client ID";
-            this.clientIDPHLabel.Click += new System.EventHandler(this.clientIDPHLabel_Click);
             // 
             // finishProblemBtn
             // 
@@ -197,7 +196,6 @@
             this.Controls.Add(this.ProblemHistoryDgv);
             this.Name = "ProblemHistoryForm";
             this.Text = "ProblemHistoryForm";
-            this.Load += new System.EventHandler(this.ProblemHistoryForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ProblemHistoryDgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

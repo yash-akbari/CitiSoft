@@ -21,12 +21,14 @@ namespace CitiSoft
 
         private void updateClientBtn_Click(object sender, EventArgs e)
         {
+            // checks if the user provided Client ID
             if (clientIDTxtBox.Text == "")
             {
                 MessageBox.Show("Please provide client id");
-                return; // Exit if no client ID is provided
+                return;
             }
 
+            // checks if the user provided wrong Client ID
             if (!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "Client", "cid", clientIDTxtBox.Text))
             {
                 MessageBox.Show("Client ID you have provided does not exist");
@@ -53,9 +55,6 @@ namespace CitiSoft
                     if (!string.IsNullOrWhiteSpace(emailTxtBox.Text))
                         addressUpdates.Add("email = @Email");
 
-                    //if (!string.IsNullOrWhiteSpace(streetTxtBox.Text))
-                        //addressUpdates.Add("Street = @Street");
-
                     if (!string.IsNullOrWhiteSpace(addressLine1TxtBox.Text))
                         addressUpdates.Add("AddressLine1 = @addressLine1");
 
@@ -71,6 +70,7 @@ namespace CitiSoft
                     if(!string.IsNullOrWhiteSpace(postcodeTxtBox.Text))
                         addressUpdates.Add("PostCode = @Postcode");
 
+                    // checks if any data was provided
                     if (clientUpdates.Count == 0 && addressUpdates.Count == 0)
                     {
                         MessageBox.Show("No data provided to update.");
@@ -96,9 +96,6 @@ namespace CitiSoft
 
                         if (!string.IsNullOrWhiteSpace(emailTxtBox.Text))
                             command.Parameters.AddWithValue("@Email", emailTxtBox.Text);
-
-                        //if (!string.IsNullOrWhiteSpace(streetTxtBox.Text))
-                            //command.Parameters.AddWithValue("@Street", streetTxtBox.Text);
 
                         if(!string.IsNullOrWhiteSpace(addressLine1TxtBox.Text))
                             command.Parameters.AddWithValue("@AddressLine1", addressLine1TxtBox.Text);
@@ -138,12 +135,14 @@ namespace CitiSoft
 
         private void deleteClientBtn_Click(object sender, EventArgs e)
         {
+            // checks if the user provided Client ID
             if(deleteIDTextBox.Text == "")
             {
                 MessageBox.Show("Please provide client ID");
                 return;
             }
 
+            // checks if the user provided wrong ID
             if (!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "Client", "cid", deleteIDTextBox.Text))
             {
                 MessageBox.Show("Client ID you have provided does not exist");
@@ -160,6 +159,7 @@ namespace CitiSoft
                 {
                     using (SqlCommand command = new SqlCommand("DELETE FROM CustAddress WHERE cid = @ClientID DELETE FROM Client WHERE cid = @ClientID;", connection, transaction))
                     {
+                        // uses parameterizing to prevent from SQL injections
                         command.Parameters.AddWithValue("@ClientID", deleteIDTextBox.Text);
 
                         int rowsAffected = command.ExecuteNonQuery();
@@ -258,16 +258,7 @@ namespace CitiSoft
             InputValidation.IsOnlyAlphanumericOrWithDots(textBox, 30, "Postcode");
         }
 
-        private void ModifyClientForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        // inserts data from the database into the data grid view
         public void showDataInTable()
         {
             RuntimeUI.dataBinding(DataBaseManager.functionalityConnectionString, "SELECT c.cid AS 'Client ID', c.compName AS 'Company Name', cu.phone AS 'Phone', cu.email AS 'Email', CONCAT(cu.addressLine1, ' ', cu.addressLine2) AS 'Address', cu.city AS 'City', cu.country AS 'Country', cu.postCode AS 'Postcode' FROM Client c JOIN CustAddress cu ON c.cid = cu.cid; ", ModifyClientDgv);

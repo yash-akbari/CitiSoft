@@ -11,7 +11,7 @@ namespace CitiSoft
 {
     internal class InputValidation
     {
-
+        // checks if the input consists only from numbers
         public static void IsOnlyNumbers(TextBox textBox)
         {
             if (textBox != null)
@@ -30,8 +30,8 @@ namespace CitiSoft
                 }
             }
         }
- 
 
+        // checks if the input consists only from letters and spaces
         public static void IsOnlyLettersAndSpaces(TextBox textBox, int length, string name)
         {
             if (textBox != null)
@@ -60,6 +60,7 @@ namespace CitiSoft
             }
         }
 
+        // checks if the input consists only from letters
         public static void IsOnlyLetters(TextBox textBox, int length, string name)
         {
             if (textBox != null)
@@ -144,6 +145,7 @@ namespace CitiSoft
             }
         }
 
+        // checks if the input consists only from alphanumerics or with dots
         public static void IsOnlyAlphanumericOrWithDots(TextBox textBox, int length, string name)
         {
             if (textBox != null)
@@ -171,7 +173,6 @@ namespace CitiSoft
                 }
             }
         }
-
 
         public static void IsValid(TextBox textBox, int length, String message, String pattern = @"^[a-zA-Z\s]+$") // by default it will accept a-z,A-Z and spaces
         {
@@ -256,6 +257,7 @@ namespace CitiSoft
             }
         }
 
+        // checks if the input consists only from numbers, spaces and '+'
         public static void IsPhoneNumberStructured(TextBox textBox, int length, string name)
         {
             if (textBox != null)
@@ -298,6 +300,7 @@ namespace CitiSoft
             }
         }  
 
+        // checks if the input holds a specific length
         public static void LimitLength(TextBox textBox, int length, string name)
         {
             if (textBox != null)
@@ -372,6 +375,7 @@ namespace CitiSoft
                 {
                     using (SqlCommand command = new SqlCommand($"SELECT {columnName} FROM {tableName} WHERE vid = @VendorID;", connection, transaction))
                     {
+                        // uses parameterizing to prevent SQL injections
                         command.Parameters.AddWithValue("@VendorID", idValue);
 
                         object result = command.ExecuteScalar();
@@ -394,6 +398,7 @@ namespace CitiSoft
 
             return isNull;
         }
+        
         public static bool IsValidPassword(string password)
         {
             if (string.IsNullOrWhiteSpace(password))

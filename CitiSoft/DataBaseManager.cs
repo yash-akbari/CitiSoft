@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace CitiSoft
 {
+    // class that contains all commonly used constants and methods
     partial class DataBaseManager
     {
 
