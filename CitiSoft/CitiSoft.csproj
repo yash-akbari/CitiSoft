@@ -114,6 +114,12 @@
     <Compile Include="addVendor.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="AdminPasswordChangeRequestsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminPasswordChangeRequestsForm.Designer.cs">
+      <DependentUpon>AdminPasswordChangeRequestsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ChangePasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,6 +196,9 @@
     <Compile Include="ViewDataByVendor.cs">
       <SubType>Form</SubType>
     </Compile>
+    <EmbeddedResource Include="AdminPasswordChangeRequestsForm.resx">
+      <DependentUpon>AdminPasswordChangeRequestsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="dashboard.resx">
       <DependentUpon>dashboard.cs</DependentUpon>
     </EmbeddedResource>
