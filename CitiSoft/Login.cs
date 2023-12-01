@@ -16,6 +16,7 @@ namespace CitiSoft
         public Login()
         {
             InitializeComponent();
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -35,9 +36,9 @@ namespace CitiSoft
                     {
                         if (reader.Read())
                         {
-                            // Задаем DialogResult как OK, если логин успешен
+                            
                             this.DialogResult = DialogResult.OK;
-                            this.Hide(); // Прячем форму логина, не закрываем
+                            this.Hide();
                         }
                         else
                         {
