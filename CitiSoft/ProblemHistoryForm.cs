@@ -115,7 +115,7 @@ namespace CitiSoft
         }
 
         // changes the value in isClosed column to True
-        private void finishProblemBtn_Click_1(object sender, EventArgs e)
+        private void finishProblemBtn_Click(object sender, EventArgs e)
         {
             // checks if the user provided Problem ID
             if (problemIDTxtBox.Text == "")

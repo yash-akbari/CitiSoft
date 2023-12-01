@@ -112,7 +112,7 @@
             this.finishProblemBtn.TabIndex = 6;
             this.finishProblemBtn.Text = "Finish Problem";
             this.finishProblemBtn.UseVisualStyleBackColor = true;
-            this.finishProblemBtn.Click += new System.EventHandler(this.finishProblemBtn_Click_1);
+            this.finishProblemBtn.Click += new System.EventHandler(this.finishProblemBtn_Click);
             // 
             // problemIDLabel
             // 
