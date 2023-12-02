@@ -1,4 +1,6 @@
-﻿namespace CitiSoft
+﻿using System;
+
+namespace CitiSoft
 {
     partial class UserProfileForm
     {
@@ -11,12 +13,18 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 

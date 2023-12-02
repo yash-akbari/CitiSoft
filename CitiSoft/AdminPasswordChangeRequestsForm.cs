@@ -15,6 +15,7 @@ public partial class AdminPasswordChangeRequestsForm : Form
     {
         InitializeComponent();
         LoadPasswordChangeRequests();
+        InitializeComponent();
     }
 
     private void InitializeComponent()
