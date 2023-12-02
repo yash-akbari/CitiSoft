@@ -211,9 +211,8 @@ namespace CitiSoft
                             Telephone = address.Telephone,
                         });
                     }
-                    VendorRepository.insertUpdateDeleteVendor(Controller.vendorModelList);
-
-                    ViewDataByVendor viewDataByVendor = new ViewDataByVendor(1); 
+                    Controller.sendVendorUpdate(Controller.vendorModelList);
+                    //ViewDataByVendor viewDataByVendor = new ViewDataByVendor(1); 
                 }
                 catch (FormatException fe)
                 {

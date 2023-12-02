@@ -56,7 +56,16 @@ namespace CitiSoft
                     con.Open();
                         using (SqlTransaction transaction = con.BeginTransaction())
                         {
-                            string sql = "INSERT INTO VendorInfo (compName, est, empCount, intProfServ, lstDemoDt, lstRevInt, lstRevDt) VALUES (@CompanyName, @CompanyEstablished, @EmployeesCount, @InternalProfessionalServices, @LastDemoDate, @LastReviewedInterval, @LastReviewedDate);";
+                            // string sql = @"INSERT INTO [dbo].[VendorInfo] ([compName], [est], [empCount], [intProfServ], [lstDemoDt], [lstRevInt], [lstRevDt], [docAttach]) 
+                            //VALUES ("+ (vendorModel.CompanyName) + ","+ (vendorModel.CompanyEstablished)+","+vendorModel.EmployeesCount + ","+ (vendorModel.InternalProfessionalServices) + ", "+vendorModel.LastDemoDate+", "+vendorModel.LastReviewedInterval+", "+vendorModel.LastReviewedDate+" ,0), SELECT SCOPE_IDENTITY();";
+
+                            string sql = @"
+                                INSERT INTO [dbo].[VendorInfo] 
+                                ([compName], [est], [empCount], [intProfServ], [lstDemoDt], [lstRevInt], [lstRevDt], [docAttach]) 
+                                VALUES 
+                                (@CompanyName, @CompanyEstablished, @EmployeesCount, @InternalProfessionalServices, @LastDemoDate, @LastReviewedInterval, @LastReviewedDate, @DocAttach);
+                                SELECT SCOPE_IDENTITY();
+                            ";
 
                             using (SqlCommand cmd = new SqlCommand(sql, con,transaction))
                             {
@@ -67,16 +76,17 @@ namespace CitiSoft
                                 cmd.Parameters.AddWithValue("@LastDemoDate", vendorModel.LastDemoDate);
                                 cmd.Parameters.AddWithValue("@LastReviewedInterval", vendorModel.LastReviewedInterval);
                                 cmd.Parameters.AddWithValue("@LastReviewedDate", vendorModel.LastReviewedDate);
-                                MessageBox.Show(vendorModel.CompanyName+" "+ vendorModel.InternalProfessionalServices.ToString());
+                                cmd.Parameters.AddWithValue("@DocAttach", 0);
+
                                 try
                                 {
-                                    int res = (cmd.ExecuteNonQuery());
+                                    object res = (cmd.ExecuteScalar());
                                     transaction.Commit();
                                     cmd.Dispose();
                                     con.Close();
                                     MessageBox.Show(res.ToString());
-                                    int venId = 0;// Convert.ToInt32(res);
-                                    MessageBox.Show(venId.ToString() + " " + res);
+                                    int venId =  Convert.ToInt32(res);
+                                    //MessageBox.Show(res.ToString());
                                     foreach (AddressModel add in Controller.addressModelList)
                                     {
                                         if (vendorModel.Vid == add.addressId)
@@ -84,6 +94,7 @@ namespace CitiSoft
                                             add.Vid = venId;
                                         }
                                     }
+                                    AddressRepository.insertUpdateDeleteAddress(Controller.addressModelList);
                                     
                                 }
                                 catch (Exception ex)
@@ -282,7 +293,7 @@ namespace CitiSoft
                 }
                 else 
                 { 
-                    string sql = "UPDATE Address SET vid = @Vid, addressLine1 = @AddressLine1, addressLine2 = @AddressLine2, city = @City, country = @Country, postcode = @PostCode, email = @Email, telephone = @Telephone WHERE aqddressId = @AddressId";
+                    string sql = "UPDATE Address SET vid = @Vid, addressLine1 = @AddressLine1, addressLine2 = @AddressLine2, city = @City, country = @Country, postcode = @PostCode, email = @Email, telephone = @Telephone WHERE addressId = @AddressId";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
                         cmd.Parameters.AddWithValue("@AddressId", addressModel.addressId);
