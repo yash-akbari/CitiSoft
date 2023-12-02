@@ -1,14 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using System;
 using System.Data;
 using System.Windows.Forms;
 using System.Data.SqlClient;
@@ -106,7 +96,8 @@ public partial class AdminPasswordChangeRequestsForm : Form
     }
     private void LoadPasswordChangeRequests()
     {
-        string query = "SELECT RequestId, UserId, NewPassword FROM PasswordChangeRequests WHERE Status = 'Pending'";
+        
+        string query = "SELECT uid, fn, email, NewPassword FROM [User] WHERE PasswordChangeRequested = 1";
         using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
         {
             try
@@ -133,8 +124,9 @@ public partial class AdminPasswordChangeRequestsForm : Form
     {
         if (dgvPasswordRequests.CurrentRow != null)
         {
-            string requestId = dgvPasswordRequests.CurrentRow.Cells["RequestId"].Value.ToString();
-            UpdatePasswordRequestStatus(requestId, "Approved");
+            string userId = dgvPasswordRequests.CurrentRow.Cells["uid"].Value.ToString();
+            string newPassword = dgvPasswordRequests.CurrentRow.Cells["NewPassword"].Value.ToString();
+            UpdateUserPassword(userId, newPassword, false);
         }
     }
 
@@ -142,14 +134,17 @@ public partial class AdminPasswordChangeRequestsForm : Form
     {
         if (dgvPasswordRequests.CurrentRow != null)
         {
-            string requestId = dgvPasswordRequests.CurrentRow.Cells["RequestId"].Value.ToString();
-            UpdatePasswordRequestStatus(requestId, "Denied");
+            string userId = dgvPasswordRequests.CurrentRow.Cells["uid"].Value.ToString();
+            UpdateUserPassword(userId, null, true);
         }
     }
 
-    private void UpdatePasswordRequestStatus(string requestId, string newStatus)
+    private void UpdateUserPassword(string userId, string newPassword, bool denyRequest)
     {
-        string query = "UPDATE PasswordChangeRequests SET Status = @Status WHERE RequestId = @RequestId";
+        string query = denyRequest ?
+            "UPDATE [User] SET PasswordChangeRequested = 0 WHERE uid = @UserId" :
+            "UPDATE [User] SET pwd = @NewPassword, PasswordChangeRequested = 0 WHERE uid = @UserId";
+
         using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
         {
             try
@@ -157,17 +152,22 @@ public partial class AdminPasswordChangeRequestsForm : Form
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@Status", newStatus);
-                    command.Parameters.AddWithValue("@RequestId", requestId);
+                    command.Parameters.AddWithValue("@UserId", userId);
+                    if (!denyRequest)
+                    {
+                        command.Parameters.AddWithValue("@NewPassword", newPassword);
+                    }
+
                     int result = command.ExecuteNonQuery();
                     if (result > 0)
                     {
-                        MessageBox.Show("Password request has been " + newStatus.ToLower() + ".");
+                        string message = denyRequest ? "Password change request has been denied." : "Password has been updated.";
+                        MessageBox.Show(message);
                         LoadPasswordChangeRequests(); // Refresh the list
                     }
                     else
                     {
-                        MessageBox.Show("Failed to update the password request.");
+                        MessageBox.Show("Failed to update the password change request.");
                     }
                 }
             }
@@ -177,4 +177,5 @@ public partial class AdminPasswordChangeRequestsForm : Form
             }
         }
     }
+
 }
