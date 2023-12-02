@@ -114,6 +114,12 @@
     <Compile Include="addVendor.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="AdminPasswordChangeRequestsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminPasswordChangeRequestsForm.Designer.cs">
+      <DependentUpon>AdminPasswordChangeRequestsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ChangePasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,13 +168,6 @@
     <Compile Include="ProblemHistoryForm.Designer.cs">
       <DependentUpon>ProblemHistoryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Reminder.cs" />
-    <Compile Include="ReminderForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ReminderForm.Designer.cs">
-      <DependentUpon>ReminderForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Repository.cs" />
     <Compile Include="RuntimeUi.cs">
       <SubType>Form</SubType>
@@ -197,6 +196,9 @@
     <Compile Include="ViewDataByVendor.cs">
       <SubType>Form</SubType>
     </Compile>
+    <EmbeddedResource Include="AdminPasswordChangeRequestsForm.resx">
+      <DependentUpon>AdminPasswordChangeRequestsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="dashboard.resx">
       <DependentUpon>dashboard.cs</DependentUpon>
     </EmbeddedResource>
@@ -225,9 +227,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ReminderForm.resx">
-      <DependentUpon>ReminderForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="RuntimeUi.resx">
       <DependentUpon>RuntimeUi.cs</DependentUpon>
     </EmbeddedResource>

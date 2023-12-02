@@ -16,64 +16,48 @@ namespace CitiSoft
         public Login()
         {
             InitializeComponent();
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(DataBaseManager.functionalityConnectionString);
-            try
+            using (SqlConnection conn = new SqlConnection(DataBaseManager.functionalityConnectionString))
             {
-                conn.Open();
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("error" + ex.ToString());
-                throw;
-            }
-
-
-            string query = "SELECT email,pwd,uType FROM [User] WHERE email='" + textBox1.Text + "' AND [pwd]='" + textBox2.Text + "'";
-            SqlCommand cmd = new SqlCommand(query, conn);
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            adapter.Fill(dt);
-
-
-            //int result = Convert.ToInt32(cmd.ExecuteScalar());
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            if (reader.Read())
-            {
-                this.Hide();
-                if (dt.Rows[0][2].ToString() == "admin")
+                try
                 {
-                    Application.Run(new RuntimeUI());
-                }
-                else if (dt.Rows[0][2].ToString() == "manager")
-                {
-                    Application.Run(new RuntimeUI());
-                }
-                else if (dt.Rows[0][2].ToString() == "user")
-                {
-                    Application.Run(new RuntimeUI());
-                }
+                    conn.Open();
 
-                if (dt.Rows.Count > 0) // Проверяем, есть ли возвращаемые строки
-                {
-                    this.Hide();
-                    RuntimeUI form = new RuntimeUI(); // Создаем и отображаем RuntimeUI
-                    form.Show();
+                    string query = "SELECT email, pwd, uType FROM [User] WHERE email=@Email AND pwd=@Password";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@Email", textBox1.Text);
+                    cmd.Parameters.AddWithValue("@Password", textBox2.Text);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            
+                            this.DialogResult = DialogResult.OK;
+                            this.Hide();
+                        }
+                        else
+                        {
+                            MessageBox.Show("USER OR PASSWORD ARE INCORRECT");
+                        }
+                    }
                 }
-            }
-            else
-            {
-                MessageBox.Show("USER OR PASSWORD ARE INCORRECT");
+                catch (SqlException ex)
+                {
+                    MessageBox.Show("Error connecting to database: " + ex.Message);
+                }
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        } 
+        }
     }
+
+
 }

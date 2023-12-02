@@ -18,7 +18,7 @@ namespace CitiSoft
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login());
+            
 
             while (true) // Infinite loop to re-display the LoginForm
             {
@@ -29,23 +29,16 @@ namespace CitiSoft
                         // If the login is not successful, exit the application
                         break;
                     }
-                    }
-
-                // Show the main application window after successful login
-                var userForm = new UserProfileForm();
-                if (userForm.ShowDialog() == DialogResult.Abort)
-                {
-                    // User chose "Logout", we will restart the loop and show LoginForm again
-                    continue;
                 }
-                else
-                {
-                    // If the user closes the UserProfileForm in another way, we exit the application
-                    break;
-                }
-            }
 
-            Application.Exit(); // Exit the application after the loop ends
-        }
+                // Show the main window after a successful login
+                using (var runtimeUi = new RuntimeUI())
+                {
+                    runtimeUi.ShowDialog();
+
+                    // If the user logs out, restart the loop and show login form again
+                    
+                }
+        }   }
     }
 }

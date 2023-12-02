@@ -8,7 +8,7 @@ namespace CitiSoft
 {
     public partial class RuntimeUI : MainUI
     {
-
+        public bool LoggedOut { get; private set; }
         Label setMenu = new Label();
         Label notiMenu = new Label();
 
@@ -149,6 +149,7 @@ namespace CitiSoft
         }
         private void dashboardMenu_Click(object sender, EventArgs e)
         {
+            HideAllPanels();
             panSelector("dashboardPan");
         }
 
@@ -348,7 +349,7 @@ namespace CitiSoft
             }
         }
 
-
+      
         void UserProfileMenuFunc()
         {
             // Create the User Profile menu label
@@ -369,32 +370,41 @@ namespace CitiSoft
             // Hide all panels first.
             HideAllPanels();
 
-            // Check if the UserProfileForm already exists; if not, create it.
+
+            UserProfileForm userProfileForm;
+
             if (!userProfilePanel.Controls.ContainsKey("userProfileForm"))
             {
-                UserProfileForm userProfileForm = new UserProfileForm
+                 userProfileForm = new UserProfileForm
                 {
                     Name = "userProfileForm",
                     TopLevel = false,
                     Dock = DockStyle.Fill,
                     FormBorderStyle = FormBorderStyle.None
                 };
-                userProfilePanel.Controls.Add(userProfileForm); // Add the form to the panel
+                userProfileForm.UserLoggedOut += (s, args) =>
+                {
+                    this.Close(); // Закрываем RuntimeUI при выходе из профиля
+                };
+
+                userProfilePanel.Controls.Add(userProfileForm);
                 userProfileForm.Show();
             }
             else
             {
-                // If the form is already created, just show it.
-                userProfilePanel.Controls["userProfileForm"].BringToFront();
+                userProfileForm = (UserProfileForm)userProfilePanel.Controls["userProfileForm"];
+                userProfileForm.BringToFront();
             }
 
-            userProfilePanel.Visible = true; // Make the user profile panel visible
-            userProfilePanel.BringToFront(); // Bring the user profile panel to the front
+            userProfilePanel.Visible = true;
+
+
         }
 
         // Method to hide all panels.
         private void HideAllPanels()
         {
+            dashboardPan.Visible = false;   
             venPan.Visible = false;
             clientPan.Visible = false;
             userProfilePanel.Visible = false;
@@ -647,14 +657,20 @@ namespace CitiSoft
             // 
             // mainPan
             // 
-            this.mainPan.Size = new System.Drawing.Size(600, 652);
+            this.mainPan.Size = new System.Drawing.Size(749, 652);
             // 
             // RuntimeUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(820, 800);
+            this.ClientSize = new System.Drawing.Size(969, 800);
             this.Name = "RuntimeUI";
+            this.Load += new System.EventHandler(this.RuntimeUI_Load);
             this.ResumeLayout(false);
+
+        }
+
+        private void RuntimeUI_Load(object sender, EventArgs e)
+        {
 
         }
     }

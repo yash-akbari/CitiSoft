@@ -23,17 +23,20 @@ namespace CitiSoft
         // adds the client to the ProblemHistory table
         private void addClientBtn_Click(object sender, EventArgs e)
         {
+            // checks if the user did not put text in any textboxes
             if (clientIDPHTxtBox.Text == "" || descriptionTxtBox.Text == "" || userIDPHTxtBox.Text == "")
             {
                 MessageBox.Show("Please fill in all text boxes");
                 return;
             }
+            // checks if the user provided wrong Client ID
             if (!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "Client", "cid", clientIDPHTxtBox.Text))
             {
                 MessageBox.Show("Client ID you have provided does not exist");
                 clientIDPHTxtBox.Text = string.Empty;
                 return;
             }
+            // checks if the user provided wrong User ID
             if (!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "User", "uid", userIDPHTxtBox.Text))
             {
                 MessageBox.Show("Your ID does not exist");
@@ -50,6 +53,7 @@ namespace CitiSoft
                 {
                     using (SqlCommand command = new SqlCommand("INSERT INTO ProblemHistory (cid, uid, [date], [desc], isClosed, lstRevDate) VALUES (@ClientID, @UserID, @Date, @Description, @IsClosed, @LstRevDate);", connection, transaction))
                     {
+                        // uses parameterizing to prevent from SQL injections
                         command.Parameters.AddWithValue("@ClientID", clientIDPHTxtBox.Text);
                         command.Parameters.AddWithValue("@UserID", userIDPHTxtBox.Text);
                         command.Parameters.AddWithValue("@Description", descriptionTxtBox.Text);
@@ -57,6 +61,7 @@ namespace CitiSoft
                         command.Parameters.AddWithValue("@LstRevDate", DateTime.Today.ToString("yyyy-MM-dd"));
                         command.Parameters.AddWithValue("@IsClosed", 0);
 
+                        // checks if any rows were added
                         int rowsAffected = command.ExecuteNonQuery();
                         if (rowsAffected > 0)
                         {
@@ -109,14 +114,16 @@ namespace CitiSoft
             InputValidation.IsOnlyNumbers(textBox);
         }
 
-        // changes the isClosed to True
-        private void finishProblemBtn_Click_1(object sender, EventArgs e)
+        // changes the value in isClosed column to True
+        private void finishProblemBtn_Click(object sender, EventArgs e)
         {
+            // checks if the user provided Problem ID
             if (problemIDTxtBox.Text == "")
             {
                 MessageBox.Show("Please enter the ID");
                 return;
             }
+            // checks if the user provided wrong Problem ID
             if (!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "ProblemHistory", "pid", problemIDTxtBox.Text))
             {
                 MessageBox.Show($"Problem with id: {problemIDTxtBox.Text}, does not exist");
@@ -133,8 +140,10 @@ namespace CitiSoft
                 {
                     using (SqlCommand command = new SqlCommand("UPDATE ProblemHistory \r\n    SET isClosed = 1\r\nWHERE pid = @ProblemID;", connection, transaction))
                     {
+                        // uses parameterizing to prevent from SQL injections
                         command.Parameters.AddWithValue("@ProblemID", problemIDTxtBox.Text);
 
+                        // checks if the rows were affected
                         int rowsAffected = command.ExecuteNonQuery();
                         if (rowsAffected > 0)
                         {
@@ -155,23 +164,18 @@ namespace CitiSoft
                 }
             }
         }
-        
-        
-
-        private void clientIDPHLabel_Click(object sender, EventArgs e)
-        {
-
-        }
 
         // displays a particular problem and updates the lstRevDate to True
         private void viewProblemBtn_Click(object sender, EventArgs e)
         {
+            // checks if the user provided ID
             if (problemIDTxtBox.Text == "")
             {
                 MessageBox.Show("Please enter the ID");
                 return;
             }
             
+            // checks if the user provided wrong id
             if(!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "ProblemHistory", "pid", problemIDTxtBox.Text))
             {
                 MessageBox.Show($"Problem with id: {problemIDTxtBox.Text}, does not exist");
@@ -179,7 +183,9 @@ namespace CitiSoft
                 return;
             }
 
+            // displays this specific problem
             RuntimeUI.dataBinding(DataBaseManager.functionalityConnectionString, "SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid", ProblemHistoryDgv, int.Parse(problemIDTxtBox.Text), "p.pid ");
+            
             // updates the lstRevDate (Last review date)
             using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
             {
@@ -189,6 +195,7 @@ namespace CitiSoft
                 {
                     using (SqlCommand command = new SqlCommand($"UPDATE ProblemHistory SET lstRevDate = {DateTime.Today.ToString("yyyy-MM-dd")}  WHERE cid = @ClientID;", connection, transaction))
                     {
+                        // uses parameterizing to prevent from SQL injections
                         command.Parameters.AddWithValue("@ClientID", problemIDTxtBox.Text);
                         int rowsAffected = command.ExecuteNonQuery();
                         transaction.Commit();
@@ -206,11 +213,6 @@ namespace CitiSoft
         private void viewAllProblemsBtn_Click(object sender, EventArgs e)
         {
             RuntimeUI.dataBinding(DataBaseManager.functionalityConnectionString, "SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid;", ProblemHistoryDgv);
-        }
-
-        private void ProblemHistoryForm_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
