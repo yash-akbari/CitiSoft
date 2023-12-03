@@ -51,7 +51,7 @@ namespace CitiSoft
         public String CompanyName { get; set; }
         public int CompanyEstablished { get; set; }
         public String EmployeesCount { get; set; }
-        public bool InternalProfessionalServices { get; set; }
+        public Boolean InternalProfessionalServices { get; set; }
         
     }
 

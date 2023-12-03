@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -39,6 +40,11 @@ namespace CitiSoft
         {
             // If the input is not null, attempt to parse it to an integer; otherwise, return 0
             return !string.IsNullOrEmpty(input) && int.TryParse(input, out int result) ? result : 0;
+        }
+
+        public static bool Parse10ToTrueOrFalse(int value) 
+        {
+            return value == 1;
         }
 
         // checks if the input consists only from letters and spaces

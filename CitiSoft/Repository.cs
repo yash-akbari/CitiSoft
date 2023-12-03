@@ -31,7 +31,7 @@ namespace CitiSoft
                     CompanyName = Convert.ToString(dataReader.GetValue(1)),
                     CompanyEstablished = Convert.ToInt32(dataReader.GetValue(2)),
                     EmployeesCount = Convert.ToString(dataReader.GetValue(3)),
-                    InternalProfessionalServices = Convert.ToBoolean(dataReader.GetValue(4)),
+                    InternalProfessionalServices = (Convert.ToBoolean(dataReader.GetValue(4))),
                 }) ;
             }
             dataReader.Close();
