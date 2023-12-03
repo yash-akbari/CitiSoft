@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace CitiSoft
 {
 
-    internal class CustomListBox : Panel
+    public class CustomListBox : Panel
     {
 
         public CustomListBox() 

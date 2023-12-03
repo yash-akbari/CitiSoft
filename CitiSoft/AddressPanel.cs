@@ -31,7 +31,7 @@ namespace CitiSoft
         public Label telephoneLabel = new Label();
         public TextBox telephoneTextBox = new TextBox();
 
-        CustomListBox addressCustomListBox = new CustomListBox();
+        public CustomListBox addressCustomListBox = new CustomListBox();
 
         public List<AddressModel> addressList = new List<AddressModel>();
 

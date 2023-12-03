@@ -24,11 +24,21 @@ namespace CitiSoft
                         // Show a message or handle the invalid character
                         MessageBox.Show("Only numbers are allowed.");
                         AutoCorrection(textBox, input);
-
                         break;
                     }
                 }
             }
+        }
+
+        public static string GetStringValueOrNullOrWhitespace(string input)
+        {
+            // If the input is not null, empty, or consists of only whitespace, return the input; otherwise, return null
+            return !string.IsNullOrWhiteSpace(input) ? input : "None";
+        }
+        public static int ParseStringToIntOrZero(string input)
+        {
+            // If the input is not null, attempt to parse it to an integer; otherwise, return 0
+            return !string.IsNullOrEmpty(input) && int.TryParse(input, out int result) ? result : 0;
         }
 
         // checks if the input consists only from letters and spaces

@@ -53,6 +53,9 @@ namespace CitiSoft
         Label additionalInfoLabel = new Label();
         RichTextBox additionalInfoRichTextBox = new RichTextBox();
 
+        Button submitButton = new Button();
+        Button clearButton = new Button();
+ 
 
 
         private void InitializeComponents()
@@ -73,6 +76,7 @@ namespace CitiSoft
                 financialServicesLabel, financialServicesTextBox, financialServicesCustomListBox,
                 cloudLabel, cloudComboBox,
                 additionalInfoLabel, additionalInfoRichTextBox,
+                submitButton, clearButton
                 });
             string[] softControlVarName = new string[] {
                 "compNameLabel","compNameComboBox",
@@ -85,6 +89,7 @@ namespace CitiSoft
                 "financialServicesLabel", "financialServicesTextBox", "financialServicesCustomListBox",
                 "cloudLabel", "cloudComboBox",
                 "additionalInfoLabel", "additionalInfoRichTextBox",
+                "submitButton", "clearButton"
             };
             string[] softControlText = new string[]
             {
@@ -98,6 +103,8 @@ namespace CitiSoft
                 "Financial Services Client Types:",
                 "Cloud (Enabled/Native/Based):",
                 "Additional Information:",
+                "Submit",
+                "Clear"
             };
             
             int softAddxLoc = 10;
@@ -136,7 +143,7 @@ namespace CitiSoft
                     softAddyLoc = softAddyLoc + 60;
                 }
 
-                else
+                else if (con is TextBox || con is ComboBox)
                 {
                     con.Width = softAddWidth + 100;
                     con.Height = softAddHeight;
@@ -144,6 +151,16 @@ namespace CitiSoft
                     con.Left = softAddxLoc + 210;
                     con.Top = softAddyLoc;
                     softAddyLoc = softAddyLoc + 50;
+                }
+                else if (con is Button)
+                {
+
+                    con.Width = softAddWidth - 100;
+                    con.Height = softAddHeight;
+                    con.Left = softAddxLoc + 100;
+                    con.Top = softAddyLoc;
+                    con.Text = softControlText[j++];
+                    softAddxLoc = softAddxLoc + 110;
                 }
 
             }
@@ -155,9 +172,21 @@ namespace CitiSoft
             modulesTextBox.TextChanged += ModulesTextBox_TextChanged;
             financialServicesTextBox.TextChanged += FinancialServicesTextBox_TextChanged;
             additionalInfoRichTextBox.TextChanged += AdditionalInfoRichTextBox_TextChanged;
+            submitButton.Click += SubmitButton_Click;
+            clearButton.Click += ClearButton_Click;
 
             
 
+        }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SubmitButton_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void SoftwareNameTextBox_TextChanged(object sender, EventArgs e)

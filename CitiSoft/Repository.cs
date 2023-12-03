@@ -56,9 +56,6 @@ namespace CitiSoft
                     con.Open();
                         using (SqlTransaction transaction = con.BeginTransaction())
                         {
-                            // string sql = @"INSERT INTO [dbo].[VendorInfo] ([compName], [est], [empCount], [intProfServ], [lstDemoDt], [lstRevInt], [lstRevDt], [docAttach]) 
-                            //VALUES ("+ (vendorModel.CompanyName) + ","+ (vendorModel.CompanyEstablished)+","+vendorModel.EmployeesCount + ","+ (vendorModel.InternalProfessionalServices) + ", "+vendorModel.LastDemoDate+", "+vendorModel.LastReviewedInterval+", "+vendorModel.LastReviewedDate+" ,0), SELECT SCOPE_IDENTITY();";
-
                             string sql = @"
                                 INSERT INTO [dbo].[VendorInfo] 
                                 ([compName], [est], [empCount], [intProfServ], [lstDemoDt], [lstRevInt], [lstRevDt], [docAttach]) 
