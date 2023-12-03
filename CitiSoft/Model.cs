@@ -51,11 +51,8 @@ namespace CitiSoft
         public String CompanyName { get; set; }
         public int CompanyEstablished { get; set; }
         public String EmployeesCount { get; set; }
-        public String InternalProfessionalServices { get; set; }
-        public DateTime LastDemoDate { get; set; }
-        public int LastReviewedInterval { get; set; }
-        public DateTime LastReviewedDate { get; set; }
-
+        public bool InternalProfessionalServices { get; set; }
+        
     }
 
     public class AddressModel

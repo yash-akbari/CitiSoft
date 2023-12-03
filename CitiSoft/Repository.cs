@@ -31,10 +31,7 @@ namespace CitiSoft
                     CompanyName = Convert.ToString(dataReader.GetValue(1)),
                     CompanyEstablished = Convert.ToInt32(dataReader.GetValue(2)),
                     EmployeesCount = Convert.ToString(dataReader.GetValue(3)),
-                    InternalProfessionalServices = Convert.ToString(dataReader.GetValue(4)),
-                    LastDemoDate = Convert.ToDateTime(dataReader.GetValue(5)),
-                    LastReviewedInterval = Convert.ToInt32(dataReader.GetValue(6)),
-                    LastReviewedDate = Convert.ToDateTime(dataReader.GetValue(7)),
+                    InternalProfessionalServices = Convert.ToBoolean(dataReader.GetValue(4)),
                 }) ;
             }
             dataReader.Close();
@@ -58,9 +55,9 @@ namespace CitiSoft
                         {
                             string sql = @"
                                 INSERT INTO [dbo].[VendorInfo] 
-                                ([compName], [est], [empCount], [intProfServ], [lstDemoDt], [lstRevInt], [lstRevDt], [docAttach]) 
+                                ([compName], [est], [empCount], [intProfServ]) 
                                 VALUES 
-                                (@CompanyName, @CompanyEstablished, @EmployeesCount, @InternalProfessionalServices, @LastDemoDate, @LastReviewedInterval, @LastReviewedDate, @DocAttach);
+                                (@CompanyName, @CompanyEstablished, @EmployeesCount, @InternalProfessionalServices);
                                 SELECT SCOPE_IDENTITY();
                             ";
 
@@ -69,11 +66,7 @@ namespace CitiSoft
                                 cmd.Parameters.AddWithValue("@CompanyName", vendorModel.CompanyName);
                                 cmd.Parameters.AddWithValue("@CompanyEstablished", vendorModel.CompanyEstablished);
                                 cmd.Parameters.AddWithValue("@EmployeesCount", vendorModel.EmployeesCount);
-                                cmd.Parameters.AddWithValue("@InternalProfessionalServices", vendorModel.InternalProfessionalServices);
-                                cmd.Parameters.AddWithValue("@LastDemoDate", vendorModel.LastDemoDate);
-                                cmd.Parameters.AddWithValue("@LastReviewedInterval", vendorModel.LastReviewedInterval);
-                                cmd.Parameters.AddWithValue("@LastReviewedDate", vendorModel.LastReviewedDate);
-                                cmd.Parameters.AddWithValue("@DocAttach", 0);
+                                cmd.Parameters.AddWithValue("@InternalProfessionaervices", vendorModel.InternalProfessionalServices);
 
                                 try
                                 {
@@ -148,7 +141,7 @@ namespace CitiSoft
                 }
                 else
                 {
-                    string sql = "UPDATE VendorInfo SET compName = @CompanyName, est = @CompanyEstablished, empCount = @EmployeesCount, intProfServ = @InternalProfessionalServices, lstDemoDt = @LastDemoDate, lstRevInt = @LastReviewedInterval, lstRevDt = @LastReviewedDate WHERE vid = @Vid";
+                    string sql = "UPDATE VendorInfo SET compName = @CompanyName, est = @CompanyEstablished, empCount = @EmployeesCount, intProfServ = @InternalProfessionalServices WHERE vid = @Vid";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
                         cmd.Parameters.AddWithValue("@Vid", vendorModel.Vid);
@@ -156,9 +149,6 @@ namespace CitiSoft
                         cmd.Parameters.AddWithValue("@CompanyEstablished", vendorModel.CompanyEstablished);
                         cmd.Parameters.AddWithValue("@EmployeesCount", vendorModel.EmployeesCount);
                         cmd.Parameters.AddWithValue("@InternalProfessionalServices", vendorModel.InternalProfessionalServices);
-                        cmd.Parameters.AddWithValue("@LastDemoDate", vendorModel.LastDemoDate);
-                        cmd.Parameters.AddWithValue("LastReviewedInterval", vendorModel.LastReviewedInterval);
-                        cmd.Parameters.AddWithValue("@LastReviewedDate", vendorModel.LastReviewedDate);
                         try
                         {
                             con.Open();

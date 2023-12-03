@@ -198,10 +198,7 @@ namespace CitiSoft
                         CompanyName = companyNameTextBox.Text,
                         CompanyEstablished = InputValidation.ParseStringToIntOrZero((companyEstablishedTextBox.Text)),
                         EmployeesCount = InputValidation.GetStringValueOrNullOrWhitespace(employeesTextBox.Text),
-                        InternalProfessionalServices = Convert.ToString(internalServicesComboBox.SelectedValue),
-                        LastDemoDate = lastDemoDatePicker.Value,
-                        LastReviewedInterval = InputValidation.ParseStringToIntOrZero(lastReviewIntTextBox.Text),
-                        LastReviewedDate = lastReviewedDatePicker.Value
+                        InternalProfessionalServices = Convert.ToBoolean(internalServicesComboBox.SelectedValue),                        
                     });
                     MessageBox.Show(InputValidation.GetStringValueOrNullOrWhitespace(employeesTextBox.Text));
                     foreach (AddressModel address in addressPanel.addressList)

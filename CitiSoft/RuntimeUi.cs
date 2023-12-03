@@ -228,10 +228,11 @@ namespace CitiSoft
             venRemData.Size = new System.Drawing.Size(604, 660);
             venRemData.TabIndex = 0;
 
-            dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo", venRemData);
+            dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT s.SoftName, c.comment, c.lstDemoDt,c.lstRevDt,  c.lstRevInt FROM dbo.SoftName s Join dbo.Comments c ON s.sid = c.sid;" , venRemData);
+            //SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo
         }
 
-        
+
 
 
 

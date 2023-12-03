@@ -27,9 +27,9 @@ namespace CitiSoft
                 {
                     conn.Open();
 
-                    string query = "SELECT email, pwd, uType FROM [User] WHERE email=@Email AND pwd=@Password";
+                    string query = "SELECT userName, pwd, uType FROM [User] WHERE userName=@userName AND pwd=@Password";
                     SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@Email", textBox1.Text);
+                    cmd.Parameters.AddWithValue("@userName", textBox1.Text);
                     cmd.Parameters.AddWithValue("@Password", textBox2.Text);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -56,6 +56,11 @@ namespace CitiSoft
         private void button2_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+
         }
     }
 
