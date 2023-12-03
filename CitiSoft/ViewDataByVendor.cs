@@ -11,6 +11,7 @@ namespace CitiSoft
         public DataGridView VendorDataGridView = new DataGridView();
         public DataGridView AddressDataGridView = new DataGridView();
         public DataGridView SoftwareDataGridView = new DataGridView();
+        public DataGridView CommentsDataGridView = new DataGridView(); 
 
         int Vid = 0;
         String DocName = "";
@@ -170,11 +171,11 @@ namespace CitiSoft
         private void ViewDataByVendor_SizeChanged(object sender, System.EventArgs e)
         {
             int widthdgv = 0, heightdgv=0;
-            widthdgv = (((this.Width) * 5) / 10);
-            heightdgv = (((this.Height) * 6) / 10);
+            widthdgv = (((this.Width) * 3) / 10);
+            heightdgv = (((this.Height) * 5) / 10);
             VendorDataGridView.Size = new System.Drawing.Size(widthdgv, heightdgv);
-            AddressDataGridView.Location = new System.Drawing.Point(widthdgv + 10, 0);
-            AddressDataGridView.Size = new System.Drawing.Size(widthdgv-10, heightdgv/2);
+            SoftwareDataGridView.Location = new System.Drawing.Point(widthdgv + 10, 0);
+            SoftwareDataGridView.Size = new System.Drawing.Size(this.Width-widthdgv, heightdgv/2);
             fileDropPBox.Location = new System.Drawing.Point(widthdgv+10, (heightdgv/2)+20);
             fileDropPBox.Size = new System.Drawing.Size(widthdgv/2, heightdgv/2-20);
             dragAndDropLabel.Location = new System.Drawing.Point(widthdgv + 10, (heightdgv / 2) + 5);
@@ -182,9 +183,9 @@ namespace CitiSoft
             vendorIDTxtBox.Location = new System.Drawing.Point(widthdgv+(widthdgv/2) + 77, heightdgv/2+26);
             removeDocumentBtn.Location = new System.Drawing.Point(widthdgv + (widthdgv / 2) + 20, heightdgv / 2 + 30+31);
             downloadDocumentBtn.Location = new System.Drawing.Point(widthdgv + (widthdgv / 2) + 20, heightdgv / 2 + +61+ 50);
-            SoftwareDataGridView.Location = new System.Drawing.Point(0, heightdgv+10);
-            heightdgv = (((this.Height) * 4) / 10)-10;
-            SoftwareDataGridView.Size = new System.Drawing.Size(this.Width, heightdgv);
+            AddressDataGridView.Location = new System.Drawing.Point(0, heightdgv+10);
+            heightdgv = (((this.Height) * 5) / 10)-10;
+            AddressDataGridView.Size = new System.Drawing.Size(this.Width/2 -10, heightdgv);
         }
 
 
