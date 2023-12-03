@@ -57,17 +57,17 @@ namespace CitiSoft
                 try
                 {
                     byte[] fileData = File.ReadAllBytes(file);
+                    string fileType = Path.GetExtension(file).TrimStart('.');
 
                     using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
                     {
-                        string query = "UPDATE VendorInfo SET docAttach = @Data WHERE vid = @VendorID";
-
+                        string query = "UPDATE VendorInfo SET docAttach = @Data, FileType = @FileType WHERE vid = @VendorID";
 
                         using (SqlCommand command = new SqlCommand(query, connection))
                         {
-                            // uses parameterizing to prevent from SQL injections
                             command.Parameters.Add("@Data", SqlDbType.VarBinary, -1).Value = fileData;
                             command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
+                            command.Parameters.AddWithValue("@FileType", fileType);
 
                             connection.Open();
                             command.ExecuteNonQuery();
@@ -159,43 +159,57 @@ namespace CitiSoft
         // downloads a document into the user's PC
         private void DownloadDocument()
         {
-            if (addDocumentDgv.SelectedRows.Count > 0)
+
+            using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
             {
-                string documentName = addDocumentDgv.SelectedRows[0].Cells["DocumentName"].Value.ToString();
-
-                using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                try
                 {
-                    connection.Open();
-                    SqlTransaction transaction = connection.BeginTransaction();
-                    try
+                    using (SqlCommand command = new SqlCommand("SELECT docAttach, FileType FROM VendorInfo WHERE vid = @VendorID", connection, transaction))
                     {
-                        using (SqlCommand command = new SqlCommand("SELECT docAttach FROM VendorInfo WHERE vid = @VendorID", connection, transaction))
+                        command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
+
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
-
-                            byte[] documentData = (byte[])command.ExecuteScalar();
-
-                            // Save document to a file
-                            SaveFileDialog saveFileDialog = new SaveFileDialog();
-                            saveFileDialog.FileName = documentName;
-                            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                            if (reader.Read())
                             {
-                                File.WriteAllBytes(saveFileDialog.FileName, documentData);
-                                MessageBox.Show("Document downloaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                transaction.Commit();
+                                byte[] documentData = (byte[])reader["docAttach"];
+                                string fileType = reader["FileType"].ToString();
+
+                                // Use FolderBrowserDialog to let the user choose the save location
+                                using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+                                {
+                                    DialogResult result = folderBrowserDialog.ShowDialog();
+
+                                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderBrowserDialog.SelectedPath))
+                                    {
+                                        // Save document to the selected folder with the correct file extension
+                                        string fileName = $"Document_{vendorIDTxtBox.Text}.{fileType}";
+                                        string filePath = Path.Combine(folderBrowserDialog.SelectedPath, fileName);
+                                        File.WriteAllBytes(filePath, documentData);
+
+                                        MessageBox.Show("Document downloaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        transaction.Commit();
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Download canceled by the user.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show($"No data found for Vendor ID: {vendorIDTxtBox.Text}", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error downloading document: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        transaction.Rollback();
-                    }
                 }
-            }
-            else
-            {
-                MessageBox.Show("Please select a document to download.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error downloading document: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    transaction.Rollback();
+                }
             }
         }
 
