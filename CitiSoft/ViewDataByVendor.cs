@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Data;
 using System.Windows.Forms;
+using System.IO;
 
 namespace CitiSoft
 {
@@ -194,24 +195,26 @@ namespace CitiSoft
             fileDropPBox.DragEnter += new DragEventHandler(fileDropPBox_DragEnter);
             fileDropPBox.DragDrop += new DragEventHandler(fileDropPBox_DragDrop);
         }
-
-        // the following two methods are used to enable drag and drop functionality to upload document
         void fileDropPBox_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 e.Effect = DragDropEffects.Copy;
         }
 
+        // adds the dropped file to the database
         void fileDropPBox_DragDrop(object sender, DragEventArgs e)
         {
+            // checks if the user provided Vendor ID
             if (vendorIDTxtBox.Text == "")
             {
                 MessageBox.Show("Please provide vendor ID first");
                 return;
             }
+            // checks if the user provided wrong Vendor ID
             if (!InputValidation.CheckValueExists(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("Provided vendor ID does not exist");
+                vendorIDTxtBox.Text = string.Empty;
                 return;
             }
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -219,31 +222,34 @@ namespace CitiSoft
             {
                 try
                 {
-                    byte[] fileData = System.IO.File.ReadAllBytes(file);
+                    byte[] fileData = File.ReadAllBytes(file);
+                    string fileName = $"{vendorIDTxtBox.Text}_{Path.GetFileName(file)}"; // Include Vendor ID in the file name
 
                     using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
                     {
-                        //string query = "INSERT INTO VendorInfo (docAttach) VALUES (@Data) WHERE vid = @VendorID;";
-                        string query = "UPDATE VendorInfo SET docAttach = @Data WHERE vid = @VendorID";
-
+                        string query = "UPDATE VendorInfo SET docAttach = @Data, FileName = @FileName WHERE vid = @VendorID";
 
                         using (SqlCommand command = new SqlCommand(query, connection))
                         {
                             command.Parameters.Add("@Data", SqlDbType.VarBinary, -1).Value = fileData;
                             command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
+                            command.Parameters.AddWithValue("@FileName", fileName);
 
                             connection.Open();
                             command.ExecuteNonQuery();
                         }
                     }
                     MessageBox.Show("File was successfully added");
+                    vendorIDTxtBox.Text = string.Empty;
                 }
                 catch (Exception exc)
                 {
                     MessageBox.Show("Error uploading file" + exc);
+                    vendorIDTxtBox.Text = string.Empty;
                 }
             }
         }
+
 
         private void vendorIDTxtBox_TextChanged(object sender, EventArgs e)
         {
@@ -251,14 +257,17 @@ namespace CitiSoft
             InputValidation.IsOnlyNumbers(textBox);
         }
 
+        // removes the attached document if it exists
         private void removeDocumentBtn_Click(object sender, EventArgs e)
         {
+            // checks if the user provied Vendor ID
             if (vendorIDTxtBox.Text == "")
             {
                 MessageBox.Show("Please provide vendor ID first");
                 return;
             }
 
+            // checks if the user provided wrong Vendor ID
             if (!InputValidation.CheckValueExists(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("Vendor ID you have provided does not exist");
@@ -268,6 +277,7 @@ namespace CitiSoft
             if (InputValidation.IsValueNull(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "docAttach", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("This Vendor has no document attached");
+                vendorIDTxtBox.Text = string.Empty;
                 return;
             }
 
@@ -280,6 +290,7 @@ namespace CitiSoft
                 {
                     using (SqlCommand command = new SqlCommand("UPDATE VendorInfo SET docAttach = NULL WHERE vid = @VendorID;", connection, transaction))
                     {
+                        // uses parameterizing to prevent from SQL injections
                         command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
 
                         int rowsAffected = command.ExecuteNonQuery();
@@ -306,29 +317,51 @@ namespace CitiSoft
             }
         }
 
+        // downloads a document into the user's PC
         private void DownloadDocument()
         {
-               
+
             using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
                 try
                 {
-                    using (SqlCommand command = new SqlCommand("SELECT docAttach FROM VendorInfo WHERE vid = @VendorID", connection, transaction))
+                    using (SqlCommand command = new SqlCommand("SELECT docAttach, FileName FROM VendorInfo WHERE vid = @VendorID", connection, transaction))
                     {
                         command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
 
-                        byte[] documentData = (byte[])command.ExecuteScalar();
-
-                        // Save document to a file
-                        SaveFileDialog saveFileDialog = new SaveFileDialog();
-                        saveFileDialog.FileName = DocName;
-                        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            System.IO.File.WriteAllBytes(saveFileDialog.FileName, documentData);
-                            MessageBox.Show("Document downloaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            transaction.Commit();
+                            if (reader.Read())
+                            {
+                                byte[] documentData = (byte[])reader["docAttach"];
+                                string fileName = reader["FileName"].ToString();
+
+                                // Use SaveFileDialog to let the user choose the save location and file name
+                                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                                {
+                                    saveFileDialog.FileName = fileName;
+                                    DialogResult result = saveFileDialog.ShowDialog();
+
+                                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(saveFileDialog.FileName))
+                                    {
+                                        // Save document to the selected file
+                                        File.WriteAllBytes(saveFileDialog.FileName, documentData);
+
+                                        MessageBox.Show("Document downloaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        transaction.Commit();
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Download canceled by the user.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show($"No data found for Vendor ID: {vendorIDTxtBox.Text}", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
                     }
                 }
@@ -340,24 +373,28 @@ namespace CitiSoft
             }
         }
 
-        
 
+        // Uses a small validation before download a document
         private void downloadDocumentBtn_Click(object sender, EventArgs e)
         {
+            // checks if the user provided Vendor ID
             if (vendorIDTxtBox.Text == "")
             {
                 MessageBox.Show("Please provide vendor ID first");
                 return;
             }
+            // checks if the user provided existing Vendor ID
             if (!InputValidation.CheckValueExists(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("Provided vendor ID does not exist");
                 vendorIDTxtBox.Text = string.Empty;
                 return;
             }
+            // checks if the Vendor has any documents 
             if (InputValidation.IsValueNull(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "docAttach", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("This Vendor has no document attached");
+                vendorIDTxtBox.Text = string.Empty;
                 return;
             }
             DownloadDocument();

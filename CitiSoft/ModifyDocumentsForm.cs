@@ -38,13 +38,13 @@ namespace CitiSoft
         // adds the dropped file to the database
         void fileDropPBox_DragDrop(object sender, DragEventArgs e)
         {
-            // checks if the user provied Vendor ID
+            // checks if the user provided Vendor ID
             if (vendorIDTxtBox.Text == "")
             {
                 MessageBox.Show("Please provide vendor ID first");
                 return;
             }
-            // checks if the user provied wrong Vendor ID
+            // checks if the user provided wrong Vendor ID
             if (!InputValidation.CheckValueExists(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "vid", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("Provided vendor ID does not exist");
@@ -57,17 +57,17 @@ namespace CitiSoft
                 try
                 {
                     byte[] fileData = File.ReadAllBytes(file);
-                    string fileType = Path.GetExtension(file).TrimStart('.');
+                    string fileName = $"{vendorIDTxtBox.Text}_{Path.GetFileName(file)}"; // Include Vendor ID in the file name
 
                     using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
                     {
-                        string query = "UPDATE VendorInfo SET docAttach = @Data, FileType = @FileType WHERE vid = @VendorID";
+                        string query = "UPDATE VendorInfo SET docAttach = @Data, FileName = @FileName WHERE vid = @VendorID";
 
                         using (SqlCommand command = new SqlCommand(query, connection))
                         {
                             command.Parameters.Add("@Data", SqlDbType.VarBinary, -1).Value = fileData;
                             command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
-                            command.Parameters.AddWithValue("@FileType", fileType);
+                            command.Parameters.AddWithValue("@FileName", fileName);
 
                             connection.Open();
                             command.ExecuteNonQuery();
@@ -83,6 +83,7 @@ namespace CitiSoft
                 }
             }
         }
+
 
         private void vendorIDTxtBox_TextChanged(object sender, EventArgs e)
         {
@@ -153,7 +154,7 @@ namespace CitiSoft
         // inserts data from the database into the datagrid view
         public void showDataInTable()
         {
-            RuntimeUI.dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT vid, compName, est, empCount, intProfServ, lstDemoDt, lstRevInt, lstRevDt FROM VendorInfo;", addDocumentDgv);
+            RuntimeUI.dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT vid AS 'Vendor ID', compName AS 'Company Name', est AS 'Establishments', empCount AS 'Employees', intProfServ AS 'International Professional Services',  FROM VendorInfo;", addDocumentDgv);
         }
 
         // downloads a document into the user's PC
@@ -166,7 +167,7 @@ namespace CitiSoft
                 SqlTransaction transaction = connection.BeginTransaction();
                 try
                 {
-                    using (SqlCommand command = new SqlCommand("SELECT docAttach, FileType FROM VendorInfo WHERE vid = @VendorID", connection, transaction))
+                    using (SqlCommand command = new SqlCommand("SELECT docAttach, FileName FROM VendorInfo WHERE vid = @VendorID", connection, transaction))
                     {
                         command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
 
@@ -175,19 +176,18 @@ namespace CitiSoft
                             if (reader.Read())
                             {
                                 byte[] documentData = (byte[])reader["docAttach"];
-                                string fileType = reader["FileType"].ToString();
+                                string fileName = reader["FileName"].ToString();
 
-                                // Use FolderBrowserDialog to let the user choose the save location
-                                using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+                                // Use SaveFileDialog to let the user choose the save location and file name
+                                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
                                 {
-                                    DialogResult result = folderBrowserDialog.ShowDialog();
+                                    saveFileDialog.FileName = fileName;
+                                    DialogResult result = saveFileDialog.ShowDialog();
 
-                                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderBrowserDialog.SelectedPath))
+                                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(saveFileDialog.FileName))
                                     {
-                                        // Save document to the selected folder with the correct file extension
-                                        string fileName = $"Document_{vendorIDTxtBox.Text}.{fileType}";
-                                        string filePath = Path.Combine(folderBrowserDialog.SelectedPath, fileName);
-                                        File.WriteAllBytes(filePath, documentData);
+                                        // Save document to the selected file
+                                        File.WriteAllBytes(saveFileDialog.FileName, documentData);
 
                                         MessageBox.Show("Document downloaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         transaction.Commit();
@@ -212,6 +212,7 @@ namespace CitiSoft
                 }
             }
         }
+
 
         // Uses a small validation before download a document
         private void downloadDocumentBtn_Click(object sender, EventArgs e)
