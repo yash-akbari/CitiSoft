@@ -35,12 +35,12 @@ namespace CitiSoft
             this.maximizeBtn = new System.Windows.Forms.Button();
             this.closeBtn = new System.Windows.Forms.Button();
             this.menuPan = new System.Windows.Forms.Panel();
-            this.venRemData = new System.Windows.Forms.DataGridView();
+            this.softRemData = new System.Windows.Forms.DataGridView();
             this.venProblemHistoryData = new System.Windows.Forms.DataGridView();
             this.venModifyClientData = new System.Windows.Forms.DataGridView();
             this.mainPan = new System.Windows.Forms.Panel();
             this.headPan.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.venRemData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.softRemData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.venProblemHistoryData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.venModifyClientData)).BeginInit();
             this.SuspendLayout();
@@ -123,12 +123,12 @@ namespace CitiSoft
             // 
             // venRemData
             // 
-            this.venRemData.ColumnHeadersHeight = 46;
-            this.venRemData.Location = new System.Drawing.Point(0, 0);
-            this.venRemData.Name = "venRemData";
-            this.venRemData.RowHeadersWidth = 82;
-            this.venRemData.Size = new System.Drawing.Size(240, 150);
-            this.venRemData.TabIndex = 0;
+            this.softRemData.ColumnHeadersHeight = 46;
+            this.softRemData.Location = new System.Drawing.Point(0, 0);
+            this.softRemData.Name = "venRemData";
+            this.softRemData.RowHeadersWidth = 82;
+            this.softRemData.Size = new System.Drawing.Size(240, 150);
+            this.softRemData.TabIndex = 0;
             // 
             // venProblemHistoryData
             // 
@@ -173,7 +173,7 @@ namespace CitiSoft
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "CitiSoft";
             this.headPan.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.venRemData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.softRemData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.venProblemHistoryData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.venModifyClientData)).EndInit();
             this.ResumeLayout(false);
@@ -187,7 +187,7 @@ namespace CitiSoft
         protected System.Windows.Forms.Panel menuPan;
         private System.Windows.Forms.Button maximizeBtn;
         private System.Windows.Forms.Button minimizeBtn;
-        protected System.Windows.Forms.DataGridView venRemData;
+        protected System.Windows.Forms.DataGridView softRemData;
         protected System.Windows.Forms.DataGridView venProblemHistoryData;
         protected System.Windows.Forms.DataGridView venModifyClientData;
 

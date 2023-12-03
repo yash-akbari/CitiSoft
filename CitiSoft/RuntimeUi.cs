@@ -33,7 +33,7 @@ namespace CitiSoft
         TabPage addSoftwareTabPage = new TabPage();
         TabPage modifyVendorTabPage = new TabPage();
 
-        TabPage venRemind = new TabPage();
+        TabPage softRemind = new TabPage();
 
 
         //dashboard
@@ -200,35 +200,35 @@ namespace CitiSoft
 
 
 
-        public void venReminderFunc()
+        public void softReminderFunc()
         {
             // 
             // venRemind
             // 
-            venRemind.Location = new System.Drawing.Point(4, 22);
-            venRemind.Name = "venRemind";
-            venRemind.Padding = new System.Windows.Forms.Padding(3);
-            venRemind.Size = new System.Drawing.Size(610, 666);
-            venRemind.TabIndex = 0;
-            venRemind.Text = "Remind";
-            venRemind.UseVisualStyleBackColor = true;
-            venRemind.Controls.Add(venRemData);
-            venViewChildTabControl.Controls.Add(venRemind);
+            softRemind.Location = new System.Drawing.Point(4, 22);
+            softRemind.Name = "venRemind";
+            softRemind.Padding = new System.Windows.Forms.Padding(3);
+            softRemind.Size = new System.Drawing.Size(610, 666);
+            softRemind.TabIndex = 0;
+            softRemind.Text = "Remind";
+            softRemind.UseVisualStyleBackColor = true;
+            softRemind.Controls.Add(softRemData);
+            venViewChildTabControl.Controls.Add(softRemind);
 
             // 
             // venRemData
             // 
 
-            venRemData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            venRemData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            softRemData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            softRemData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            venRemData.Location = new System.Drawing.Point(3, 3);
-            venRemData.Name = "venRemData";
-            venRemData.Size = new System.Drawing.Size(604, 660);
-            venRemData.TabIndex = 0;
+            softRemData.Location = new System.Drawing.Point(3, 3);
+            softRemData.Name = "venRemData";
+            softRemData.Size = new System.Drawing.Size(604, 660);
+            softRemData.TabIndex = 0;
 
-            dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT s.SoftName, c.comment, c.lstDemoDt,c.lstRevDt,  c.lstRevInt FROM dbo.SoftName s Join dbo.Comments c ON s.sid = c.sid;" , venRemData);
+            dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT s.SoftName, c.comment, c.lstDemoDt,c.lstRevDt,  c.lstRevInt FROM dbo.SoftName s Join dbo.Comments c ON s.sid = c.sid;" , softRemData);
             //SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo
         }
 
@@ -583,7 +583,7 @@ namespace CitiSoft
                     searchVendorTabPageFunc();
                     addVendorTabPageFunc();
                     addSoftwareTabPageFunc();
-                    venReminderFunc();
+                    softReminderFunc();
                     clientProblemHistoryFunc();
                     clientMenuFunc();
                     clientTabControlFunc();
