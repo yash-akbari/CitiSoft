@@ -428,11 +428,11 @@ namespace CitiSoft
         }
         private void SetupUserRegistrationTab()
         {
-            
+
             TabPage userRegistrationTab = new TabPage("User Registration");
             userRegistrationTab.Dock = DockStyle.Fill;
 
-            
+
             UserRegistrationForm userRegForm = new UserRegistrationForm();
             userRegForm.TopLevel = false;
             userRegForm.Dock = DockStyle.Fill;
@@ -444,23 +444,27 @@ namespace CitiSoft
             userRegForm.Show();
         }
 
-
         public void SetupPasswordRequestsTab()
         {
+           
             passwordRequestsTabPage.Text = "Password Requests";
             passwordRequestsTabPage.Dock = DockStyle.Fill;
 
-            AdminPasswordChangeRequestsForm passwordChangeRequestsForm = new AdminPasswordChangeRequestsForm
-            {
-                TopLevel = false,
-                Dock = DockStyle.Fill,
-                FormBorderStyle = FormBorderStyle.None,
-                Visible = true // Это делает форму видимой внутри TabPage
-            };
+            
+            AdminPasswordChangeRequestsForm passwordChangeRequestsForm = new AdminPasswordChangeRequestsForm();
+            passwordChangeRequestsForm.TopLevel = false;
+            passwordChangeRequestsForm.Dock = DockStyle.Fill;
+            passwordChangeRequestsForm.FormBorderStyle = FormBorderStyle.None;
 
             passwordRequestsTabPage.Controls.Add(passwordChangeRequestsForm);
-            passwordChangeRequestsForm.Show(); // Это допустимо только если AdminPasswordChangeRequestsForm является Form
+            registerTabControl.TabPages.Add(passwordRequestsTabPage);
+
+            passwordChangeRequestsForm.Show();
         }
+
+
+
+
 
 
 
@@ -568,17 +572,18 @@ namespace CitiSoft
             {
                 
                 RegisterMenuFunc(); // Call this only if the user is an admin
-                SetupPasswordRequestsTab();
+              
             }
         }
 
         public RuntimeUI(int userType, int userId)
         {
+            InitializeComponent();
             CurrentUserType = userType;
             _userId = userId;
 
 
-            InitializeComponent();
+            
             
             InitializeTabs();
         }

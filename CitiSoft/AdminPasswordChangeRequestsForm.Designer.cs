@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace CitiSoft
+﻿namespace CitiSoft
 {
     partial class AdminPasswordChangeRequestsForm
     {
@@ -9,16 +7,18 @@ namespace CitiSoft
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        public bool TopLevel { get; internal set; }
-        public DockStyle Dock { get; internal set; }
-        public FormBorderStyle FormBorderStyle { get; internal set; }
-
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-
-
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
         #region Windows Form Designer generated code
 
@@ -26,6 +26,7 @@ namespace CitiSoft
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
+        
 
         #endregion
     }
