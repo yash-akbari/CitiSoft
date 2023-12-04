@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace CitiSoft
 {
-    public partial class RuntimeUI : MainUI
+    public partial class RuntimeUI :MainUI
     {
         public bool LoggedOut { get; private set; }
         Label setMenu = new Label();
@@ -56,7 +56,7 @@ namespace CitiSoft
         int menuYLoc = 0;
 
 
-      
+
         public void venMenuFunc()
         {// Vendor Menu
             venMenu.Text = "Vendor";
@@ -117,9 +117,9 @@ namespace CitiSoft
             viewVendorTabPage.Name = "viewVendorTabPage";
             viewVendorTabPage.Text = "View Vendor";
             viewVendorTabPage.AutoScroll = true;
-            
+
             ViewDataByVendor venView = new ViewDataByVendor();
-            
+
             AddForm(venView, viewVendorTabPage);
         }
 
@@ -228,7 +228,7 @@ namespace CitiSoft
             softRemData.Size = new System.Drawing.Size(604, 660);
             softRemData.TabIndex = 0;
 
-            dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT s.SoftName, c.comment, c.lstDemoDt,c.lstRevDt,  c.lstRevInt FROM dbo.SoftName s Join dbo.Comments c ON s.sid = c.sid;" , softRemData);
+            dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT s.SoftName, c.comment, c.lstDemoDt,c.lstRevDt,  c.lstRevInt FROM dbo.SoftName s Join dbo.Comments c ON s.sid = c.sid;", softRemData);
             //SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo
         }
 
@@ -324,11 +324,11 @@ namespace CitiSoft
         {
             userProfilePanel = new Panel
             {
-                Dock = DockStyle.Fill, 
-                Size = new Size(600, 400), 
-                Location = new Point(200, 50), 
+                Dock = DockStyle.Fill,
+                Size = new Size(600, 400),
+                Location = new Point(200, 50),
                 BorderStyle = BorderStyle.FixedSingle,
-                Visible = false 
+                Visible = false
             };
             this.Controls.Add(userProfilePanel); // Add userProfilePanel to the main form's controls only once
             userProfilePanel.BringToFront();
@@ -350,7 +350,7 @@ namespace CitiSoft
             }
         }
 
-      
+
         void UserProfileMenuFunc()
         {
             // Create the User Profile menu label
@@ -376,7 +376,7 @@ namespace CitiSoft
 
             if (!userProfilePanel.Controls.ContainsKey("userProfileForm"))
             {
-                 userProfileForm = new UserProfileForm
+                userProfileForm = new UserProfileForm
                 {
                     Name = "userProfileForm",
                     TopLevel = false,
@@ -405,7 +405,7 @@ namespace CitiSoft
         // Method to hide all panels.
         private void HideAllPanels()
         {
-            dashboardPan.Visible = false;   
+            dashboardPan.Visible = false;
             venPan.Visible = false;
             clientPan.Visible = false;
             userProfilePanel.Visible = false;
@@ -439,7 +439,7 @@ namespace CitiSoft
 
         // takes database name, query and DataGridView instance to display a table. Also takes optional argument,
         // which enables to display a particular row
-       
+
         public static void dataBinding(string connectionString, string baseQuery, DataGridView table, int? id = null, string idName = null)
         {
             try
@@ -513,6 +513,7 @@ namespace CitiSoft
 
 
                     venMenuFunc();
+                    CheckIndent c = new CheckIndent();
                     venTabControlFunc();
                     viewParentTabPageFunc();
                     viewVendorTabPageFunc();
@@ -549,7 +550,7 @@ namespace CitiSoft
 
         private void _statusLabel_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void InitializeComponent()
@@ -573,6 +574,79 @@ namespace CitiSoft
         private void RuntimeUI_Load(object sender, EventArgs e)
         {
 
+        }
+
+        public AddVendor AddVendor
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        internal AddSoftware AddSoftware
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public ModifyClientForm ModifyClientForm
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+
+        public ModifyDocumentsForm ModifyDocumentsForm
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public ChangePasswordForm ChangePasswordForm
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public ForgotPasswordForm ForgotPasswordForm
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public ProblemHistoryForm ProblemHistoryForm
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public UserProfileForm UserProfileForm
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public dashboard dashboard
+        {
+            get => default;
+            set
+            {
+            }
         }
     }
 }

@@ -19,6 +19,14 @@ namespace CitiSoft
 
         }
 
+        public RuntimeUI RuntimeUI
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             using (SqlConnection conn = new SqlConnection(DataBaseManager.functionalityConnectionString))

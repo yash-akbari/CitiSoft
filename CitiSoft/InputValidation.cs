@@ -12,6 +12,7 @@ namespace CitiSoft
 {
     internal class InputValidation
     {
+
         // checks if the input consists only from numbers
         public static void IsOnlyNumbers(TextBox textBox)
         {
@@ -42,9 +43,9 @@ namespace CitiSoft
             return !string.IsNullOrEmpty(input) && int.TryParse(input, out int result) ? result : 0;
         }
 
-        public static bool Parse10ToTrueOrFalse(int value) 
+        public static bool ParseTrueOrFalse(String value) 
         {
-            return value == 1;
+            return value == "Yes";
         }
 
         // checks if the input consists only from letters and spaces

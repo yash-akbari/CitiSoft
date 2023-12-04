@@ -50,6 +50,30 @@ namespace CitiSoft
             InitializeComponent();
         }
 
+        public Controller Controller
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        internal InputValidation InputValidation
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public AddressPanel AddressPanel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         void InitializeComponent() 
         {
             AutoScroll = true;
@@ -198,7 +222,7 @@ namespace CitiSoft
                         CompanyName = companyNameTextBox.Text,
                         CompanyEstablished = InputValidation.ParseStringToIntOrZero((companyEstablishedTextBox.Text)),
                         EmployeesCount = InputValidation.GetStringValueOrNullOrWhitespace(employeesTextBox.Text),
-                        InternalProfessionalServices = Convert.ToBoolean(internalServicesComboBox.SelectedValue),                        
+                        InternalProfessionalServices = InputValidation.ParseTrueOrFalse(internalServicesComboBox.SelectedText),                        
                     });
                     MessageBox.Show(InputValidation.GetStringValueOrNullOrWhitespace(employeesTextBox.Text));
                     foreach (AddressModel address in addressPanel.addressList)

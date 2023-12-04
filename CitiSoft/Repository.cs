@@ -11,6 +11,14 @@ namespace CitiSoft
     // Repository (Model)
     public partial class VendorRepository
     {
+        internal DataBaseManager DataBaseManager
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         public static List<VendorModel> GetAllVendor()
         {
             List<VendorModel> vendorModelList = new List<VendorModel>();
@@ -32,7 +40,7 @@ namespace CitiSoft
                     CompanyEstablished = Convert.ToInt32(dataReader.GetValue(2)),
                     EmployeesCount = Convert.ToString(dataReader.GetValue(3)),
                     InternalProfessionalServices = (Convert.ToBoolean(dataReader.GetValue(4))),
-                }) ;
+                });
             }
             dataReader.Close();
             cmd.Dispose();
@@ -48,9 +56,9 @@ namespace CitiSoft
             {
                 if (vendorModel.Vid < 0)
                 {
-                    
-                    try { 
-                    con.Open();
+
+                    try {
+                        con.Open();
                         using (SqlTransaction transaction = con.BeginTransaction())
                         {
                             string sql = @"
@@ -61,12 +69,12 @@ namespace CitiSoft
                                 SELECT SCOPE_IDENTITY();
                             ";
 
-                            using (SqlCommand cmd = new SqlCommand(sql, con,transaction))
+                            using (SqlCommand cmd = new SqlCommand(sql, con, transaction))
                             {
                                 cmd.Parameters.AddWithValue("@CompanyName", vendorModel.CompanyName);
                                 cmd.Parameters.AddWithValue("@CompanyEstablished", vendorModel.CompanyEstablished);
                                 cmd.Parameters.AddWithValue("@EmployeesCount", vendorModel.EmployeesCount);
-                                cmd.Parameters.AddWithValue("@InternalProfessionaervices", vendorModel.InternalProfessionalServices);
+                                cmd.Parameters.AddWithValue("@InternalProfessionalServices", vendorModel.InternalProfessionalServices);
 
                                 try
                                 {
@@ -75,7 +83,7 @@ namespace CitiSoft
                                     cmd.Dispose();
                                     con.Close();
                                     MessageBox.Show(res.ToString());
-                                    int venId =  Convert.ToInt32(res);
+                                    int venId = Convert.ToInt32(res);
                                     //MessageBox.Show(res.ToString());
                                     foreach (AddressModel add in Controller.addressModelList)
                                     {
@@ -85,18 +93,18 @@ namespace CitiSoft
                                         }
                                     }
                                     AddressRepository.insertUpdateDeleteAddress(Controller.addressModelList);
-                                    
+
                                 }
                                 catch (Exception ex)
                                 {
                                     transaction.Rollback();
                                     MessageBox.Show("Error: " + ex.Message);
-                                    
+
                                 }
 
                             }
                         }
-                        
+
                     }
                     catch (Exception ex)
                     {
@@ -108,7 +116,7 @@ namespace CitiSoft
                         con.Close();
                     }
                 }
-                else if (vendorModel.CompanyName.Equals(null)) 
+                else if (vendorModel.CompanyName.Equals(null))
                 {
                     string sql = "Delete From VendorInfo WHERE vid = @Vid";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
@@ -167,8 +175,32 @@ namespace CitiSoft
             }
         }
     }
-    public partial class AddressRepository 
+    public partial class AddressRepository
     {
+        public AddressModel AddressModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        internal DataBaseManager DataBaseManager
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controller Controller
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         public static List<AddressModel> GetAllAddress()
         {
             List<AddressModel> addressModelList = new List<AddressModel>();
@@ -184,10 +216,10 @@ namespace CitiSoft
             while (dataReader.Read())
             {
                 addressModelList.Add(new AddressModel
-                {   
+                {
                     addressId = Convert.ToInt32(dataReader.GetValue(0)),
                     Vid = Convert.ToInt32(dataReader.GetValue(1)),
-                    AddressLine1= Convert.ToString(dataReader.GetValue(2)),
+                    AddressLine1 = Convert.ToString(dataReader.GetValue(2)),
                     AddressLine2 = Convert.ToString(dataReader.GetValue(3)),
                     City = Convert.ToString(dataReader.GetValue(4)),
                     Country = Convert.ToString(dataReader.GetValue(5)),
@@ -215,7 +247,7 @@ namespace CitiSoft
                     {
                         cmd.Parameters.AddWithValue("@Vid", addressModel.Vid);
                         cmd.Parameters.AddWithValue("@AddressLine1", addressModel.AddressLine1);
-                        cmd.Parameters.AddWithValue("@AddressLine2",addressModel.AddressLine2);
+                        cmd.Parameters.AddWithValue("@AddressLine2", addressModel.AddressLine2);
                         cmd.Parameters.AddWithValue("@City", addressModel.City);
                         cmd.Parameters.AddWithValue("@Country", addressModel.Country);
                         cmd.Parameters.AddWithValue("@PostCode", addressModel.PostCode);
@@ -247,7 +279,7 @@ namespace CitiSoft
 
                     }
                 }
-                else if (addressModel.Vid == 0 && addressModel.addressId != 0 )
+                else if (addressModel.Vid == 0 && addressModel.addressId != 0)
                 {
                     string sql = "Delete From Address WHERE addressId = @addressId";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
@@ -278,8 +310,8 @@ namespace CitiSoft
                         }
                     }
                 }
-                else 
-                { 
+                else
+                {
                     string sql = "UPDATE Address SET vid = @Vid, addressLine1 = @AddressLine1, addressLine2 = @AddressLine2, city = @City, country = @Country, postcode = @PostCode, email = @Email, telephone = @Telephone WHERE addressId = @AddressId";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
@@ -322,6 +354,62 @@ namespace CitiSoft
     }
     public partial class SoftwareRepository
     {
+        public SoftwareModel SoftwareModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public TypeOfSoftwareModel TypeOfSoftwareModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public BusinessAreasModel BusinessAreasModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public ModulesModel ModulesModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public FinancialServicesModel FinancialServicesModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        internal DataBaseManager DataBaseManager
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controller Controller
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         public static List<SoftwareModel> GetAllSoftware()
         {
             List<SoftwareModel> softwareModelList = new List<SoftwareModel>();
@@ -345,9 +433,9 @@ namespace CitiSoft
                     Description = Convert.ToString(dataReader.GetValue(4)),
                     Cloud = Convert.ToString(dataReader.GetValue(5)),
                     AdditionalInfo = Convert.ToString(dataReader.GetValue(6)),
-                    BusinessAreas =JoinProperty(Controller.getBusinessAreasBySid(Convert.ToInt32(dataReader.GetValue(1))), "BusinessAreas"),
-                    Modules = JoinProperty(Controller.getModulesBySid(Convert.ToInt32(dataReader.GetValue(1))),"Modules"),
-                    FinancialServices = JoinProperty(Controller.getFinancialServicesBySid(Convert.ToInt32(dataReader.GetValue(1))),"FinancialService"),
+                    BusinessAreas = JoinProperty(Controller.getBusinessAreasBySid(Convert.ToInt32(dataReader.GetValue(1))), "BusinessAreas"),
+                    Modules = JoinProperty(Controller.getModulesBySid(Convert.ToInt32(dataReader.GetValue(1))), "Modules"),
+                    FinancialServices = JoinProperty(Controller.getFinancialServicesBySid(Convert.ToInt32(dataReader.GetValue(1))), "FinancialService"),
                     TypeOfSoftware = JoinProperty(Controller.getTypeOfSoftwareBySid(Convert.ToInt32(dataReader.GetValue(1))), "TypeOfSoftware")
                 });
             }
@@ -398,7 +486,7 @@ namespace CitiSoft
             return modulesModelList;
         }
 
-        public static List<BusinessAreasModel> getBusinessArea() 
+        public static List<BusinessAreasModel> getBusinessArea()
         {
             List<BusinessAreasModel> businessAreasModelList = new List<BusinessAreasModel>();
             SqlConnection con;
@@ -622,7 +710,71 @@ namespace CitiSoft
                 }
             }
         }
-        
+
+    }
+    public class CheckIndent
+    {
+        /*DECLARE @GapIdentifier INT;
+
+        SELECT TOP 1 @GapIdentifier = tableInstance.id[i] + 1
+        FROM tabName[i] tableInstance
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM tabName[i] t2
+            WHERE t2.id[i] = tableInstance.id[i] + 1
+        )
+        ORDER BY tableInstance.id[i];
+
+        DBCC CHECKIDENT(tabName[i], RESEED, @GapIdentifier);*/
+        public CheckIndent()
+        {
+            String[] tabName = new string[7] { "Address", "Business", "ClientTypes", "Modules", "SoftName", "SoftTypes", "VendorInfo" };
+            String[] id = new String[7] { "addressId", "businessId", "clientTypesId", "modulesId", "sid", "softTypesId", "vid" };
+            for (int i = 0; i < 7; i++)
+            {
+                SqlConnection con;
+                con = DataBaseManager.GetCitiSoftConnection();
+
+                String sql = "DECLARE @GapIdentifier INT;" +
+                             "SELECT TOP 1 @GapIdentifier = tableInstance."+id[i]+" + 1 " +
+                             "FROM "+tabName[i]+" tableInstance " +
+                             "WHERE NOT EXISTS ( " +
+                             "SELECT 1 " +
+                             "FROM "+tabName[i]+" t2 " +
+                             "WHERE t2."+id[i]+" = tableInstance."+id[i]+" + 1 " +
+                             ") " +
+                             "ORDER BY tableInstance."+id[i]+"; " +
+                             "DECLARE @FirstNUllRow INT = @GapIdentifier - 1; "+
+                             "DBCC CHECKIDENT('"+tabName[i]+"', RESEED, @FirstNullRow );";
+
+                using (SqlCommand cmd = new SqlCommand(sql, con))
+                {
+                    try
+                    {
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message);
+                    }
+                    finally
+                    {
+                        con.Close();
+                    }
+                }
+            }
+
+        }
+
+        internal DataBaseManager DataBaseManager
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
 
 }

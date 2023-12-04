@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace CitiSoft
 {
-   
     public class SoftwareModel
     {
         public int SoftwareId { get; set; }
@@ -39,7 +38,7 @@ namespace CitiSoft
         public int Sid { get; set; }
         public string Modules { get; set; }
     }
-    public class FinancialServicesModel 
+    public class FinancialServicesModel      
     {
         public int id { get; set; }
         public int Sid { get; set; }
@@ -52,10 +51,9 @@ namespace CitiSoft
         public int CompanyEstablished { get; set; }
         public String EmployeesCount { get; set; }
         public Boolean InternalProfessionalServices { get; set; }
-        
     }
 
-    public class AddressModel
+    public class AddressModel 
     {
         public int addressId { get; set; }
         public int Vid { get; set; }

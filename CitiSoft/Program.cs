@@ -10,6 +10,14 @@ namespace CitiSoft
 {
     internal static class Program
     {
+        public static Login Login
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
