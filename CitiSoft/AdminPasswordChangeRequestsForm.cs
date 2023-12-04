@@ -15,7 +15,7 @@ public partial class AdminPasswordChangeRequestsForm : Form
     {
         InitializeComponent();
         LoadPasswordChangeRequests();
-        InitializeComponent();
+       
     }
 
     private void InitializeComponent()
@@ -44,7 +44,7 @@ public partial class AdminPasswordChangeRequestsForm : Form
         this.btnApprove.TabIndex = 1;
         this.btnApprove.Text = "Approve";
         this.btnApprove.UseVisualStyleBackColor = true;
-        this.btnApprove.Click += new System.EventHandler(this.BtnApprove_Click);
+        this.btnApprove.Click += new System.EventHandler(this.btnApprove_Click);
         // 
         // rejectButton
         // 
@@ -54,7 +54,7 @@ public partial class AdminPasswordChangeRequestsForm : Form
         this.btnDeny.TabIndex = 2;
         this.btnDeny.Text = "Reject";
         this.btnDeny.UseVisualStyleBackColor = true;
-        this.btnDeny.Click += new System.EventHandler(this.BtnDeny_Click);
+        this.btnDeny.Click += new System.EventHandler(this.btnDeny_Click);
         
         // 
         // AdminPasswordChangeRequestsForm
@@ -69,114 +69,63 @@ public partial class AdminPasswordChangeRequestsForm : Form
         ((System.ComponentModel.ISupportInitialize)(this.dgvPasswordRequests)).EndInit();
         this.ResumeLayout(false);
     }
-    private void InitializeCustomComponents()
-    {
-        dgvPasswordRequests = new DataGridView
-        {
-            Dock = DockStyle.Fill,
-            AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        };
 
-        btnApprove = new Button
-        {
-            Text = "Approve",
-            Dock = DockStyle.Top
-        };
-        btnApprove.Click += BtnApprove_Click;
-
-        btnDeny = new Button
-        {
-            Text = "Deny",
-            Dock = DockStyle.Top
-        };
-        btnDeny.Click += BtnDeny_Click;
-
-        this.Controls.Add(dgvPasswordRequests);
-        this.Controls.Add(btnApprove);
-        this.Controls.Add(btnDeny);
-    }
     private void LoadPasswordChangeRequests()
     {
-        
-        string query = "SELECT uid, fn, email, NewPassword FROM [User] WHERE PasswordChangeRequested = 1";
+        string query = "SELECT uid, userName, newPwd FROM [User] WHERE pwdChangeStatus = 1";
         using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
         {
-            try
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    DataTable dt = new DataTable();
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        adapter.Fill(dt);
-                    }
-                    dgvPasswordRequests.DataSource = dt;
-                }
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("An error occurred while accessing the database: " + ex.Message);
-            }
+            SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            dgvPasswordRequests.DataSource = dt;
         }
     }
 
-    private void BtnApprove_Click(object sender, EventArgs e)
+    private void btnApprove_Click(object sender, EventArgs e)
     {
         if (dgvPasswordRequests.CurrentRow != null)
         {
             string userId = dgvPasswordRequests.CurrentRow.Cells["uid"].Value.ToString();
-            string newPassword = dgvPasswordRequests.CurrentRow.Cells["NewPassword"].Value.ToString();
-            UpdateUserPassword(userId, newPassword, false);
+            UpdatePassword(userId, true);
         }
     }
 
-    private void BtnDeny_Click(object sender, EventArgs e)
+    private void btnDeny_Click(object sender, EventArgs e)
     {
         if (dgvPasswordRequests.CurrentRow != null)
         {
             string userId = dgvPasswordRequests.CurrentRow.Cells["uid"].Value.ToString();
-            UpdateUserPassword(userId, null, true);
+            UpdatePassword(userId, false);
         }
     }
 
-    private void UpdateUserPassword(string userId, string newPassword, bool denyRequest)
+    private void UpdatePassword(string userId, bool approve)
     {
-        string query = denyRequest ?
-            "UPDATE [User] SET PasswordChangeRequested = 0 WHERE uid = @UserId" :
-            "UPDATE [User] SET pwd = @NewPassword, PasswordChangeRequested = 0 WHERE uid = @UserId";
+        string query = approve
+            ? "UPDATE [User] SET pwd = newPwd, newPwd = NULL, pwdChangeStatus = 0 WHERE uid = @uid"
+            : "UPDATE [User] SET newPwd = NULL, pwdChangeStatus = 0 WHERE uid = @uid";
 
         using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
         {
-            try
+            connection.Open();
+            using (SqlCommand command = new SqlCommand(query, connection))
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@UserId", userId);
-                    if (!denyRequest)
-                    {
-                        command.Parameters.AddWithValue("@NewPassword", newPassword);
-                    }
+                command.Parameters.AddWithValue("@uid", userId);
+                int result = command.ExecuteNonQuery();
 
-                    int result = command.ExecuteNonQuery();
-                    if (result > 0)
-                    {
-                        string message = denyRequest ? "Password change request has been denied." : "Password has been updated.";
-                        MessageBox.Show(message);
-                        LoadPasswordChangeRequests(); // Refresh the list
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to update the password change request.");
-                    }
+                if (result > 0)
+                {
+                    MessageBox.Show(approve ? "Password change approved." : "Password change denied.");
+                    LoadPasswordChangeRequests();
                 }
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("An error occurred while accessing the database: " + ex.Message);
+                else
+                {
+                    MessageBox.Show("Error updating the password change request.");
+                }
             }
         }
     }
+
 
 }

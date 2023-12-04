@@ -55,8 +55,11 @@ namespace CitiSoft
         Panel userProfilePanel;
         int menuYLoc = 0;
 
+        TabPage registerTabPage = new TabPage();
+        TabControl registerTabControl = new TabControl();
+        TabPage userRegistrationTabPage = new TabPage();
+        TabPage passwordRequestsTabPage = new TabPage();
 
-      
         public void venMenuFunc()
         {// Vendor Menu
             venMenu.Text = "Vendor";
@@ -402,6 +405,46 @@ namespace CitiSoft
 
         }
 
+        public void RegisterMenuFunc()
+        {
+            // I'm setting up the main "Register" tab here
+            registerTabPage.Text = "Register";
+            registerTabPage.Dock = DockStyle.Fill;
+            registerTabControl.Dock = DockStyle.Fill;
+
+            // Adding the main "Register" tab to my vendor tab control
+            venTabControl.Controls.Add(registerTabPage);
+
+            // Inserting a tab control into the register tab for sub-tabs
+            registerTabPage.Controls.Add(registerTabControl);
+
+            // Now, I'm configuring the sub-tabs
+            SetupUserRegistrationTab();
+            SetupPasswordRequestsTab();
+        }
+        public void SetupUserRegistrationTab()
+        {
+            // Creating the "User Registration" sub-tab
+            userRegistrationTabPage.Text = "User Registration";
+            userRegistrationTabPage.Dock = DockStyle.Fill;
+
+            // This is where I would add controls like user registration forms
+
+            // Adding the "User Registration" sub-tab to the register tab control
+            registerTabControl.Controls.Add(userRegistrationTabPage);
+        }
+        public void SetupPasswordRequestsTab()
+        {
+            // Creating the "Password Requests" sub-tab
+            passwordRequestsTabPage.Text = "Password Requests";
+            passwordRequestsTabPage.Dock = DockStyle.Fill;
+
+            // This is where I would add controls for password change requests, such as a data grid view
+
+            // Adding the "Password Requests" sub-tab to the register tab control
+            registerTabControl.Controls.Add(passwordRequestsTabPage);
+        }
+
         // Method to hide all panels.
         private void HideAllPanels()
         {
@@ -497,7 +540,9 @@ namespace CitiSoft
             InitializeComponent();
             InitializeUserProfilePanel();
             tblSelector(2);
-            UserProfileMenuFunc(); // Initialize menu items
+            UserProfileMenuFunc();
+            
+            RegisterMenuFunc();
         }
 
 
