@@ -26,5 +26,9 @@ namespace CitiSoft
         {
             return new SqlConnection(citiSoftDatabaseConnectionString);
         }
+        public static SqlConnection GetFunctionalityConnection()
+        {
+            return new SqlConnection(functionalityConnectionString);
+        }
     }
 }

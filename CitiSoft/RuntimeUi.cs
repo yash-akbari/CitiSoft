@@ -8,6 +8,7 @@ namespace CitiSoft
 {
     public partial class RuntimeUI :MainUI
     {
+
         public bool LoggedOut { get; private set; }
         Label setMenu = new Label();
         Label notiMenu = new Label();
@@ -55,8 +56,14 @@ namespace CitiSoft
         Panel userProfilePanel;
         int menuYLoc = 0;
 
+        TabPage registerTabPage = new TabPage();
+        TabControl registerTabControl = new TabControl();
+        TabPage userRegistrationTabPage = new TabPage();
+        TabPage passwordRequestsTabPage = new TabPage();
 
-
+        public int CurrentUserType { get; set; }
+        private int _userType;
+        private int _userId;
         public void venMenuFunc()
         {// Vendor Menu
             venMenu.Text = "Vendor";
@@ -385,7 +392,7 @@ namespace CitiSoft
                 };
                 userProfileForm.UserLoggedOut += (s, args) =>
                 {
-                    this.Close(); // Закрываем RuntimeUI при выходе из профиля
+                    this.Close(); 
                 };
 
                 userProfilePanel.Controls.Add(userProfileForm);
@@ -401,6 +408,67 @@ namespace CitiSoft
 
 
         }
+
+        public void RegisterMenuFunc()
+        {
+            // I'm setting up the main "Register" tab here
+            registerTabPage.Text = "Register";
+            registerTabPage.Dock = DockStyle.Fill;
+            registerTabControl.Dock = DockStyle.Fill;
+
+            // Adding the main "Register" tab to my vendor tab control
+            venTabControl.Controls.Add(registerTabPage);
+
+            // Inserting a tab control into the register tab for sub-tabs
+            registerTabPage.Controls.Add(registerTabControl);
+
+            // Now, I'm configuring the sub-tabs
+            SetupUserRegistrationTab();
+            SetupPasswordRequestsTab();
+        }
+        private void SetupUserRegistrationTab()
+        {
+
+            TabPage userRegistrationTab = new TabPage("User Registration");
+            userRegistrationTab.Dock = DockStyle.Fill;
+
+
+            UserRegistrationForm userRegForm = new UserRegistrationForm();
+            userRegForm.TopLevel = false;
+            userRegForm.Dock = DockStyle.Fill;
+            userRegForm.FormBorderStyle = FormBorderStyle.None;
+
+            userRegistrationTab.Controls.Add(userRegForm);
+            registerTabControl.TabPages.Add(userRegistrationTab);
+
+            userRegForm.Show();
+        }
+
+        public void SetupPasswordRequestsTab()
+        {
+           
+            passwordRequestsTabPage.Text = "Password Requests";
+            passwordRequestsTabPage.Dock = DockStyle.Fill;
+
+            
+            AdminPasswordChangeRequestsForm passwordChangeRequestsForm = new AdminPasswordChangeRequestsForm();
+            passwordChangeRequestsForm.TopLevel = false;
+            passwordChangeRequestsForm.Dock = DockStyle.Fill;
+            passwordChangeRequestsForm.FormBorderStyle = FormBorderStyle.None;
+
+            passwordRequestsTabPage.Controls.Add(passwordChangeRequestsForm);
+            registerTabControl.TabPages.Add(passwordRequestsTabPage);
+
+            passwordChangeRequestsForm.Show();
+        }
+
+
+
+
+
+
+
+
 
         // Method to hide all panels.
         private void HideAllPanels()
@@ -491,13 +559,33 @@ namespace CitiSoft
         }
 
 
-
-        public RuntimeUI()
+        public void InitializeTabs()
         {
-            InitializeComponent();
+
             InitializeUserProfilePanel();
             tblSelector(2);
-            UserProfileMenuFunc(); // Initialize menu items
+            UserProfileMenuFunc();
+
+
+
+            if (CurrentUserType == 1)
+            {
+                
+                RegisterMenuFunc(); // Call this only if the user is an admin
+              
+            }
+        }
+
+        public RuntimeUI(int userType, int userId)
+        {
+            InitializeComponent();
+            CurrentUserType = userType;
+            _userId = userId;
+
+
+            
+            
+            InitializeTabs();
         }
 
 
@@ -511,7 +599,7 @@ namespace CitiSoft
                     break;
                 case 2:
 
-
+                   
                     venMenuFunc();
                     CheckIndent c = new CheckIndent();
                     venTabControlFunc();

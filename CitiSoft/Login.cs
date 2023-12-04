@@ -13,6 +13,8 @@ namespace CitiSoft
 {
     public partial class Login : Form
     {
+        public int UserType { get; private set; }
+        public int UserId { get; private set; }
         public Login()
         {
             InitializeComponent();
@@ -35,7 +37,7 @@ namespace CitiSoft
                 {
                     conn.Open();
 
-                    string query = "SELECT userName, pwd, uType FROM [User] WHERE userName=@userName AND pwd=@Password";
+                    string query = "SELECT uid, userName, pwd, uType FROM [User] WHERE userName=@userName AND pwd=@Password";
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@userName", textBox1.Text);
                     cmd.Parameters.AddWithValue("@Password", textBox2.Text);
@@ -44,9 +46,20 @@ namespace CitiSoft
                     {
                         if (reader.Read())
                         {
-                            
-                            this.DialogResult = DialogResult.OK;
+                            int userId = reader.GetInt32(reader.GetOrdinal("uid"));
+                            int userType = reader.GetInt32(reader.GetOrdinal("uType"));
+
+                            // Hide the login form
                             this.Hide();
+
+                            // Create and show the main window (RuntimeUI)
+                            using (var runtimeUi = new RuntimeUI(userType, userId))
+                            {
+                                runtimeUi.ShowDialog();
+                            }
+
+                            // If the RuntimeUI is closed, close the login form as well (this exits the application)
+                            this.Close();
                         }
                         else
                         {
