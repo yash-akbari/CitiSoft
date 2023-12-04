@@ -12,6 +12,7 @@ using System.Windows.Forms;
 namespace CitiSoft
 {
     public partial class UserRegistrationForm : Form
+
     {
         private TextBox txtUsername;
         private TextBox txtPassword;

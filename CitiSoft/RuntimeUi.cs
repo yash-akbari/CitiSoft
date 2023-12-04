@@ -8,6 +8,7 @@ namespace CitiSoft
 {
     public partial class RuntimeUI : MainUI
     {
+
         public bool LoggedOut { get; private set; }
         Label setMenu = new Label();
         Label notiMenu = new Label();
@@ -425,36 +426,45 @@ namespace CitiSoft
             SetupUserRegistrationTab();
             SetupPasswordRequestsTab();
         }
-        public void SetupUserRegistrationTab()
+        private void SetupUserRegistrationTab()
         {
-            // Creating the "User Registration" sub-tab
-            userRegistrationTabPage.Text = "User Registration";
-            userRegistrationTabPage.Dock = DockStyle.Fill;
+            
+            TabPage userRegistrationTab = new TabPage("User Registration");
+            userRegistrationTab.Dock = DockStyle.Fill;
 
-            var userRegistrationForm = new UserRe
-            {
-                Dock = DockStyle.Fill,
-                TopLevel = false,
-                Visible = true,
-                FormBorderStyle = FormBorderStyle.None
-            };
+            
+            UserRegistrationForm userRegForm = new UserRegistrationForm();
+            userRegForm.TopLevel = false;
+            userRegForm.Dock = DockStyle.Fill;
+            userRegForm.FormBorderStyle = FormBorderStyle.None;
 
-            // Adding the UserRegistrationForm to the sub-tab
-            userRegistrationTabPage.Controls.Add(userRegistrationForm);
-            userRegistrationForm.Show();
+            userRegistrationTab.Controls.Add(userRegForm);
+            registerTabControl.TabPages.Add(userRegistrationTab);
 
+            userRegForm.Show();
         }
+
+
         public void SetupPasswordRequestsTab()
         {
-            // Creating the "Password Requests" sub-tab
             passwordRequestsTabPage.Text = "Password Requests";
             passwordRequestsTabPage.Dock = DockStyle.Fill;
 
-            // This is where I would add controls for password change requests, such as a data grid view
+            AdminPasswordChangeRequestsForm passwordChangeRequestsForm = new AdminPasswordChangeRequestsForm
+            {
+                TopLevel = false,
+                Dock = DockStyle.Fill,
+                FormBorderStyle = FormBorderStyle.None,
+                Visible = true // Это делает форму видимой внутри TabPage
+            };
 
-            // Adding the "Password Requests" sub-tab to the register tab control
-            registerTabControl.Controls.Add(passwordRequestsTabPage);
+            passwordRequestsTabPage.Controls.Add(passwordChangeRequestsForm);
+            passwordChangeRequestsForm.Show(); // Это допустимо только если AdminPasswordChangeRequestsForm является Form
         }
+
+
+
+
 
         // Method to hide all panels.
         private void HideAllPanels()
@@ -556,7 +566,9 @@ namespace CitiSoft
 
             if (CurrentUserType == 1)
             {
+                
                 RegisterMenuFunc(); // Call this only if the user is an admin
+                SetupPasswordRequestsTab();
             }
         }
 
@@ -582,7 +594,7 @@ namespace CitiSoft
                     break;
                 case 2:
 
-
+                   
                     venMenuFunc();
                     venTabControlFunc();
                     viewParentTabPageFunc();
