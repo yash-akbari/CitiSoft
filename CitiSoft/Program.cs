@@ -24,21 +24,28 @@ namespace CitiSoft
             {
                 using (var loginForm = new Login())
                 {
-                    if (loginForm.ShowDialog() != DialogResult.OK)
+                    // Show the login form as a dialog and check the result.
+                    var result = loginForm.ShowDialog();
+
+                    // If the result is not OK, which means the user clicked the Cancel button or closed the form, exit the loop.
+                    if (result != DialogResult.OK)
                     {
-                        // If the login is not successful, exit the application
                         break;
                     }
-                }
 
-                // Show the main window after a successful login
-                using (var runtimeUi = new RuntimeUI())
-                {
-                    runtimeUi.ShowDialog();
+                    // Retrieve user information from the login form. These properties should be set in the login form upon successful login.
+                    var userType = loginForm.UserType;
+                    var userId = loginForm.UserId;
 
-                    // If the user logs out, restart the loop and show login form again
-                    
-                }
-        }   }
+                    // Show the main application window after a successful login.
+                    using (var runtimeUi = new RuntimeUI(userType, userId))
+                    {
+                        runtimeUi.ShowDialog();
+
+                        // If the user logs out, the runtimeUi form will close and the loop will start again showing the login form.
+                        // If the user closes the application, the entire application exits.
+                    }
+                 }
+            }   }
     }
 }

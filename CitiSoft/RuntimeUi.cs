@@ -123,9 +123,9 @@ namespace CitiSoft
             viewVendorTabPage.Name = "viewVendorTabPage";
             viewVendorTabPage.Text = "View Vendor";
             viewVendorTabPage.AutoScroll = true;
-            
+
             ViewDataByVendor venView = new ViewDataByVendor();
-            
+
             AddForm(venView, viewVendorTabPage);
         }
 
@@ -234,7 +234,7 @@ namespace CitiSoft
             softRemData.Size = new System.Drawing.Size(604, 660);
             softRemData.TabIndex = 0;
 
-            dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT s.SoftName, c.comment, c.lstDemoDt,c.lstRevDt,  c.lstRevInt FROM dbo.SoftName s Join dbo.Comments c ON s.sid = c.sid;" , softRemData);
+            dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT s.SoftName, c.comment, c.lstDemoDt,c.lstRevDt,  c.lstRevInt FROM dbo.SoftName s Join dbo.Comments c ON s.sid = c.sid;", softRemData);
             //SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo
         }
 
@@ -330,11 +330,11 @@ namespace CitiSoft
         {
             userProfilePanel = new Panel
             {
-                Dock = DockStyle.Fill, 
-                Size = new Size(600, 400), 
-                Location = new Point(200, 50), 
+                Dock = DockStyle.Fill,
+                Size = new Size(600, 400),
+                Location = new Point(200, 50),
                 BorderStyle = BorderStyle.FixedSingle,
-                Visible = false 
+                Visible = false
             };
             this.Controls.Add(userProfilePanel); // Add userProfilePanel to the main form's controls only once
             userProfilePanel.BringToFront();
@@ -356,7 +356,7 @@ namespace CitiSoft
             }
         }
 
-      
+
         void UserProfileMenuFunc()
         {
             // Create the User Profile menu label
@@ -382,7 +382,7 @@ namespace CitiSoft
 
             if (!userProfilePanel.Controls.ContainsKey("userProfileForm"))
             {
-                 userProfileForm = new UserProfileForm
+                userProfileForm = new UserProfileForm
                 {
                     Name = "userProfileForm",
                     TopLevel = false,
@@ -431,10 +431,18 @@ namespace CitiSoft
             userRegistrationTabPage.Text = "User Registration";
             userRegistrationTabPage.Dock = DockStyle.Fill;
 
-            // This is where I would add controls like user registration forms
+            var userRegistrationForm = new UserRe
+            {
+                Dock = DockStyle.Fill,
+                TopLevel = false,
+                Visible = true,
+                FormBorderStyle = FormBorderStyle.None
+            };
 
-            // Adding the "User Registration" sub-tab to the register tab control
-            registerTabControl.Controls.Add(userRegistrationTabPage);
+            // Adding the UserRegistrationForm to the sub-tab
+            userRegistrationTabPage.Controls.Add(userRegistrationForm);
+            userRegistrationForm.Show();
+
         }
         public void SetupPasswordRequestsTab()
         {
@@ -451,7 +459,7 @@ namespace CitiSoft
         // Method to hide all panels.
         private void HideAllPanels()
         {
-            dashboardPan.Visible = false;   
+            dashboardPan.Visible = false;
             venPan.Visible = false;
             clientPan.Visible = false;
             userProfilePanel.Visible = false;
@@ -485,7 +493,7 @@ namespace CitiSoft
 
         // takes database name, query and DataGridView instance to display a table. Also takes optional argument,
         // which enables to display a particular row
-       
+
         public static void dataBinding(string connectionString, string baseQuery, DataGridView table, int? id = null, string idName = null)
         {
             try
@@ -539,13 +547,13 @@ namespace CitiSoft
 
         public void InitializeTabs()
         {
-            
+
             InitializeUserProfilePanel();
             tblSelector(2);
             UserProfileMenuFunc();
-           
 
-           
+
+
             if (CurrentUserType == 1)
             {
                 RegisterMenuFunc(); // Call this only if the user is an admin
@@ -554,11 +562,12 @@ namespace CitiSoft
 
         public RuntimeUI(int userType, int userId)
         {
-            _userType = userType;
+            CurrentUserType = userType;
             _userId = userId;
 
+
             InitializeComponent();
-            CurrentUserType = userType; 
+            
             InitializeTabs();
         }
 

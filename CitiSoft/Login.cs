@@ -13,6 +13,8 @@ namespace CitiSoft
 {
     public partial class Login : Form
     {
+        public int UserType { get; private set; }
+        public int UserId { get; private set; }
         public Login()
         {
             InitializeComponent();
@@ -27,7 +29,7 @@ namespace CitiSoft
                 {
                     conn.Open();
 
-                    string query = "SELECT userName, pwd, uType FROM [User] WHERE userName=@userName AND pwd=@Password";
+                    string query = "SELECT uid, userName, pwd, uType FROM [User] WHERE userName=@userName AND pwd=@Password";
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@userName", textBox1.Text);
                     cmd.Parameters.AddWithValue("@Password", textBox2.Text);
@@ -36,16 +38,20 @@ namespace CitiSoft
                     {
                         if (reader.Read())
                         {
-                            // Assume uType is the second column in the result
-                            int userType = Convert.ToInt32(reader["uType"]);
-                            int userId = Convert.ToInt32(reader["uid"]);
+                            int userId = reader.GetInt32(reader.GetOrdinal("uid"));
+                            int userType = reader.GetInt32(reader.GetOrdinal("uType"));
 
-                            // Close the reader and open the RuntimeUI form with user type
-                            reader.Close();
+                            // Hide the login form
                             this.Hide();
-                            RuntimeUI runtimeUI = new RuntimeUI(userType, userId);
-                            runtimeUI.Closed += (s, args) => this.Close();
-                            runtimeUI.Show();
+
+                            // Create and show the main window (RuntimeUI)
+                            using (var runtimeUi = new RuntimeUI(userType, userId))
+                            {
+                                runtimeUi.ShowDialog();
+                            }
+
+                            // If the RuntimeUI is closed, close the login form as well (this exits the application)
+                            this.Close();
                         }
                         else
                         {
