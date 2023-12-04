@@ -392,7 +392,7 @@ namespace CitiSoft
                 };
                 userProfileForm.UserLoggedOut += (s, args) =>
                 {
-                    this.Close(); // Закрываем RuntimeUI при выходе из профиля
+                    this.Close(); 
                 };
 
                 userProfilePanel.Controls.Add(userProfileForm);

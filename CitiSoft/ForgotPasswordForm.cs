@@ -1,94 +1,131 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CitiSoft
 {
     public partial class ForgotPasswordForm : Form
     {
-        private TextBox emailTextBox;
+        private TextBox usernameTextBox;
+        private TextBox newPasswordTextBox;
+        private TextBox confirmNewPasswordTextBox;
         private Button submitButton;
         private Label instructionLabel;
+        private Label usernameLabel;
+        private Label newPasswordLabel;
+        private Label confirmNewPasswordLabel;
 
         public ForgotPasswordForm()
         {
             InitializeComponent();
-            //no maximize buttonm
             this.MaximizeBox = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
         }
+
         private void InitializeComponent()
         {
-            this.emailTextBox = new TextBox();
+            this.usernameTextBox = new TextBox();
+            this.newPasswordTextBox = new TextBox();
+            this.confirmNewPasswordTextBox = new TextBox();
             this.submitButton = new Button();
             this.instructionLabel = new Label();
-
-            // emailTextBox
-            this.emailTextBox.Location = new Point(10, 50); // Adjust these values as needed
-            this.emailTextBox.Size = new Size(200, 20);
-            this.emailTextBox.Enter += EmailTextBox_Enter;
-            this.emailTextBox.Leave += EmailTextBox_Leave;
-
-            // submitButton
-            this.submitButton.Location = new Point(10, 80); // Adjust these values as needed
-            this.submitButton.Size = new Size(200, 30);
-            this.submitButton.Text = "Submit";
-            this.submitButton.Click += new EventHandler(SubmitButton_Click);
+            this.usernameLabel = new Label();
+            this.newPasswordLabel = new Label();
+            this.confirmNewPasswordLabel = new Label();
 
             // instructionLabel
-            this.instructionLabel.Location = new Point(10, 20); // Adjust these values as needed
-            this.instructionLabel.Size = new Size(200, 20);
-            this.instructionLabel.Text = "Please enter your email address:";
+            this.instructionLabel.AutoSize = true;
+            this.instructionLabel.Location = new Point(10, 10);
+            this.instructionLabel.Text = "Enter your username and new password:";
+
+            // usernameLabel
+            this.usernameLabel.AutoSize = true;
+            this.usernameLabel.Location = new Point(10, 40);
+            this.usernameLabel.Text = "Username:";
+
+            // usernameTextBox
+            this.usernameTextBox.Location = new Point(120, 40);
+
+            // newPasswordLabel
+            this.newPasswordLabel.AutoSize = true;
+            this.newPasswordLabel.Location = new Point(10, 70);
+            this.newPasswordLabel.Text = "New Password:";
+
+            // newPasswordTextBox
+            this.newPasswordTextBox.Location = new Point(120, 70);
+            this.newPasswordTextBox.PasswordChar = '*';
+
+            // confirmNewPasswordLabel
+            this.confirmNewPasswordLabel.AutoSize = true;
+            this.confirmNewPasswordLabel.Location = new Point(10, 100);
+            this.confirmNewPasswordLabel.Text = "Confirm Password:";
+
+            // confirmNewPasswordTextBox
+            this.confirmNewPasswordTextBox.Location = new Point(120, 100);
+            this.confirmNewPasswordTextBox.PasswordChar = '*';
+
+            // submitButton
+            this.submitButton.Location = new Point(120, 130);
+            this.submitButton.Text = "Submit";
+            this.submitButton.Click += new EventHandler(this.SubmitButton_Click);
 
             // ForgotPasswordForm
-            this.ClientSize = new Size(220, 120); // Adjust these values as needed
-            this.Controls.Add(this.emailTextBox);
-            this.Controls.Add(this.submitButton);
+            this.ClientSize = new Size(300, 170);
             this.Controls.Add(this.instructionLabel);
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
-            this.StartPosition = FormStartPosition.CenterParent;
+            this.Controls.Add(this.usernameLabel);
+            this.Controls.Add(this.usernameTextBox);
+            this.Controls.Add(this.newPasswordLabel);
+            this.Controls.Add(this.newPasswordTextBox);
+            this.Controls.Add(this.confirmNewPasswordLabel);
+            this.Controls.Add(this.confirmNewPasswordTextBox);
+            this.Controls.Add(this.submitButton);
             this.Text = "Forgot Password";
-        }
-
-        private void EmailTextBox_Enter(object sender, EventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (textBox != null && textBox.Text == "Enter your email here")
-            {
-                textBox.Text = "";
-                textBox.ForeColor = SystemColors.WindowText;
-            }
-        }
-
-        private void EmailTextBox_Leave(object sender, EventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (textBox != null && string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                textBox.Text = "Enter your email here";
-                textBox.ForeColor = SystemColors.GrayText;
-            }
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
-            string email = emailTextBox.Text;
-            if (InputValidation.IsValidEmail(email))
+            string username = this.usernameTextBox.Text;
+            string newPassword = this.newPasswordTextBox.Text;
+            string confirmNewPassword = this.confirmNewPasswordTextBox.Text;
+
+            if (string.IsNullOrWhiteSpace(username) ||
+                string.IsNullOrWhiteSpace(newPassword) ||
+                newPassword != confirmNewPassword)
             {
-                // Implement your password recovery logic here.
-                // For now, we'll just show a message box.
-                MessageBox.Show("A password reset link has been sent to: " + email, "Password Reset", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close(); // Optionally close the form after submission.
+                MessageBox.Show("Username, new password, and password confirmation are required. The passwords must match.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else
+
+            try
             {
-                MessageBox.Show("Please enter a valid email address.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               
+                using (SqlConnection conn = new SqlConnection(DataBaseManager.functionalityConnectionString))
+                {
+                    conn.Open();
+                    var query = "UPDATE [User] SET newPwd = @NewPassword, pwdChnageStatus = 1 WHERE userName = @Username";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Username", username);
+                        cmd.Parameters.AddWithValue("@NewPassword", newPassword); 
+                        int result = cmd.ExecuteNonQuery();
+
+                        if (result > 0)
+                        {
+                            MessageBox.Show("Your password reset request has been submitted. Please wait for an admin to approve.", "Request Submitted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("No matching username found or error occurred.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

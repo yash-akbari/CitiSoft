@@ -150,7 +150,7 @@ namespace CitiSoft
 
         }
 
-    private void btnRegister_Click(object sender, EventArgs e)
+        private void btnRegister_Click(object sender, EventArgs e)
         {
             // Проверка ввода пользователя
             if (string.IsNullOrWhiteSpace(txtFirstName.Text))
@@ -184,20 +184,20 @@ namespace CitiSoft
                 return;
             }
 
-          
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(DataBaseManager.functionalityConnectionString))
                 {
                     string query = @"
-                 INSERT INTO [User] (fn, ln, phone, userName, pwd, uType) 
-                 VALUES (@FirstName, @LastName, @Phone, @Username, @Password, @UserType)";
+                 INSERT INTO [User] (fn, ln, phone, userName, pwd, newPwd, pwdChnageStatus,uType) 
+                 VALUES (@FirstName, @LastName, @Phone, @Username, @Password, 0, 0, @UserType)";
 
                     var selectedUserType = (dynamic)cmbUserType.SelectedItem;
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                       
+
                         cmd.Parameters.AddWithValue("@FirstName", txtFirstName.Text);
                         cmd.Parameters.AddWithValue("@LastName", txtLastName.Text);
                         cmd.Parameters.AddWithValue("@Phone", txtPhone.Text);
@@ -210,7 +210,7 @@ namespace CitiSoft
                         if (result > 0)
                         {
                             MessageBox.Show("User successfully registered.");
-                            this.Close(); 
+
                         }
                         else
                         {

@@ -45,7 +45,7 @@ namespace CitiSoft
                         // If the user logs out, the runtimeUi form will close and the loop will start again showing the login form.
                         // If the user closes the application, the entire application exits.
                     }
-                 }
-            }   }
+                }
+        }   }
     }
 }
