@@ -36,9 +36,16 @@ namespace CitiSoft
                     {
                         if (reader.Read())
                         {
-                            
-                            this.DialogResult = DialogResult.OK;
+                            // Assume uType is the second column in the result
+                            int userType = Convert.ToInt32(reader["uType"]);
+                            int userId = Convert.ToInt32(reader["uid"]);
+
+                            // Close the reader and open the RuntimeUI form with user type
+                            reader.Close();
                             this.Hide();
+                            RuntimeUI runtimeUI = new RuntimeUI(userType, userId);
+                            runtimeUI.Closed += (s, args) => this.Close();
+                            runtimeUI.Show();
                         }
                         else
                         {

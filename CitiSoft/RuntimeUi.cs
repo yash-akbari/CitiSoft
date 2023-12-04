@@ -60,6 +60,9 @@ namespace CitiSoft
         TabPage userRegistrationTabPage = new TabPage();
         TabPage passwordRequestsTabPage = new TabPage();
 
+        public int CurrentUserType { get; set; }
+        private int _userType;
+        private int _userId;
         public void venMenuFunc()
         {// Vendor Menu
             venMenu.Text = "Vendor";
@@ -534,15 +537,29 @@ namespace CitiSoft
         }
 
 
-
-        public RuntimeUI()
+        public void InitializeTabs()
         {
-            InitializeComponent();
+            
             InitializeUserProfilePanel();
             tblSelector(2);
             UserProfileMenuFunc();
-            
-            RegisterMenuFunc();
+           
+
+           
+            if (CurrentUserType == 1)
+            {
+                RegisterMenuFunc(); // Call this only if the user is an admin
+            }
+        }
+
+        public RuntimeUI(int userType, int userId)
+        {
+            _userType = userType;
+            _userId = userId;
+
+            InitializeComponent();
+            CurrentUserType = userType; 
+            InitializeTabs();
         }
 
 
