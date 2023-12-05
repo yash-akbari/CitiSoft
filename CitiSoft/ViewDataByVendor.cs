@@ -316,14 +316,16 @@ namespace CitiSoft
             fileDropPBox.DragEnter += new DragEventHandler(fileDropPBox_DragEnter);
             fileDropPBox.DragDrop += new DragEventHandler(fileDropPBox_DragDrop);
         }
-        void fileDropPBox_DragEnter(object sender, DragEventArgs e)
+
+        // the following two methods are used to enable drag and drop functionality to upload document
+        private void fileDropPBox_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 e.Effect = DragDropEffects.Copy;
         }
 
         // adds the dropped file to the database
-        void fileDropPBox_DragDrop(object sender, DragEventArgs e)
+        private void fileDropPBox_DragDrop(object sender, DragEventArgs e)
         {
             // checks if the user provided Vendor ID
             if (vendorIDTxtBox.Text == "")
@@ -338,6 +340,14 @@ namespace CitiSoft
                 vendorIDTxtBox.Text = string.Empty;
                 return;
             }
+            // checks if the document already exists
+            if (!InputValidation.IsValueNull(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "docAttach", vendorIDTxtBox.Text))
+            {
+                MessageBox.Show("This Vendor already has a document attached");
+                vendorIDTxtBox.Text = string.Empty;
+                return;
+            }
+
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             foreach (var file in files)
             {
@@ -345,10 +355,14 @@ namespace CitiSoft
                 {
                     byte[] fileData = File.ReadAllBytes(file);
                     string fileName = $"{vendorIDTxtBox.Text}_{Path.GetFileName(file)}"; // Include Vendor ID in the file name
-
+                    if (fileName.Length > 255)
+                    {
+                        MessageBox.Show("Document name is too long");
+                        return;
+                    }
                     using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
                     {
-                        string query = "UPDATE VendorInfo SET docAttach = @Data, FileName = @FileName WHERE vid = @VendorID";
+                        string query = "UPDATE VendorInfo SET docAttach = @Data, docName = @FileName WHERE vid = @VendorID";
 
                         using (SqlCommand command = new SqlCommand(query, connection))
                         {
@@ -395,6 +409,7 @@ namespace CitiSoft
                 vendorIDTxtBox.Text = string.Empty;
                 return;
             }
+            // checks if the document already exists
             if (InputValidation.IsValueNull(DataBaseManager.citiSoftDatabaseConnectionString, "VendorInfo", "docAttach", vendorIDTxtBox.Text))
             {
                 MessageBox.Show("This Vendor has no document attached");
@@ -409,7 +424,7 @@ namespace CitiSoft
 
                 try
                 {
-                    using (SqlCommand command = new SqlCommand("UPDATE VendorInfo SET docAttach = NULL WHERE vid = @VendorID;", connection, transaction))
+                    using (SqlCommand command = new SqlCommand("UPDATE VendorInfo SET docAttach = NULL, docName = NULL WHERE vid = @VendorID;", connection, transaction))
                     {
                         // uses parameterizing to prevent from SQL injections
                         command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
@@ -441,14 +456,13 @@ namespace CitiSoft
         // downloads a document into the user's PC
         private void DownloadDocument()
         {
-
             using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
                 try
                 {
-                    using (SqlCommand command = new SqlCommand("SELECT docAttach, FileName FROM VendorInfo WHERE vid = @VendorID", connection, transaction))
+                    using (SqlCommand command = new SqlCommand("SELECT docAttach, docName FROM VendorInfo WHERE vid = @VendorID", connection, transaction))
                     {
                         command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
 
@@ -457,7 +471,7 @@ namespace CitiSoft
                             if (reader.Read())
                             {
                                 byte[] documentData = (byte[])reader["docAttach"];
-                                string fileName = reader["FileName"].ToString();
+                                string fileName = reader["docName"].ToString();
 
                                 // Use SaveFileDialog to let the user choose the save location and file name
                                 using (SaveFileDialog saveFileDialog = new SaveFileDialog())
