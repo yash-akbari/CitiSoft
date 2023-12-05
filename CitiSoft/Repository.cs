@@ -82,7 +82,6 @@ namespace CitiSoft
                                     transaction.Commit();
                                     cmd.Dispose();
                                     con.Close();
-                                    MessageBox.Show(res.ToString());
                                     int venId = Convert.ToInt32(res);
                                     //MessageBox.Show(res.ToString());
                                     foreach (AddressModel add in Controller.addressModelList)
@@ -210,7 +209,7 @@ namespace CitiSoft
             SqlCommand cmd;
             SqlDataReader dataReader;
             string sql;
-            sql = "SELECT * FROM Address";
+            sql = "SELECT * FROM Address"; 
             cmd = new SqlCommand(sql, con);
             dataReader = cmd.ExecuteReader();
             while (dataReader.Read())
@@ -712,6 +711,41 @@ namespace CitiSoft
         }
 
     }
+
+
+    public class CommentsRepository
+    {
+        public static List<CommentsModel> GetAllComments()
+        {
+            List<CommentsModel> commentsModelList = new List<CommentsModel>();
+            SqlConnection con;
+            con = DataBaseManager.GetCitiSoftConnection();
+            con.Open();
+            SqlCommand cmd;
+            SqlDataReader dataReader;
+            string sql;
+            sql = "SELECT * FROM Comments";
+            cmd = new SqlCommand(sql, con);
+            dataReader = cmd.ExecuteReader();
+            while (dataReader.Read())
+            {
+                commentsModelList.Add(new CommentsModel
+                {
+                    sid = Convert.ToInt32(dataReader.GetValue(0)),
+                    Comments = Convert.ToString(dataReader.GetValue(1)),
+                    LastDemoDate = Convert.ToDateTime(dataReader.GetValue(2)), 
+                    LastReviewedInterval = Convert.ToDateTime(dataReader.GetValue(3)),
+                    LastReviewedDate = Convert.ToDateTime(dataReader.GetValue(4)),
+                });
+            }
+            dataReader.Close();
+            cmd.Dispose();
+            con.Close();
+            return commentsModelList;
+        }
+
+    }
+
     public class CheckIndent
     {
         /*DECLARE @GapIdentifier INT;

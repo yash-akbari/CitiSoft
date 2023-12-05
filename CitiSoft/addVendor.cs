@@ -224,7 +224,6 @@ namespace CitiSoft
                         EmployeesCount = InputValidation.GetStringValueOrNullOrWhitespace(employeesTextBox.Text),
                         InternalProfessionalServices = InputValidation.ParseTrueOrFalse(internalServicesComboBox.SelectedText),                        
                     });
-                    MessageBox.Show(InputValidation.GetStringValueOrNullOrWhitespace(employeesTextBox.Text));
                     foreach (AddressModel address in addressPanel.addressList)
                     {
                         Controller.addressModelList.Add
@@ -243,7 +242,7 @@ namespace CitiSoft
                     }
                     clearAll();
                     Controller.sendVendorUpdate(Controller.vendorModelList);
-                    //ViewDataByVendor viewDataByVendor = new ViewDataByVendor(1); 
+
                 }
                 catch (FormatException fe)
                 {
