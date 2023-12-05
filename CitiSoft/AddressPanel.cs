@@ -39,13 +39,20 @@ namespace CitiSoft
 
 
 
-        public AddressPanel() 
-        { 
+        public AddressPanel()
+        {
             InitializeComponent();
         }
 
+        public CustomListBox CustomListBox
+        {
+            get => default;
+            set
+            {
+            }
+        }
 
-        public void InitializeComponent() 
+        public void InitializeComponent()
         {
             Controls.AddRange(new Control[]
             {
@@ -83,7 +90,7 @@ namespace CitiSoft
             int addHeight = 30;
             int addWidth = 200;
             int i = 0, j = 0;
-            Size= new System.Drawing.Size(1100, 350);
+            Size = new System.Drawing.Size(1100, 350);
             foreach (Control con in Controls)
             {
                 con.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -101,7 +108,7 @@ namespace CitiSoft
                     con.TabStop = false;
                     addressCustomListBox.setHeightWidth(600, 325);
                     con.Left = addxLoc + 210 + 100 + 210;
-                    con.Top = addyLoc- 50;
+                    con.Top = addyLoc - 50;
                 }
                 else
                 {
@@ -128,26 +135,26 @@ namespace CitiSoft
             addressCustomListBox.edit.Click += Edit_Click;
         }
 
-        
+
 
         private void ListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
             if (addressCustomListBox.listBox.SelectedItem != null)
             {
-                index= addressCustomListBox.listBox.SelectedIndex;
+                index = addressCustomListBox.listBox.SelectedIndex;
                 AddressModel instance = addressList[index] as AddressModel;
                 addressLine1TextBox.Text = instance.AddressLine1;
                 addressLine2TextBox.Text = instance.AddressLine2;
                 cityTextBox.Text = instance.City;
                 countryTextBox.Text = instance.Country;
                 postCodeTextBox.Text = instance.PostCode;
-                emailTextBox .Text = instance.Email;
+                emailTextBox.Text = instance.Email;
                 telephoneTextBox.Text = instance.Telephone;
                 addressCustomListBox.add.Visible = false;
                 addressCustomListBox.edit.Visible = true;
                 addressCustomListBox.update.Visible = false;
-                
+
             }
 
         }
@@ -156,7 +163,7 @@ namespace CitiSoft
         {
             if (addressLine1TextBox.Text.Trim() != "" || addressLine2TextBox.Text.Trim() != "" || cityTextBox.Text.Trim() != "" || countryTextBox.Text.Trim() != "" || postCodeTextBox.Text.Trim() != "" || emailTextBox.Text.Trim() != "" || telephoneTextBox.Text.Trim() != "")
             {
-                
+
                 addressList.Add(new AddressModel
                 {
                     AddressLine1 = addressLine1TextBox.Text,
@@ -186,7 +193,7 @@ namespace CitiSoft
         private void Edit_Click(object sender, EventArgs e)
         {
             index = addressCustomListBox.listBox.SelectedIndex;
-            if (index > -1 )
+            if (index > -1)
             {
                 AddressModel instance = addressList[index] as AddressModel;
                 addressLine1TextBox.Text = instance.AddressLine1;
@@ -232,7 +239,7 @@ namespace CitiSoft
         {
             if (addressLine1TextBox.Text.Trim() != "" || addressLine2TextBox.Text.Trim() != "" || cityTextBox.Text.Trim() != "" || countryTextBox.Text.Trim() != "" || postCodeTextBox.Text.Trim() != "" || emailTextBox.Text.Trim() != "" || telephoneTextBox.Text.Trim() != "")
             {
-                addressList[index]=(new AddressModel
+                addressList[index] = (new AddressModel
                 {
                     AddressLine1 = addressLine1TextBox.Text,
                     AddressLine2 = addressLine2TextBox.Text,
@@ -251,11 +258,11 @@ namespace CitiSoft
                 }
                 AddressModel instance = addressList[index] as AddressModel;
                 addressCustomListBox.listBox.Items.RemoveAt(index);
-                addressCustomListBox.listBox.Items.Insert(index,(instance.AddressLine1 + " " + instance.AddressLine2 + " " + instance.City + " " + instance.Country + " " + instance.PostCode + " " + instance.Email + " " + instance.Telephone));
+                addressCustomListBox.listBox.Items.Insert(index, (instance.AddressLine1 + " " + instance.AddressLine2 + " " + instance.City + " " + instance.Country + " " + instance.PostCode + " " + instance.Email + " " + instance.Telephone));
                 addressCustomListBox.add.Visible = true;
                 addressCustomListBox.edit.Visible = true;
                 addressCustomListBox.remove.Visible = true;
-                addressCustomListBox.update.Visible = false;   
+                addressCustomListBox.update.Visible = false;
             }
             else
             {

@@ -29,6 +29,14 @@ namespace CitiSoft
         Rectangle BottomLeft { get { return new Rectangle(0, this.ClientSize.Height - _, _, _); } }
         Rectangle BottomRight { get { return new Rectangle(this.ClientSize.Width - _, this.ClientSize.Height - _, _, _); } }
 
+        internal Properties.Resources Resources
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         protected override void WndProc(ref Message message)
         {
             base.WndProc(ref message);

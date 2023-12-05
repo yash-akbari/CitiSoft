@@ -7,7 +7,7 @@ namespace CitiSoft
 
     public partial class Controller
     {
-        public static List<VendorModel> vendorModelList = new List<VendorModel>(); 
+        public static List<VendorModel> vendorModelList = new List<VendorModel>();
         public static List<AddressModel> addressModelList = new List<AddressModel>();
         public static List<SoftwareModel> softwareModelList = new List<SoftwareModel>();
         public static List<BusinessAreasModel> businessAreasModelList = new List<BusinessAreasModel>();
@@ -15,7 +15,144 @@ namespace CitiSoft
         public static List<TypeOfSoftwareModel> typeOfSoftwareModelList = new List<TypeOfSoftwareModel>();
         public static List<ModulesModel> modulesModelList = new List<ModulesModel>();
         static ViewDataByVendor vendor = new ViewDataByVendor();
-        public static List<VendorModel> getDeliverVendor() 
+
+        public searchVendor searchVendor
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public AddressRepository AddressRepository
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public AddressModel AddressModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public SoftwareRepository SoftwareRepository
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public VendorRepository VendorRepository
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public VendorModel VendorModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public SoftwareModel SoftwareModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public ModulesModel ModulesModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public FinancialServicesModel FinancialServicesModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public BusinessAreasModel BusinessAreasModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public TypeOfSoftwareModel TypeOfSoftwareModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public VendorRepository VendorRepository1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public AddressRepository AddressRepository1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public SoftwareRepository SoftwareRepository1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        internal ViewDataByVendor ViewDataByVendor
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public SearchByVendor SearchByVendor
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public searchVendor searchVendor1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public static List<VendorModel> getDeliverVendor()
         {
             vendorModelList = VendorRepository.GetAllVendor();
             return vendorModelList;
@@ -29,7 +166,7 @@ namespace CitiSoft
         public static List<AddressModel> getDeliverAddress(int vid)
         {
             addressModelList = AddressRepository.GetAllAddress();
-            List<AddressModel> result= addressModelList.Where(address => address.Vid == vid).ToList();
+            List<AddressModel> result = addressModelList.Where(address => address.Vid == vid).ToList();
             return result;
         }
 

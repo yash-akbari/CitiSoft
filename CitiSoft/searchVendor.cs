@@ -18,6 +18,7 @@ namespace CitiSoft
         {
             InitializeComponent();  
         }
+
         private void InitializeComponent()
         {
 

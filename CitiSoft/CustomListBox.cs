@@ -12,7 +12,7 @@ namespace CitiSoft
     public class CustomListBox : Panel
     {
 
-        public CustomListBox() 
+        public CustomListBox()
         {
             Controls.AddRange(new Control[] { listBox, add, remove, edit, update });
             Size = new System.Drawing.Size(width, height);
@@ -25,23 +25,23 @@ namespace CitiSoft
 
         public CustomListBox(TextBox tb)
         {
-            Controls.AddRange(new Control[] { listBox, add, remove, edit,update });
+            Controls.AddRange(new Control[] { listBox, add, remove, edit, update });
             Size = new System.Drawing.Size(width, height);
 
             add.Click += (sender, e) => Add_Click(tb);
             remove.Click += (sender, e) => Remove_Click(tb);
-            update.Click += (sender,e) => Update_Click(tb);
+            update.Click += (sender, e) => Update_Click(tb);
             edit.Click += (sender, e) => Edit_Click(tb);
-            
+
         }
 
-        
 
-        public ListBox listBox = new ListBox() { Size = new System.Drawing.Size(150, 90), Location = new System.Drawing.Point(0,0) };
-        public Button add = new Button() { Size = new System.Drawing.Size(100, 28), Location = new System.Drawing.Point(155,0), Text="Add" };
-        public Button update = new Button() { Size = new System.Drawing.Size(100, 28), Location = new System.Drawing.Point(155, 0), Text = "Update" , Visible = false };
-        public Button remove = new Button() { Size = new System.Drawing.Size(100, 28), Location = new System.Drawing.Point(155,30), Text= "Remove" };
-        public Button edit = new Button() { Size = new System.Drawing.Size(100, 28), Location = new System.Drawing.Point(155, 60), Text="Edit"};
+
+        public ListBox listBox = new ListBox() { Size = new System.Drawing.Size(150, 90), Location = new System.Drawing.Point(0, 0) };
+        public Button add = new Button() { Size = new System.Drawing.Size(100, 28), Location = new System.Drawing.Point(155, 0), Text = "Add" };
+        public Button update = new Button() { Size = new System.Drawing.Size(100, 28), Location = new System.Drawing.Point(155, 0), Text = "Update", Visible = false };
+        public Button remove = new Button() { Size = new System.Drawing.Size(100, 28), Location = new System.Drawing.Point(155, 30), Text = "Remove" };
+        public Button edit = new Button() { Size = new System.Drawing.Size(100, 28), Location = new System.Drawing.Point(155, 60), Text = "Edit" };
         public int height = 90, width = 300;
 
 
@@ -53,7 +53,7 @@ namespace CitiSoft
             remove.Left = width - 145;
             edit.Left = width - 145;
             update.Left = width - 145;
-        
+
         }
         public virtual void Remove_Click(TextBox tb)
         {
@@ -84,7 +84,7 @@ namespace CitiSoft
             edit.Visible = true;
             remove.Visible = true;
             update.Visible = false;
-            
+
 
 
         }
@@ -100,7 +100,7 @@ namespace CitiSoft
                 remove.Visible = false;
                 update.Visible = true;
             }
-            else 
+            else
             {
                 MessageBox.Show("No Entries Found Or Please Select the Entry.");
             }
@@ -108,11 +108,11 @@ namespace CitiSoft
 
         public virtual void Add_Click(TextBox tb)
         {
-            
+
             if (tb.Text != "")
             {
                 listBox.Items.Add(tb.Text);
-                tb.Text= null;
+                tb.Text = null;
             }
             else
             {
@@ -120,7 +120,7 @@ namespace CitiSoft
             }
         }
 
-        
+
 
     }
 }

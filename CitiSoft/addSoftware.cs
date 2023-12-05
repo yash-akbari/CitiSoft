@@ -15,6 +15,29 @@ namespace CitiSoft
             InitializeComponents();
         }
 
+        public Controller Controller
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        internal InputValidation InputValidation
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public CustomListBox CustomListBox
+        {
+            get => default;
+            set
+            {
+            }
+        }
 
         Label compNameLabel = new Label();
         ComboBox compNameComboBox = new ComboBox();

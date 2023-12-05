@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Data;
-using System.Windows.Forms;
+using System.Data.SqlClient;
 using System.IO;
+using System.Windows.Forms;
 
 namespace CitiSoft
 {
+
     internal class ViewDataByVendor : Form
     {
         public DataGridView VendorDataGridView = new DataGridView();

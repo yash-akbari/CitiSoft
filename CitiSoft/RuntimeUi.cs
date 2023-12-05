@@ -6,8 +6,9 @@ using System.Windows.Forms;
 
 namespace CitiSoft
 {
-    public partial class RuntimeUI : MainUI
+    public partial class RuntimeUI :MainUI
     {
+
         public bool LoggedOut { get; private set; }
         Label setMenu = new Label();
         Label notiMenu = new Label();
@@ -55,8 +56,14 @@ namespace CitiSoft
         Panel userProfilePanel;
         int menuYLoc = 0;
 
+        TabPage registerTabPage = new TabPage();
+        TabControl registerTabControl = new TabControl();
+        TabPage userRegistrationTabPage = new TabPage();
+        TabPage passwordRequestsTabPage = new TabPage();
 
-      
+        public int CurrentUserType { get; set; }
+        private int _userType;
+        private int _userId;
         public void venMenuFunc()
         {// Vendor Menu
             venMenu.Text = "Vendor";
@@ -117,9 +124,9 @@ namespace CitiSoft
             viewVendorTabPage.Name = "viewVendorTabPage";
             viewVendorTabPage.Text = "View Vendor";
             viewVendorTabPage.AutoScroll = true;
-            
+
             ViewDataByVendor venView = new ViewDataByVendor();
-            
+
             AddForm(venView, viewVendorTabPage);
         }
 
@@ -228,7 +235,7 @@ namespace CitiSoft
             softRemData.Size = new System.Drawing.Size(604, 660);
             softRemData.TabIndex = 0;
 
-            dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT s.SoftName, c.comment, c.lstDemoDt,c.lstRevDt,  c.lstRevInt FROM dbo.SoftName s Join dbo.Comments c ON s.sid = c.sid;" , softRemData);
+            dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT s.SoftName, c.comment, c.lstDemoDt,c.lstRevDt,  c.lstRevInt FROM dbo.SoftName s Join dbo.Comments c ON s.sid = c.sid;", softRemData);
             //SELECT VendorInfo.compName AS 'Company Name', VendorInfo.lstDemoDt AS 'Last Demo Date', VendorInfo.lstRevInt AS 'Last Review Interval', VendorInfo.lstRevDt AS 'Last Reviewed Date' FROM VendorInfo
         }
 
@@ -324,11 +331,11 @@ namespace CitiSoft
         {
             userProfilePanel = new Panel
             {
-                Dock = DockStyle.Fill, 
-                Size = new Size(600, 400), 
-                Location = new Point(200, 50), 
+                Dock = DockStyle.Fill,
+                Size = new Size(600, 400),
+                Location = new Point(200, 50),
                 BorderStyle = BorderStyle.FixedSingle,
-                Visible = false 
+                Visible = false
             };
             this.Controls.Add(userProfilePanel); // Add userProfilePanel to the main form's controls only once
             userProfilePanel.BringToFront();
@@ -350,7 +357,7 @@ namespace CitiSoft
             }
         }
 
-      
+
         void UserProfileMenuFunc()
         {
             // Create the User Profile menu label
@@ -376,7 +383,7 @@ namespace CitiSoft
 
             if (!userProfilePanel.Controls.ContainsKey("userProfileForm"))
             {
-                 userProfileForm = new UserProfileForm
+                userProfileForm = new UserProfileForm
                 {
                     Name = "userProfileForm",
                     TopLevel = false,
@@ -385,7 +392,7 @@ namespace CitiSoft
                 };
                 userProfileForm.UserLoggedOut += (s, args) =>
                 {
-                    this.Close(); // Закрываем RuntimeUI при выходе из профиля
+                    this.Close(); 
                 };
 
                 userProfilePanel.Controls.Add(userProfileForm);
@@ -402,10 +409,71 @@ namespace CitiSoft
 
         }
 
+        public void RegisterMenuFunc()
+        {
+            // I'm setting up the main "Register" tab here
+            registerTabPage.Text = "Register";
+            registerTabPage.Dock = DockStyle.Fill;
+            registerTabControl.Dock = DockStyle.Fill;
+
+            // Adding the main "Register" tab to my vendor tab control
+            venTabControl.Controls.Add(registerTabPage);
+
+            // Inserting a tab control into the register tab for sub-tabs
+            registerTabPage.Controls.Add(registerTabControl);
+
+            // Now, I'm configuring the sub-tabs
+            SetupUserRegistrationTab();
+            SetupPasswordRequestsTab();
+        }
+        private void SetupUserRegistrationTab()
+        {
+
+            TabPage userRegistrationTab = new TabPage("User Registration");
+            userRegistrationTab.Dock = DockStyle.Fill;
+
+
+            UserRegistrationForm userRegForm = new UserRegistrationForm();
+            userRegForm.TopLevel = false;
+            userRegForm.Dock = DockStyle.Fill;
+            userRegForm.FormBorderStyle = FormBorderStyle.None;
+
+            userRegistrationTab.Controls.Add(userRegForm);
+            registerTabControl.TabPages.Add(userRegistrationTab);
+
+            userRegForm.Show();
+        }
+
+        public void SetupPasswordRequestsTab()
+        {
+           
+            passwordRequestsTabPage.Text = "Password Requests";
+            passwordRequestsTabPage.Dock = DockStyle.Fill;
+
+            
+            AdminPasswordChangeRequestsForm passwordChangeRequestsForm = new AdminPasswordChangeRequestsForm();
+            passwordChangeRequestsForm.TopLevel = false;
+            passwordChangeRequestsForm.Dock = DockStyle.Fill;
+            passwordChangeRequestsForm.FormBorderStyle = FormBorderStyle.None;
+
+            passwordRequestsTabPage.Controls.Add(passwordChangeRequestsForm);
+            registerTabControl.TabPages.Add(passwordRequestsTabPage);
+
+            passwordChangeRequestsForm.Show();
+        }
+
+
+
+
+
+
+
+
+
         // Method to hide all panels.
         private void HideAllPanels()
         {
-            dashboardPan.Visible = false;   
+            dashboardPan.Visible = false;
             venPan.Visible = false;
             clientPan.Visible = false;
             userProfilePanel.Visible = false;
@@ -439,7 +507,7 @@ namespace CitiSoft
 
         // takes database name, query and DataGridView instance to display a table. Also takes optional argument,
         // which enables to display a particular row
-       
+
         public static void dataBinding(string connectionString, string baseQuery, DataGridView table, int? id = null, string idName = null)
         {
             try
@@ -491,13 +559,33 @@ namespace CitiSoft
         }
 
 
-
-        public RuntimeUI()
+        public void InitializeTabs()
         {
-            InitializeComponent();
+
             InitializeUserProfilePanel();
             tblSelector(2);
-            UserProfileMenuFunc(); // Initialize menu items
+            UserProfileMenuFunc();
+
+
+
+            if (CurrentUserType == 1)
+            {
+                
+                RegisterMenuFunc(); // Call this only if the user is an admin
+              
+            }
+        }
+
+        public RuntimeUI(int userType, int userId)
+        {
+            InitializeComponent();
+            CurrentUserType = userType;
+            _userId = userId;
+
+
+            
+            
+            InitializeTabs();
         }
 
 
@@ -511,8 +599,9 @@ namespace CitiSoft
                     break;
                 case 2:
 
-
+                   
                     venMenuFunc();
+                    CheckIndent c = new CheckIndent();
                     venTabControlFunc();
                     viewParentTabPageFunc();
                     viewVendorTabPageFunc();
@@ -549,7 +638,7 @@ namespace CitiSoft
 
         private void _statusLabel_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void InitializeComponent()
@@ -573,6 +662,79 @@ namespace CitiSoft
         private void RuntimeUI_Load(object sender, EventArgs e)
         {
 
+        }
+
+        public AddVendor AddVendor
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        internal AddSoftware AddSoftware
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public ModifyClientForm ModifyClientForm
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+
+        public ModifyDocumentsForm ModifyDocumentsForm
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public ChangePasswordForm ChangePasswordForm
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public ForgotPasswordForm ForgotPasswordForm
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public ProblemHistoryForm ProblemHistoryForm
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public UserProfileForm UserProfileForm
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public dashboard dashboard
+        {
+            get => default;
+            set
+            {
+            }
         }
     }
 }
