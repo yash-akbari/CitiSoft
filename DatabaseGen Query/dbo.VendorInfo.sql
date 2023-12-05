@@ -5,7 +5,7 @@
     [empCount]    NVARCHAR (25)   NULL,
     [intProfServ] BIT             NULL,
     [docName]     NVARCHAR (20)   NULL,
-	[docType]	NVARCHAR(10) NULL,
+    [docType]     NVARCHAR (255)   NULL,
     [docAttach]   VARBINARY (MAX) NULL,
     PRIMARY KEY CLUSTERED ([vid] ASC)
 );

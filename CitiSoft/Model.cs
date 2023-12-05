@@ -65,4 +65,12 @@ namespace CitiSoft
         public String Email { get; set; }
         public String Telephone { get; set; }
     }
+    public class CommentsModel 
+    {
+        public int sid { get; set; }
+        public string Comments { get; set; }
+        public DateTime LastReviewedInterval { get; set; }
+        public DateTime LastReviewedDate { get; set; }
+        public DateTime LastDemoDate { get; set; }
+    }
 }

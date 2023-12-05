@@ -2,14 +2,6 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CitiSoft.AddressPanel">
     <Position X="16.25" Y="22.25" Width="2.75" />
-    <AssociationLine Name="CustomListBox" Type="CitiSoft.CustomListBox" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="17.167" Y="22.25" />
-        <Point X="17.167" Y="21.875" />
-        <Point X="17.555" Y="21.875" />
-        <Point X="17.555" Y="20.17" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
       <HashCode>ACBAQBAAgAAQAAAABAIAABACQChAABYQIACAFAEREEA=</HashCode>
       <FileName>AddressPanel.cs</FileName>
@@ -36,21 +28,6 @@
         <Point X="43.667" Y="21.413" Type="JumpEnd" />
         <Point X="27.5" Y="21.413" />
         <Point X="27.5" Y="22" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="CustomListBox" Type="CitiSoft.CustomListBox" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="48.5" Y="16.938" />
-        <Point X="47.192" Y="16.938" />
-        <Point X="47.192" Y="20.428" />
-        <Point X="43.833" Y="20.428" Type="JumpStart" />
-        <Point X="43.667" Y="20.428" Type="JumpEnd" />
-        <Point X="42.13" Y="20.428" Type="JumpStart" />
-        <Point X="41.963" Y="20.428" Type="JumpEnd" />
-        <Point X="34.833" Y="20.428" Type="JumpStart" />
-        <Point X="34.667" Y="20.428" Type="JumpEnd" />
-        <Point X="17.953" Y="20.428" />
-        <Point X="17.953" Y="20.17" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -96,7 +73,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="CitiSoft.ChangePasswordForm">
-    <Position X="15.75" Y="11" Width="2.25" />
+    <Position X="19.25" Y="11" Width="2.25" />
     <TypeIdentifier>
       <HashCode>EAAAABIAACAAAAAAAACAAAACAACAIAAAAAAICAAFAQA=</HashCode>
       <FileName>ChangePasswordForm.cs</FileName>
@@ -108,8 +85,8 @@
       <Path>
         <Point X="42.25" Y="24.687" />
         <Point X="41.271" Y="24.687" Type="JumpStart" />
-        <Point X="41.104" Y="24.687" Type="JumpEnd" />
-        <Point X="40.646" Y="24.687" Type="JumpStart" />
+        <Point X="41.105" Y="24.687" Type="JumpEnd" />
+        <Point X="40.645" Y="24.687" Type="JumpStart" />
         <Point X="40.479" Y="24.687" Type="JumpEnd" />
         <Point X="37.562" Y="24.687" />
         <Point X="37.562" Y="30" />
@@ -133,10 +110,10 @@
       <Path>
         <Point X="42.25" Y="27.25" />
         <Point X="41.271" Y="27.25" Type="JumpStart" />
-        <Point X="41.104" Y="27.25" Type="JumpEnd" />
-        <Point X="40.646" Y="27.25" Type="JumpStart" />
+        <Point X="41.105" Y="27.25" Type="JumpEnd" />
+        <Point X="40.645" Y="27.25" Type="JumpStart" />
         <Point X="40.479" Y="27.25" Type="JumpEnd" />
-        <Point X="37.646" Y="27.25" Type="JumpStart" />
+        <Point X="37.645" Y="27.25" Type="JumpStart" />
         <Point X="37.479" Y="27.25" Type="JumpEnd" />
         <Point X="30.259" Y="27.25" />
         <Point X="30.259" Y="30" />
@@ -146,10 +123,10 @@
       <Path>
         <Point X="42.25" Y="27.25" />
         <Point X="41.271" Y="27.25" Type="JumpStart" />
-        <Point X="41.104" Y="27.25" Type="JumpEnd" />
-        <Point X="40.646" Y="27.25" Type="JumpStart" />
+        <Point X="41.105" Y="27.25" Type="JumpEnd" />
+        <Point X="40.645" Y="27.25" Type="JumpStart" />
         <Point X="40.479" Y="27.25" Type="JumpEnd" />
-        <Point X="37.646" Y="27.25" Type="JumpStart" />
+        <Point X="37.645" Y="27.25" Type="JumpStart" />
         <Point X="37.479" Y="27.25" Type="JumpEnd" />
         <Point X="26.875" Y="27.25" />
         <Point X="26.875" Y="30" />
@@ -159,10 +136,10 @@
       <Path>
         <Point X="42.25" Y="27.25" />
         <Point X="41.271" Y="27.25" Type="JumpStart" />
-        <Point X="41.104" Y="27.25" Type="JumpEnd" />
-        <Point X="40.646" Y="27.25" Type="JumpStart" />
+        <Point X="41.105" Y="27.25" Type="JumpEnd" />
+        <Point X="40.645" Y="27.25" Type="JumpStart" />
         <Point X="40.479" Y="27.25" Type="JumpEnd" />
-        <Point X="37.646" Y="27.25" Type="JumpStart" />
+        <Point X="37.645" Y="27.25" Type="JumpStart" />
         <Point X="37.479" Y="27.25" Type="JumpEnd" />
         <Point X="24.125" Y="27.25" />
         <Point X="24.125" Y="30" />
@@ -198,14 +175,14 @@
   <Class Name="CitiSoft.DataBaseManager">
     <Position X="47" Y="24.25" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIgAAQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAIgAAQAAAIAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>DataBaseManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.ForgotPasswordForm">
-    <Position X="13.25" Y="11" Width="1.75" />
+    <Position X="16.75" Y="11" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>ACAAABAAACAQAAAAAACAAAACACAEAAAAAABAAAAAAAA=</HashCode>
+      <HashCode>AAAAABAAACAQAAAAAACABAACAACEAAAAAABACAgEAAA=</HashCode>
       <FileName>ForgotPasswordForm.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -225,7 +202,7 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>ACAAAAAAACAAABAAAACAAAACAIAcAAAAEGAAAABAAAA=</HashCode>
+      <HashCode>ACAAAAAAACAAABAAAACAAAgCAIAcCAAAEGAAAABAAAA=</HashCode>
       <FileName>Login.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -330,14 +307,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.ModifyDocumentsForm">
-    <Position X="18.75" Y="11" Width="2.25" />
+    <Position X="22.25" Y="11" Width="2.25" />
     <TypeIdentifier>
       <HashCode>gQAAAAEAACgAAgAAAFCAABECAAACEBCAAAAAQAAAAAA=</HashCode>
       <FileName>ModifyDocumentsForm.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.ProblemHistoryForm">
-    <Position X="10" Y="11" Width="2.5" />
+    <Position X="13.5" Y="11" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAABAAAwGAQAAgAAACAAAACQBAAcJAAAAAUCCQCIAE=</HashCode>
       <FileName>ProblemHistoryForm.cs</FileName>
@@ -355,22 +332,6 @@
   </Class>
   <Class Name="CitiSoft.VendorRepository">
     <Position X="36.75" Y="30" Width="2.25" />
-    <AssociationLine Name="DataBaseManager" Type="CitiSoft.DataBaseManager" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="37.875" Y="30" />
-        <Point X="37.875" Y="28.982" />
-        <Point X="40.479" Y="28.982" Type="JumpStart" />
-        <Point X="40.646" Y="28.982" Type="JumpEnd" />
-        <Point X="41.104" Y="28.982" Type="JumpStart" />
-        <Point X="41.271" Y="28.982" Type="JumpEnd" />
-        <Point X="45.729" Y="28.982" Type="JumpStart" />
-        <Point X="45.896" Y="28.982" Type="JumpEnd" />
-        <Point X="46.698" Y="28.982" Type="JumpStart" />
-        <Point X="46.865" Y="28.982" Type="JumpEnd" />
-        <Point X="48.188" Y="28.982" />
-        <Point X="48.188" Y="26.449" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAAAAAAAQAAAAgAAAAAAAAAAAAAA=</HashCode>
       <FileName>Repository.cs</FileName>
@@ -386,20 +347,6 @@
         <Point X="41.188" Y="30" />
         <Point X="41.188" Y="23.375" />
         <Point X="42.25" Y="23.375" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="DataBaseManager" Type="CitiSoft.DataBaseManager" ManuallyRouted="true">
-      <Path>
-        <Point X="40.875" Y="30" />
-        <Point X="40.875" Y="28.993" />
-        <Point X="41.104" Y="28.993" Type="JumpStart" />
-        <Point X="41.271" Y="28.993" Type="JumpEnd" />
-        <Point X="45.729" Y="28.993" Type="JumpStart" />
-        <Point X="45.896" Y="28.993" Type="JumpEnd" />
-        <Point X="46.698" Y="28.993" Type="JumpStart" />
-        <Point X="46.865" Y="28.993" Type="JumpEnd" />
-        <Point X="48.188" Y="28.993" />
-        <Point X="48.188" Y="26.449" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -458,17 +405,9 @@
       <Path>
         <Point X="46.781" Y="30" />
         <Point X="46.781" Y="25.25" />
+        <Point X="46.38" Y="25.25" Type="JumpStart" />
+        <Point X="46.213" Y="25.25" Type="JumpEnd" />
         <Point X="44.25" Y="25.25" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="DataBaseManager" Type="CitiSoft.DataBaseManager" ManuallyRouted="true">
-      <Path>
-        <Point X="46.125" Y="30" />
-        <Point X="46.125" Y="28.989" />
-        <Point X="46.698" Y="28.989" Type="JumpStart" />
-        <Point X="46.865" Y="28.989" Type="JumpEnd" />
-        <Point X="48.188" Y="28.989" />
-        <Point X="48.188" Y="26.449" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -487,14 +426,6 @@
   </Class>
   <Class Name="CitiSoft.CheckIndent">
     <Position X="48" Y="30" Width="1.5" />
-    <AssociationLine Name="DataBaseManager" Type="CitiSoft.DataBaseManager" ManuallyRouted="true">
-      <Path>
-        <Point X="48.75" Y="30" />
-        <Point X="48.75" Y="28.993" />
-        <Point X="48.188" Y="28.993" />
-        <Point X="48.188" Y="26.449" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Repository.cs</FileName>
@@ -526,39 +457,39 @@
         <Point X="26.562" Y="11" />
       </Path>
     </AssociationLine>
-    <AssociationLine Name="AdminPasswordChangeRequestsForm" Type="AdminPasswordChangeRequestsForm" FixedFromPoint="true" FixedToPoint="true">
+    <AssociationLine Name="ModifyDocumentsForm" Type="CitiSoft.ModifyDocumentsForm" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="32.25" Y="7" />
-        <Point X="23.125" Y="7" />
-        <Point X="23.125" Y="11" />
+        <Point X="23.375" Y="7" />
+        <Point X="23.375" Y="11" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="ChangePasswordForm" Type="CitiSoft.ChangePasswordForm" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="32.25" Y="7" />
-        <Point X="16.875" Y="7" />
-        <Point X="16.875" Y="11" />
+        <Point X="20.375" Y="7" />
+        <Point X="20.375" Y="11" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="ForgotPasswordForm" Type="CitiSoft.ForgotPasswordForm" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="32.25" Y="7" />
-        <Point X="14.531" Y="7" />
-        <Point X="14.531" Y="11" />
+        <Point X="18.031" Y="7" />
+        <Point X="18.031" Y="11" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="ProblemHistoryForm" Type="CitiSoft.ProblemHistoryForm" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="32.25" Y="7" />
-        <Point X="11.25" Y="7" />
-        <Point X="11.25" Y="11" />
+        <Point X="14.75" Y="7" />
+        <Point X="14.75" Y="11" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="UserProfileForm" Type="CitiSoft.UserProfileForm" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="32.25" Y="7" />
-        <Point X="8" Y="7" />
-        <Point X="8" Y="11" />
+        <Point X="11.5" Y="7" />
+        <Point X="11.5" Y="11" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="dashboard" Type="CitiSoft.dashboard" FixedFromPoint="true" FixedToPoint="true">
@@ -569,14 +500,13 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>ACEoCyAQEWhJsIuTkAAAiCKKBAEZAABQggSTEAX5giQ=</HashCode>
+      <HashCode>QKEoC2AQEWhJsIuDkAAAiCKKBAEZAAJYggSTEA/5giQ=</HashCode>
       <FileName>RuntimeUi.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="AddVendor" />
       <Property Name="AddSoftware" />
       <Property Name="ModifyClientForm" />
-      <Property Name="AdminPasswordChangeRequestsForm" />
       <Property Name="ModifyDocumentsForm" />
       <Property Name="ChangePasswordForm" />
       <Property Name="ForgotPasswordForm" />
@@ -600,7 +530,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.UserProfileForm">
-    <Position X="6.75" Y="11" Width="2.5" />
+    <Position X="10.25" Y="11" Width="2.5" />
     <TypeIdentifier>
       <HashCode>EQAAAABAACAAAAAAAACAgACCAAAAAAAAAAAIAAACAAQ=</HashCode>
       <FileName>UserProfileForm.cs</FileName>
@@ -611,13 +541,6 @@
     <TypeIdentifier>
       <HashCode>gQAAAAEIAAgAwiAAANAAgBECAACCEBCEAABgQAAAAAA=</HashCode>
       <FileName>ViewDataByVendor.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="AdminPasswordChangeRequestsForm">
-    <Position X="21.75" Y="11" Width="2.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAACCAAAAABACAAAACBACACAQAAAAAAAAAAAA=</HashCode>
-      <FileName>AdminPasswordChangeRequestsForm.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.Properties.Resources">

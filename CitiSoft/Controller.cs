@@ -14,7 +14,8 @@ namespace CitiSoft
         public static List<FinancialServicesModel> financialServicesModelList = new List<FinancialServicesModel>();
         public static List<TypeOfSoftwareModel> typeOfSoftwareModelList = new List<TypeOfSoftwareModel>();
         public static List<ModulesModel> modulesModelList = new List<ModulesModel>();
-        static ViewDataByVendor vendor = new ViewDataByVendor();
+        public static List<CommentsModel> commentsModelList = new List<CommentsModel>();
+        public static ViewDataByVendor vendor = new ViewDataByVendor();
 
         public searchVendor searchVendor
         {
@@ -161,7 +162,6 @@ namespace CitiSoft
         {
             Controller.vendorModelList = vendorModelList;
             VendorRepository.insertUpdateDeleteVendor(vendorModelList);
-            vendor.VendorDataGridView.DataSource = Controller.getDeliverVendor();
         }
         public static List<AddressModel> getDeliverAddress(int vid)
         {
@@ -194,6 +194,14 @@ namespace CitiSoft
         {
             typeOfSoftwareModelList = SoftwareRepository.getTypeOfSoftware();
             List<TypeOfSoftwareModel> result = typeOfSoftwareModelList.Where(typeOfSoftware => typeOfSoftware.Sid == sid).ToList();
+            return result;
+        }
+        public static CommentsModel getComments(int sid)
+        { 
+            commentsModelList=CommentsRepository.GetAllComments();
+            CommentsModel result = commentsModelList.FirstOrDefault(comments => comments.sid == sid);
+            SoftwareModel model = softwareModelList.FirstOrDefault(software => software.SoftwareId == sid);
+
             return result;
         }
         public static void sendAddressUpdate(List<AddressModel> addressModelList)

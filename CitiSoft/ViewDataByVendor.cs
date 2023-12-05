@@ -2,18 +2,42 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace CitiSoft
 {
 
-    internal class ViewDataByVendor : Form
+    public class ViewDataByVendor : Form
     {
         public DataGridView VendorDataGridView = new DataGridView();
         public DataGridView AddressDataGridView = new DataGridView();
         public DataGridView SoftwareDataGridView = new DataGridView();
-        public DataGridView CommentsDataGridView = new DataGridView(); 
+        public DataGridView SoftCompDataGridView = new DataGridView();
+        public Button refreshButton = new Button();
+        public Panel commentPanel = new Panel();
+        public Panel dataRetPanel = new Panel();
 
+        public Label descriptionLabel = new Label();
+        public RichTextBox descriptionRichTextBox = new RichTextBox();
+
+        public Label additionalInfoLabel = new Label();
+        public RichTextBox additionalInfoRichTextBox = new RichTextBox();
+
+        public Label commentsLabel = new Label();
+        public RichTextBox commentsRichTextBox = new RichTextBox();
+
+        public Label lastDemoDateLabel = new Label();
+        public DateTimePicker lastDemoDatePicker = new DateTimePicker();
+
+        public Label lastReviewIntLabel = new Label();
+        public TextBox lastReviewIntTextBox = new TextBox();
+
+        public Label lastReviewedDateLabel = new Label();
+        public DateTimePicker lastReviewedDatePicker = new DateTimePicker();
+
+        int sid = 0;
         int Vid = 0;
         String DocName = "";
         private System.Windows.Forms.PictureBox fileDropPBox = new PictureBox();
@@ -31,10 +55,10 @@ namespace CitiSoft
         public ViewDataByVendor(int i)
         {
             VendorDataGridView.DataSource = Controller.getDeliverVendor();
-        }    
+        }
         private void InitializeComponent() 
         {
-            VendorDataGridView.DataSource = Controller.getDeliverVendor();
+            VendorDataGridView.DataSource=Controller.getDeliverVendor();
             VendorDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             VendorDataGridView.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.Fill;
             VendorDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
@@ -45,7 +69,6 @@ namespace CitiSoft
             VendorDataGridView.ReadOnly = true;
             VendorDataGridView.DataBindingComplete += VendorDataGridView_DataBindingComplete;
             VendorDataGridView.SelectionChanged += VendorDataGridView_SelectionChanged;
-
 
 
             AddressDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -67,12 +90,42 @@ namespace CitiSoft
             SoftwareDataGridView.CellContentClick += SoftwareDataGridView_CellContentClick;
 
 
+            SoftCompDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            SoftCompDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            SoftCompDataGridView.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            SoftCompDataGridView.Name = "SoftCompDataGridView";
+            Controls.Add(SoftCompDataGridView);
+            SoftCompDataGridView.ReadOnly = true;
+
+
+
+            commentPanel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            commentPanel.Name = "CommentsDataGridView";
+            Controls.Add(commentPanel);
+
+            commentPanel.Controls.AddRange(new Control[] {
+            descriptionLabel,descriptionRichTextBox,
+            additionalInfoLabel,additionalInfoRichTextBox,
+            commentsLabel,commentsRichTextBox,
+            lastDemoDateLabel,lastDemoDatePicker,
+            lastReviewIntLabel,lastReviewIntTextBox,
+            lastReviewedDateLabel,lastReviewedDatePicker });
+
+            lastDemoDateLabel.Text = "Last Demo Date";
+            lastReviewedDateLabel.Text = "Last Reviewed Date";
+            lastReviewIntLabel.Text = "Last Reviewed Interval";
+            descriptionLabel.Text = "Description";
+            additionalInfoLabel.Text = "Additional Info.";
+
+            Controls.Add(dataRetPanel);
+            //Everything about data retrival added to Data retrival Panel
+
             InitializeDragDrop();
             this.fileDropPBox.BackColor = System.Drawing.SystemColors.Info;
             this.fileDropPBox.Name = "fileDropPBox";
             this.fileDropPBox.Size = new System.Drawing.Size(461, 314);
             this.fileDropPBox.TabStop = false;
-            Controls.Add(fileDropPBox);
+            dataRetPanel.Controls.Add(fileDropPBox);
             // 
             // dragAndDropLabel
             // 
@@ -81,20 +134,20 @@ namespace CitiSoft
             this.dragAndDropLabel.Name = "dragAndDropLabel";
             this.dragAndDropLabel.Size = new System.Drawing.Size(352, 25);
             this.dragAndDropLabel.Text = "Drag and drop your document here:";
-            Controls.Add(dragAndDropLabel);
+            dataRetPanel.Controls.Add(dragAndDropLabel);
             // 
             // vendorIDLabel
             // 
             this.vendorIDLabel.AutoSize = true;
-            this.vendorIDLabel.Size = new System.Drawing.Size(107, 25);
+            this.vendorIDLabel.Size = new System.Drawing.Size(60, 25);
             this.vendorIDLabel.Text = "Vendor ID";
-            Controls.Add(vendorIDLabel);
+            dataRetPanel.Controls.Add(vendorIDLabel);
             // 
             // vendorIDTxtBox
             // 
             this.vendorIDTxtBox.Size = new System.Drawing.Size(50, 31);
             this.vendorIDTxtBox.TextChanged += new System.EventHandler(this.vendorIDTxtBox_TextChanged);
-            Controls.Add(vendorIDTxtBox);
+            dataRetPanel.Controls.Add(vendorIDTxtBox);
             // 
             // removeDocumentBtn
             // 
@@ -103,7 +156,7 @@ namespace CitiSoft
             this.removeDocumentBtn.Text = "Remove\nDocument";
             this.removeDocumentBtn.UseVisualStyleBackColor = true;
             this.removeDocumentBtn.Click += new System.EventHandler(this.removeDocumentBtn_Click);
-            Controls.Add(removeDocumentBtn);
+            dataRetPanel.Controls.Add(removeDocumentBtn);
             // 
             // downloadDocumentBtn
             // 
@@ -111,7 +164,7 @@ namespace CitiSoft
             this.downloadDocumentBtn.Text = "Download Document";
             this.downloadDocumentBtn.UseVisualStyleBackColor = true;
             this.downloadDocumentBtn.Click += new System.EventHandler(this.downloadDocumentBtn_Click);
-            Controls.Add(downloadDocumentBtn);
+            dataRetPanel.Controls.Add(downloadDocumentBtn);
         }
 
         private void SoftwareDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -164,6 +217,26 @@ namespace CitiSoft
                     vendorIDTxtBox.Text=Vid.ToString();
                     AddressDataGridView.DataSource = Controller.getDeliverAddress(Vid);
                     SoftwareDataGridView.DataSource = Controller.getDeliverSoftware(Vid);
+
+                }
+            }
+
+        }
+        private void SoftwareDataGridView_SelectionChanged(object sender, System.EventArgs e)
+        {
+
+            if (SoftwareDataGridView.SelectedCells.Count > 0)
+            {
+                foreach (DataGridViewCell cell in SoftwareDataGridView.SelectedCells)
+                {
+                    SoftwareDataGridView.Rows[cell.RowIndex].Selected = true;
+                }
+                foreach (DataGridViewRow row in SoftwareDataGridView.SelectedRows)
+                {
+                    sid = Convert.ToInt32(row.Cells["sid"].Value);
+                   Controller.getComments(sid);
+                    SoftwareModel model = Controller.softwareModelList.FirstOrDefault(software => software.SoftwareId == sid);
+                    
                 }
             }
 
@@ -171,22 +244,51 @@ namespace CitiSoft
 
         private void ViewDataByVendor_SizeChanged(object sender, System.EventArgs e)
         {
-            int widthdgv = 0, heightdgv=0;
-            widthdgv = (((this.Width) * 3) / 10);
-            heightdgv = (((this.Height) * 5) / 10);
-            VendorDataGridView.Size = new System.Drawing.Size(widthdgv, heightdgv);
-            SoftwareDataGridView.Location = new System.Drawing.Point(widthdgv + 10, 0);
-            SoftwareDataGridView.Size = new System.Drawing.Size(this.Width-widthdgv, heightdgv/2);
-            fileDropPBox.Location = new System.Drawing.Point(widthdgv+10, (heightdgv/2)+20);
-            fileDropPBox.Size = new System.Drawing.Size(widthdgv/2, heightdgv/2-20);
-            dragAndDropLabel.Location = new System.Drawing.Point(widthdgv + 10, (heightdgv / 2) + 5);
-            vendorIDLabel.Location = new System.Drawing.Point(widthdgv + (widthdgv / 2) + 20,heightdgv/2+30);
-            vendorIDTxtBox.Location = new System.Drawing.Point(widthdgv+(widthdgv/2) + 77, heightdgv/2+26);
-            removeDocumentBtn.Location = new System.Drawing.Point(widthdgv + (widthdgv / 2) + 20, heightdgv / 2 + 30+31);
-            downloadDocumentBtn.Location = new System.Drawing.Point(widthdgv + (widthdgv / 2) + 20, heightdgv / 2 + +61+ 50);
-            AddressDataGridView.Location = new System.Drawing.Point(0, heightdgv+10);
-            heightdgv = (((this.Height) * 5) / 10)-10;
-            AddressDataGridView.Size = new System.Drawing.Size(this.Width/2 -10, heightdgv);
+            VendorDataGridView.Size = new System.Drawing.Size((this.Width * 3 / 10), this.Height);
+            fileDropPBox.Location = new System.Drawing.Point(0, 15);
+            fileDropPBox.Size = new System.Drawing.Size((this.Width * 3 / 10) + (this.Width * 5 / 10) + 20, dataRetPanel.Height/2);
+            dragAndDropLabel.Location = new System.Drawing.Point( 0,0);
+            vendorIDLabel.Location = new System.Drawing.Point(0,dataRetPanel.Height/2+20);
+            vendorIDTxtBox.Location = new System.Drawing.Point(vendorIDLabel.Width + 10, dataRetPanel.Height / 2 + 17);
+            removeDocumentBtn.Location = new System.Drawing.Point(0, vendorIDLabel.Height + vendorIDLabel.Top +10);
+            downloadDocumentBtn.Location = new System.Drawing.Point(0, removeDocumentBtn.Height + removeDocumentBtn.Top + 5);
+            dataRetPanel.Location = new System.Drawing.Point((this.Width * 3 / 10) + (this.Width * 5 / 10) + 20, 0);
+            dataRetPanel.Size = new System.Drawing.Size(this.Width * 2 / 10-12, downloadDocumentBtn.Top + downloadDocumentBtn.Height + 5);
+            AddressDataGridView.Location = new System.Drawing.Point((this.Width * 3 / 10) + 10, 0);
+            AddressDataGridView.Size = new System.Drawing.Size(this.Width * 5 / 10, dataRetPanel.Height);
+            SoftwareDataGridView.Location = new System.Drawing.Point(AddressDataGridView.Left, AddressDataGridView.Height+10);
+            SoftwareDataGridView.Size = new System.Drawing.Size(this.Width*3/10 -10, ( this.Height*3/10));
+            SoftCompDataGridView.Location = new System.Drawing.Point(SoftwareDataGridView.Width+ SoftwareDataGridView.Left+10,AddressDataGridView.Height+ 10);
+            SoftCompDataGridView.Size = new System.Drawing.Size(this.Width * 4 / 10-12, (this.Height * 3 / 10));
+            commentPanel.Size = new System.Drawing.Size(this.Width * 7 / 10 -12, this.Width-(SoftCompDataGridView.Height + SoftCompDataGridView.Top + 10)-12 );
+            commentPanel.Location = new System.Drawing.Point(VendorDataGridView.Width + 10, SoftCompDataGridView.Height+SoftCompDataGridView.Top + 10);
+
+
+            lastDemoDateLabel.Location = new System.Drawing.Point(0,0);
+            lastDemoDateLabel.Size = new System.Drawing.Size(commentPanel.Width*25/100,15);
+
+            lastDemoDatePicker.Location = new System.Drawing.Point(0,lastDemoDateLabel.Height);
+            lastDemoDatePicker.Size = new System.Drawing.Size(commentPanel.Width * 25 / 100, 5);
+
+
+            lastReviewIntLabel.Location = new System.Drawing.Point(0, lastDemoDatePicker.Top+ lastDemoDatePicker.Height + 10) ;
+            lastReviewIntLabel.Size = new System.Drawing.Size(commentPanel.Width * 25 / 100,15);
+
+            lastReviewIntTextBox.Location = new System.Drawing.Point(0,lastReviewIntLabel.Top+lastReviewIntLabel.Height);
+            lastReviewIntTextBox.Size = new System.Drawing.Size(commentPanel.Width * 25 / 100,5);
+
+
+            lastReviewedDateLabel.Location = new System.Drawing.Point(0,lastReviewIntTextBox.Top+lastReviewIntTextBox.Height+10);
+            lastReviewedDateLabel.Size = new System.Drawing.Size(commentPanel.Width * 25 / 100,15);
+
+            lastReviewedDatePicker.Location = new System.Drawing.Point(0,lastReviewedDateLabel.Top+lastReviewedDateLabel.Height);
+            lastReviewedDatePicker.Size = new System.Drawing.Size(commentPanel.Width * 25 / 100,5);
+
+            commentsLabel.Location = new System.Drawing.Point(lastDemoDateLabel.Width+10,0);
+            commentsLabel.Size = new System.Drawing.Size(commentPanel.Width*25/100,15);
+
+            commentsRichTextBox.Location = new System.Drawing.Point(lastDemoDateLabel.Width+10,20);
+            commentsRichTextBox.Size = new System.Drawing.Size(commentPanel.Width*25/100,commentPanel.Height-25);
         }
 
 
