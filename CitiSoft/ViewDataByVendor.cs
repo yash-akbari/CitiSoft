@@ -116,6 +116,7 @@ namespace CitiSoft
             lastReviewIntLabel.Text = "Last Reviewed Interval";
             descriptionLabel.Text = "Description";
             additionalInfoLabel.Text = "Additional Info.";
+            commentsLabel.Text = "Comments";
 
             Controls.Add(dataRetPanel);
             //Everything about data retrival added to Data retrival Panel
@@ -284,11 +285,27 @@ namespace CitiSoft
             lastReviewedDatePicker.Location = new System.Drawing.Point(0,lastReviewedDateLabel.Top+lastReviewedDateLabel.Height);
             lastReviewedDatePicker.Size = new System.Drawing.Size(commentPanel.Width * 25 / 100,5);
 
+
             commentsLabel.Location = new System.Drawing.Point(lastDemoDateLabel.Width+10,0);
             commentsLabel.Size = new System.Drawing.Size(commentPanel.Width*25/100,15);
 
             commentsRichTextBox.Location = new System.Drawing.Point(lastDemoDateLabel.Width+10,20);
             commentsRichTextBox.Size = new System.Drawing.Size(commentPanel.Width*25/100,commentPanel.Height-25);
+
+
+            descriptionLabel.Location = new System.Drawing.Point(commentsLabel.Width+commentsLabel.Left+10,0);
+            descriptionLabel.Size = new System.Drawing.Size(commentPanel.Width*25/100,15);
+
+            descriptionRichTextBox.Location = new System.Drawing.Point(commentsLabel.Width+10,20);
+            descriptionRichTextBox.Size = new System.Drawing.Size(commentPanel.Width*25/100,commentPanel.Height-25);
+
+
+            additionalInfoLabel.Location = new System.Drawing.Point(descriptionLabel.Width + 10, 0);
+            additionalInfoLabel.Size = new System.Drawing.Size(commentPanel.Width * 25 / 100, 15);
+
+            additionalInfoLabel.Location = new System.Drawing.Point(descriptionLabel.Width + 10, 20);
+            additionalInfoLabel.Size = new System.Drawing.Size(commentPanel.Width * 25 / 100, commentPanel.Height - 25);
+
         }
 
 
