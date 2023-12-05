@@ -25,13 +25,7 @@ namespace CitiSoft
             }
         }
 
-        public AddressRepository AddressRepository
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        
 
         public AddressModel AddressModel
         {
@@ -41,22 +35,7 @@ namespace CitiSoft
             }
         }
 
-        public SoftwareRepository SoftwareRepository
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-        public VendorRepository VendorRepository
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
+     
         public VendorModel VendorModel
         {
             get => default;
@@ -105,29 +84,7 @@ namespace CitiSoft
             }
         }
 
-        public VendorRepository VendorRepository1
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-        public AddressRepository AddressRepository1
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-        public SoftwareRepository SoftwareRepository1
-        {
-            get => default;
-            set
-            {
-            }
-        }
+       
 
         internal ViewDataByVendor ViewDataByVendor
         {
@@ -152,53 +109,85 @@ namespace CitiSoft
             {
             }
         }
-
+        public Controller()
+        {
+            vendorModelList = Repository.GetAllVendor();
+            addressModelList =Repository.GetAllAddress();
+            softwareModelList = Repository.GetAllSoftware();
+            businessAreasModelList = Repository.getBusinessArea();
+            financialServicesModelList = Repository.getFinancialServices();
+            typeOfSoftwareModelList = Repository.getTypeOfSoftware();
+            modulesModelList = Repository.getModules(); 
+            commentsModelList = Repository.GetAllComments();
+        }
+    
+        
+        
         public static List<VendorModel> getDeliverVendor()
         {
-            vendorModelList = VendorRepository.GetAllVendor();
             return vendorModelList;
         }
         public static void sendVendorUpdate(List<VendorModel> vendorModelList)
         {
             Controller.vendorModelList = vendorModelList;
-            VendorRepository.insertUpdateDeleteVendor(vendorModelList);
+            Repository.insertUpdateDeleteVendor(vendorModelList);
         }
         public static List<AddressModel> getDeliverAddress(int vid)
         {
-            addressModelList = AddressRepository.GetAllAddress();
             List<AddressModel> result = addressModelList.Where(address => address.Vid == vid).ToList();
             return result;
         }
 
+
+
         public static List<BusinessAreasModel> getBusinessAreasBySid(int sid)
         {
-            businessAreasModelList = SoftwareRepository.getBusinessArea();
             List<BusinessAreasModel> result = businessAreasModelList.Where(business => business.Sid == sid).ToList();
             return result;
         }
+        public static List<string> getOnlyBusinessBySid(int sid)
+        {
+            return businessAreasModelList.Where(business => business.Sid == sid).Select(business => business.BusinessAreas).ToList();
+        }
+
+
         public static List<FinancialServicesModel> getFinancialServicesBySid(int sid)
         {
-            financialServicesModelList = SoftwareRepository.getFinancialServices();
+            
             List<FinancialServicesModel> result = financialServicesModelList.Where(financial => financial.Sid == sid).ToList();
             return result;
         }
+        public static List<string> getOnlyFinancialServicesBySid(int sid)
+        {
+            return financialServicesModelList.Where(finance => finance.Sid == sid).Select(finance => finance.FinancialService).ToList();
+        }
+
 
         public static List<ModulesModel> getModulesBySid(int sid)
-        {
-            modulesModelList = SoftwareRepository.getModules();
+        { 
             List<ModulesModel> result = modulesModelList.Where(modules => modules.Sid == sid).ToList();
             return result;
         }
+        public static List<string> getOnlyModulesBySid(int sid)
+        {
+            return modulesModelList.Where(modules => modules.Sid == sid).Select(modules => modules.Modules).ToList();
+        }
+
 
         public static List<TypeOfSoftwareModel> getTypeOfSoftwareBySid(int sid)
-        {
-            typeOfSoftwareModelList = SoftwareRepository.getTypeOfSoftware();
+        {  
             List<TypeOfSoftwareModel> result = typeOfSoftwareModelList.Where(typeOfSoftware => typeOfSoftware.Sid == sid).ToList();
             return result;
         }
+        public static List<string> getOnlyTypeOfSoftwareBySid(int sid)
+        {
+            return typeOfSoftwareModelList.Where(type => type.Sid == sid).Select(type => type.TypeOfSoftware).ToList();
+        }
+
+
         public static CommentsModel getComments(int sid)
         { 
-            commentsModelList=CommentsRepository.GetAllComments();
+            commentsModelList=Repository.GetAllComments();
             CommentsModel result = commentsModelList.FirstOrDefault(comments => comments.sid == sid);
             SoftwareModel model = softwareModelList.FirstOrDefault(software => software.SoftwareId == sid);
 
@@ -207,12 +196,11 @@ namespace CitiSoft
         public static void sendAddressUpdate(List<AddressModel> addressModelList)
         {
             Controller.addressModelList = addressModelList;
-            AddressRepository.insertUpdateDeleteAddress(addressModelList);
+            Repository.insertUpdateDeleteAddress(addressModelList);
         }
 
         public static List<SoftwareModel> getDeliverSoftware(int vid)
         {
-            softwareModelList = SoftwareRepository.GetAllSoftware();
             List<SoftwareModel> result = softwareModelList.Where(software => software.Vid == vid).ToList();
             return result;
         }
@@ -220,7 +208,7 @@ namespace CitiSoft
         public static void sendSoftwareUpdate(List<SoftwareModel> softwareModelList)
         {
             Controller.softwareModelList = softwareModelList;
-            SoftwareRepository.insertUpdateDeleteSoftware(softwareModelList);
+            Repository.insertUpdateDeleteSoftware(softwareModelList);
         }
 
     }

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace CitiSoft
 {
     // Repository (Model)
-    public partial class VendorRepository
+    public partial class Repository
     {
         internal DataBaseManager DataBaseManager
         {
@@ -91,7 +91,7 @@ namespace CitiSoft
                                             add.Vid = venId;
                                         }
                                     }
-                                    AddressRepository.insertUpdateDeleteAddress(Controller.addressModelList);
+                                    Repository.insertUpdateDeleteAddress(Controller.addressModelList);
 
                                 }
                                 catch (Exception ex)
@@ -173,10 +173,8 @@ namespace CitiSoft
                 }
             }
         }
-    }
-    public partial class AddressRepository
-    {
-        public AddressModel AddressModel
+    
+     public AddressModel AddressModel
         {
             get => default;
             set
@@ -184,13 +182,7 @@ namespace CitiSoft
             }
         }
 
-        internal DataBaseManager DataBaseManager
-        {
-            get => default;
-            set
-            {
-            }
-        }
+    
 
         public Controller Controller
         {
@@ -350,9 +342,8 @@ namespace CitiSoft
                 }
             }
         }
-    }
-    public partial class SoftwareRepository
-    {
+    
+  
         public SoftwareModel SoftwareModel
         {
             get => default;
@@ -393,21 +384,8 @@ namespace CitiSoft
             }
         }
 
-        internal DataBaseManager DataBaseManager
-        {
-            get => default;
-            set
-            {
-            }
-        }
 
-        public Controller Controller
-        {
-            get => default;
-            set
-            {
-            }
-        }
+      
 
         public static List<SoftwareModel> GetAllSoftware()
         {
@@ -429,13 +407,13 @@ namespace CitiSoft
                     SoftwareId = Convert.ToInt32(dataReader.GetValue(1)),
                     SoftwareName = Convert.ToString(dataReader.GetValue(2)),
                     SoftwareWebsite = Convert.ToString(dataReader.GetValue(3)),
-                    Description = Convert.ToString(dataReader.GetValue(4)),
+                    //Description = Convert.ToString(dataReader.GetValue(4)),
                     Cloud = Convert.ToString(dataReader.GetValue(5)),
-                    AdditionalInfo = Convert.ToString(dataReader.GetValue(6)),
-                    BusinessAreas = JoinProperty(Controller.getBusinessAreasBySid(Convert.ToInt32(dataReader.GetValue(1))), "BusinessAreas"),
-                    Modules = JoinProperty(Controller.getModulesBySid(Convert.ToInt32(dataReader.GetValue(1))), "Modules"),
-                    FinancialServices = JoinProperty(Controller.getFinancialServicesBySid(Convert.ToInt32(dataReader.GetValue(1))), "FinancialService"),
-                    TypeOfSoftware = JoinProperty(Controller.getTypeOfSoftwareBySid(Convert.ToInt32(dataReader.GetValue(1))), "TypeOfSoftware")
+                    //AdditionalInfo = Convert.ToString(dataReader.GetValue(6)),
+                    //BusinessAreas = JoinProperty(Controller.getBusinessAreasBySid(Convert.ToInt32(dataReader.GetValue(1))), "BusinessAreas"),
+                    //Modules = JoinProperty(Controller.getModulesBySid(Convert.ToInt32(dataReader.GetValue(1))), "Modules"),
+                    //FinancialServices = JoinProperty(Controller.getFinancialServicesBySid(Convert.ToInt32(dataReader.GetValue(1))), "FinancialService"),
+                    //TypeOfSoftware = JoinProperty(Controller.getTypeOfSoftwareBySid(Convert.ToInt32(dataReader.GetValue(1))), "TypeOfSoftware")
                 });
             }
             dataReader.Close();
@@ -710,11 +688,10 @@ namespace CitiSoft
             }
         }
 
-    }
+    
 
 
-    public class CommentsRepository
-    {
+    
         public static List<CommentsModel> GetAllComments()
         {
             List<CommentsModel> commentsModelList = new List<CommentsModel>();
@@ -732,10 +709,11 @@ namespace CitiSoft
                 commentsModelList.Add(new CommentsModel
                 {
                     sid = Convert.ToInt32(dataReader.GetValue(0)),
-                    Comments = Convert.ToString(dataReader.GetValue(1)),
-                    LastDemoDate = Convert.ToDateTime(dataReader.GetValue(2)), 
-                    LastReviewedInterval = Convert.ToDateTime(dataReader.GetValue(3)),
-                    LastReviewedDate = Convert.ToDateTime(dataReader.GetValue(4)),
+                    commentId = Convert.ToInt32(dataReader.GetValue(1)),
+                    Comments = Convert.ToString(dataReader.GetValue(2)),
+                    LastDemoDate = Convert.ToDateTime(dataReader.GetValue(3)), 
+                    LastReviewedInterval = Convert.ToInt32(dataReader.GetValue(4)),
+                    LastReviewedDate = Convert.ToDateTime(dataReader.GetValue(5)),
                 });
             }
             dataReader.Close();

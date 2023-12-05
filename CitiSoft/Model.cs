@@ -11,12 +11,8 @@ namespace CitiSoft
         public int SoftwareId { get; set; }
         public int Vid { get; set; }
         public String SoftwareName { get; set; }
-        public String TypeOfSoftware { get; set; }
         public String SoftwareWebsite { get; set; }
         public String Description { get; set; }
-        public String BusinessAreas { get; set; }
-        public String Modules { get; set; }
-        public String FinancialServices { get; set; }
         public String Cloud { get; set; }
         public String AdditionalInfo { get; set; }
     }
@@ -68,8 +64,9 @@ namespace CitiSoft
     public class CommentsModel 
     {
         public int sid { get; set; }
+        public int commentId { get; set; }
         public string Comments { get; set; }
-        public DateTime LastReviewedInterval { get; set; }
+        public int LastReviewedInterval { get; set; }
         public DateTime LastReviewedDate { get; set; }
         public DateTime LastDemoDate { get; set; }
     }
