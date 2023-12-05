@@ -29,14 +29,14 @@ namespace CitiSoft
         }
 
         // the following two methods are used to enable drag and drop functionality to upload document
-        void fileDropPBox_DragEnter(object sender, DragEventArgs e)
+        private void fileDropPBox_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 e.Effect = DragDropEffects.Copy;
         }
 
         // adds the dropped file to the database
-        void fileDropPBox_DragDrop(object sender, DragEventArgs e)
+        private void fileDropPBox_DragDrop(object sender, DragEventArgs e)
         {
             // checks if the user provided Vendor ID
             if (vendorIDTxtBox.Text == "")
