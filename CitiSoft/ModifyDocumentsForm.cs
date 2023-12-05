@@ -61,7 +61,7 @@ namespace CitiSoft
 
                     using (SqlConnection connection = new SqlConnection(DataBaseManager.citiSoftDatabaseConnectionString))
                     {
-                        string query = "UPDATE VendorInfo SET docAttach = @Data, FileName = @FileName WHERE vid = @VendorID";
+                        string query = "UPDATE VendorInfo SET docAttach = @Data, docType = @FileName WHERE vid = @VendorID";
 
                         using (SqlCommand command = new SqlCommand(query, connection))
                         {
@@ -167,7 +167,7 @@ namespace CitiSoft
                 SqlTransaction transaction = connection.BeginTransaction();
                 try
                 {
-                    using (SqlCommand command = new SqlCommand("SELECT docAttach, FileName FROM VendorInfo WHERE vid = @VendorID", connection, transaction))
+                    using (SqlCommand command = new SqlCommand("SELECT docAttach, docType FROM VendorInfo WHERE vid = @VendorID", connection, transaction))
                     {
                         command.Parameters.AddWithValue("@VendorID", vendorIDTxtBox.Text);
 
@@ -176,7 +176,7 @@ namespace CitiSoft
                             if (reader.Read())
                             {
                                 byte[] documentData = (byte[])reader["docAttach"];
-                                string fileName = reader["FileName"].ToString();
+                                string fileName = reader["docType"].ToString();
 
                                 // Use SaveFileDialog to let the user choose the save location and file name
                                 using (SaveFileDialog saveFileDialog = new SaveFileDialog())
