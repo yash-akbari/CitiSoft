@@ -58,7 +58,7 @@ namespace CitiSoft
             // 
             // updateClientBtn
             // 
-            this.updateClientBtn.Location = new System.Drawing.Point(1621, 656);
+            this.updateClientBtn.Location = new System.Drawing.Point(1625, 656);
             this.updateClientBtn.Name = "updateClientBtn";
             this.updateClientBtn.Size = new System.Drawing.Size(172, 50);
             this.updateClientBtn.TabIndex = 0;
