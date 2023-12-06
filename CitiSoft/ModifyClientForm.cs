@@ -22,17 +22,27 @@ namespace CitiSoft
         private void updateClientBtn_Click(object sender, EventArgs e)
         {
             // checks if the user provided Client ID
-            if (clientIDTxtBox.Text == "")
+            if(clientIDTxtBox.Text == "")
             {
                 MessageBox.Show("Please provide client id");
                 return;
             }
 
             // checks if the user provided wrong Client ID
-            if (!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "Client", "cid", clientIDTxtBox.Text))
+            if(!InputValidation.CheckValueExists(DataBaseManager.functionalityConnectionString, "Client", "cid", clientIDTxtBox.Text))
             {
-                MessageBox.Show("Client ID you have provided does not exist");
-                clientIDTxtBox.Text = string.Empty;
+                DialogResult result = MessageBox.Show("Client ID you have provided does not exist. Do you want to add this client?", "Client Not Found", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    // Call a method to add the client
+                    if(clientIDTxtBox.Text == "" || countryTxtBox.Text == "" || companyNameTxtBox.Text == "" || cityTxtBox.Text == "" || postcodeTxtBox.Text == "" || phoneTxtBox.Text == "" || addressLine1TxtBox.Text == "" || addressLine2TxtBox.Text == "" || emailTxtBox.Text == "")
+                    {
+                        MessageBox.Show("Please provide all data first");
+                        return;
+                    }
+                    AddClient();
+                }
                 return;
             }
             using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
@@ -132,6 +142,86 @@ namespace CitiSoft
                 }
             }
         }
+
+        // adds the client to the database
+        private void AddClient()
+        {
+            using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+                    // using SCOPE_IDENTITY() to retrieve last pk id from Client table
+                    string insertSql = "INSERT INTO Client (compName) VALUES (@CompName); " +
+                                       "INSERT INTO CustAddress (cid, phone, email, addressLine1, addressLine2, city, country, postCode) " +
+                                       "VALUES (SCOPE_IDENTITY(), @Phone, @Email, @AddressLine1, @AddressLine2, @City, @Country, @Postcode);";
+
+                    using (SqlCommand command = new SqlCommand(insertSql, connection, transaction))
+                    {
+                        if(!string.IsNullOrWhiteSpace(companyNameTxtBox.Text))
+                            command.Parameters.AddWithValue("@CompName", companyNameTxtBox.Text);
+
+                        if(!string.IsNullOrWhiteSpace(phoneTxtBox.Text))
+                            command.Parameters.AddWithValue("@Phone", phoneTxtBox.Text);
+
+                        if(!string.IsNullOrWhiteSpace(emailTxtBox.Text))
+                            command.Parameters.AddWithValue("@Email", emailTxtBox.Text);
+
+                        if(!string.IsNullOrWhiteSpace(addressLine1TxtBox.Text))
+                            command.Parameters.AddWithValue("@AddressLine1", addressLine1TxtBox.Text);
+
+                        if(!string.IsNullOrWhiteSpace(addressLine2TxtBox.Text))
+                            command.Parameters.AddWithValue("@AddressLine2", addressLine2TxtBox.Text);
+
+                        if(!string.IsNullOrWhiteSpace(cityTxtBox.Text))
+                            command.Parameters.AddWithValue("@City", cityTxtBox.Text);
+
+                        if(!string.IsNullOrWhiteSpace(countryTxtBox.Text))
+                            command.Parameters.AddWithValue("@Country", countryTxtBox.Text);
+
+                        if(!string.IsNullOrWhiteSpace(postcodeTxtBox.Text))
+                            command.Parameters.AddWithValue("@Postcode", postcodeTxtBox.Text);
+
+                        // ExecuteNonQuery is used for INSERT, UPDATE, DELETE operations
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        if(rowsAffected > 0)
+                        {
+                            // Retrieve the last inserted ID
+                            string selectLastIdSql = "SELECT SCOPE_IDENTITY();";
+                            command.CommandText = selectLastIdSql;
+
+                            object result = command.ExecuteScalar();
+
+                            if(result != null)
+                            {
+                                MessageBox.Show("Insertion successful.");
+                            }
+                            else
+                            {
+                                MessageBox.Show("No rows inserted. Failed to retrieve the last inserted ID.");
+                            }
+
+                            transaction.Commit(); // Only commit if no errors occurred
+                        }
+                        else
+                        {
+                            MessageBox.Show("No rows inserted. Failed to add the client.");
+                            transaction.Rollback(); // Rollback if no rows affected
+                        }
+                    }
+                }
+                catch (SqlException)
+                {
+                    transaction.Rollback(); // Rollback on error
+                    MessageBox.Show("An error occurred while adding the client");
+                }
+            }
+        }
+
+
 
         private void deleteClientBtn_Click(object sender, EventArgs e)
         {
@@ -263,6 +353,5 @@ namespace CitiSoft
         {
             RuntimeUI.dataBinding(DataBaseManager.functionalityConnectionString, "SELECT c.cid AS 'Client ID', c.compName AS 'Company Name', cu.phone AS 'Phone', cu.email AS 'Email', CONCAT(cu.addressLine1, ' ', cu.addressLine2) AS 'Address', cu.city AS 'City', cu.country AS 'Country', cu.postCode AS 'Postcode' FROM Client c JOIN CustAddress cu ON c.cid = cu.cid; ", ModifyClientDgv);
         }
-
     }
 }
