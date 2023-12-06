@@ -12,6 +12,8 @@ using System.Data.SqlClient;
 namespace CitiSoft
 {
     public partial class Login : Form
+
+
     {
         public int UserType { get; private set; }
         public int UserId { get; private set; }
