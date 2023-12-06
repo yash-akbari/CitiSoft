@@ -32,7 +32,8 @@ namespace CitiSoft
         TabControl venModifyChildTabControl = new TabControl();
         TabPage addVendorTabPage = new TabPage();
         TabPage addSoftwareTabPage = new TabPage();
-        TabPage modifyVendorTabPage = new TabPage();
+        TabPage updateVendorTabPage = new TabPage();
+        TabPage updateSoftwareTabPage = new TabPage();
 
         TabPage softRemind = new TabPage();
 
@@ -122,7 +123,7 @@ namespace CitiSoft
         {
             venViewChildTabControl.Controls.Add(viewVendorTabPage);
             viewVendorTabPage.Name = "viewVendorTabPage";
-            viewVendorTabPage.Text = "View Vendor";
+            viewVendorTabPage.Text = "View & Search";
             viewVendorTabPage.AutoScroll = true;
 
             ViewDataByVendor venView = new ViewDataByVendor();
@@ -165,10 +166,8 @@ namespace CitiSoft
             dashboardTabControl.Controls.Add(dashboardFunctionality);
             dashboardFunctionality.Location = new System.Drawing.Point(4, 22);
             dashboardFunctionality.Name = "dashboardFunctionality";
-            dashboardFunctionality.Padding = new System.Windows.Forms.Padding(3);
             dashboardFunctionality.Size = new System.Drawing.Size(610, 666);
             dashboardFunctionality.TabIndex = 0;
-            dashboardFunctionality.Text = "Functionality";
             dashboardFunctionality.UseVisualStyleBackColor = true;
 
             dashboard dashboardForm = new dashboard();
@@ -201,6 +200,24 @@ namespace CitiSoft
             AddSoftware addSoft = new AddSoftware();
             AddForm(addSoft, addSoftwareTabPage);
             venModifyChildTabControl.Controls.Add(addSoftwareTabPage);
+        }
+
+        public void updateSoftwareTabPageFunc()
+        {
+            updateSoftwareTabPage.Name = "updateSoftwareTabPage";
+            updateSoftwareTabPage.Text = "Update Software";
+            UpdateSoftware updateSoft = new UpdateSoftware();
+            AddForm(updateSoft, updateSoftwareTabPage);
+            venModifyChildTabControl.Controls.Add(updateSoftwareTabPage);
+        }
+
+        public void updateVendorTabPageFunc()
+        {
+            updateVendorTabPage.Name = "updateVendorTabPage";
+            updateVendorTabPage.Text = "Update Vendor";
+            UpdateVendor updateVendor = new UpdateVendor();
+            AddForm(updateVendor, updateVendorTabPage);
+            venModifyChildTabControl.Controls.Add(updateVendorTabPage);
         }
 
 
@@ -601,8 +618,12 @@ namespace CitiSoft
 
 
                     
-                    venMenuFunc();
+                    
                     CheckIndent c = new CheckIndent();
+                    dashboardMenuFunc();
+                    dashboardFunctionalityFunc();
+                    dasboardTabControlFunc();
+                    venMenuFunc();
                     venTabControlFunc();
                     viewParentTabPageFunc();
                     viewVendorTabPageFunc();
@@ -610,14 +631,14 @@ namespace CitiSoft
                     searchVendorTabPageFunc();
                     addVendorTabPageFunc();
                     addSoftwareTabPageFunc();
+                    updateVendorTabPageFunc();
+                    updateSoftwareTabPageFunc();
                     softReminderFunc();
                     clientProblemHistoryFunc();
                     clientMenuFunc();
                     clientTabControlFunc();
                     modifyClientTabPageFunc();
-                    dashboardMenuFunc();
-                    dashboardFunctionalityFunc();
-                    dasboardTabControlFunc();
+                    
                     //ModifyDocumentsForm modifyDocumentsForm = new ModifyDocumentsForm();
                     //modifyDocumentsForm.ShowDialog();
                     // visible

@@ -32,7 +32,7 @@ namespace CitiSoft
             }
         }
 
-        public static string GetStringValueOrNullOrWhitespace(string input)
+        public static string GetStringValueOrNoneOrWhitespace(string input)
         {
             // If the input is not null, empty, or consists of only whitespace, return the input; otherwise, return null
             return !string.IsNullOrWhiteSpace(input) ? input : "None";

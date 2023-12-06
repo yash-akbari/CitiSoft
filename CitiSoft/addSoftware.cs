@@ -200,6 +200,12 @@ namespace CitiSoft
             submitButton.Click += SubmitButton_Click;
             clearButton.Click += ClearButton_Click;
 
+            cloudComboBox.Items.Add("None");
+            cloudComboBox.Items.Add("Cloud Native");
+            cloudComboBox.Items.Add("Cloud Based");
+            cloudComboBox.Items.Add("Cloud Enabled");
+            cloudComboBox.SelectedIndex = 0;
+
 
 
             compNameComboBox.DropDownStyle = ComboBoxStyle.DropDown;
@@ -218,7 +224,7 @@ namespace CitiSoft
             if (sender is ComboBox comboBox)
             {
 
-                if (Controller.getDeliverVendor().Any(vendor => vendor.CompanyName.Equals(comboBox.Text, StringComparison.OrdinalIgnoreCase)))
+                if (!Controller.getDeliverVendor().Any(vendor => vendor.CompanyName.Equals(comboBox.Text, StringComparison.OrdinalIgnoreCase)))
                 {
                     comboBox.Text = string.Empty;
                 }
@@ -235,7 +241,7 @@ namespace CitiSoft
         {
             Random rand = new Random();
             int random = rand.Next(int.MinValue, 0);
-            if (!(InputValidation.GetStringValueOrNullOrWhitespace(softwareNameTextBox.Text)).Equals("None"))
+            if (!(InputValidation.GetStringValueOrNoneOrWhitespace(softwareNameTextBox.Text)).Equals("None"))
             {
                 try
                 {
@@ -243,11 +249,11 @@ namespace CitiSoft
                     {
                         Vid = Controller.vendorModelList.Where(v => v.CompanyName.ToLowerInvariant().Equals(compNameComboBox.SelectedItem.ToString().ToLowerInvariant(), StringComparison.OrdinalIgnoreCase)).Select(v => v.Vid).FirstOrDefault(),
                         SoftwareId = random,
-                        SoftwareName = InputValidation.GetStringValueOrNullOrWhitespace(softwareNameTextBox.Text),
-                        SoftwareWebsite = InputValidation.GetStringValueOrNullOrWhitespace(softwareWebsiteTextBox.Text),
-                        Description = InputValidation.GetStringValueOrNullOrWhitespace(descriptionRichTextBox.Text),
-                        Cloud = cloudComboBox.SelectedValue.ToString(),
-                        AdditionalInfo = InputValidation.GetStringValueOrNullOrWhitespace(additionalInfoRichTextBox.Text)
+                        SoftwareName = InputValidation.GetStringValueOrNoneOrWhitespace(softwareNameTextBox.Text),
+                        SoftwareWebsite = InputValidation.GetStringValueOrNoneOrWhitespace(softwareWebsiteTextBox.Text),
+                        Description = InputValidation.GetStringValueOrNoneOrWhitespace(descriptionRichTextBox.Text),
+                        Cloud = cloudComboBox.SelectedItem.ToString(),
+                        AdditionalInfo = InputValidation.GetStringValueOrNoneOrWhitespace(additionalInfoRichTextBox.Text)
                     }) ;
                     foreach (var type in typeOfSoftwareCustomListBox.listBox.Items)
                     {
@@ -308,7 +314,22 @@ namespace CitiSoft
                     con.Text = "";
                 else if (con is CustomListBox)
                 {
-                    foreach (Control conCom in CustomListBox.Controls)
+                    foreach (Control conCom in typeOfSoftwareCustomListBox.Controls)
+                    {
+                        if (conCom is TextBox)
+                            conCom.Text = "";
+                    }
+                    foreach (Control conCom in buisenessAreasCustomListBox.Controls)
+                    {
+                        if (conCom is TextBox)
+                            conCom.Text = "";
+                    }
+                    foreach (Control conCom in modulesCustomListBox.Controls)
+                    {
+                        if (conCom is TextBox)
+                            conCom.Text = "";
+                    }
+                    foreach (Control conCom in financialServicesCustomListBox.Controls)
                     {
                         if (conCom is TextBox)
                             conCom.Text = "";

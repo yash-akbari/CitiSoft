@@ -8,16 +8,16 @@ using System.Windows.Forms;
 
 namespace CitiSoft
 {
- 
-    public partial class AddVendor : Form 
+
+    public partial class AddVendor : Form
     {
 
         public Label companyNameLabel = new Label();
         public TextBox companyNameTextBox = new TextBox();
-        
+
         public Label companyEstablishedLabel = new Label();
         public TextBox companyEstablishedTextBox = new TextBox();
-        
+
         public AddressPanel addressPanel = new AddressPanel();
 
         public Label employeesLabel = new Label();
@@ -30,11 +30,6 @@ namespace CitiSoft
 
         public Button submitButton = new Button();
         public Button clearButton = new Button();
-
-        // Events for CRUD operations
-        public event EventHandler InsertVendor;
-        public event EventHandler UpdateVendor;
-        public event EventHandler DeleteVendor;
 
 
         public AddVendor()
@@ -66,12 +61,12 @@ namespace CitiSoft
             }
         }
 
-        void InitializeComponent() 
+        void InitializeComponent()
         {
             AutoScroll = true;
             internalServicesComboBox.Items.Add("Yes");
             internalServicesComboBox.Items.Add("No");
-            internalServicesComboBox.SelectedIndex= 0;
+            internalServicesComboBox.SelectedIndex = 0;
 
             Controls.AddRange(new Control[]
             {
@@ -79,7 +74,7 @@ namespace CitiSoft
                 companyEstablishedLabel, companyEstablishedTextBox,
                 addressPanel,
                 employeesLabel, employeesTextBox,
-                internalServicesLabel, internalServicesComboBox,               
+                internalServicesLabel, internalServicesComboBox,
                 submitButton, clearButton
             });
             string[] venControlVarName = new string[]
@@ -145,7 +140,7 @@ namespace CitiSoft
                 }
                 else
                 {
-                    con.Width = venAddWidth -100;
+                    con.Width = venAddWidth - 100;
                     con.Height = venAddHeight;
                     con.Left = venAddxLoc + 100;
                     con.Top = venAddyLoc;
@@ -175,22 +170,22 @@ namespace CitiSoft
         private void CompanyEstablishedTextBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.IsValid(textBox,8, "Only Numbers", @"^[0-9]+$"); ;
+            InputValidation.IsValid(textBox, 8, "Only Numbers", @"^[0-9]+$"); ;
         }
 
         private void CompanyNameTextBox_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            InputValidation.IsValid(textBox,20,"Only AlphabetsNumbers, at(@) and Spaces", @"^[a-zA-Z\d\s]*$");//@"^[a-zA-Z0-9\s]+$"
+            InputValidation.IsValid(textBox, 20, "Only AlphabetsNumbers, at(@) and Spaces", @"^[a-zA-Z\d\s]*$");//@"^[a-zA-Z0-9\s]+$"
         }
 
-        
+
         public void submitButton_click(object sender, EventArgs e)
         {
-            Random rand= new Random();
+            Random rand = new Random();
             int random = rand.Next(int.MinValue, 0);
-            if (!(InputValidation.GetStringValueOrNullOrWhitespace(companyNameTextBox.Text)).Equals("None"))
-            { 
+            if (!(InputValidation.GetStringValueOrNoneOrWhitespace(companyNameTextBox.Text)).Equals("None"))
+            {
                 try
                 {
                     Controller.vendorModelList.Add(new VendorModel
@@ -198,8 +193,8 @@ namespace CitiSoft
                         Vid = random,
                         CompanyName = companyNameTextBox.Text,
                         CompanyEstablished = InputValidation.ParseStringToIntOrZero((companyEstablishedTextBox.Text)),
-                        EmployeesCount = InputValidation.GetStringValueOrNullOrWhitespace(employeesTextBox.Text),
-                        InternalProfessionalServices = InputValidation.ParseTrueOrFalse(internalServicesComboBox.SelectedText),                        
+                        EmployeesCount = InputValidation.GetStringValueOrNoneOrWhitespace(employeesTextBox.Text),
+                        InternalProfessionalServices = InputValidation.ParseTrueOrFalse(internalServicesComboBox.SelectedText),
                     });
                     foreach (AddressModel address in addressPanel.addressList)
                     {
@@ -224,10 +219,10 @@ namespace CitiSoft
                 }
                 catch (FormatException fe)
                 {
-                    MessageBox.Show(fe.Message);                
-                }  
+                    MessageBox.Show(fe.Message);
+                }
             }
-            else 
+            else
             {
                 MessageBox.Show("Company Name is Empty");
             }

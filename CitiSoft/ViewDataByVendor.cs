@@ -406,6 +406,7 @@ namespace CitiSoft
                     lastReviewIntTextBox.Text = "0";
                     lastReviewedDatePicker.Value = DateTime.Now;
                     commentsRichTextBox.Text = "";
+                    SoftCompDataGridView.DataSource = "";
                     descriptionRichTextBox.Text = "";
                     additionalInfoRichTextBox.Text = "";
                     DocName = Convert.ToString(row.Cells["CompanyName"].Value);
