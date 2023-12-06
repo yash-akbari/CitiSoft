@@ -97,7 +97,7 @@ namespace CitiSoft
                                 catch (Exception ex)
                                 {
                                     transaction.Rollback();
-                                    MessageBox.Show("Error: " + ex.Message);
+                                    MessageBox.Show("Error: " + ex.Message+ "Insert");
 
                                 }
 
@@ -124,17 +124,8 @@ namespace CitiSoft
                         try
                         {
                             con.Open();
-                            int rowsAffected = cmd.ExecuteNonQuery();
+                            cmd.ExecuteNonQuery();
 
-                            // Check if the update was successful
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show("Record Deleted successfully!");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Record not found or update failed.");
-                            }
                         }
                         catch (Exception ex)
                         {
@@ -163,7 +154,7 @@ namespace CitiSoft
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Error: " + ex.Message);
+                            MessageBox.Show("Error: " + ex.Message+ "Update");
                         }
                         finally
                         {
@@ -540,7 +531,7 @@ namespace CitiSoft
 
                     }
                 }
-                else if (typeOfSoftwareModel.Sid == 0 && typeOfSoftwareModel.id != 0)
+                else if (typeOfSoftwareModel.Sid == 0 )
                 {
                     string sql = "Delete From SoftTypes WHERE softTypesId = @Id";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
@@ -594,7 +585,7 @@ namespace CitiSoft
             {
                 if (businessAreasModel.id < 0)
                 {
-                    string sql = "INSERT INTO Business (sid,BusinessAreas) VALUES (@Sid,@Business)";
+                    string sql = "INSERT INTO Business (sid,BusinessArea) VALUES (@Sid,@Business)";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
                         cmd.Parameters.AddWithValue("@Sid", businessAreasModel.Sid);
@@ -616,7 +607,7 @@ namespace CitiSoft
 
                     }
                 }
-                else if (businessAreasModel.Sid == 0 && businessAreasModel.id != 0)
+                else if (businessAreasModel.Sid == 0)
                 {
                     string sql = "Delete From Business WHERE businessId = @Id";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
@@ -748,7 +739,7 @@ namespace CitiSoft
             {
                 if (financialModel.id < 0)
                 {
-                    string sql = "INSERT INTO ClientTypes (sid,finance) VALUES (@Sid,@FinancialService)";
+                    string sql = "INSERT INTO ClientTypes (sid,finSerCliTypes) VALUES (@Sid,@FinancialService)";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
                         cmd.Parameters.AddWithValue("@Sid", financialModel.Sid);
@@ -772,7 +763,7 @@ namespace CitiSoft
                 }
                 else if (financialModel.Sid == 0 && financialModel.id != 0)
                 {
-                    string sql = "Delete From ClientTypes WHERE id = @Id";
+                    string sql = "Delete From ClientTypes WHERE clientTypesId = @Id";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
                         cmd.Parameters.AddWithValue("@Id", financialModel.id);
@@ -793,7 +784,7 @@ namespace CitiSoft
                 }
                 else
                 {
-                    string sql = "UPDATE ClientTypes SET sid = @sid, finance = @finance WHERE id = @id";
+                    string sql = "UPDATE ClientTypes SET sid = @sid, finSerCliTypes = @finance WHERE clientTypesId = @id";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
                         cmd.Parameters.AddWithValue("@id", financialModel.id);
@@ -851,7 +842,7 @@ namespace CitiSoft
                 }
                 else if (commentsModel.sid == 0 && commentsModel.commentId != 0)
                 {
-                    string sql = "Delete From ClientTypes WHERE id = @Id";
+                    string sql = "Delete From Comments WHERE commentId = @Id";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
                         cmd.Parameters.AddWithValue("@Id", commentsModel.commentId);
@@ -906,15 +897,13 @@ namespace CitiSoft
             {
                 if (softwareModel.SoftwareId < 0)
                 {
-                    string sql = "INSERT INTO SoftName (vid,softName, softWeb, desc, cloud, addInfo) VALUES (@Vid, @SoftwareName, @SoftwareWebsite, @Description, @Cloud, @AdditionalInfo)";
+                    string sql = "INSERT INTO SoftName (vid,softName, [softWeb], [cloud]) VALUES (@Vid, @SoftwareName, @SoftwareWebsite, @Cloud)";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
                         cmd.Parameters.AddWithValue("@Vid", softwareModel.Vid);
                         cmd.Parameters.AddWithValue("@SoftwareName", softwareModel.SoftwareName);
                         cmd.Parameters.AddWithValue("@softwareWebsite", softwareModel.SoftwareWebsite);
-                        cmd.Parameters.AddWithValue("@Description", softwareModel.Description);
                         cmd.Parameters.AddWithValue("@Cloud", softwareModel.Cloud);
-                        cmd.Parameters.AddWithValue("@AdditionalInfo", softwareModel.AdditionalInfo);
                         try
                         {
                             con.Open();
@@ -950,15 +939,6 @@ namespace CitiSoft
                                 }
                             }
 
-                            // Check if the update was successful
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show("Record updated successfully!");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Record not found or update failed.");
-                            }
                         }
                         catch (Exception ex)
                         {
@@ -980,17 +960,9 @@ namespace CitiSoft
                         try
                         {
                             con.Open();
-                            int rowsAffected = cmd.ExecuteNonQuery();
+                            cmd.ExecuteNonQuery();
 
-                            // Check if the update was successful
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show("Record updated successfully!");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Record not found or update failed.");
-                            }
+                            
                         }
                         catch (Exception ex)
                         {
@@ -1004,29 +976,18 @@ namespace CitiSoft
                 }
                 else
                 {
-                    string sql = "UPDATE VendorInfo SET SoftName = @SoftwareName, softWeb = @SoftwareWebsite, desc = @Description, cloud = @Cloud, addInfo = @AdditionalInfo WHERE vid = @Vid";
+                    string sql = "UPDATE SoftName SET SoftName = @SoftwareName, [softWeb] = @SoftwareWebsite, [cloud] = @Cloud WHERE vid = @Vid";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
                         cmd.Parameters.AddWithValue("@Vid", softwareModel.Vid);
                         cmd.Parameters.AddWithValue("@SoftwareName", softwareModel.SoftwareName);
                         cmd.Parameters.AddWithValue("@softwareWebsite", softwareModel.SoftwareWebsite);
-                        cmd.Parameters.AddWithValue("@Description", softwareModel.Description);
                         cmd.Parameters.AddWithValue("@Cloud", softwareModel.Cloud);
-                        cmd.Parameters.AddWithValue("@AdditionalInfo", softwareModel.AdditionalInfo);
                         try
                         {
                             con.Open();
-                            int rowsAffected = cmd.ExecuteNonQuery();
-
-                            // Check if the update was successful
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show("Record updated successfully!");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Record not found or update failed.");
-                            }
+                            cmd.ExecuteNonQuery();
+                            
                         }
                         catch (Exception ex)
                         {
@@ -1109,7 +1070,8 @@ namespace CitiSoft
                              "WHERE t2."+id[i]+" = tableInstance."+id[i]+" + 1 " +
                              ") " +
                              "ORDER BY tableInstance."+id[i]+"; " +
-                             "DBCC CHECKIDENT('"+tabName[i]+ "', RESEED, @GapIdentifier );";
+                             "SET @GapIdentifier = @GapIdentifier - 1;" +               
+                             "DBCC CHECKIDENT('" +tabName[i]+ "', RESEED, @GapIdentifier );";
 
                 using (SqlCommand cmd = new SqlCommand(sql, con))
                 {

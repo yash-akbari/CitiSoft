@@ -19,15 +19,13 @@ namespace CitiSoft
         public DataGridView AddressDataGridView = new DataGridView();
         public DataGridView SoftwareDataGridView = new DataGridView();
         public DataGridView SoftCompDataGridView = new DataGridView();
-        public Button refreshButton = new Button();
         public Panel commentPanel = new Panel();
         public Panel dataRetPanel = new Panel();
         public Panel viewPanel = new Panel();
         public Panel topPanel = new Panel();
-        private bool isCategoryLabelClicked = false;
 
         public ComboBox searchComboBox = new ComboBox();
-        public Button searchButton = new Button();
+        public Button RefreshButton = new Button();
         public TextBox searchTextBox = new TextBox();
 
         public Label descriptionLabel = new Label();
@@ -69,7 +67,7 @@ namespace CitiSoft
             Controls.Add(viewPanel);
 
             topPanel.Controls.Add(searchComboBox);
-            topPanel.Controls.Add(searchButton);
+            topPanel.Controls.Add(RefreshButton);
             topPanel.Controls.Add(searchTextBox);
             topPanel.Height = 31;
 
@@ -96,14 +94,15 @@ namespace CitiSoft
             }
 
 
-            searchButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            searchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            searchButton.Location = new System.Drawing.Point(624, 5);
-            searchButton.Name = "venSerBtn";
-            searchButton.Size = new System.Drawing.Size(82, 23);
-            searchButton.TabIndex = 1;
-            searchButton.Text = "Search";
-            searchButton.UseVisualStyleBackColor = true;
+            RefreshButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            RefreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            RefreshButton.Location = new System.Drawing.Point(624, 5);
+            RefreshButton.Name = "RefreshButton";
+            RefreshButton.Size = new System.Drawing.Size(82, 23);
+            RefreshButton.TabIndex = 1;
+            RefreshButton.Text = "Refresh";
+            RefreshButton.UseVisualStyleBackColor = true;
+            RefreshButton.Click += RefreshButton_Click;
          
 
 
@@ -229,7 +228,13 @@ namespace CitiSoft
             dataRetPanel.Controls.Add(downloadDocumentBtn);
         }
 
-
+        private void RefreshButton_Click(object sender, EventArgs e)
+        {
+            Controller.sendVendorUpdate(Controller.vendorModelList);
+            Controller.sendAddressUpdate(Controller.addressModelList);
+            Controller.sendSoftwareUpdate(Controller.softwareModelList);
+            new Controller();
+        }
 
         private void SoftCompDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -445,7 +450,6 @@ namespace CitiSoft
                     List<String> finance = Controller.getOnlyFinancialServicesBySid(sid);
                     List<String> modules = Controller.getOnlyModulesBySid(sid);
                     List<String> types = Controller.getOnlyTypeOfSoftwareBySid(sid);
-                    //MessageBox.Show(business[0]);                    
                     for (int i = 0; i < Math.Max(business.Count,Math.Max(finance.Count,Math.Max(modules.Count,types.Count))); i++) 
                     {
                         DataRow dataRow= additionalSoft.NewRow();
