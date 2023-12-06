@@ -26,14 +26,6 @@ namespace CitiSoft
         public Label internalServicesLabel = new Label();
         public ComboBox internalServicesComboBox = new ComboBox();
 
-        public Label lastDemoDateLabel = new Label();
-        public DateTimePicker lastDemoDatePicker = new DateTimePicker();
-
-        public Label lastReviewIntLabel = new Label();
-        public TextBox lastReviewIntTextBox = new TextBox();
-
-        public Label lastReviewedDateLabel = new Label();
-        public DateTimePicker lastReviewedDatePicker = new DateTimePicker();
 
 
         public Button submitButton = new Button();
@@ -79,6 +71,7 @@ namespace CitiSoft
             AutoScroll = true;
             internalServicesComboBox.Items.Add("Yes");
             internalServicesComboBox.Items.Add("No");
+            internalServicesComboBox.SelectedIndex= 0;
 
             Controls.AddRange(new Control[]
             {
@@ -86,10 +79,7 @@ namespace CitiSoft
                 companyEstablishedLabel, companyEstablishedTextBox,
                 addressPanel,
                 employeesLabel, employeesTextBox,
-                internalServicesLabel, internalServicesComboBox,
-                lastDemoDateLabel, lastDemoDatePicker,
-                lastReviewIntLabel,lastReviewIntTextBox,
-                lastReviewedDateLabel, lastReviewedDatePicker,               
+                internalServicesLabel, internalServicesComboBox,               
                 submitButton, clearButton
             });
             string[] venControlVarName = new string[]
@@ -99,9 +89,6 @@ namespace CitiSoft
                 "addressPanel",
                 "employeesLabel", "employeesTextBox",
                 "internalServicesLabel", "internalServicesComboBox",
-                "lastDemoDateLabel", "lastDemoDatePicker",
-                "lastReviewIntLabel","lastReviewIntTextBox",
-                "lastReviewedDateLabel", "lastReviewedDatePicker",
                 "submitButton", "clearButton"
             };
             string[] venControlText = new string[]
@@ -109,9 +96,6 @@ namespace CitiSoft
                 "Company Established:",
                 "No. of Employees:",
                 "Internal Professional Services:",
-                "Last Demo Date:",
-                "Last Reviewe Date Interval:",
-                "Last Reviewed Date:",
                 "Submit",
                 "Clear"
             };
@@ -174,19 +158,12 @@ namespace CitiSoft
             companyNameTextBox.TextChanged += CompanyNameTextBox_TextChanged;
             companyEstablishedTextBox.TextChanged += CompanyEstablishedTextBox_TextChanged;
             employeesTextBox.TextChanged += EmployeesTextBox_TextChanged;
-            lastReviewIntTextBox.TextChanged += LastReviewIntTextBox_TextChanged;
             internalServicesComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void ClearButton_Click(object sender, EventArgs e)
         {
             clearAll();
-        }
-
-        private void LastReviewIntTextBox_TextChanged(object sender, EventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            InputValidation.IsValid(textBox, 3, "Only Numbers", @"^[0-9]+$"); ;
         }
 
         private void EmployeesTextBox_TextChanged(object sender, EventArgs e)
@@ -241,7 +218,8 @@ namespace CitiSoft
                         });
                     }
                     clearAll();
-                    Controller.sendVendorUpdate(Controller.vendorModelList);
+                    //Controller.sendVendorUpdate(Controller.vendorModelList);
+                    MessageBox.Show("Vendor Successfully added.");
 
                 }
                 catch (FormatException fe)

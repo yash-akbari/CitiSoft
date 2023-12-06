@@ -247,17 +247,8 @@ namespace CitiSoft
                         try
                         {
                             con.Open();
-                            int rowsAffected = cmd.ExecuteNonQuery();
-
-                            // Check if the update was successful
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show("Address updated successfully!");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Record not found or update failed.");
-                            }
+                            cmd.ExecuteNonQuery();
+                        
                         }
                         catch (Exception ex)
                         {
@@ -280,16 +271,6 @@ namespace CitiSoft
                         {
                             con.Open();
                             int rowsAffected = cmd.ExecuteNonQuery();
-
-                            // Check if the update was successful
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show("Address updated successfully!");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Record not found or update failed.");
-                            }
                         }
                         catch (Exception ex)
                         {
@@ -318,17 +299,8 @@ namespace CitiSoft
                         try
                         {
                             con.Open();
-                            int rowsAffected = cmd.ExecuteNonQuery();
+                            cmd.ExecuteNonQuery();
 
-                            // Check if the update was successful
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show("Address updated successfully!");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Record not found or update failed.");
-                            }
                         }
                         catch (Exception ex)
                         {
@@ -407,13 +379,7 @@ namespace CitiSoft
                     SoftwareId = Convert.ToInt32(dataReader.GetValue(1)),
                     SoftwareName = Convert.ToString(dataReader.GetValue(2)),
                     SoftwareWebsite = Convert.ToString(dataReader.GetValue(3)),
-                    //Description = Convert.ToString(dataReader.GetValue(4)),
-                    Cloud = Convert.ToString(dataReader.GetValue(5)),
-                    //AdditionalInfo = Convert.ToString(dataReader.GetValue(6)),
-                    //BusinessAreas = JoinProperty(Controller.getBusinessAreasBySid(Convert.ToInt32(dataReader.GetValue(1))), "BusinessAreas"),
-                    //Modules = JoinProperty(Controller.getModulesBySid(Convert.ToInt32(dataReader.GetValue(1))), "Modules"),
-                    //FinancialServices = JoinProperty(Controller.getFinancialServicesBySid(Convert.ToInt32(dataReader.GetValue(1))), "FinancialService"),
-                    //TypeOfSoftware = JoinProperty(Controller.getTypeOfSoftwareBySid(Convert.ToInt32(dataReader.GetValue(1))), "TypeOfSoftware")
+                    Cloud = Convert.ToString(dataReader.GetValue(5))
                 });
             }
             dataReader.Close();
@@ -543,6 +509,395 @@ namespace CitiSoft
             return typeOfSoftwareModelList;
         }
 
+
+        public static void insertUpdateDelete(List<TypeOfSoftwareModel> typeOfSoftwareModelList) 
+        {
+            SqlConnection con;
+            con = DataBaseManager.GetCitiSoftConnection();
+            foreach (TypeOfSoftwareModel typeOfSoftwareModel in typeOfSoftwareModelList)
+            {
+                if (typeOfSoftwareModel.id < 0)
+                {
+                    string sql = "INSERT INTO SoftTypes (sid,softTypes) VALUES (@Sid,@TypeOfSoftware)";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Sid", typeOfSoftwareModel.Sid);
+                        cmd.Parameters.AddWithValue("@TypeOfSoftware", typeOfSoftwareModel.TypeOfSoftware);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+
+                    }
+                }
+                else if (typeOfSoftwareModel.Sid == 0 && typeOfSoftwareModel.id != 0)
+                {
+                    string sql = "Delete From SoftTypes WHERE softTypesId = @Id";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", typeOfSoftwareModel.id);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+                    }
+                }
+                else
+                {
+                    string sql = "UPDATE SoftTypes SET sid = @sid, softTypes = @typeOfSoftware WHERE softTypesId = @id";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@id",typeOfSoftwareModel.id);
+                        cmd.Parameters.AddWithValue("@sid", typeOfSoftwareModel.Sid);
+                        cmd.Parameters.AddWithValue("@typeOfSoftware", typeOfSoftwareModel.TypeOfSoftware);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+                    }
+                }
+            }
+        }
+        public static void insertUpdateDelete(List<BusinessAreasModel> businessModelList)
+        {
+            SqlConnection con;
+            con = DataBaseManager.GetCitiSoftConnection();
+            foreach (BusinessAreasModel businessAreasModel in businessModelList)
+            {
+                if (businessAreasModel.id < 0)
+                {
+                    string sql = "INSERT INTO Business (sid,BusinessAreas) VALUES (@Sid,@Business)";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Sid", businessAreasModel.Sid);
+                        cmd.Parameters.AddWithValue("@Business", businessAreasModel.BusinessAreas);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+
+                    }
+                }
+                else if (businessAreasModel.Sid == 0 && businessAreasModel.id != 0)
+                {
+                    string sql = "Delete From Business WHERE businessId = @Id";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", businessAreasModel.id);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+                    }
+                }
+                else
+                {
+                    string sql = "UPDATE Business SET sid = @sid, BusinessArea = @Business WHERE businessId = @id";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@id", businessAreasModel.id);
+                        cmd.Parameters.AddWithValue("@sid", businessAreasModel.Sid);
+                        cmd.Parameters.AddWithValue("@Business", businessAreasModel.BusinessAreas);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void insertUpdateDelete(List<ModulesModel> modulesModelList)
+        {
+            SqlConnection con;
+            con = DataBaseManager.GetCitiSoftConnection();
+            foreach (ModulesModel modulesModel in modulesModelList)
+            {
+                if (modulesModel.id < 0)
+                {
+                    string sql = "INSERT INTO Modules (sid,modules) VALUES (@Sid,@Modules)";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Sid", modulesModel.Sid);
+                        cmd.Parameters.AddWithValue("@Modules", modulesModel.Modules);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+
+                    }
+                }
+                else if (modulesModel.Sid == 0 && modulesModel.id != 0)
+                {
+                    string sql = "Delete From Modules WHERE modulesId = @Id";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", modulesModel.id);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+                    }
+                }
+                else
+                {
+                    string sql = "UPDATE Modules SET sid = @sid, modules = @modules WHERE modulesId = @id";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@id", modulesModel.id);
+                        cmd.Parameters.AddWithValue("@sid", modulesModel.Sid);
+                        cmd.Parameters.AddWithValue("@modules", modulesModel.Modules);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void insertUpdateDelete(List<FinancialServicesModel> financialModelList)
+        {
+            SqlConnection con;
+            con = DataBaseManager.GetCitiSoftConnection();
+            foreach (FinancialServicesModel financialModel in financialModelList)
+            {
+                if (financialModel.id < 0)
+                {
+                    string sql = "INSERT INTO ClientTypes (sid,finance) VALUES (@Sid,@FinancialService)";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Sid", financialModel.Sid);
+                        cmd.Parameters.AddWithValue("@FinancialService", financialModel.FinancialService);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+
+                    }
+                }
+                else if (financialModel.Sid == 0 && financialModel.id != 0)
+                {
+                    string sql = "Delete From ClientTypes WHERE id = @Id";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", financialModel.id);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+                    }
+                }
+                else
+                {
+                    string sql = "UPDATE ClientTypes SET sid = @sid, finance = @finance WHERE id = @id";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@id", financialModel.id);
+                        cmd.Parameters.AddWithValue("@sid", financialModel.Sid);
+                        cmd.Parameters.AddWithValue("@finance", financialModel.FinancialService);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+                    }
+                }
+            }
+        }
+        public static void insertUpdateDelete(List<CommentsModel> commentsModelList)
+        {
+            SqlConnection con;
+            con = DataBaseManager.GetCitiSoftConnection();
+            foreach (CommentsModel commentsModel in commentsModelList)
+            {
+                if (commentsModel.commentId < 0)
+                {
+                    string sql = "INSERT INTO Comments (sid,comment,lstDemoDt,lstRevInt,lstRevDt) VALUES (@Sid,@comment,@lstDemoDt,lstRevInt,lstRevDt)";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Sid", commentsModel.sid);
+                        cmd.Parameters.AddWithValue("@comment", commentsModel.Comments);
+                        cmd.Parameters.AddWithValue("@lstDemoDt", commentsModel.LastDemoDate);
+                        cmd.Parameters.AddWithValue("@lstRevInt", commentsModel.LastReviewedInterval);
+                        cmd.Parameters.AddWithValue("@lstRevDt", commentsModel.LastReviewedDate);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+
+                    }
+                }
+                else if (commentsModel.sid == 0 && commentsModel.commentId != 0)
+                {
+                    string sql = "Delete From ClientTypes WHERE id = @Id";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", commentsModel.commentId);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+                    }
+                }
+                else
+                {
+                    string sql = "UPDATE Comments SET sid = @sid, comment = @comment, lstDemoDt=@lstDemoDt, lstrevInt=@lstrevInt, lstRevDt=@lstRevDt WHERE commentId = @id";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        cmd.Parameters.AddWithValue("@id", commentsModel.commentId);
+                        cmd.Parameters.AddWithValue("@sid", commentsModel.sid);
+                        cmd.Parameters.AddWithValue("@comment", commentsModel.Comments);
+                        cmd.Parameters.AddWithValue("@lstDemoDt", commentsModel.LastDemoDate);
+                        cmd.Parameters.AddWithValue("@lstRevInt", commentsModel.LastReviewedInterval);
+                        cmd.Parameters.AddWithValue("@lstRevDt", commentsModel.LastReviewedDate);
+                        try
+                        {
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+                    }
+                }
+            }
+        }
         public static void insertUpdateDeleteSoftware(List<SoftwareModel> softwareModelList)
         {
             SqlConnection con;
@@ -572,8 +927,6 @@ namespace CitiSoft
                                 {
                                     business.Sid = sId;
                                 }
-                                sql = "INSERT INTO Business(sid,BusinessArea)";
-
                             }
                             foreach (TypeOfSoftwareModel type in Controller.typeOfSoftwareModelList)
                             {
@@ -756,8 +1109,7 @@ namespace CitiSoft
                              "WHERE t2."+id[i]+" = tableInstance."+id[i]+" + 1 " +
                              ") " +
                              "ORDER BY tableInstance."+id[i]+"; " +
-                             "DECLARE @FirstNUllRow INT = @GapIdentifier - 1; "+
-                             "DBCC CHECKIDENT('"+tabName[i]+"', RESEED, @FirstNullRow );";
+                             "DBCC CHECKIDENT('"+tabName[i]+ "', RESEED, @GapIdentifier );";
 
                 using (SqlCommand cmd = new SqlCommand(sql, con))
                 {
@@ -765,7 +1117,6 @@ namespace CitiSoft
                     {
                         con.Open();
                         cmd.ExecuteNonQuery();
-
                     }
                     catch (Exception ex)
                     {
