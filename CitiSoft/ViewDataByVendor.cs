@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -24,10 +26,9 @@ namespace CitiSoft
         public Panel dataRetPanel = new Panel();
         public Panel viewPanel = new Panel();
         public Panel topPanel = new Panel();
-        private bool isCategoryLabelClicked = false;
 
         public ComboBox searchComboBox = new ComboBox();
-        public Button searchButton = new Button();
+        public Button saveButton = new Button();
         public TextBox searchTextBox = new TextBox();
 
         public Label descriptionLabel = new Label();
@@ -69,7 +70,7 @@ namespace CitiSoft
             Controls.Add(viewPanel);
 
             topPanel.Controls.Add(searchComboBox);
-            topPanel.Controls.Add(searchButton);
+            topPanel.Controls.Add(saveButton);
             topPanel.Controls.Add(searchTextBox);
             topPanel.Height = 31;
 
@@ -96,14 +97,18 @@ namespace CitiSoft
             }
 
 
-            searchButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            searchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            searchButton.Location = new System.Drawing.Point(624, 5);
-            searchButton.Name = "venSerBtn";
-            searchButton.Size = new System.Drawing.Size(82, 23);
-            searchButton.TabIndex = 1;
-            searchButton.Text = "Search";
-            searchButton.UseVisualStyleBackColor = true;
+            saveButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            saveButton.Location = new System.Drawing.Point(624, 5);
+            saveButton.Name = "venSerBtn";
+            saveButton.Size = new System.Drawing.Size(82, 23);
+            saveButton.TabIndex = 1;
+            saveButton.Text = "Search";
+            saveButton.UseVisualStyleBackColor = true;
+            saveButton.Click += SaveButton_Click;
+
+
+            
          
 
 
@@ -157,6 +162,9 @@ namespace CitiSoft
             viewPanel.Controls.Add(SoftCompDataGridView);
             SoftCompDataGridView.ReadOnly = true;
             SoftCompDataGridView.DataBindingComplete += SoftCompDataGridView_DataBindingComplete;
+
+
+            lastReviewIntTextBox.TextChanged += LastReviewIntTextBox_TextChanged;
 
 
 
@@ -229,7 +237,36 @@ namespace CitiSoft
             dataRetPanel.Controls.Add(downloadDocumentBtn);
         }
 
+        private void LastReviewIntTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox tb =sender as TextBox;
+            InputValidation.IsValid(tb,20,"Only Numbers and subtraction(-) Sign allowed", @"^[0-9-]+$");
+        }
 
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in SoftwareDataGridView.SelectedRows)
+            {
+                sid = Convert.ToInt32(row.Cells["SoftwareId"].Value);
+            }
+            var softwareModelInstance = Controller.softwareModelList.FirstOrDefault(s => s.SoftwareId == sid);
+
+            if (softwareModelInstance != null)
+            {
+                softwareModelInstance.Description = InputValidation.GetStringValueOrNoneOrWhitespace(descriptionRichTextBox.Text);
+                softwareModelInstance.AdditionalInfo = InputValidation.GetStringValueOrNoneOrWhitespace(additionalInfoRichTextBox.Text);
+            }
+            var commentsModelInstance= Controller.commentsModelList.FirstOrDefault(c => c.sid == sid);
+            if (commentsModelInstance != null)
+            {
+                commentsModelInstance.Comments = commentsRichTextBox.Text;
+                commentsModelInstance.LastDemoDate = lastDemoDatePicker.Value;
+                commentsModelInstance.LastReviewedDate = lastReviewedDatePicker.Value;
+                commentsModelInstance.LastReviewedInterval = (InputValidation.ParseStringToIntOrZero(lastReviewIntTextBox.Text));
+            }
+
+
+        }
 
         private void SoftCompDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {

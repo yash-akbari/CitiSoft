@@ -379,8 +379,10 @@ namespace CitiSoft
                     SoftwareId = Convert.ToInt32(dataReader.GetValue(1)),
                     SoftwareName = Convert.ToString(dataReader.GetValue(2)),
                     SoftwareWebsite = Convert.ToString(dataReader.GetValue(3)),
-                    Cloud = Convert.ToString(dataReader.GetValue(5))
-                });
+                    Description = Convert.ToString(dataReader.GetValue(4)),
+                    Cloud = Convert.ToString(dataReader.GetValue(5)),
+                    AdditionalInfo = Convert.ToString(dataReader.GetValue(6))
+                }) ;
             }
             dataReader.Close();
             cmd.Dispose();
@@ -401,7 +403,7 @@ namespace CitiSoft
 
             return string.Empty;
         }
-
+        
         public static List<ModulesModel> getModules()
         {
             List<ModulesModel> modulesModelList = new List<ModulesModel>();
