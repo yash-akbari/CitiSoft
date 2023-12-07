@@ -17,13 +17,7 @@ namespace CitiSoft
         public static List<CommentsModel> commentsModelList = new List<CommentsModel>();
         public static ViewDataByVendor vendor = new ViewDataByVendor();
 
-        public searchVendor searchVendor
-        {
-            get => default;
-            set
-            {
-            }
-        }
+     
 
         
 
@@ -94,21 +88,6 @@ namespace CitiSoft
             }
         }
 
-        public SearchByVendor SearchByVendor
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
-        public searchVendor searchVendor1
-        {
-            get => default;
-            set
-            {
-            }
-        }
         public Controller()
         {
             vendorModelList = Repository.GetAllVendor();
@@ -209,6 +188,11 @@ namespace CitiSoft
         {
             Controller.softwareModelList = softwareModelList;
             Repository.insertUpdateDeleteSoftware(softwareModelList);
+            Repository.insertUpdateDelete(Controller.typeOfSoftwareModelList);
+            Repository.insertUpdateDelete(Controller.modulesModelList);
+            Repository.insertUpdateDelete(Controller.businessAreasModelList);
+            Repository.insertUpdateDelete(Controller.financialServicesModelList);
+            Repository.insertUpdateDelete(Controller.commentsModelList);
         }
 
     }

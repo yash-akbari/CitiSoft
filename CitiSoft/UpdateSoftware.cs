@@ -76,7 +76,7 @@ namespace CitiSoft
 
 
         int vid = 0;
-        int sid = 0;
+        static int sid = 0;
 
         private void InitializeComponents()
         {
@@ -214,7 +214,10 @@ namespace CitiSoft
                 }
             }
         }
-
+        List<int> typeOfId = Controller.typeOfSoftwareModelList.Where(software => software.Sid == sid).Select(software => software.id).ToList();
+        List<int> businessId = Controller.businessAreasModelList.Where(business => business.Sid == sid).Select(business => business.id).ToList();
+        List<int> moduleId = Controller.modulesModelList.Where(mod => mod.Sid == sid).Select(mod => mod.id).ToList();
+        List<int> financeId = Controller.financialServicesModelList.Where(fin => fin.Sid == sid).Select(fin => fin.id).ToList();
         private void SoftwareNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             SoftwareModel softwareModel = Controller.softwareModelList.FirstOrDefault(software => software.SoftwareName.Equals(softwareNameComboBox.SelectedItem.ToString()));
@@ -229,9 +232,13 @@ namespace CitiSoft
             else
                 cloudComboBox.SelectedIndex = 0;
             List<String> typeOf = Controller.typeOfSoftwareModelList.Where(software => software.Sid == sid).Select(software => software.TypeOfSoftware).ToList();
+            
             List<String> businessarea = Controller.businessAreasModelList.Where(business => business.Sid == sid).Select(business => business.BusinessAreas).ToList();
-            List<String> module = Controller.modulesModelList.Where(modules => modules.Sid == sid).Select(modules => modules.Modules).ToList();
+            
+            List<String> module = Controller.modulesModelList.Where(mod => mod.Sid == sid).Select(mod => mod.Modules).ToList();
+            
             List<String> finance = Controller.financialServicesModelList.Where(client => client.Sid == sid).Select(client => client.FinancialService).ToList();
+            
             foreach (var val in typeOf)
             {
                 typeOfSoftwareCustomListBox.listBox.Items.Add(val);
@@ -283,52 +290,72 @@ namespace CitiSoft
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
-            Random rand = new Random();
-            int random = rand.Next(int.MinValue, 0);
+
             if (!(InputValidation.GetStringValueOrNoneOrWhitespace(softwareNameComboBox.Text)).Equals("None"))
             {
                 try
                 {
-                    Controller.softwareModelList.Add(new SoftwareModel
+                    int softwareIndex = Controller.softwareModelList.FindIndex(software => software.SoftwareId == sid);
+                    SoftwareModel existingSoftware = Controller.softwareModelList.FirstOrDefault(software => software.SoftwareId == sid);
+                    existingSoftware.SoftwareName = InputValidation.GetStringValueOrNoneOrWhitespace(softwareNameComboBox.Text);
+                    existingSoftware.SoftwareWebsite = InputValidation.GetStringValueOrNoneOrWhitespace(softwareWebsiteTextBox.Text);
+                    existingSoftware.Cloud = cloudComboBox.SelectedItem.ToString();
+                    Controller.softwareModelList.RemoveAt(softwareIndex);
+                    Controller.softwareModelList.Insert(softwareIndex, existingSoftware);
+                    foreach (var typeOfSoftwareModel in Controller.typeOfSoftwareModelList.Where(v => v.Sid == sid))
                     {
-                        Vid = Controller.vendorModelList.Where(v => v.CompanyName.ToLowerInvariant().Equals(compNameComboBox.SelectedItem.ToString().ToLowerInvariant(), StringComparison.OrdinalIgnoreCase)).Select(v => v.Vid).FirstOrDefault(),
-                        SoftwareId = random,
-                        SoftwareName = InputValidation.GetStringValueOrNoneOrWhitespace(softwareNameComboBox.Text),
-                        SoftwareWebsite = InputValidation.GetStringValueOrNoneOrWhitespace(softwareWebsiteTextBox.Text),
-                        Cloud = cloudComboBox.SelectedItem.ToString(),
-                    });
+                        typeOfSoftwareModel.Sid = 0;
+                    }
                     foreach (var type in typeOfSoftwareCustomListBox.listBox.Items)
                     {
                         Controller.typeOfSoftwareModelList.Add(new TypeOfSoftwareModel
                         {
-                            id = random,
-                            TypeOfSoftware = type.ToString()
-                        });
+                            id=-1,
+                            Sid = sid,
+                            TypeOfSoftware = type.ToString(),
+                        }) ;    
+                    }
+
+                    foreach (var business in Controller.businessAreasModelList.Where(v => v.Sid == sid))
+                    {
+                        business.Sid = 0;
                     }
                     foreach (var business in buisenessAreasCustomListBox.listBox.Items)
                     {
                         Controller.businessAreasModelList.Add(new BusinessAreasModel
                         {
-                            id = random,
+                            id = -1,
+                            Sid  = sid,
                             BusinessAreas = business.ToString()
                         });
+                    }
+                    foreach (var module in Controller.modulesModelList.Where(v => v.Sid == sid))
+                    {
+                        module.Sid = 0;
                     }
                     foreach (var modules in modulesCustomListBox.listBox.Items)
                     {
                         Controller.modulesModelList.Add(new ModulesModel
                         {
-                            id = random,
+                            id = -1,
+                            Sid = sid,
                             Modules = modules.ToString()
                         });
+                    }
+                    foreach (var fin in Controller.financialServicesModelList.Where(v => v.Sid == sid))
+                    {
+                        fin.Sid = 0;
                     }
                     foreach (var finance in financialServicesCustomListBox.listBox.Items)
                     {
                         Controller.financialServicesModelList.Add(new FinancialServicesModel
                         {
-                            id = random,
+                            id = -1,
+                            Sid = sid,
                             FinancialService = finance.ToString()
                         });
                     }
+                    
                     clearAll();
                     MessageBox.Show("Software Successfully added.");
                     //Controller.sendSoftwareUpdate(Controller.softwareModelList);

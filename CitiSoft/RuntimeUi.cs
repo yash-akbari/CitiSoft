@@ -26,7 +26,7 @@ namespace CitiSoft
 
         TabControl venViewChildTabControl = new TabControl();
         TabPage viewVendorTabPage = new TabPage();
-        TabPage searchVendorTabPage = new TabPage();
+
         TabPage clientProblemHistory = new TabPage();
 
         TabControl venModifyChildTabControl = new TabControl();
@@ -34,6 +34,8 @@ namespace CitiSoft
         TabPage addSoftwareTabPage = new TabPage();
         TabPage updateVendorTabPage = new TabPage();
         TabPage updateSoftwareTabPage = new TabPage();
+        TabPage deleteVendortabPage = new TabPage();
+        TabPage deleteSoftwaretabPage = new TabPage();
 
         TabPage softRemind = new TabPage();
 
@@ -174,15 +176,6 @@ namespace CitiSoft
             AddForm(dashboardForm, dashboardFunctionality);
         }
 
-        public void searchVendorTabPageFunc()
-        {
-            searchVendorTabPage.Name = "searchVendorTabPage";
-            searchVendorTabPage.Text = "Search";
-            venViewChildTabControl.Controls.Add(searchVendorTabPage);
-            searchVendor venSearch = new searchVendor();
-            AddForm(venSearch, searchVendorTabPage);
-        }
-
 
         public void addVendorTabPageFunc()
         {
@@ -218,6 +211,22 @@ namespace CitiSoft
             UpdateVendor updateVendor = new UpdateVendor();
             AddForm(updateVendor, updateVendorTabPage);
             venModifyChildTabControl.Controls.Add(updateVendorTabPage);
+        }
+        public void deleteVendorTabPageFunc()
+        {
+            deleteVendortabPage.Name = "updateVendorTabPage";
+            deleteVendortabPage.Text = "Delete Vendor";
+            Delete_Vendor delete_Vendor = new Delete_Vendor();
+            AddForm(delete_Vendor, deleteVendortabPage);
+            venModifyChildTabControl.Controls.Add(deleteVendortabPage);
+        }
+        public void deleteSoftwareTabPageFunc()
+        {
+            deleteSoftwaretabPage.Name = "deleteSoftwareTabPage";
+            deleteSoftwaretabPage.Text = "Delete Software";
+            DeleteSoftware deleteSoftware = new DeleteSoftware();
+            AddForm(deleteSoftware, deleteSoftwaretabPage);
+            venModifyChildTabControl.Controls.Add(deleteSoftwaretabPage);
         }
 
 
@@ -324,7 +333,7 @@ namespace CitiSoft
             ProblemHistoryForm problemHistoryForm = new ProblemHistoryForm();
             AddForm(problemHistoryForm, clientProblemHistory);
         }
-
+        
 
 
 
@@ -628,11 +637,12 @@ namespace CitiSoft
                     viewParentTabPageFunc();
                     viewVendorTabPageFunc();
                     modifyParentTabPageFunc();
-                    searchVendorTabPageFunc();
                     addVendorTabPageFunc();
                     addSoftwareTabPageFunc();
                     updateVendorTabPageFunc();
                     updateSoftwareTabPageFunc();
+                    deleteVendorTabPageFunc();
+                    deleteSoftwareTabPageFunc();
                     softReminderFunc();
                     clientProblemHistoryFunc();
                     clientMenuFunc();

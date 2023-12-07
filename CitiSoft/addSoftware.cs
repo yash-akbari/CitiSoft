@@ -49,8 +49,6 @@ namespace CitiSoft
         Label softwareWebsiteLabel = new Label();
         TextBox softwareWebsiteTextBox = new TextBox();
 
-        Label descriptionLabel = new Label();
-        RichTextBox descriptionRichTextBox = new RichTextBox();
 
         Label typeOfSoftwareLabel = new Label();
         TextBox typeOfSoftwareTextBox = new TextBox();
@@ -74,8 +72,6 @@ namespace CitiSoft
         Label cloudLabel = new Label();
         ComboBox cloudComboBox = new ComboBox();
 
-        Label additionalInfoLabel = new Label();
-        RichTextBox additionalInfoRichTextBox = new RichTextBox();
 
         Button submitButton = new Button();
         Button clearButton = new Button();
@@ -94,12 +90,10 @@ namespace CitiSoft
                 softwareNameLabel, softwareNameTextBox,
                 softwareWebsiteLabel, softwareWebsiteTextBox,
                 typeOfSoftwareLabel, typeOfSoftwareTextBox, typeOfSoftwareCustomListBox,
-                descriptionLabel, descriptionRichTextBox,
                 businessAreasLabel, businessAreasTextBox, buisenessAreasCustomListBox,
                 modulesLabel, modulesTextBox, modulesCustomListBox,
                 financialServicesLabel, financialServicesTextBox, financialServicesCustomListBox,
                 cloudLabel, cloudComboBox,
-                additionalInfoLabel, additionalInfoRichTextBox,
                 submitButton, clearButton
                 });
             string[] softControlVarName = new string[] {
@@ -107,12 +101,10 @@ namespace CitiSoft
                 "softwareNameLabel", "softwareNameTextBox",
                 "softwareWebsiteLabel", "softwareWebsiteTextBox",
                 "typeOfSoftwareLabel", "typeOfSoftwareTextBox", "typeOfSoftwareCustomListBox",
-                "descriptionLabel", "descriptionRichTextBox",
                 "businessAreasLabel", "businessAreasTextBox", "buisenessAreasCustomListBox",
                 "modulesLabel", "modulesTextBox", "modulesCustomListBox",
                 "financialServicesLabel", "financialServicesTextBox", "financialServicesCustomListBox",
                 "cloudLabel", "cloudComboBox",
-                "additionalInfoLabel", "additionalInfoRichTextBox",
                 "submitButton", "clearButton"
             };
             string[] softControlText = new string[]
@@ -121,12 +113,10 @@ namespace CitiSoft
                 "Software Name:",
                 "Company Website:",
                 "Type of Software:",
-                "Description:",
                 "Business Areas:",
                 "Modules:",
                 "Financial Services Client Types:",
                 "Cloud (Enabled/Native/Based):",
-                "Additional Information:",
                 "Submit",
                 "Clear"
             };
@@ -147,15 +137,6 @@ namespace CitiSoft
                     con.Text = softControlText[j++];
                     con.Left = softAddxLoc;
                     con.Top = softAddyLoc;
-                }
-                else if (con is RichTextBox)
-                {
-                    con.Width = softAddWidth + 100;
-                    con.Height = softAddHeight + 60;
-
-                    con.Left = softAddxLoc + 210;
-                    con.Top = softAddyLoc;
-                    softAddyLoc = softAddyLoc + 100;
                 }
                 else if (con is CustomListBox)
                 {
@@ -192,11 +173,10 @@ namespace CitiSoft
             softwareNameTextBox.TextChanged += SoftwareNameTextBox_TextChanged;
             softwareWebsiteTextBox.TextChanged += CompanyWebsiteTextBox_TextChanged;
             typeOfSoftwareTextBox.TextChanged += TypeOfSoftwareTextBox_TextChanged;
-            descriptionRichTextBox.TextChanged += DescriptionRichTextBox_TextChanged;
             businessAreasTextBox.TextChanged += BusinessAreasTextBox_TextChanged;
             modulesTextBox.TextChanged += ModulesTextBox_TextChanged;
             financialServicesTextBox.TextChanged += FinancialServicesTextBox_TextChanged;
-            additionalInfoRichTextBox.TextChanged += AdditionalInfoRichTextBox_TextChanged;
+
             submitButton.Click += SubmitButton_Click;
             clearButton.Click += ClearButton_Click;
 
@@ -251,9 +231,7 @@ namespace CitiSoft
                         SoftwareId = random,
                         SoftwareName = InputValidation.GetStringValueOrNoneOrWhitespace(softwareNameTextBox.Text),
                         SoftwareWebsite = InputValidation.GetStringValueOrNoneOrWhitespace(softwareWebsiteTextBox.Text),
-                        Description = InputValidation.GetStringValueOrNoneOrWhitespace(descriptionRichTextBox.Text),
                         Cloud = cloudComboBox.SelectedItem.ToString(),
-                        AdditionalInfo = InputValidation.GetStringValueOrNoneOrWhitespace(additionalInfoRichTextBox.Text)
                     }) ;
                     foreach (var type in typeOfSoftwareCustomListBox.listBox.Items)
                     {
@@ -359,12 +337,6 @@ namespace CitiSoft
             InputValidation.IsValid(textBox, 30, "Only Text and Space", @"^[a-zA-Z ]+$");
         }
 
-        private void DescriptionRichTextBox_TextChanged(object sender, EventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            InputValidation.IsValid(textBox, 255, "Only Text, Numbers and Special Characters like these  /&?=:%$-_.+!*'(),", @"^[a-zA-Z0-9/&?=:%$£-_.+!*'(),]+$");
-        }
-
         
         private void BusinessAreasTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -384,11 +356,6 @@ namespace CitiSoft
             InputValidation.IsValid(textBox, 30, "Only Text and Space", @"^[a-zA-Z ]+$");
         }
 
-        private void AdditionalInfoRichTextBox_TextChanged(object sender, EventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            InputValidation.IsValid(textBox, 255, "Only Text, Numbers and Special Characters like these  /&?=:%$-_.+!*'(),", @"^[a-zA-Z0-9/&?=:%$£-_.+!*'(),]+$");
-        }
 
     }
 

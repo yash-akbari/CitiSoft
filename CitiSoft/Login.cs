@@ -59,6 +59,7 @@ namespace CitiSoft
                             using (var runtimeUi = new RuntimeUI(userType, userId))
                             {
                                 runtimeUi.ShowDialog();
+
                             }
 
                             // If the RuntimeUI is closed, close the login form as well (this exits the application)

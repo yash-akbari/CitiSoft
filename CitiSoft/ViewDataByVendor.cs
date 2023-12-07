@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,7 +6,6 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -21,14 +19,14 @@ namespace CitiSoft
         public DataGridView AddressDataGridView = new DataGridView();
         public DataGridView SoftwareDataGridView = new DataGridView();
         public DataGridView SoftCompDataGridView = new DataGridView();
-        public Button refreshButton = new Button();
         public Panel commentPanel = new Panel();
         public Panel dataRetPanel = new Panel();
         public Panel viewPanel = new Panel();
         public Panel topPanel = new Panel();
 
         public ComboBox searchComboBox = new ComboBox();
-        public Button saveButton = new Button();
+        public Button RefreshButton = new Button();
+        public Button SaveButton = new Button();
         public TextBox searchTextBox = new TextBox();
 
         public Label descriptionLabel = new Label();
@@ -70,7 +68,7 @@ namespace CitiSoft
             Controls.Add(viewPanel);
 
             topPanel.Controls.Add(searchComboBox);
-            topPanel.Controls.Add(saveButton);
+            topPanel.Controls.Add(RefreshButton);
             topPanel.Controls.Add(searchTextBox);
             topPanel.Height = 31;
 
@@ -97,19 +95,26 @@ namespace CitiSoft
             }
 
 
-            saveButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            saveButton.Location = new System.Drawing.Point(624, 5);
-            saveButton.Name = "venSerBtn";
-            saveButton.Size = new System.Drawing.Size(82, 23);
-            saveButton.TabIndex = 1;
-            saveButton.Text = "Search";
-            saveButton.UseVisualStyleBackColor = true;
-            saveButton.Click += SaveButton_Click;
+            RefreshButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            RefreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            RefreshButton.Location = new System.Drawing.Point(624, 5);
+            RefreshButton.Name = "RefreshButton";
+            RefreshButton.Size = new System.Drawing.Size(82, 23);
+            RefreshButton.TabIndex = 1;
+            RefreshButton.Text = "Refresh";
+            RefreshButton.UseVisualStyleBackColor = true;
+            RefreshButton.Click += RefreshButton_Click;
 
 
-            
-         
+            SaveButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            SaveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            SaveButton.Location = new System.Drawing.Point(716, 5);
+            SaveButton.Name = "SaveButton";
+            SaveButton.Size = new System.Drawing.Size(82, 23);
+            SaveButton.TabIndex = 1;
+            SaveButton.Text = "Save Comment";
+            SaveButton.UseVisualStyleBackColor = true;
+            SaveButton.Click += SaveButton_Click;
 
 
             searchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -162,9 +167,6 @@ namespace CitiSoft
             viewPanel.Controls.Add(SoftCompDataGridView);
             SoftCompDataGridView.ReadOnly = true;
             SoftCompDataGridView.DataBindingComplete += SoftCompDataGridView_DataBindingComplete;
-
-
-            lastReviewIntTextBox.TextChanged += LastReviewIntTextBox_TextChanged;
 
 
 
@@ -237,35 +239,17 @@ namespace CitiSoft
             dataRetPanel.Controls.Add(downloadDocumentBtn);
         }
 
-        private void LastReviewIntTextBox_TextChanged(object sender, EventArgs e)
-        {
-            TextBox tb =sender as TextBox;
-            InputValidation.IsValid(tb,20,"Only Numbers and subtraction(-) Sign allowed", @"^[0-9-]+$");
-        }
-
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow row in SoftwareDataGridView.SelectedRows)
-            {
-                sid = Convert.ToInt32(row.Cells["SoftwareId"].Value);
-            }
-            var softwareModelInstance = Controller.softwareModelList.FirstOrDefault(s => s.SoftwareId == sid);
+            
+        }
 
-            if (softwareModelInstance != null)
-            {
-                softwareModelInstance.Description = InputValidation.GetStringValueOrNoneOrWhitespace(descriptionRichTextBox.Text);
-                softwareModelInstance.AdditionalInfo = InputValidation.GetStringValueOrNoneOrWhitespace(additionalInfoRichTextBox.Text);
-            }
-            var commentsModelInstance= Controller.commentsModelList.FirstOrDefault(c => c.sid == sid);
-            if (commentsModelInstance != null)
-            {
-                commentsModelInstance.Comments = commentsRichTextBox.Text;
-                commentsModelInstance.LastDemoDate = lastDemoDatePicker.Value;
-                commentsModelInstance.LastReviewedDate = lastReviewedDatePicker.Value;
-                commentsModelInstance.LastReviewedInterval = (InputValidation.ParseStringToIntOrZero(lastReviewIntTextBox.Text));
-            }
-
-
+        private void RefreshButton_Click(object sender, EventArgs e)
+        {
+            Controller.sendVendorUpdate(Controller.vendorModelList);
+            Controller.sendAddressUpdate(Controller.addressModelList);
+            Controller.sendSoftwareUpdate(Controller.softwareModelList);
+            new Controller();
         }
 
         private void SoftCompDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -482,7 +466,6 @@ namespace CitiSoft
                     List<String> finance = Controller.getOnlyFinancialServicesBySid(sid);
                     List<String> modules = Controller.getOnlyModulesBySid(sid);
                     List<String> types = Controller.getOnlyTypeOfSoftwareBySid(sid);
-                    //MessageBox.Show(business[0]);                    
                     for (int i = 0; i < Math.Max(business.Count,Math.Max(finance.Count,Math.Max(modules.Count,types.Count))); i++) 
                     {
                         DataRow dataRow= additionalSoft.NewRow();

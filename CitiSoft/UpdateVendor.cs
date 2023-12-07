@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace CitiSoft
 {
@@ -180,6 +182,7 @@ namespace CitiSoft
             {
                 List<AddressModel> addressModels = Controller.addressModelList.Where(address => address.Vid == vid).ToList();
                 addressPanel.addressList = addressModels;
+                
             }
             foreach (AddressModel instance in addressPanel.addressList)
             {
@@ -220,21 +223,36 @@ namespace CitiSoft
             {
                 try
                 {
-                    Controller.vendorModelList.Add(new VendorModel
-                    {
-                        Vid = vid,
-                        CompanyName = companyNameComboBox.Text,
-                        CompanyEstablished = InputValidation.ParseStringToIntOrZero((companyEstablishedTextBox.Text)),
-                        EmployeesCount = InputValidation.GetStringValueOrNoneOrWhitespace(employeesTextBox.Text),
-                        InternalProfessionalServices = InputValidation.ParseTrueOrFalse(internalServicesComboBox.SelectedText),
-                    });
+                    int vendorIndex= Controller.vendorModelList.FindIndex(vendor => vendor.Vid == vid);
+                    VendorModel existingVendor = Controller.vendorModelList.FirstOrDefault(vendor => vendor.Vid == vid);
+                    existingVendor.CompanyEstablished = InputValidation.ParseStringToIntOrZero((companyEstablishedTextBox.Text));
+                    existingVendor.EmployeesCount = InputValidation.GetStringValueOrNoneOrWhitespace(employeesTextBox.Text);
+                    existingVendor.InternalProfessionalServices = InputValidation.ParseTrueOrFalse(internalServicesComboBox.SelectedText);
+                    Controller.vendorModelList.RemoveAt(vendorIndex);
+                    Controller.vendorModelList.Insert(vendorIndex, existingVendor);
                     foreach (AddressModel address in addressPanel.addressList)
                     {
-                        Controller.addressModelList.Add
+                        if (!address.addressId.Equals(null))
+                        {
+                            int index = Controller.addressModelList.FindIndex(inst => inst.addressId == address.addressId);
+                            AddressModel instance = Controller.addressModelList.FirstOrDefault(inst => inst.addressId == address.addressId);
+                            instance.AddressLine1 = address.AddressLine1;
+                            instance.AddressLine2 = address.AddressLine2;
+                            instance.City = address.City;
+                            instance.Country = address.Country;
+                            instance.PostCode = address.PostCode;
+                            instance.Email = address.Email;
+                            instance.Telephone = address.Telephone;
+                            Controller.addressModelList.RemoveAt(index);
+                            Controller.addressModelList.Insert(index, instance);
+                        }
+                        else 
+                        {
+                            Controller.addressModelList.Add
                         (new AddressModel
                         {
-                            Vid = address.Vid,
-                            addressId = address.addressId,
+                            addressId=-1,
+                            Vid = vid,
                             AddressLine1 = address.AddressLine1,
                             AddressLine2 = address.AddressLine2,
                             City = address.City,
@@ -243,6 +261,7 @@ namespace CitiSoft
                             Email = address.Email,
                             Telephone = address.Telephone,
                         });
+                        }
                     }
                     clearAll();
                     //Controller.sendVendorUpdate(Controller.vendorModelList);
