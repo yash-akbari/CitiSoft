@@ -897,7 +897,7 @@ namespace CitiSoft
             {
                 if (softwareModel.SoftwareId < 0)
                 {
-                    string sql = "INSERT INTO SoftName (vid,softName, [softWeb], [cloud]) VALUES (@Vid, @SoftwareName, @SoftwareWebsite, @Cloud)";
+                    string sql = "INSERT INTO SoftName (vid,softName, [softWeb], [cloud]) VALUES (@Vid, @SoftwareName, @SoftwareWebsite, @Cloud);SELECT SCOPE_IDENTITY();";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
                         cmd.Parameters.AddWithValue("@Vid", softwareModel.Vid);
@@ -907,8 +907,6 @@ namespace CitiSoft
                         try
                         {
                             con.Open();
-                            int rowsAffected = cmd.ExecuteNonQuery();
-                            cmd.CommandText = "Select SCOPE_INDENTITY();";
                             int sId = Convert.ToInt32(cmd.ExecuteScalar());
                             foreach (BusinessAreasModel business in Controller.businessAreasModelList)
                             {

@@ -13,7 +13,7 @@ namespace CitiSoft
 
         public Label companyNameLabel = new Label();
         public ComboBox companyNameComboBox = new ComboBox();
-        public Button submitButton = new Button();
+        public Button deleteButton = new Button();
 
         VendorModel existingVendor;
 
@@ -29,16 +29,16 @@ namespace CitiSoft
             {
                 companyNameLabel, companyNameComboBox,
         
-                submitButton
+                deleteButton
             });
             string[] venControlVarName = new string[]
             {
                 "companyNameLabel", "companyNameComboBox",
-                "submitButton"
+                "deleteButton"
             };
             string[] venControlText = new string[]
             {   "Company Name:",
-                "Submit",
+                "Delete",
             };
             int venAddxLoc = 10;
             int venAddyLoc = 11;
@@ -78,7 +78,7 @@ namespace CitiSoft
                     venAddxLoc = venAddxLoc + 110;
                 }
             }
-            submitButton.Click += new EventHandler(submitButton_click);
+            deleteButton.Click += new EventHandler(deleteButton_click);
             companyNameComboBox.DropDownStyle = ComboBoxStyle.DropDown;
             companyNameComboBox.DataSource = Controller.vendorModelList.Select(vendor => vendor.CompanyName).ToList();
             companyNameComboBox.SelectedIndex = -1;
@@ -104,7 +104,7 @@ namespace CitiSoft
             existingVendor = Controller.vendorModelList.FirstOrDefault(vendor => vendor.CompanyName.Equals(companyNameComboBox.SelectedItem.ToString(), StringComparison.OrdinalIgnoreCase));
         }
 
-        private void submitButton_click(object sender, EventArgs e)
+        private void deleteButton_click(object sender, EventArgs e)
         {
             int vid = Controller.vendorModelList
            .Where(v => v.CompanyName.Equals(companyNameComboBox.SelectedItem.ToString(), StringComparison.OrdinalIgnoreCase))

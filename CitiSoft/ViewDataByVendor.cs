@@ -26,6 +26,7 @@ namespace CitiSoft
 
         public ComboBox searchComboBox = new ComboBox();
         public Button RefreshButton = new Button();
+        public Button SaveButton = new Button();
         public TextBox searchTextBox = new TextBox();
 
         public Label descriptionLabel = new Label();
@@ -103,7 +104,17 @@ namespace CitiSoft
             RefreshButton.Text = "Refresh";
             RefreshButton.UseVisualStyleBackColor = true;
             RefreshButton.Click += RefreshButton_Click;
-         
+
+
+            SaveButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            SaveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            SaveButton.Location = new System.Drawing.Point(716, 5);
+            SaveButton.Name = "SaveButton";
+            SaveButton.Size = new System.Drawing.Size(82, 23);
+            SaveButton.TabIndex = 1;
+            SaveButton.Text = "Save Comment";
+            SaveButton.UseVisualStyleBackColor = true;
+            SaveButton.Click += SaveButton_Click;
 
 
             searchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -226,6 +237,11 @@ namespace CitiSoft
             this.downloadDocumentBtn.UseVisualStyleBackColor = true;
             this.downloadDocumentBtn.Click += new System.EventHandler(this.downloadDocumentBtn_Click);
             dataRetPanel.Controls.Add(downloadDocumentBtn);
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            
         }
 
         private void RefreshButton_Click(object sender, EventArgs e)

@@ -14,7 +14,7 @@ namespace CitiSoft
 
         Label softwareNameLabel = new Label();
         ComboBox softwareNameComboBox = new ComboBox();
-        Button submitButton = new Button();
+        Button deleteButton = new Button();
         SoftwareModel existingSoftware;
         int sid =0, vid = 0;
 
@@ -27,18 +27,18 @@ namespace CitiSoft
             Controls.AddRange(new Control[] {
                 compNameLabel, compNameComboBox,
                 softwareNameLabel, softwareNameComboBox,
-                submitButton
+                deleteButton
                 });
             string[] softControlVarName = new string[] {
                 "compNameLabel","compNameComboBox",
                 "softwareNameLabel", "softwareNameComboBox",
-                "submitButton"
+                "deleteButton"
             };
             string[] softControlText = new string[]
             {
                 "Comapany Name:",
                 "Software Name:",
-                "Submit",
+                "Delete"
             };
 
             int softAddxLoc = 10;
@@ -83,7 +83,7 @@ namespace CitiSoft
 
             }
 
-            submitButton.Click += SubmitButton_Click;
+            deleteButton.Click += SubmitButton_Click;
 
 
 
