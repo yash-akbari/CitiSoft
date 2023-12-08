@@ -106,6 +106,13 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 28;
             this.pictureBox1.TabStop = false;
+
+            this.buttonForgotPassword = new System.Windows.Forms.Button();
+            this.buttonForgotPassword.Text = "Forgot Password?";
+            this.buttonForgotPassword.Location = new System.Drawing.Point(495, 240); // Set the appropriate location
+            this.buttonForgotPassword.Size = new System.Drawing.Size(185, 23);
+            this.buttonForgotPassword.Click += new System.EventHandler(this.buttonForgotPassword_Click);
+
             // 
             // Login
             // 
@@ -120,6 +127,7 @@
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.buttonForgotPassword);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Login";
@@ -140,5 +148,6 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button buttonForgotPassword;
     }
 }

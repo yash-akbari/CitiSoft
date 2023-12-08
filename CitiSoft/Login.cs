@@ -82,7 +82,13 @@ namespace CitiSoft
         {
             Application.Exit();
         }
-
+        private void buttonForgotPassword_Click(object sender, EventArgs e)
+        {
+            // Open the Forgot Password form or process
+          
+            ForgotPasswordForm forgotPasswordForm = new ForgotPasswordForm();
+            forgotPasswordForm.ShowDialog(); // Show the Forgot Password form as a dialog
+        }
         private void Login_Load(object sender, EventArgs e)
         {
 
