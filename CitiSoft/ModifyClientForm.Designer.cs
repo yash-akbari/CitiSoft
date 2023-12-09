@@ -88,7 +88,15 @@ namespace CitiSoft
             this.ModifyClientDgv.RowHeadersWidth = 82;
             this.ModifyClientDgv.RowTemplate.Height = 33;
             this.ModifyClientDgv.Size = new System.Drawing.Size(1237, 1284);
+            this.ModifyClientDgv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill; // Adjusted
+            this.ModifyClientDgv.AutoGenerateColumns = true; // Adjusted
+            this.ModifyClientDgv.AutoResizeColumns(); // Adjusted
+            this.ModifyClientDgv.DataBindingComplete += (sender, e) =>
+            {
+                // Additional setup after data binding, if needed
+            };
             this.ModifyClientDgv.TabIndex = 2;
+
             // 
             // clientIDTxtBox
             // 

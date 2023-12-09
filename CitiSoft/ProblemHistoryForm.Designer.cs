@@ -44,9 +44,10 @@
             this.problemHistoryPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.ProblemHistoryDgv)).BeginInit();
             this.SuspendLayout();
-            // 
+            
+            //
             // ProblemHistoryDgv
-            // 
+            //
             this.ProblemHistoryDgv.AllowUserToAddRows = false;
             this.ProblemHistoryDgv.AllowUserToDeleteRows = false;
             this.ProblemHistoryDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -57,7 +58,15 @@
             this.ProblemHistoryDgv.RowHeadersWidth = 82;
             this.ProblemHistoryDgv.RowTemplate.Height = 33;
             this.ProblemHistoryDgv.Size = new System.Drawing.Size(1237, 1284);
+            this.ProblemHistoryDgv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill; // Adjusted
+            this.ProblemHistoryDgv.AutoGenerateColumns = true; // Adjusted
+            this.ProblemHistoryDgv.AutoResizeColumns(); // Adjusted
+            this.ProblemHistoryDgv.DataBindingComplete += (sender, e) =>
+            {
+                // Additional setup after data binding, if needed
+            };
             this.ProblemHistoryDgv.TabIndex = 0;
+
             // 
             // addClientBtn
             // 

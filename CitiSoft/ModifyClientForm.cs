@@ -17,6 +17,12 @@ namespace CitiSoft
         public ModifyClientForm()
         {
             InitializeComponent();
+            Load += ModifyClientForm_Load;
+        }
+
+        private void ModifyClientForm_Load(object sender, EventArgs e)
+        {
+            showDataInTable();
         }
 
         private void updateClientBtn_Click(object sender, EventArgs e)
