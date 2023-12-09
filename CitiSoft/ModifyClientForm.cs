@@ -135,10 +135,10 @@ namespace CitiSoft
                         }
                     }
                 }
-                catch (SqlException)
+                catch (SqlException error)
                 {
                     transaction.Rollback(); // Rollback on error
-                    MessageBox.Show("An error occurred while updating the client");
+                    MessageBox.Show("An error occurred while updating the client" + error);
                 }
             }
         }
@@ -213,15 +213,13 @@ namespace CitiSoft
                         }
                     }
                 }
-                catch (SqlException)
+                catch (SqlException error)
                 {
                     transaction.Rollback(); // Rollback on error
-                    MessageBox.Show("An error occurred while adding the client");
+                    MessageBox.Show("An error occurred while adding the client" + error);
                 }
             }
         }
-
-
 
         private void deleteClientBtn_Click(object sender, EventArgs e)
         {
@@ -267,10 +265,10 @@ namespace CitiSoft
                         }
                     }
                 }
-                catch (SqlException)
+                catch (SqlException error)
                 {
                     transaction.Rollback(); // Rollback on error
-                    MessageBox.Show("An error occurred while deleting the client");
+                    MessageBox.Show("An error occurred while deleting the client" + error);
                 }
             }
         }
@@ -351,15 +349,8 @@ namespace CitiSoft
         // refreshes the table
         private void refreshBtn_Click(object sender, EventArgs e)
         {
-            using (SqlConnection sqlCon = new SqlConnection(DataBaseManager.functionalityConnectionString))
-            {
-                sqlCon.Open();
-                SqlDataAdapter sqlData = new SqlDataAdapter("SELECT c.cid AS 'Client ID', c.compName AS 'Company Name', cu.phone AS 'Phone', cu.email AS 'Email', CONCAT(cu.addressLine1, ' ', cu.addressLine2) AS 'Address', cu.city AS 'City', cu.country AS 'Country', cu.postCode AS 'Postcode' FROM Client c JOIN CustAddress cu ON c.cid = cu.cid;", sqlCon);
-                DataTable dt = new DataTable();
-                sqlData.Fill(dt);
+            RuntimeUI.dataBinding(DataBaseManager.functionalityConnectionString, "SELECT c.cid AS 'Client ID', c.compName AS 'Company Name', cu.phone AS 'Phone', cu.email AS 'Email', CONCAT(cu.addressLine1, ' ', cu.addressLine2) AS 'Address', cu.city AS 'City', cu.country AS 'Country', cu.postCode AS 'Postcode' FROM Client c JOIN CustAddress cu ON c.cid = cu.cid; ", ModifyClientDvg);
 
-                ModifyClientDvg.DataSource = dt;
-            }
         }
     }
 }

@@ -18,8 +18,6 @@ namespace CitiSoft
         {
             InitializeComponent();
             InitializeDragDrop();
-            showDataInTable();
-
         }
         private void InitializeDragDrop()
         {
@@ -83,7 +81,6 @@ namespace CitiSoft
                 }
             }
         }
-
 
         private void vendorIDTxtBox_TextChanged(object sender, EventArgs e)
         {
@@ -149,12 +146,6 @@ namespace CitiSoft
                     vendorIDTxtBox.Text = string.Empty;
                 }
             }
-        }
-
-        // inserts data from the database into the datagrid view
-        public void showDataInTable()
-        {
-            RuntimeUI.dataBinding(DataBaseManager.citiSoftDatabaseConnectionString, "SELECT vid AS 'Vendor ID', compName AS 'Company Name', est AS 'Establishments', empCount AS 'Employees', intProfServ AS 'International Professional Services',  FROM VendorInfo;", addDocumentDgv);
         }
 
         // downloads a document into the user's PC

@@ -6,9 +6,11 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 
 namespace CitiSoft
@@ -80,10 +82,10 @@ namespace CitiSoft
                         }
                     }
                 }
-                catch (SqlException)
+                catch (SqlException error)
                 {
                     transaction.Rollback(); // Rollback on error
-                    MessageBox.Show("An error occurred while adding the problem");
+                    MessageBox.Show("An error occurred while adding the problem" + error);
                     clientIDPHTxtBox.Text = string.Empty;
                     userIDPHTxtBox.Text = string.Empty;
                 }
@@ -157,10 +159,10 @@ namespace CitiSoft
                         }
                     }
                 }
-                catch (SqlException)
+                catch (SqlException error)
                 {
                     transaction.Rollback(); // Rollback on error
-                    MessageBox.Show("An error occurred while finishing the problem");
+                    MessageBox.Show("An error occurred while finishing the problem" + error);
                 }
             }
         }
@@ -185,7 +187,7 @@ namespace CitiSoft
 
             // displays this specific problem
             RuntimeUI.dataBinding(DataBaseManager.functionalityConnectionString, "SELECT \r\n    p.pid AS 'Problem ID', \r\n    c.compName AS 'Company name', \r\n    u.fn AS 'User first name', p.[date] AS 'Date of Creation', \r\n    p.[desc] AS 'Description', \r\n    p.isClosed AS 'Is Finished', \r\n    p.lstRevDate AS 'Last review date'\r\nFROM ProblemHistory p\r\nJOIN [User] u\r\n    ON u.uid = p.uid\r\nJOIN Client c\r\n    ON c.cid = p.cid", ProblemHistoryDgv, int.Parse(problemIDTxtBox.Text), "p.pid ");
-            
+
             // updates the lstRevDate (Last review date)
             using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
             {
@@ -200,11 +202,12 @@ namespace CitiSoft
                         int rowsAffected = command.ExecuteNonQuery();
                         transaction.Commit();
                     }
+
                 }
-                catch (SqlException)
+                catch (SqlException error)
                 {
                     transaction.Rollback(); // Rollback on error
-                    MessageBox.Show("An error occurred while updating the Last review date");
+                    MessageBox.Show("An error occurred while updating the Last review date" + error);
                 }
             }
         }

@@ -538,29 +538,19 @@ namespace CitiSoft
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    if (connection.State != ConnectionState.Open)
+                    connection.Open();
+
+                    // Modify the query and add parameter if 'id' is provided
+                    if (id.HasValue && idName != null)
                     {
-                        connection.Open();
+                        baseQuery += $" WHERE {idName} = {id}";
                     }
 
-                    using (SqlCommand command = new SqlCommand(baseQuery, connection))
-                    {
-                        // Modify the query and add parameter if 'id' is provided
-                        if (id.HasValue && idName != null)
-                        {
-                            command.CommandText += $" WHERE {idName} = @Id";
-                            command.Parameters.AddWithValue("@Id", id.Value);
-                        }
-
-                        DataTable table1 = new DataTable();
-
-                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                        {
-                            adapter.Fill(table1);
-                        }
-
-                        table.DataSource = table1;
-                    }
+                    SqlDataAdapter sqlData = new SqlDataAdapter(baseQuery, connectionString);
+                    DataTable dataTable = new DataTable();
+                    sqlData.Fill(dataTable);
+                    
+                    table.DataSource = dataTable;
                 }
             }
             catch (SqlException sqlEx)
