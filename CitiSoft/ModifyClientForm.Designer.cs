@@ -32,7 +32,6 @@ namespace CitiSoft
         {
             this.updateClientBtn = new System.Windows.Forms.Button();
             this.deleteClientBtn = new System.Windows.Forms.Button();
-            this.ModifyClientDgv = new System.Windows.Forms.DataGridView();
             this.clientIDTxtBox = new System.Windows.Forms.TextBox();
             this.companyNameTxtBox = new System.Windows.Forms.TextBox();
             this.countryTxtBox = new System.Windows.Forms.TextBox();
@@ -53,7 +52,9 @@ namespace CitiSoft
             this.addressLine2Label = new System.Windows.Forms.Label();
             this.postcodeLabel = new System.Windows.Forms.Label();
             this.postcodeTxtBox = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.ModifyClientDgv)).BeginInit();
+            this.ModifyClientDvg = new System.Windows.Forms.DataGridView();
+            this.refreshBtn = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.ModifyClientDvg)).BeginInit();
             this.SuspendLayout();
             // 
             // updateClientBtn
@@ -75,28 +76,6 @@ namespace CitiSoft
             this.deleteClientBtn.Text = "Delete row";
             this.deleteClientBtn.UseVisualStyleBackColor = true;
             this.deleteClientBtn.Click += new System.EventHandler(this.deleteClientBtn_Click);
-            // 
-            // ModifyClientDgv
-            // 
-            this.ModifyClientDgv.AllowUserToAddRows = false;
-            this.ModifyClientDgv.AllowUserToDeleteRows = false;
-            this.ModifyClientDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ModifyClientDgv.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ModifyClientDgv.Location = new System.Drawing.Point(0, 0);
-            this.ModifyClientDgv.Name = "ModifyClientDgv";
-            this.ModifyClientDgv.ReadOnly = true;
-            this.ModifyClientDgv.RowHeadersWidth = 82;
-            this.ModifyClientDgv.RowTemplate.Height = 33;
-            this.ModifyClientDgv.Size = new System.Drawing.Size(1237, 1284);
-            this.ModifyClientDgv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill; // Adjusted
-            this.ModifyClientDgv.AutoGenerateColumns = true; // Adjusted
-            this.ModifyClientDgv.AutoResizeColumns(); // Adjusted
-            this.ModifyClientDgv.DataBindingComplete += (sender, e) =>
-            {
-                // Additional setup after data binding, if needed
-            };
-            this.ModifyClientDgv.TabIndex = 2;
-
             // 
             // clientIDTxtBox
             // 
@@ -268,12 +247,34 @@ namespace CitiSoft
             this.postcodeTxtBox.TabIndex = 24;
             this.postcodeTxtBox.TextChanged += new System.EventHandler(this.postcodeTxtBox_TextChanged);
             // 
+            // ModifyClientDvg
+            // 
+            this.ModifyClientDvg.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ModifyClientDvg.Location = new System.Drawing.Point(12, 12);
+            this.ModifyClientDvg.Name = "ModifyClientDvg";
+            this.ModifyClientDvg.RowHeadersWidth = 82;
+            this.ModifyClientDvg.RowTemplate.Height = 33;
+            this.ModifyClientDvg.Size = new System.Drawing.Size(1237, 1284);
+            this.ModifyClientDvg.TabIndex = 25;
+            // 
+            // refreshBtn
+            // 
+            this.refreshBtn.Location = new System.Drawing.Point(1278, 783);
+            this.refreshBtn.Name = "refreshBtn";
+            this.refreshBtn.Size = new System.Drawing.Size(184, 61);
+            this.refreshBtn.TabIndex = 26;
+            this.refreshBtn.Text = "Refresh Table";
+            this.refreshBtn.UseVisualStyleBackColor = true;
+            this.refreshBtn.Click += new System.EventHandler(this.refreshBtn_Click);
+            // 
             // ModifyClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1865, 1284);
+            this.Controls.Add(this.refreshBtn);
+            this.Controls.Add(this.ModifyClientDvg);
             this.Controls.Add(this.postcodeTxtBox);
             this.Controls.Add(this.postcodeLabel);
             this.Controls.Add(this.addressLine2Label);
@@ -294,7 +295,6 @@ namespace CitiSoft
             this.Controls.Add(this.countryTxtBox);
             this.Controls.Add(this.companyNameTxtBox);
             this.Controls.Add(this.clientIDTxtBox);
-            this.Controls.Add(this.ModifyClientDgv);
             this.Controls.Add(this.deleteClientBtn);
             this.Controls.Add(this.updateClientBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -302,7 +302,7 @@ namespace CitiSoft
             this.MinimizeBox = false;
             this.Name = "ModifyClientForm";
             this.Text = "Modify Client";
-            ((System.ComponentModel.ISupportInitialize)(this.ModifyClientDgv)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ModifyClientDvg)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,7 +312,6 @@ namespace CitiSoft
 
         private System.Windows.Forms.Button updateClientBtn;
         private System.Windows.Forms.Button deleteClientBtn;
-        private System.Windows.Forms.DataGridView ModifyClientDgv;
 
         private System.Windows.Forms.TextBox clientIDTxtBox;
         private System.Windows.Forms.TextBox companyNameTxtBox;
@@ -336,5 +335,7 @@ namespace CitiSoft
         private Label addressLine2Label;
         private Label postcodeLabel;
         private TextBox postcodeTxtBox;
+        private DataGridView ModifyClientDvg;
+        private Button refreshBtn;
     }
 }

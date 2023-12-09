@@ -17,12 +17,6 @@ namespace CitiSoft
         public ModifyClientForm()
         {
             InitializeComponent();
-            Load += ModifyClientForm_Load;
-        }
-
-        private void ModifyClientForm_Load(object sender, EventArgs e)
-        {
-            showDataInTable();
         }
 
         private void updateClientBtn_Click(object sender, EventArgs e)
@@ -353,11 +347,19 @@ namespace CitiSoft
             TextBox textBox = sender as TextBox;
             InputValidation.IsOnlyAlphanumericOrWithDots(textBox, 30, "Postcode");
         }
-
-        // inserts data from the database into the data grid view
-        public void showDataInTable()
+        
+        // refreshes the table
+        private void refreshBtn_Click(object sender, EventArgs e)
         {
-            RuntimeUI.dataBinding(DataBaseManager.functionalityConnectionString, "SELECT c.cid AS 'Client ID', c.compName AS 'Company Name', cu.phone AS 'Phone', cu.email AS 'Email', CONCAT(cu.addressLine1, ' ', cu.addressLine2) AS 'Address', cu.city AS 'City', cu.country AS 'Country', cu.postCode AS 'Postcode' FROM Client c JOIN CustAddress cu ON c.cid = cu.cid; ", ModifyClientDgv);
+            using (SqlConnection sqlCon = new SqlConnection(DataBaseManager.functionalityConnectionString))
+            {
+                sqlCon.Open();
+                SqlDataAdapter sqlData = new SqlDataAdapter("SELECT c.cid AS 'Client ID', c.compName AS 'Company Name', cu.phone AS 'Phone', cu.email AS 'Email', CONCAT(cu.addressLine1, ' ', cu.addressLine2) AS 'Address', cu.city AS 'City', cu.country AS 'Country', cu.postCode AS 'Postcode' FROM Client c JOIN CustAddress cu ON c.cid = cu.cid;", sqlCon);
+                DataTable dt = new DataTable();
+                sqlData.Fill(dt);
+
+                ModifyClientDvg.DataSource = dt;
+            }
         }
     }
 }

@@ -316,7 +316,6 @@ namespace CitiSoft
             modifyClientTabPage.UseVisualStyleBackColor = true;
 
             ModifyClientForm modifyClientForm = new ModifyClientForm();
-            modifyClientForm.showDataInTable();
             AddForm(modifyClientForm, modifyClientTabPage);
         }
         public void clientProblemHistoryFunc()

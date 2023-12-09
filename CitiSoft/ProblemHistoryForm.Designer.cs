@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ProblemHistoryDgv = new System.Windows.Forms.DataGridView();
             this.addClientBtn = new System.Windows.Forms.Button();
             this.descriptionTxtBox = new System.Windows.Forms.TextBox();
             this.descriptionLabel = new System.Windows.Forms.Label();
@@ -42,31 +41,9 @@
             this.viewProblemBtn = new System.Windows.Forms.Button();
             this.viewAllProblemsBtn = new System.Windows.Forms.Button();
             this.problemHistoryPanel = new System.Windows.Forms.Panel();
+            this.ProblemHistoryDgv = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.ProblemHistoryDgv)).BeginInit();
             this.SuspendLayout();
-            
-            //
-            // ProblemHistoryDgv
-            //
-            this.ProblemHistoryDgv.AllowUserToAddRows = false;
-            this.ProblemHistoryDgv.AllowUserToDeleteRows = false;
-            this.ProblemHistoryDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ProblemHistoryDgv.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ProblemHistoryDgv.Location = new System.Drawing.Point(0, 0);
-            this.ProblemHistoryDgv.Name = "ProblemHistoryDgv";
-            this.ProblemHistoryDgv.ReadOnly = true;
-            this.ProblemHistoryDgv.RowHeadersWidth = 82;
-            this.ProblemHistoryDgv.RowTemplate.Height = 33;
-            this.ProblemHistoryDgv.Size = new System.Drawing.Size(1237, 1284);
-            this.ProblemHistoryDgv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill; // Adjusted
-            this.ProblemHistoryDgv.AutoGenerateColumns = true; // Adjusted
-            this.ProblemHistoryDgv.AutoResizeColumns(); // Adjusted
-            this.ProblemHistoryDgv.DataBindingComplete += (sender, e) =>
-            {
-                // Additional setup after data binding, if needed
-            };
-            this.ProblemHistoryDgv.TabIndex = 0;
-
             // 
             // addClientBtn
             // 
@@ -184,6 +161,20 @@
             this.problemHistoryPanel.Size = new System.Drawing.Size(200, 100);
             this.problemHistoryPanel.TabIndex = 0;
             // 
+            // ProblemHistoryDgv
+            // 
+            this.ProblemHistoryDgv.AllowUserToAddRows = false;
+            this.ProblemHistoryDgv.AllowUserToDeleteRows = false;
+            this.ProblemHistoryDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ProblemHistoryDgv.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ProblemHistoryDgv.Location = new System.Drawing.Point(0, 0);
+            this.ProblemHistoryDgv.Name = "ProblemHistoryDgv";
+            this.ProblemHistoryDgv.ReadOnly = true;
+            this.ProblemHistoryDgv.RowHeadersWidth = 82;
+            this.ProblemHistoryDgv.RowTemplate.Height = 33;
+            this.ProblemHistoryDgv.Size = new System.Drawing.Size(1237, 1284);
+            this.ProblemHistoryDgv.TabIndex = 0;
+            // 
             // ProblemHistoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -212,8 +203,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView ProblemHistoryDgv;
         private System.Windows.Forms.Button addClientBtn;
         private System.Windows.Forms.TextBox descriptionTxtBox;
         private System.Windows.Forms.Label descriptionLabel;
@@ -227,5 +216,6 @@
         private System.Windows.Forms.Button viewProblemBtn;
         private System.Windows.Forms.Button viewAllProblemsBtn;
         private System.Windows.Forms.Panel problemHistoryPanel;
+        private System.Windows.Forms.DataGridView ProblemHistoryDgv;
     }
 }
