@@ -28,12 +28,39 @@ namespace CitiSoft
         private Label lblUsername;
         private Label lblPassword;
         private Label lblUserType;
+        private TextBox txtDeleteUsername;
+        private Button btnDeleteUser;
+        private Label lblDeleteUser;
 
         public UserRegistrationForm()
         {
             InitializeComponent();
+            InitializeDeleteComponents();
         }
+        private void InitializeDeleteComponents()
+        {
+            // Initialize and configure the delete user label and textbox
+            lblDeleteUser = new Label { Text = "Username:", AutoSize = true };
+            txtDeleteUsername = new TextBox();
 
+            // Initialize and configure the delete user button
+            btnDeleteUser = new Button { Text = "Delete User" };
+
+            // Positioning controls
+            lblDeleteUser.Location = new Point(10, 330);
+            txtDeleteUsername.Location = new Point(130, 330);
+            txtDeleteUsername.Size = new Size(150, 20);
+            btnDeleteUser.Location = new Point(130, 360);
+            btnDeleteUser.Size = new Size(150, 20);
+
+            // Subscribe to button click event
+            btnDeleteUser.Click += BtnDeleteUser_Click;
+
+            // Add controls to the form
+            Controls.Add(lblDeleteUser);
+            Controls.Add(txtDeleteUsername);
+            Controls.Add(btnDeleteUser);
+        }
         private void InitializeComponent()
         {
             this.txtFirstName = new TextBox();
@@ -148,6 +175,54 @@ namespace CitiSoft
             this.Text = "Registration";
         
 
+        }
+        private void BtnDeleteUser_Click(object sender, EventArgs e)
+        {
+            var usernameToDelete = txtDeleteUsername.Text.Trim();
+            if (string.IsNullOrEmpty(usernameToDelete))
+            {
+                MessageBox.Show("Please enter a username to delete.");
+                return;
+            }
+
+            // Confirmation dialog before deletion
+            var confirmResult = MessageBox.Show($"Are you sure to delete user {usernameToDelete}?",
+                                                "Confirm Delete", MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes)
+            {
+                DeleteUserByUsername(usernameToDelete);
+            }
+        }
+
+        private void DeleteUserByUsername(string username)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
+                {
+                    var query = "DELETE FROM [User] WHERE userName = @Username";
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Username", username);
+                        connection.Open();
+                        int result = command.ExecuteNonQuery();
+
+                        if (result > 0)
+                        {
+                            MessageBox.Show("User successfully deleted.");
+                            // Optionally refresh the user list if you have a display control
+                        }
+                        else
+                        {
+                            MessageBox.Show("User not found or could not be deleted.");
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("An error occurred while deleting the user: " + ex.Message);
+            }
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
