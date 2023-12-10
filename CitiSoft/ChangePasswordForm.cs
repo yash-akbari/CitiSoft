@@ -24,7 +24,8 @@ namespace CitiSoft
         private Label oldPasswordLabel;
         private Label newPasswordLabel;
         private Label confirmNewPasswordLabel;
-
+        private int currentUserId = 1; 
+        private string connectionString = DataBaseManager.functionalityConnectionString; 
         public ChangePasswordForm()
         {
             InitializeComponent();
@@ -101,53 +102,50 @@ namespace CitiSoft
                 return;
             }
 
-            /*if (!IsOldPasswordCorrect(oldPassword))
+            if (!IsOldPasswordCorrect(oldPassword))
             {
                 MessageBox.Show("The old password is incorrect.");
                 return;
             }
 
-            UpdatePasswordInDatabase(newPassword);*/
+            MessageBox.Show("Password was changed successfully!");
+            UpdatePasswordInDatabase(newPassword);
         }
-        /*private bool IsOldPasswordCorrect(string oldPassword)
+        private bool IsOldPasswordCorrect(string oldPassword)
         {
-            using (var connection = new SqlConnection(connectionString))
+            // This method checks if the old password entered by the user matches the one in the database.
+            using (var connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
             {
                 connection.Open();
-                var query = "SELECT pwd FROM User WHERE uid = @uid";
+                var query = "SELECT pwd FROM [User] WHERE uid = @uid";
                 using (var command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@uid", currentUsername);
+                    command.Parameters.AddWithValue("@uid", currentUserId);
                     var storedPassword = command.ExecuteScalar()?.ToString();
+                    Console.WriteLine($"Entered Old Password: {oldPassword}");
+                    Console.WriteLine($"Stored Password: {storedPassword}");
 
-                    return HashPassword(oldPassword) == storedPassword;
+                    // Directly compare the entered old password with the stored one (as hashing has been removed).
+                    return oldPassword == storedPassword;
                 }
             }
         }
         private void UpdatePasswordInDatabase(string newPassword)
         {
-            using (var connection = new SqlConnection(connectionString))
+            // This method updates the user's password in the database to the new password.
+            using (var connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
             {
                 connection.Open();
-                var query = "UPDATE User SET pwd = @newPwd WHERE uid = @uid";
+                var query = "UPDATE [User] SET pwd = @newPwd WHERE uid = @uid";
                 using (var command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@newPwd", HashPassword(newPassword));
-                    command.Parameters.AddWithValue("@uid", currentUsername);
+                    command.Parameters.AddWithValue("@newPwd", newPassword);
+                    command.Parameters.AddWithValue("@uid", currentUserId);
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        private string HashPassword(string password)
-        {
-            using (var sha256 = SHA256.Create())
-            {
-                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                var hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLowerInvariant();
-                return hash;
-            }
-        }*/
 
         private void ForgotPasswordButton_Click(object sender, EventArgs e)
         {
