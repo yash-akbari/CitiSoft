@@ -109,13 +109,16 @@ namespace CitiSoft
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
-            existingSoftware.SoftwareId = sid;
-            existingSoftware.SoftwareName = null;
-            int softwareIndex = Controller.softwareModelList.FindIndex(software => software.SoftwareId == sid);
-            compNameComboBox.DataSource = Controller.vendorModelList.Select(vendor => vendor.CompanyName).ToList();
-            Controller.softwareModelList.RemoveAt(softwareIndex);
-            Controller.softwareModelList.Insert(softwareIndex, existingSoftware);
+            if (sid > 0)
+            {
+                existingSoftware = Controller.softwareModelList.FirstOrDefault(software => software.SoftwareName.Equals(softwareNameComboBox.SelectedItem.ToString()));
+                MessageBox.Show(existingSoftware.SoftwareName);
 
+                existingSoftware.Operation = 'D';
+                int softwareIndex = Controller.softwareModelList.FindIndex(software => software.SoftwareId == existingSoftware.SoftwareId);
+                Controller.softwareModelList[softwareIndex]= existingSoftware;
+                new ViewDataByVendor(1);
+            }
 
         }
 
@@ -136,7 +139,6 @@ namespace CitiSoft
         {
             existingSoftware = Controller.softwareModelList.FirstOrDefault(software => software.SoftwareName.Equals(softwareNameComboBox.SelectedItem.ToString()));
             sid = existingSoftware.SoftwareId;
-        
         }
 
 

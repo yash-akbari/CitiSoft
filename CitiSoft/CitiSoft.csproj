@@ -206,6 +206,9 @@
     <Compile Include="ViewDataByVendor.cs">
       <SubType>Form</SubType>
     </Compile>
+    <EmbeddedResource Include="addVendor.resx">
+      <DependentUpon>AddVendor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="dashboard.resx">
       <DependentUpon>dashboard.cs</DependentUpon>
     </EmbeddedResource>

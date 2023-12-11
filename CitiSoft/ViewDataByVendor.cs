@@ -239,9 +239,11 @@ namespace CitiSoft
             dataRetPanel.Controls.Add(downloadDocumentBtn);
         }
 
+        
+
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            
+            //softwareList.Where(x => x.Operation != 'D').ToList();
         }
 
         private void RefreshButton_Click(object sender, EventArgs e)
@@ -250,6 +252,7 @@ namespace CitiSoft
             Controller.sendAddressUpdate(Controller.addressModelList);
             Controller.sendSoftwareUpdate(Controller.softwareModelList);
             new Controller();
+            new ViewDataByVendor(1);
         }
 
         private void SoftCompDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -265,95 +268,94 @@ namespace CitiSoft
             {
                 String val = searchComboBox.SelectedItem as String;
                 String searchItem = searchTextBox.Text.ToLowerInvariant().Trim();
-                string datePattern = @"\b\d{4}-\d{2}-\d{2}\b";
 
                 if (searchTextBox.Text.Length > 0)
                 {
                     switch (val)
                     {
                         case "Vendor":
-                            VendorDataGridView.DataSource = Controller.vendorModelList.Where(vendor => vendor.CompanyName.ToLowerInvariant().Contains(searchItem)).ToList();
+                            VendorDataGridView.DataSource = Controller.vendorModelList.Where(vendor => vendor.CompanyName.ToLowerInvariant().Contains(searchItem) && vendor.Operation != 'D').ToList();
                             break;
                         case "         Company Name":
-                            VendorDataGridView.DataSource = Controller.vendorModelList.Where(vendor => vendor.CompanyName.ToLowerInvariant().Contains(searchItem)).ToList();
+                            VendorDataGridView.DataSource = Controller.vendorModelList.Where(vendor => vendor.CompanyName.ToLowerInvariant().Contains(searchItem) && vendor.Operation != 'D').ToList();
                             break;
                         case "         Established":
-                            VendorDataGridView.DataSource = Controller.vendorModelList.Where(vendor => vendor.CompanyEstablished.ToString().Contains(searchItem)).ToList();
+                            VendorDataGridView.DataSource = Controller.vendorModelList.Where(vendor => vendor.CompanyEstablished.ToString().Contains(searchItem) && vendor.Operation != 'D').ToList();
                             break;
                         case "         Employees Count":
-                            VendorDataGridView.DataSource = Controller.vendorModelList.Where(vendor => vendor.EmployeesCount.ToLowerInvariant().Contains(searchItem)).ToList();
+                            VendorDataGridView.DataSource = Controller.vendorModelList.Where(vendor => vendor.EmployeesCount.ToLowerInvariant().Contains(searchItem) && vendor.Operation != 'D').ToList();
                             break;
                         case "         Internal Professional Services":
-                            VendorDataGridView.DataSource = Controller.vendorModelList.Where(vendor => vendor.InternalProfessionalServices.ToString().ToLowerInvariant().Contains(searchItem)).ToList();
+                            VendorDataGridView.DataSource = Controller.vendorModelList.Where(vendor => vendor.InternalProfessionalServices.ToString().ToLowerInvariant().Contains(searchItem) && vendor.Operation != 'D').ToList();
                             break;
 
 
                         case "Software":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => software.SoftwareName.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => software.SoftwareName.ToLowerInvariant().Contains(searchItem) && software.Operation != 'D').ToList().Select(component => component.Vid).Distinct().ToList());
                             break;
 
                         case "         Software Name":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => software.SoftwareName.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => software.SoftwareName.ToLowerInvariant().Contains(searchItem) && software.Operation != 'D').ToList().Select(component => component.Vid).Distinct().ToList());
                             break;
 
                         case "         Type of Software":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => Controller.typeOfSoftwareModelList.Where(component => component.TypeOfSoftware.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Sid).Distinct().ToList().Contains(software.SoftwareId)).ToList().Select(software => software.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => Controller.typeOfSoftwareModelList.Where(component => component.TypeOfSoftware.ToLowerInvariant().Contains(searchItem) && component.Operation!='D').ToList().Select(component => component.Sid).Distinct().ToList().Contains(software.SoftwareId)).ToList().Select(software => software.Vid).Distinct().ToList());
                             break;
 
                         case "         Website":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => software.SoftwareWebsite.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => software.SoftwareWebsite.ToLowerInvariant().Contains(searchItem) && software.Operation != 'D').ToList().Select(component => component.Vid).Distinct().ToList());
                             break;
 
                         case "         Descritption":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => software.Description.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => software.Description.ToLowerInvariant().Contains(searchItem) && software.Operation != 'D').ToList().Select(component => component.Vid).Distinct().ToList());
                             break;
 
                         case "         Comments":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => Controller.commentsModelList.Where(component => component.Comments.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.sid).Distinct().ToList().Contains(software.SoftwareId)).ToList().Select(software => software.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => Controller.commentsModelList.Where(component => component.Comments.ToLowerInvariant().Contains(searchItem) && component.Operation != 'D').ToList().Select(component => component.Sid).Distinct().ToList().Contains(software.SoftwareId)).ToList().Select(software => software.Vid).Distinct().ToList());
                             break;
 
                         case "         Business Areas":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => Controller.businessAreasModelList.Where(component => component.BusinessAreas.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Sid).Distinct().ToList().Contains(software.SoftwareId)).ToList().Select(software => software.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => Controller.businessAreasModelList.Where(component => component.BusinessAreas.ToLowerInvariant().Contains(searchItem) && component.Operation != 'D').ToList().Select(component => component.Sid).Distinct().ToList().Contains(software.SoftwareId)).ToList().Select(software => software.Vid).Distinct().ToList());
                             break;
 
                         case "         Modules":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => Controller.modulesModelList.Where(component => component.Modules.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Sid).Distinct().ToList().Contains(software.SoftwareId)).ToList().Select(software => software.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => Controller.modulesModelList.Where(component => component.Modules.ToLowerInvariant().Contains(searchItem) && component.Operation != 'D').ToList().Select(component => component.Sid).Distinct().ToList().Contains(software.SoftwareId)).ToList().Select(software => software.Vid).Distinct().ToList());
                             break;
 
                         case "         Financial Services Client Type":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => Controller.financialServicesModelList.Where(component => component.FinancialService.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Sid).Distinct().ToList().Contains(software.SoftwareId)).ToList().Select(software => software.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => Controller.financialServicesModelList.Where(component => component.FinancialService.ToLowerInvariant().Contains(searchItem) && component.Operation != 'D').ToList().Select(component => component.Sid).Distinct().ToList().Contains(software.SoftwareId)).ToList().Select(software => software.Vid).Distinct().ToList());
                             break;
 
                         case "         Cloud":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => software.Cloud.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => software.Cloud.ToLowerInvariant().Contains(searchItem) && software.Operation != 'D').ToList().Select(component => component.Vid).Distinct().ToList());
                             break;
                         case "         Additional Info":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => software.AdditionalInfo.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.softwareModelList.Where(software => software.AdditionalInfo.ToLowerInvariant().Contains(searchItem) && software.Operation != 'D').ToList().Select(component => component.Vid).Distinct().ToList());
                             break;
 
 
                         case "         Address":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.addressModelList.Where(address => address.AddressLine1.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.addressModelList.Where(address => address.AddressLine1.ToLowerInvariant().Contains(searchItem) && address.Operation != 'D').ToList().Select(component => component.Vid).Distinct().ToList());
                             break;
 
                         case "         City":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.addressModelList.Where(address => address.City.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.addressModelList.Where(address => address.City.ToLowerInvariant().Contains(searchItem) && address.Operation != 'D').ToList().Select(component => component.Vid).Distinct().ToList());
                             break;
 
                         case "         Country":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.addressModelList.Where(address => address.Country.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.addressModelList.Where(address => address.Country.ToLowerInvariant().Contains(searchItem) && address.Operation != 'D').ToList().Select(component => component.Vid).Distinct().ToList());
                             break;
 
                         case "         PostCode":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.addressModelList.Where(address => address.PostCode.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.addressModelList.Where(address => address.PostCode.ToLowerInvariant().Contains(searchItem) && address.Operation != 'D').ToList().Select(component => component.Vid).Distinct().ToList());
                             break;
 
                         case "         Email":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.addressModelList.Where(address => address.Email.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.addressModelList.Where(address => address.Email.ToLowerInvariant().Contains(searchItem) && address.Operation != 'D').ToList().Select(component => component.Vid).Distinct().ToList());
                             break;
 
                         case "         TelePhone":
-                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.addressModelList.Where(address => address.Telephone.ToLowerInvariant().Contains(searchItem)).ToList().Select(component => component.Vid).Distinct().ToList());
+                            VendorDataGridView.DataSource = GetVendorsForSoftwareLists(Controller.addressModelList.Where(address => address.Telephone.ToLowerInvariant().Contains(searchItem) && address.Operation != 'D').ToList().Select(component => component.Vid).Distinct().ToList());
                             break;
                     }
                 }   
@@ -370,7 +372,7 @@ namespace CitiSoft
 
         private List<VendorModel> GetVendorsForSoftwareLists(List<int> vidList)
         {
-            return Controller.vendorModelList.Where(vendor => vidList.Contains(vendor.Vid)).ToList();
+            return Controller.vendorModelList.Where(vendor => vidList.Contains(vendor.Vid) && vendor.Operation != 'D').ToList();
         }
 
         private void SoftwareDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -453,7 +455,7 @@ namespace CitiSoft
                 {
                     sid = Convert.ToInt32(row.Cells["SoftwareId"].Value);
                     CommentsModel commentsModel=Controller.getComments(sid);
-                    SoftwareModel model = Controller.softwareModelList.FirstOrDefault(software => software.SoftwareId == sid);
+                    SoftwareModel model = Controller.softwareModelList.FirstOrDefault(software => software.SoftwareId == sid && software.Operation!='D');
                     
                     DataTable additionalSoft = new DataTable();
                     additionalSoft.Columns.Add("Software Types", typeof(String));

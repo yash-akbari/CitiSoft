@@ -15,30 +15,35 @@ namespace CitiSoft
         public String Description { get; set; }
         public String Cloud { get; set; }
         public String AdditionalInfo { get; set; }
+        public char Operation { get; set; }
     }
     public class TypeOfSoftwareModel
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public int Sid { get; set; }
         public string TypeOfSoftware { get; set; }
+        public char Operation { get; set; }
     }
     public class BusinessAreasModel
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public int Sid { get; set; }
         public string BusinessAreas { get; set; }
+        public char Operation { get; set; }
     }
     public class ModulesModel
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public int Sid { get; set; }
         public string Modules { get; set; }
+        public char Operation { get; set; }
     }
     public class FinancialServicesModel      
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public int Sid { get; set; }
         public string FinancialService { get; set; }
+        public char Operation { get; set; }
     }
     public class VendorModel
     {
@@ -47,11 +52,12 @@ namespace CitiSoft
         public int CompanyEstablished { get; set; }
         public String EmployeesCount { get; set; }
         public Boolean InternalProfessionalServices { get; set; }
+        public char Operation { get; set; }
     }
 
     public class AddressModel 
     {
-        public int addressId { get; set; }
+        public int AddressId { get; set; }
         public int Vid { get; set; }
         public String AddressLine1 { get; set; }
         public String AddressLine2 { get; set; }
@@ -60,14 +66,16 @@ namespace CitiSoft
         public String PostCode { get; set; }
         public String Email { get; set; }
         public String Telephone { get; set; }
+        public char Operation { get; set; }
     }
     public class CommentsModel 
     {
-        public int sid { get; set; }
-        public int commentId { get; set; }
+        public int Sid { get; set; }
+        public int CommentId { get; set; }
         public string Comments { get; set; }
         public int LastReviewedInterval { get; set; }
         public DateTime LastReviewedDate { get; set; }
         public DateTime LastDemoDate { get; set; }
+        public char Operation { get; set; }
     }
 }

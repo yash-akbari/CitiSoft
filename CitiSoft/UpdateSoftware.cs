@@ -210,18 +210,17 @@ namespace CitiSoft
 
                 if (vid != 0)
                 {
-                    softwareNameComboBox.DataSource= Controller.softwareModelList.Where(software => software.Vid == vid).Select(software => software.SoftwareName).ToList();
+                    softwareNameComboBox.DataSource= Controller.softwareModelList.Where(software => software.Vid == vid && software.Operation!='D').Select(software => software.SoftwareName).ToList();
                 }
             }
         }
-        List<int> typeOfId = Controller.typeOfSoftwareModelList.Where(software => software.Sid == sid).Select(software => software.id).ToList();
-        List<int> businessId = Controller.businessAreasModelList.Where(business => business.Sid == sid).Select(business => business.id).ToList();
-        List<int> moduleId = Controller.modulesModelList.Where(mod => mod.Sid == sid).Select(mod => mod.id).ToList();
-        List<int> financeId = Controller.financialServicesModelList.Where(fin => fin.Sid == sid).Select(fin => fin.id).ToList();
+        
         private void SoftwareNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            clearAll();
             SoftwareModel softwareModel = Controller.softwareModelList.FirstOrDefault(software => software.SoftwareName.Equals(softwareNameComboBox.SelectedItem.ToString()));
             sid = softwareModel.SoftwareId;
+            
             softwareWebsiteTextBox.Text = softwareModel.SoftwareWebsite;
             if (softwareModel.Cloud == "Cloud Native")
                 cloudComboBox.SelectedIndex = 1;
@@ -231,13 +230,13 @@ namespace CitiSoft
                 cloudComboBox.SelectedIndex = 3;
             else
                 cloudComboBox.SelectedIndex = 0;
-            List<String> typeOf = Controller.typeOfSoftwareModelList.Where(software => software.Sid == sid).Select(software => software.TypeOfSoftware).ToList();
+            List<String> typeOf = Controller.typeOfSoftwareModelList.Where(software => software.Sid == sid && software.Operation != 'D').Select(software => software.TypeOfSoftware).ToList();
             
-            List<String> businessarea = Controller.businessAreasModelList.Where(business => business.Sid == sid).Select(business => business.BusinessAreas).ToList();
+            List<String> businessarea = Controller.businessAreasModelList.Where(business => business.Sid == sid && business.Operation != 'D').Select(business => business.BusinessAreas).ToList();
             
-            List<String> module = Controller.modulesModelList.Where(mod => mod.Sid == sid).Select(mod => mod.Modules).ToList();
+            List<String> module = Controller.modulesModelList.Where(mod => mod.Sid == sid && mod.Operation != 'D').Select(mod => mod.Modules).ToList();
             
-            List<String> finance = Controller.financialServicesModelList.Where(client => client.Sid == sid).Select(client => client.FinancialService).ToList();
+            List<String> finance = Controller.financialServicesModelList.Where(client => client.Sid == sid && client.Operation != 'D').Select(client => client.FinancialService).ToList();
             
             foreach (var val in typeOf)
             {
@@ -295,69 +294,72 @@ namespace CitiSoft
             {
                 try
                 {
-                    int softwareIndex = Controller.softwareModelList.FindIndex(software => software.SoftwareId == sid);
-                    SoftwareModel existingSoftware = Controller.softwareModelList.FirstOrDefault(software => software.SoftwareId == sid);
+                    int softwareIndex = Controller.softwareModelList.FindIndex(software => software.SoftwareId == sid && software.Operation != 'D');
+                    SoftwareModel existingSoftware = Controller.softwareModelList.FirstOrDefault(software => software.SoftwareId == sid && software.Operation!='D');
                     existingSoftware.SoftwareName = InputValidation.GetStringValueOrNoneOrWhitespace(softwareNameComboBox.Text);
                     existingSoftware.SoftwareWebsite = InputValidation.GetStringValueOrNoneOrWhitespace(softwareWebsiteTextBox.Text);
                     existingSoftware.Cloud = cloudComboBox.SelectedItem.ToString();
+                    existingSoftware.Operation = 'U';
                     Controller.softwareModelList.RemoveAt(softwareIndex);
                     Controller.softwareModelList.Insert(softwareIndex, existingSoftware);
                     foreach (var typeOfSoftwareModel in Controller.typeOfSoftwareModelList.Where(v => v.Sid == sid))
                     {
-                        typeOfSoftwareModel.Sid = 0;
+                        typeOfSoftwareModel.Operation='D';
                     }
                     foreach (var type in typeOfSoftwareCustomListBox.listBox.Items)
                     {
                         Controller.typeOfSoftwareModelList.Add(new TypeOfSoftwareModel
                         {
-                            id=-1,
                             Sid = sid,
                             TypeOfSoftware = type.ToString(),
+                            Operation = 'I'
                         }) ;    
                     }
 
-                    foreach (var business in Controller.businessAreasModelList.Where(v => v.Sid == sid))
+                    foreach (var business in Controller.businessAreasModelList.Where(v => v.Sid == sid ))
                     {
-                        business.Sid = 0;
+                        business.Operation='D';
                     }
                     foreach (var business in buisenessAreasCustomListBox.listBox.Items)
                     {
                         Controller.businessAreasModelList.Add(new BusinessAreasModel
                         {
-                            id = -1,
+                            
                             Sid  = sid,
-                            BusinessAreas = business.ToString()
+                            BusinessAreas = business.ToString(),
+                            Operation = 'I'
                         });
                     }
                     foreach (var module in Controller.modulesModelList.Where(v => v.Sid == sid))
                     {
-                        module.Sid = 0;
+                        module.Operation='D';
                     }
                     foreach (var modules in modulesCustomListBox.listBox.Items)
                     {
                         Controller.modulesModelList.Add(new ModulesModel
                         {
-                            id = -1,
                             Sid = sid,
-                            Modules = modules.ToString()
+                            Modules = modules.ToString(),
+                            Operation = 'I'
                         });
                     }
                     foreach (var fin in Controller.financialServicesModelList.Where(v => v.Sid == sid))
                     {
-                        fin.Sid = 0;
+                        fin.Operation='D';
                     }
                     foreach (var finance in financialServicesCustomListBox.listBox.Items)
                     {
                         Controller.financialServicesModelList.Add(new FinancialServicesModel
                         {
-                            id = -1,
                             Sid = sid,
-                            FinancialService = finance.ToString()
+                            FinancialService = finance.ToString(),
+                            Operation = 'I'
                         });
                     }
                     
                     clearAll();
-                    MessageBox.Show("Software Successfully added.");
+                    MessageBox.Show("Software Successfully Updated.");
+                    new ViewDataByVendor(1);
                     //Controller.sendSoftwareUpdate(Controller.softwareModelList);
 
                 }

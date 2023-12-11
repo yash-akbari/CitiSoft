@@ -63,97 +63,14 @@ namespace CitiSoft
 
         void InitializeComponent()
         {
-            AutoScroll = true;
-            internalServicesComboBox.Items.Add("Yes");
-            internalServicesComboBox.Items.Add("No");
-            internalServicesComboBox.SelectedIndex = 0;
+            this.SuspendLayout();
+            // 
+            // AddVendor
+            // 
+            this.ClientSize = new System.Drawing.Size(282, 253);
+            this.Name = "AddVendor";
+            this.ResumeLayout(false);
 
-            Controls.AddRange(new Control[]
-            {
-                companyNameLabel, companyNameTextBox,
-                companyEstablishedLabel, companyEstablishedTextBox,
-                addressPanel,
-                employeesLabel, employeesTextBox,
-                internalServicesLabel, internalServicesComboBox,
-                submitButton, clearButton
-            });
-            string[] venControlVarName = new string[]
-            {
-                "companyNameLabel", "companyNameTextBox",
-                "companyEstablishedLabel", "companyEstablishedTextBox",
-                "addressPanel",
-                "employeesLabel", "employeesTextBox",
-                "internalServicesLabel", "internalServicesComboBox",
-                "submitButton", "clearButton"
-            };
-            string[] venControlText = new string[]
-            {   "Company Name:",
-                "Company Established:",
-                "No. of Employees:",
-                "Internal Professional Services:",
-                "Submit",
-                "Clear"
-            };
-            int venAddxLoc = 10;
-            int venAddyLoc = 11;
-            int venAddHeight = 30;
-            int venAddWidth = 200;
-            int i = 0, j = 0;
-            foreach (Control con in Controls)
-            {
-                con.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                con.Name = venControlVarName.ElementAt(i++);
-                if (con is Label)
-                {
-                    con.Width = venAddWidth;
-                    con.Height = venAddHeight;
-                    con.Text = venControlText[j++];
-                    con.Left = venAddxLoc;
-                    con.Top = venAddyLoc;
-                }
-                else if (con is RichTextBox)
-                {
-                    con.TabStop = false;
-                    con.Width = venAddWidth + 100;
-                    con.Height = venAddHeight + 90;
-
-                    con.Left = venAddxLoc + 210;
-                    con.Top = venAddyLoc;
-                    venAddyLoc = venAddyLoc + 120;
-                }
-                else if (con is AddressPanel)
-                {
-                    con.TabStop = false;
-                    con.Left = venAddxLoc;
-                    con.Top = venAddyLoc;
-                    venAddyLoc = venAddyLoc + 350;
-                }
-                else if (con is TextBox || con is DateTimePicker || con is ComboBox)
-                {
-                    con.TabStop = false;
-                    con.Width = venAddWidth + 100;
-                    con.Height = venAddHeight;
-
-                    con.Left = venAddxLoc + 210;
-                    con.Top = venAddyLoc;
-                    venAddyLoc = venAddyLoc + 50;
-                }
-                else
-                {
-                    con.Width = venAddWidth - 100;
-                    con.Height = venAddHeight;
-                    con.Left = venAddxLoc + 100;
-                    con.Top = venAddyLoc;
-                    con.Text = venControlText[j++];
-                    venAddxLoc = venAddxLoc + 110;
-                }
-            }
-            submitButton.Click += new EventHandler(submitButton_click);
-            clearButton.Click += ClearButton_Click;
-            companyNameTextBox.TextChanged += CompanyNameTextBox_TextChanged;
-            companyEstablishedTextBox.TextChanged += CompanyEstablishedTextBox_TextChanged;
-            employeesTextBox.TextChanged += EmployeesTextBox_TextChanged;
-            internalServicesComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void ClearButton_Click(object sender, EventArgs e)
@@ -195,14 +112,14 @@ namespace CitiSoft
                         CompanyEstablished = InputValidation.ParseStringToIntOrZero((companyEstablishedTextBox.Text)),
                         EmployeesCount = InputValidation.GetStringValueOrNoneOrWhitespace(employeesTextBox.Text),
                         InternalProfessionalServices = InputValidation.ParseTrueOrFalse(internalServicesComboBox.SelectedText),
+                        Operation = 'I'
                     });
                     foreach (AddressModel address in addressPanel.addressList)
                     {
                         Controller.addressModelList.Add
                         (new AddressModel
                         {
-                            Vid = -1,
-                            addressId = random,
+                            AddressId = random,
                             AddressLine1 = address.AddressLine1,
                             AddressLine2 = address.AddressLine2,
                             City = address.City,
@@ -210,11 +127,13 @@ namespace CitiSoft
                             PostCode = address.PostCode,
                             Email = address.Email,
                             Telephone = address.Telephone,
+                            Operation = 'I'
                         });
                     }
                     clearAll();
                     //Controller.sendVendorUpdate(Controller.vendorModelList);
                     MessageBox.Show("Vendor Successfully added.");
+                    new ViewDataByVendor(1);
 
                 }
                 catch (FormatException fe)

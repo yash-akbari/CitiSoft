@@ -113,10 +113,11 @@ namespace CitiSoft
 
             int vendorIndex = Controller.vendorModelList.FindIndex(vendor => vendor.Vid == vid);
             existingVendor.Vid = vid;
-            existingVendor.CompanyName = null;
+            existingVendor.Operation = 'D';
             Controller.vendorModelList.RemoveAt(vendorIndex);
             Controller.vendorModelList.Insert(vendorIndex, existingVendor);
-            companyNameComboBox.DataSource = Controller.vendorModelList.Select(vendor => vendor.CompanyName).ToList();
+            new ViewDataByVendor(1);
+            //companyNameComboBox.DataSource = Controller.vendorModelList.Select(vendor => vendor.CompanyName).ToList();
         }
     }
 }

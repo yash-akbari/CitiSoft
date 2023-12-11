@@ -165,7 +165,8 @@ namespace CitiSoft
 
         private void CompanyNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            VendorModel vendorModel= Controller.vendorModelList.FirstOrDefault(vendor => vendor.CompanyName.Equals(companyNameComboBox.SelectedItem.ToString(), StringComparison.OrdinalIgnoreCase));
+            clearAll();
+            VendorModel vendorModel= Controller.vendorModelList.FirstOrDefault(vendor => vendor.CompanyName.Equals(companyNameComboBox.SelectedItem.ToString(), StringComparison.OrdinalIgnoreCase)  && vendor.Operation!='D');
             companyEstablishedTextBox.Text = vendorModel.CompanyEstablished.ToString();
             employeesTextBox.Text = vendorModel.EmployeesCount;
             if (vendorModel.InternalProfessionalServices)
@@ -173,14 +174,11 @@ namespace CitiSoft
             else internalServicesComboBox.SelectedIndex = 1;
 
 
-             vid = Controller.vendorModelList
-            .Where(v => v.CompanyName.Equals(companyNameComboBox.SelectedItem.ToString(), StringComparison.OrdinalIgnoreCase))
-            .Select(v => v.Vid)
-            .FirstOrDefault();
+             vid = Controller.vendorModelList.Where(v => v.CompanyName.Equals(companyNameComboBox.SelectedItem.ToString(), StringComparison.OrdinalIgnoreCase) && v.Operation != 'D').Select(v => v.Vid).FirstOrDefault();
 
             if (vid != 0)
             {
-                List<AddressModel> addressModels = Controller.addressModelList.Where(address => address.Vid == vid).ToList();
+                List<AddressModel> addressModels = Controller.addressModelList.Where(address => address.Vid == vid && address.Operation != 'D').ToList();
                 addressPanel.addressList = addressModels;
                 
             }
@@ -194,7 +192,7 @@ namespace CitiSoft
         {
             if (sender is ComboBox comboBox)
             {
-                if (!Controller.getDeliverVendor().Any(vendor => vendor.CompanyName.Equals(comboBox.Text, StringComparison.OrdinalIgnoreCase)))
+                if (!Controller.getDeliverVendor().Any(vendor => vendor.CompanyName.Equals(comboBox.Text, StringComparison.OrdinalIgnoreCase) && vendor.Operation != 'D'))
                 {
                     comboBox.Text = string.Empty;
                 }
@@ -223,35 +221,23 @@ namespace CitiSoft
             {
                 try
                 {
-                    int vendorIndex= Controller.vendorModelList.FindIndex(vendor => vendor.Vid == vid);
-                    VendorModel existingVendor = Controller.vendorModelList.FirstOrDefault(vendor => vendor.Vid == vid);
+                    int vendorIndex= Controller.vendorModelList.FindIndex(vendor => vendor.Vid == vid && vendor.Operation != 'D');
+                    VendorModel existingVendor = Controller.vendorModelList.FirstOrDefault(vendor => vendor.Vid == vid && vendor.Operation != 'D');
                     existingVendor.CompanyEstablished = InputValidation.ParseStringToIntOrZero((companyEstablishedTextBox.Text));
                     existingVendor.EmployeesCount = InputValidation.GetStringValueOrNoneOrWhitespace(employeesTextBox.Text);
                     existingVendor.InternalProfessionalServices = InputValidation.ParseTrueOrFalse(internalServicesComboBox.SelectedText);
+                    existingVendor.Operation = 'U';
                     Controller.vendorModelList.RemoveAt(vendorIndex);
                     Controller.vendorModelList.Insert(vendorIndex, existingVendor);
+                    foreach (var addressModel in Controller.addressModelList.Where(v => v.Vid == vid))
+                    {
+                        addressModel.Operation = 'D';
+                    }
                     foreach (AddressModel address in addressPanel.addressList)
                     {
-                        if (!address.addressId.Equals(null))
-                        {
-                            int index = Controller.addressModelList.FindIndex(inst => inst.addressId == address.addressId);
-                            AddressModel instance = Controller.addressModelList.FirstOrDefault(inst => inst.addressId == address.addressId);
-                            instance.AddressLine1 = address.AddressLine1;
-                            instance.AddressLine2 = address.AddressLine2;
-                            instance.City = address.City;
-                            instance.Country = address.Country;
-                            instance.PostCode = address.PostCode;
-                            instance.Email = address.Email;
-                            instance.Telephone = address.Telephone;
-                            Controller.addressModelList.RemoveAt(index);
-                            Controller.addressModelList.Insert(index, instance);
-                        }
-                        else 
-                        {
-                            Controller.addressModelList.Add
+                        Controller.addressModelList.Add
                         (new AddressModel
                         {
-                            addressId=-1,
                             Vid = vid,
                             AddressLine1 = address.AddressLine1,
                             AddressLine2 = address.AddressLine2,
@@ -260,12 +246,14 @@ namespace CitiSoft
                             PostCode = address.PostCode,
                             Email = address.Email,
                             Telephone = address.Telephone,
+                            Operation = 'I'
                         });
-                        }
+                        
                     }
                     clearAll();
                     //Controller.sendVendorUpdate(Controller.vendorModelList);
                     MessageBox.Show("Vendor Successfully Updated.");
+                    new ViewDataByVendor(1);
 
                 }
                 catch (FormatException fe)

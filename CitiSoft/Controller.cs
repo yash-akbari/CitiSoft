@@ -104,90 +104,81 @@ namespace CitiSoft
         
         public static List<VendorModel> getDeliverVendor()
         {
-            return vendorModelList;
+            return vendorModelList.Where(vendor => vendor.Operation!= 'D').ToList();
         }
         public static void sendVendorUpdate(List<VendorModel> vendorModelList)
         {
             Controller.vendorModelList = vendorModelList;
-            Repository.insertUpdateDeleteVendor(vendorModelList);
+            Repository.insertUpdateDelete(vendorModelList);
         }
         public static List<AddressModel> getDeliverAddress(int vid)
         {
-            List<AddressModel> result = addressModelList.Where(address => address.Vid == vid).ToList();
-            return result;
+            return addressModelList.Where(address => address.Vid == vid && address.Operation != 'D').ToList();
         }
 
 
 
         public static List<BusinessAreasModel> getBusinessAreasBySid(int sid)
         {
-            List<BusinessAreasModel> result = businessAreasModelList.Where(business => business.Sid == sid).ToList();
-            return result;
+            return businessAreasModelList.Where(business => business.Sid == sid && business.Operation != 'D').ToList();
         }
         public static List<string> getOnlyBusinessBySid(int sid)
         {
-            return businessAreasModelList.Where(business => business.Sid == sid).Select(business => business.BusinessAreas).ToList();
+            return businessAreasModelList.Where(business => business.Sid == sid && business.Operation != 'D').Select(business => business.BusinessAreas).ToList();
         }
 
 
         public static List<FinancialServicesModel> getFinancialServicesBySid(int sid)
         {
             
-            List<FinancialServicesModel> result = financialServicesModelList.Where(financial => financial.Sid == sid).ToList();
-            return result;
+            return financialServicesModelList.Where(financial => financial.Sid == sid && financial.Operation != 'D').ToList();
         }
         public static List<string> getOnlyFinancialServicesBySid(int sid)
         {
-            return financialServicesModelList.Where(finance => finance.Sid == sid).Select(finance => finance.FinancialService).ToList();
+            return financialServicesModelList.Where(finance => finance.Sid == sid && finance.Operation != 'D').Select(finance => finance.FinancialService).ToList();
         }
 
 
         public static List<ModulesModel> getModulesBySid(int sid)
         { 
-            List<ModulesModel> result = modulesModelList.Where(modules => modules.Sid == sid).ToList();
-            return result;
+            return modulesModelList.Where(modules => modules.Sid == sid && modules.Operation != 'D').ToList();
         }
         public static List<string> getOnlyModulesBySid(int sid)
         {
-            return modulesModelList.Where(modules => modules.Sid == sid).Select(modules => modules.Modules).ToList();
+            return modulesModelList.Where(modules => modules.Sid == sid && modules.Operation != 'D').Select(modules => modules.Modules).ToList();
         }
 
 
         public static List<TypeOfSoftwareModel> getTypeOfSoftwareBySid(int sid)
         {  
-            List<TypeOfSoftwareModel> result = typeOfSoftwareModelList.Where(typeOfSoftware => typeOfSoftware.Sid == sid).ToList();
-            return result;
+            return typeOfSoftwareModelList.Where(typeOfSoftware => typeOfSoftware.Sid == sid && typeOfSoftware.Operation != 'D').ToList();
         }
         public static List<string> getOnlyTypeOfSoftwareBySid(int sid)
         {
-            return typeOfSoftwareModelList.Where(type => type.Sid == sid).Select(type => type.TypeOfSoftware).ToList();
+            return typeOfSoftwareModelList.Where(type => type.Sid == sid && type.Operation != 'D').Select(type => type.TypeOfSoftware).ToList();
         }
 
 
         public static CommentsModel getComments(int sid)
         { 
             commentsModelList=Repository.GetAllComments();
-            CommentsModel result = commentsModelList.FirstOrDefault(comments => comments.sid == sid);
-            SoftwareModel model = softwareModelList.FirstOrDefault(software => software.SoftwareId == sid);
-
-            return result;
+            return commentsModelList.FirstOrDefault(comments => comments.Sid == sid && comments.Operation != 'D');
         }
         public static void sendAddressUpdate(List<AddressModel> addressModelList)
         {
             Controller.addressModelList = addressModelList;
-            Repository.insertUpdateDeleteAddress(addressModelList);
+            Repository.insertUpdateDelete(addressModelList);
         }
 
         public static List<SoftwareModel> getDeliverSoftware(int vid)
         {
-            List<SoftwareModel> result = softwareModelList.Where(software => software.Vid == vid).ToList();
-            return result;
+           return softwareModelList.Where(software => software.Vid == vid && software.Operation != 'D').ToList();
         }
 
         public static void sendSoftwareUpdate(List<SoftwareModel> softwareModelList)
         {
             Controller.softwareModelList = softwareModelList;
-            Repository.insertUpdateDeleteSoftware(softwareModelList);
+            Repository.insertUpdateDelete(softwareModelList);
             Repository.insertUpdateDelete(Controller.typeOfSoftwareModelList);
             Repository.insertUpdateDelete(Controller.modulesModelList);
             Repository.insertUpdateDelete(Controller.businessAreasModelList);

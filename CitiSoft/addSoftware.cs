@@ -232,41 +232,47 @@ namespace CitiSoft
                         SoftwareName = InputValidation.GetStringValueOrNoneOrWhitespace(softwareNameTextBox.Text),
                         SoftwareWebsite = InputValidation.GetStringValueOrNoneOrWhitespace(softwareWebsiteTextBox.Text),
                         Cloud = cloudComboBox.SelectedItem.ToString(),
+                        Operation= 'I'
                     }) ;
                     foreach (var type in typeOfSoftwareCustomListBox.listBox.Items)
                     {
                         Controller.typeOfSoftwareModelList.Add(new TypeOfSoftwareModel
                         {
-                            id = random,
-                            TypeOfSoftware = type.ToString()
+                            Id = random,
+                            TypeOfSoftware = type.ToString(),
+                            Operation='I'
                         }) ;
                     }
                     foreach( var business in buisenessAreasCustomListBox.listBox.Items)
                     {
                         Controller.businessAreasModelList.Add(new BusinessAreasModel
                         {
-                            id = random,
-                            BusinessAreas = business.ToString()
+                            Id = random,
+                            BusinessAreas = business.ToString(),
+                            Operation = 'I'
                         }) ;
                     }
                     foreach (var modules in modulesCustomListBox.listBox.Items)
                     {
                         Controller.modulesModelList.Add(new ModulesModel
                         {
-                            id = random,
-                            Modules = modules.ToString()
+                            Id = random,
+                            Modules = modules.ToString(),
+                            Operation = 'I'
                         });
                     }
                     foreach (var finance in financialServicesCustomListBox.listBox.Items)
                     {
                         Controller.financialServicesModelList.Add(new FinancialServicesModel
                         {
-                            id = random,
-                            FinancialService = finance.ToString()
+                            Id = random,
+                            FinancialService = finance.ToString(),
+                            Operation = 'I'
                         });
                     }
                     clearAll();
                     MessageBox.Show("Software Successfully added.");
+                    new ViewDataByVendor(1);
                     //Controller.sendSoftwareUpdate(Controller.softwareModelList);
 
                 }
