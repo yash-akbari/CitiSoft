@@ -76,7 +76,7 @@ namespace CitiSoft
             this.minimizeBtn.TabIndex = 0;
             this.minimizeBtn.Text = "🗕";
             this.minimizeBtn.UseVisualStyleBackColor = false;
-            this.minimizeBtn.Click += new System.EventHandler(this.minimizeBtn_Click);
+            this.minimizeBtn.Click += new System.EventHandler(this.MinimizeBtn_Click);
             // 
             // maximizeBtn
             // 
@@ -93,7 +93,7 @@ namespace CitiSoft
             this.maximizeBtn.TabIndex = 1;
             this.maximizeBtn.Text = "🗖";
             this.maximizeBtn.UseVisualStyleBackColor = false;
-            this.maximizeBtn.Click += new System.EventHandler(this.maximizeBtn_Click);
+            this.maximizeBtn.Click += new System.EventHandler(this.MaximizeBtn_Click);
             // 
             // closeBtn
             // 
@@ -110,7 +110,7 @@ namespace CitiSoft
             this.closeBtn.TabIndex = 2;
             this.closeBtn.Text = "X";
             this.closeBtn.UseVisualStyleBackColor = false;
-            this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
+            this.closeBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
             // menuPan
             // 

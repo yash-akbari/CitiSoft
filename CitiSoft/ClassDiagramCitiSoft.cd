@@ -11,27 +11,24 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="CitiSoft.AddSoftware">
-    <Position X="48.5" Y="12.75" Width="3" />
-    <AssociationLine Name="Controller" Type="CitiSoft.Controller" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="50" Y="21.357" />
-        <Point X="50" Y="22.938" />
-        <Point X="44.25" Y="22.938" />
-      </Path>
-    </AssociationLine>
+    <Position X="44.5" Y="12.5" Width="3" />
     <AssociationLine Name="InputValidation" Type="CitiSoft.InputValidation" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="48.5" Y="17.75" />
-        <Point X="47.928" Y="17.75" />
-        <Point X="47.928" Y="21.413" />
-        <Point X="43.833" Y="21.413" Type="JumpStart" />
-        <Point X="43.667" Y="21.413" Type="JumpEnd" />
-        <Point X="27.5" Y="21.413" />
+        <Point X="44.5" Y="17.5" />
+        <Point X="42.5" Y="17.5" />
+        <Point X="42.5" Y="20.627" />
+        <Point X="41.115" Y="20.627" Type="JumpStart" />
+        <Point X="40.948" Y="20.627" Type="JumpEnd" />
+        <Point X="39.833" Y="20.627" Type="JumpStart" />
+        <Point X="39.667" Y="20.627" Type="JumpEnd" />
+        <Point X="34.833" Y="20.627" Type="JumpStart" />
+        <Point X="34.667" Y="20.627" Type="JumpEnd" />
+        <Point X="27.5" Y="20.627" />
         <Point X="27.5" Y="22" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AADggkABgSAxMkAYAIBAAQgAAAAIgAAAEhJCIIQAEUg=</HashCode>
+      <HashCode>AADggkABgWAwMgAIAIAAAAgACAAIAAAAEhJCIIAAAUg=</HashCode>
       <FileName>AddSoftware.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -41,21 +38,14 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="CitiSoft.AddVendor">
-    <Position X="43.25" Y="12.75" Width="3" />
-    <AssociationLine Name="InputValidation" Type="CitiSoft.InputValidation" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="43.25" Y="17.75" />
-        <Point X="42.047" Y="17.75" />
-        <Point X="42.047" Y="21.414" />
-        <Point X="27.5" Y="21.414" />
-        <Point X="27.5" Y="22" />
-      </Path>
-    </AssociationLine>
+    <Position X="39.25" Y="12.5" Width="3" />
     <AssociationLine Name="AddressPanel" Type="CitiSoft.AddressPanel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="43.25" Y="16.5" />
-        <Point X="34.75" Y="16.5" />
+        <Point X="39.25" Y="16.25" />
+        <Point X="34.75" Y="16.25" />
         <Point X="34.75" Y="21.026" />
+        <Point X="27.583" Y="21.026" Type="JumpStart" />
+        <Point X="27.417" Y="21.026" Type="JumpEnd" />
         <Point X="20.88" Y="21.026" />
         <Point X="20.88" Y="21.646" />
         <Point X="18.312" Y="21.646" />
@@ -63,8 +53,8 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>IQBQRkAAAUyQAAAIKARAAAACEAgAASAAAAQAAFEQAEA=</HashCode>
-      <FileName>addVendor.cs</FileName>
+      <HashCode>AQBQQkAAAUiQAAAIAARAAAACAAAAASAAAAQAABEAAEA=</HashCode>
+      <FileName>AddVendor.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Controller" />
@@ -75,87 +65,25 @@
   <Class Name="CitiSoft.ChangePasswordForm">
     <Position X="19.25" Y="11" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>EAAAABIAACAAAAAAAACAAAACAACAIAAAAAAICAAFAQA=</HashCode>
+      <HashCode>EAAAABIAACAAAAgAQACAAAACAACgMAAAAAAICAAFAQA=</HashCode>
       <FileName>ChangePasswordForm.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.Controller">
-    <Position X="42.25" Y="21.75" Width="2" />
-    <AssociationLine Name="VendorRepository1" Type="CitiSoft.VendorRepository" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="42.25" Y="24.687" />
-        <Point X="41.271" Y="24.687" Type="JumpStart" />
-        <Point X="41.105" Y="24.687" Type="JumpEnd" />
-        <Point X="40.645" Y="24.687" Type="JumpStart" />
-        <Point X="40.479" Y="24.687" Type="JumpEnd" />
-        <Point X="37.562" Y="24.687" />
-        <Point X="37.562" Y="30" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="AddressRepository1" Type="CitiSoft.AddressRepository" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="42.25" Y="22.687" />
-        <Point X="40.562" Y="22.687" />
-        <Point X="40.562" Y="30" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="SoftwareRepository1" Type="CitiSoft.SoftwareRepository" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="44.25" Y="25.875" />
-        <Point X="45.812" Y="25.875" />
-        <Point X="45.812" Y="30" />
-      </Path>
-    </AssociationLine>
+    <Position X="38.25" Y="21.5" Width="2" />
     <AssociationLine Name="ViewDataByVendor" Type="CitiSoft.ViewDataByVendor" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="42.25" Y="27.25" />
-        <Point X="41.271" Y="27.25" Type="JumpStart" />
-        <Point X="41.105" Y="27.25" Type="JumpEnd" />
-        <Point X="40.645" Y="27.25" Type="JumpStart" />
-        <Point X="40.479" Y="27.25" Type="JumpEnd" />
-        <Point X="37.645" Y="27.25" Type="JumpStart" />
-        <Point X="37.479" Y="27.25" Type="JumpEnd" />
-        <Point X="30.259" Y="27.25" />
-        <Point X="30.259" Y="30" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="SearchByVendor" Type="CitiSoft.SearchByVendor" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="42.25" Y="27.25" />
-        <Point X="41.271" Y="27.25" Type="JumpStart" />
-        <Point X="41.105" Y="27.25" Type="JumpEnd" />
-        <Point X="40.645" Y="27.25" Type="JumpStart" />
-        <Point X="40.479" Y="27.25" Type="JumpEnd" />
-        <Point X="37.645" Y="27.25" Type="JumpStart" />
-        <Point X="37.479" Y="27.25" Type="JumpEnd" />
-        <Point X="26.875" Y="27.25" />
-        <Point X="26.875" Y="30" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="searchVendor1" Type="CitiSoft.searchVendor" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="42.25" Y="27.25" />
-        <Point X="41.271" Y="27.25" Type="JumpStart" />
-        <Point X="41.105" Y="27.25" Type="JumpEnd" />
-        <Point X="40.645" Y="27.25" Type="JumpStart" />
-        <Point X="40.479" Y="27.25" Type="JumpEnd" />
-        <Point X="37.645" Y="27.25" Type="JumpStart" />
-        <Point X="37.479" Y="27.25" Type="JumpEnd" />
-        <Point X="24.125" Y="27.25" />
-        <Point X="24.125" Y="30" />
+        <Point X="38.25" Y="27" />
+        <Point X="30.259" Y="27" />
+        <Point X="30.259" Y="28.75" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAgAIQAGAEAAAAAAAmQAAWAAAEAQEDAAaQkAIABGGwA=</HashCode>
+      <HashCode>AQgAAQACAEAAAAAAAiAAAWAEAEAQEAAAaYgAIABMG4A=</HashCode>
       <FileName>Controller.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="VendorRepository1" />
-      <Property Name="AddressRepository1" />
-      <Property Name="SoftwareRepository1" />
       <Property Name="ViewDataByVendor" />
-      <Property Name="SearchByVendor" />
-      <Property Name="searchVendor1" />
     </ShowAsAssociation>
   </Class>
   <Class Name="CitiSoft.CustomListBox">
@@ -173,7 +101,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.DataBaseManager">
-    <Position X="47" Y="24.25" Width="2.5" />
+    <Position X="43" Y="24" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAIgAAQAAAIAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
       <FileName>DataBaseManager.cs</FileName>
@@ -189,7 +117,7 @@
   <Class Name="CitiSoft.InputValidation">
     <Position X="26" Y="22" Width="3" />
     <TypeIdentifier>
-      <HashCode>AIAAQAMAEAAIAAAAAAgQAoAAAhCABAAAAABEACAAIAA=</HashCode>
+      <HashCode>AIAAQAIAEAAIAAAAAAgQAoAAAhCgBAAAAABEACAAIAA=</HashCode>
       <FileName>InputValidation.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -202,7 +130,7 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>ACAAAAAAACAAABAAAACAAAgCAIAcCAAAEGAAAABAAAA=</HashCode>
+      <HashCode>ACAAAAAIACAAABAAAACAAAgCAIAcCAAQEGAAAABAAAA=</HashCode>
       <FileName>Login.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -243,7 +171,7 @@
       <Field Name="venProblemHistoryData" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>BgYQCAAYYCAgABEAgAG0AAACIAAIBAAASACAwQASCGY=</HashCode>
+      <HashCode>BgYQCAAYYCAgABAAgAG0AAACIAAIBAAACAGAwEASCWY=</HashCode>
       <FileName>MainUi.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -251,58 +179,58 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="CitiSoft.SoftwareModel">
-    <Position X="52.25" Y="34.25" Width="1.5" />
+    <Position X="48.25" Y="34" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAAAAAACABAgAAAAAIAAAAAQEABAAAACAAAAAAAAAEA=</HashCode>
+      <HashCode>gAAAAAAAAAAgAAAAAIAAAAAQEABAAAAAAAEAAAAAAEA=</HashCode>
       <FileName>Model.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.TypeOfSoftwareModel">
-    <Position X="50" Y="34.25" Width="1.75" />
+    <Position X="46" Y="34" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAACAAAAAAAAAgA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAEAAAAAAAAAAACAAEAAAAAAAA=</HashCode>
       <FileName>Model.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.BusinessAreasModel">
-    <Position X="47.75" Y="34.25" Width="1.75" />
+    <Position X="43.75" Y="34" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <HashCode>AAACAAAAABAAAAAAAAAEAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Model.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.ModulesModel">
-    <Position X="45.75" Y="34.25" Width="1.5" />
+    <Position X="41.75" Y="34" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAQAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAEAAAQAAAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Model.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.FinancialServicesModel">
-    <Position X="43.25" Y="34.25" Width="2" />
+    <Position X="39.25" Y="34" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAABEAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Model.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.VendorModel">
-    <Position X="36.75" Y="32.75" Width="2.25" />
+    <Position X="32.75" Y="32.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAACQAAAAAAAAAQAAIAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <HashCode>AAACQAAAAAAAAAQAAIAAAAAAAAAAAAAAAgEAAAAAAAA=</HashCode>
       <FileName>Model.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.AddressModel">
-    <Position X="40" Y="32.75" Width="1.5" />
+    <Position X="36" Y="32.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAIAIAAAAAAAAIAAAAAAIAAgEAQAAA=</HashCode>
+      <HashCode>QAAAAAAAACAAAAAIAIAAAAAAAAIAAAAAAIEAgAAQAAA=</HashCode>
       <FileName>Model.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.ModifyClientForm">
     <Position X="25.25" Y="11" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAwGQwAFBSAAQBIABAGAAEIKSAJhAAMAAAAAAAEAAAE=</HashCode>
+      <HashCode>AAwGQwAFBSAAQBIAJAGABEIKSAJhAAMCAAACAAEAAAE=</HashCode>
       <FileName>ModifyClientForm.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -330,102 +258,33 @@
       <Property Name="Login" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="CitiSoft.VendorRepository">
-    <Position X="36.75" Y="30" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAAAAAQAAAAgAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Repository.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="DataBaseManager" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="CitiSoft.AddressRepository">
-    <Position X="39.75" Y="30" Width="2.25" />
-    <AssociationLine Name="Controller" Type="CitiSoft.Controller" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="41.188" Y="30" />
-        <Point X="41.188" Y="23.375" />
-        <Point X="42.25" Y="23.375" />
-      </Path>
-    </AssociationLine>
-    <TypeIdentifier>
-      <HashCode>AAAAIAAAASAAAAAAAAAAABAAAAAAAAAAAAAAIAAAAAA=</HashCode>
-      <FileName>Repository.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="AddressModel" />
-      <Property Name="DataBaseManager" />
-      <Property Name="Controller" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="CitiSoft.SoftwareRepository">
-    <Position X="45" Y="30" Width="2.25" />
-    <AssociationLine Name="SoftwareModel" Type="CitiSoft.SoftwareModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="46" Y="32.257" />
-        <Point X="46" Y="32.762" />
-        <Point X="52.938" Y="32.762" />
-        <Point X="52.938" Y="34.25" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="TypeOfSoftwareModel" Type="CitiSoft.TypeOfSoftwareModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="46" Y="32.257" />
-        <Point X="46" Y="32.762" />
-        <Point X="50.984" Y="32.762" />
-        <Point X="50.984" Y="34.25" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="BusinessAreasModel" Type="CitiSoft.BusinessAreasModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="46" Y="32.257" />
-        <Point X="46" Y="32.762" />
-        <Point X="48.625" Y="32.762" />
-        <Point X="48.625" Y="34.25" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="ModulesModel" Type="CitiSoft.ModulesModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="46" Y="32.257" />
-        <Point X="46" Y="32.762" />
-        <Point X="46.5" Y="32.762" />
-        <Point X="46.5" Y="34.25" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="FinancialServicesModel" Type="CitiSoft.FinancialServicesModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="46" Y="32.257" />
-        <Point X="46" Y="32.762" />
-        <Point X="44.188" Y="32.762" />
-        <Point X="44.188" Y="34.25" />
-      </Path>
-    </AssociationLine>
+  <Class Name="CitiSoft.Repository">
+    <Position X="41" Y="29.75" Width="2.25" />
     <AssociationLine Name="Controller" Type="CitiSoft.Controller" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="46.781" Y="30" />
-        <Point X="46.781" Y="25.25" />
-        <Point X="46.38" Y="25.25" Type="JumpStart" />
-        <Point X="46.213" Y="25.25" Type="JumpEnd" />
-        <Point X="44.25" Y="25.25" />
+        <Point X="42.781" Y="29.75" />
+        <Point X="42.781" Y="25" />
+        <Point X="40.25" Y="25" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AACAAAAABSAAAAAAAgAAAQAAIAAAAgAAAQAAYAAAEQA=</HashCode>
+      <HashCode>AACAAAAABSAAAQBAAgAAARAAIAAAggAAIQAQIAAAEQA=</HashCode>
       <FileName>Repository.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="DataBaseManager" />
+      <Property Name="Controller" />
       <Property Name="SoftwareModel" />
       <Property Name="TypeOfSoftwareModel" />
       <Property Name="BusinessAreasModel" />
       <Property Name="ModulesModel" />
       <Property Name="FinancialServicesModel" />
-      <Property Name="DataBaseManager" />
-      <Property Name="Controller" />
+      <Property Name="AddressModel1" />
+      <Property Name="VendorModel" />
     </ShowAsAssociation>
   </Class>
   <Class Name="CitiSoft.CheckIndent">
-    <Position X="48" Y="30" Width="1.5" />
+    <Position X="44" Y="29.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Repository.cs</FileName>
@@ -439,15 +298,15 @@
     <AssociationLine Name="AddVendor" Type="CitiSoft.AddVendor" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="34.5" Y="10.312" />
-        <Point X="44.75" Y="10.312" />
-        <Point X="44.75" Y="12.75" />
+        <Point X="40.75" Y="10.312" />
+        <Point X="40.75" Y="12.5" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="AddSoftware" Type="CitiSoft.AddSoftware" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="34.5" Y="10.312" />
-        <Point X="50.781" Y="10.312" />
-        <Point X="50.781" Y="12.75" />
+        <Point X="46.781" Y="10.312" />
+        <Point X="46.781" Y="12.5" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="ModifyClientForm" Type="CitiSoft.ModifyClientForm" FixedFromPoint="true" FixedToPoint="true">
@@ -500,7 +359,7 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>QKEoC2AQEWhJsIuDkAAAiCKKBAEZAAJYggSTEA/5giQ=</HashCode>
+      <HashCode>QaEoC2gwEWhJsI+DkAAAiCKCBAEZAAJYgoSSEA/5giQ=</HashCode>
       <FileName>RuntimeUi.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -515,20 +374,6 @@
       <Property Name="dashboard" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="CitiSoft.SearchByVendor">
-    <Position X="25.75" Y="30" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAABAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAQAEAAIA=</HashCode>
-      <FileName>SearchByVendor.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="CitiSoft.searchVendor">
-    <Position X="23.25" Y="30" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AgAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAQAAAAAAI=</HashCode>
-      <FileName>searchVendor.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="CitiSoft.UserProfileForm">
     <Position X="10.25" Y="11" Width="2.5" />
     <TypeIdentifier>
@@ -537,9 +382,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CitiSoft.ViewDataByVendor">
-    <Position X="28.75" Y="30" Width="3.25" />
+    <Position X="28.75" Y="28.75" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>gQAAAAEIAAgAwiAAANAAgBECAACCEBCEAABgQAAAAAA=</HashCode>
+      <HashCode>pQAAAQUYCQ6BxmQADNAAoxkCggjCEBAEAABgQIQSAAA=</HashCode>
       <FileName>ViewDataByVendor.cs</FileName>
     </TypeIdentifier>
   </Class>

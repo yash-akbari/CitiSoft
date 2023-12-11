@@ -58,7 +58,7 @@ namespace CitiSoft
                 if (vendorModel.Operation.Equals('I'))
                 {
 
-                    try 
+                    try
                     {
                         con.Open();
                         using (SqlTransaction transaction = con.BeginTransaction())
@@ -99,7 +99,7 @@ namespace CitiSoft
                                 catch (Exception ex)
                                 {
                                     transaction.Rollback();
-                                    MessageBox.Show("Error: " + ex.Message+ "Insert");
+                                    MessageBox.Show("Error: " + ex.Message + "Insert");
 
                                 }
 
@@ -156,7 +156,7 @@ namespace CitiSoft
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Error: " + ex.Message+ "Update");
+                            MessageBox.Show("Error: " + ex.Message + "Update");
                         }
                         finally
                         {
@@ -166,8 +166,8 @@ namespace CitiSoft
                 }
             }
         }
-    
-     public AddressModel AddressModel
+
+        public AddressModel AddressModel
         {
             get => default;
             set
@@ -175,7 +175,7 @@ namespace CitiSoft
             }
         }
 
-    
+
 
         public Controller Controller
         {
@@ -194,7 +194,7 @@ namespace CitiSoft
             SqlCommand cmd;
             SqlDataReader dataReader;
             string sql;
-            sql = "SELECT * FROM Address"; 
+            sql = "SELECT * FROM Address";
             cmd = new SqlCommand(sql, con);
             dataReader = cmd.ExecuteReader();
             while (dataReader.Read())
@@ -242,7 +242,7 @@ namespace CitiSoft
                         {
                             con.Open();
                             cmd.ExecuteNonQuery();
-                        
+
                         }
                         catch (Exception ex)
                         {
@@ -276,7 +276,7 @@ namespace CitiSoft
                         }
                     }
                 }
-                else if(addressModel.Operation.Equals('U'))
+                else if (addressModel.Operation.Equals('U'))
                 {
                     string sql = "UPDATE Address SET vid = @Vid, addressLine1 = @AddressLine1, addressLine2 = @AddressLine2, city = @City, country = @Country, postcode = @PostCode, email = @Email, telephone = @Telephone WHERE addressId = @AddressId";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
@@ -308,8 +308,8 @@ namespace CitiSoft
                 }
             }
         }
-    
-  
+
+
         public SoftwareModel SoftwareModel
         {
             get => default;
@@ -351,7 +351,7 @@ namespace CitiSoft
         }
 
 
-      
+
 
         public static List<SoftwareModel> GetAllSoftware()
         {
@@ -377,7 +377,7 @@ namespace CitiSoft
                     Cloud = Convert.ToString(dataReader.GetValue(5)),
                     AdditionalInfo = Convert.ToString(dataReader.GetValue(6)),
                     Operation = 'N'
-                }) ;
+                });
             }
             dataReader.Close();
             cmd.Dispose();
@@ -398,7 +398,7 @@ namespace CitiSoft
 
             return string.Empty;
         }
-        
+
         public static List<ModulesModel> getModules()
         {
             List<ModulesModel> modulesModelList = new List<ModulesModel>();
@@ -511,7 +511,7 @@ namespace CitiSoft
         }
 
 
-        public static void insertUpdateDelete(List<TypeOfSoftwareModel> typeOfSoftwareModelList) 
+        public static void insertUpdateDelete(List<TypeOfSoftwareModel> typeOfSoftwareModelList)
         {
             SqlConnection con;
             con = DataBaseManager.GetCitiSoftConnection();
@@ -541,7 +541,7 @@ namespace CitiSoft
 
                     }
                 }
-                else if (typeOfSoftwareModel.Operation.Equals('D') )
+                else if (typeOfSoftwareModel.Operation.Equals('D'))
                 {
                     string sql = "Delete From SoftTypes WHERE softTypesId = @Id";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
@@ -567,7 +567,7 @@ namespace CitiSoft
                     string sql = "UPDATE SoftTypes SET sid = @sid, softTypes = @typeOfSoftware WHERE softTypesId = @id";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
-                        cmd.Parameters.AddWithValue("@id",typeOfSoftwareModel.Id);
+                        cmd.Parameters.AddWithValue("@id", typeOfSoftwareModel.Id);
                         cmd.Parameters.AddWithValue("@sid", typeOfSoftwareModel.Sid);
                         cmd.Parameters.AddWithValue("@typeOfSoftware", typeOfSoftwareModel.TypeOfSoftware);
                         try
@@ -638,7 +638,7 @@ namespace CitiSoft
                         }
                     }
                 }
-                else if(businessAreasModel.Operation.Equals('U'))
+                else if (businessAreasModel.Operation.Equals('U'))
                 {
                     string sql = "UPDATE Business SET sid = @sid, BusinessArea = @Business WHERE businessId = @id";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
@@ -872,7 +872,7 @@ namespace CitiSoft
                         }
                     }
                 }
-                else if(commentsModel.Operation.Equals('U'))
+                else if (commentsModel.Operation.Equals('U'))
                 {
                     string sql = "UPDATE Comments SET sid = @sid, comment = @comment, lstDemoDt=@lstDemoDt, lstrevInt=@lstrevInt, lstRevDt=@lstRevDt WHERE commentId = @id";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
@@ -969,9 +969,9 @@ namespace CitiSoft
                         try
                         {
                             con.Open();
-                           MessageBox.Show( cmd.ExecuteNonQuery().ToString());
-                            
-                            
+                            MessageBox.Show(cmd.ExecuteNonQuery().ToString());
+
+
                         }
                         catch (Exception ex)
                         {
@@ -983,7 +983,7 @@ namespace CitiSoft
                         }
                     }
                 }
-                else if(softwareModel.Operation.Equals('U'))
+                else if (softwareModel.Operation.Equals('U'))
                 {
                     string sql = "UPDATE SoftName SET SoftName = @SoftwareName, [softWeb] = @SoftwareWebsite, [cloud] = @Cloud WHERE vid = @Vid";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
@@ -996,7 +996,7 @@ namespace CitiSoft
                         {
                             con.Open();
                             cmd.ExecuteNonQuery();
-                            
+
                         }
                         catch (Exception ex)
                         {
@@ -1011,10 +1011,10 @@ namespace CitiSoft
             }
         }
 
-    
 
 
-    
+
+
         public static List<CommentsModel> GetAllComments()
         {
             List<CommentsModel> commentsModelList = new List<CommentsModel>();
@@ -1034,7 +1034,7 @@ namespace CitiSoft
                     Sid = Convert.ToInt32(dataReader.GetValue(0)),
                     CommentId = Convert.ToInt32(dataReader.GetValue(1)),
                     Comments = Convert.ToString(dataReader.GetValue(2)),
-                    LastDemoDate = Convert.ToDateTime(dataReader.GetValue(3)), 
+                    LastDemoDate = Convert.ToDateTime(dataReader.GetValue(3)),
                     LastReviewedInterval = Convert.ToInt32(dataReader.GetValue(4)),
                     LastReviewedDate = Convert.ToDateTime(dataReader.GetValue(5)),
                     Operation = 'N'
@@ -1046,6 +1046,21 @@ namespace CitiSoft
             return commentsModelList;
         }
 
+        public AddressModel AddressModel1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public VendorModel VendorModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
 
     public class CheckIndent

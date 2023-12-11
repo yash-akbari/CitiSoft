@@ -86,7 +86,7 @@ namespace CitiSoft
             searchComboBoxCatgorized.Add("Software", new List<String> { "Software Name", "Type of Software", "Website", "Description","Comments","Business Areas","Modules","Financial Services Client Type", "Cloud", "Additional Info"});
             searchComboBoxCatgorized.Add("Address", new List<String> { "City", "Country", "PostCode", "Email", "TelePhone"});
 
-            foreach (var category in searchComboBoxCatgorized.Keys)
+            foreach (var category in searchComboBoxCatgorized.Keys) // to categorizw the list spaces are added
             { 
                 searchComboBox.Items.Add(category);
                 foreach (var item in searchComboBoxCatgorized[category])
@@ -406,7 +406,7 @@ namespace CitiSoft
             SoftwareDataGridView.Columns[4].Visible = false;
             SoftwareDataGridView.Columns[6].Visible = false; 
             SoftwareDataGridView.RowHeadersVisible = false;
-            SoftCompDataGridView.Columns["Operation"].Visible = false;
+            //SoftCompDataGridView.Columns[SoftCompDataGridView.ColumnCount-1].Visible = false;
         }
 
         private void AddressDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

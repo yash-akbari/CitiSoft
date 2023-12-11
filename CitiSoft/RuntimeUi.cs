@@ -93,6 +93,10 @@ namespace CitiSoft
             panSelector("venPan");
         }
 
+        /// <summary>
+        /// All the Functions ending with Func keyword are used to initialize the Speicific Controls
+        /// </summary>
+
         public void venTabControlFunc()
         {
             venTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -266,12 +270,6 @@ namespace CitiSoft
         }
 
 
-
-
-
-
-
-
         public void clientMenuFunc()
         {//Settings Menu
             clientMenu.Text = "Client";
@@ -332,15 +330,6 @@ namespace CitiSoft
             ProblemHistoryForm problemHistoryForm = new ProblemHistoryForm();
             AddForm(problemHistoryForm, clientProblemHistory);
         }
-        
-
-
-
-
-
-
-
-
 
         // adds the form inside the tab
         public static void AddForm(Form form, TabPage page)
@@ -588,11 +577,7 @@ namespace CitiSoft
         {
             InitializeComponent();
             CurrentUserType = userType;
-            _userId = userId;
-
-
-            
-            
+            _userId = userId;    
             InitializeTabs();
         }
 
@@ -607,9 +592,6 @@ namespace CitiSoft
                     break;
                 case 2:
 
-
-                    
-                    
                     CheckIndent c = new CheckIndent();
                     dashboardMenuFunc();
                     dashboardFunctionalityFunc();

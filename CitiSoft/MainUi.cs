@@ -56,9 +56,9 @@ namespace CitiSoft
                 else if (Bottom.Contains(cursor)) message.Result = (IntPtr)HTBOTTOM;
             }
         }
-        private void closeBtn_Click(object sender, EventArgs e)
+        private void CloseBtn_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            Application.Exit(); // Button to close whole program
         }
 
         [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]
@@ -67,12 +67,12 @@ namespace CitiSoft
         [DllImport("user32.dll", EntryPoint = "SendMessage")]
         private extern static void SendMessge(System.IntPtr hwnd, int wmsg, int wparam, int lparam);
 
-        private void minimizeBtn_Click(object sender, EventArgs e)
+        private void MinimizeBtn_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
+            this.WindowState = FormWindowState.Minimized; //To minimize the whole window
         }
 
-        private void maximizeBtn_Click(object sender, EventArgs e)
+        private void MaximizeBtn_Click(object sender, EventArgs e) // to maximize the whole window
         {
             if (this.WindowState == FormWindowState.Normal)
             {
