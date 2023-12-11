@@ -112,8 +112,8 @@ namespace CitiSoft
         private void UpdatePassword(string userId, bool approve)
         {
             string query = approve
-                ? "UPDATE [User] SET pwd = newPwd, newPwd = NULL, pwdChangeStatus = 0 WHERE uid = @uid"
-                : "UPDATE [User] SET newPwd = NULL, pwdChangeStatus = 0 WHERE uid = @uid";
+                ? "UPDATE [User] SET pwd = newPwd, newPwd = 0, pwdChnageStatus = 0 WHERE uid = @uid"
+                : "UPDATE [User] SET newPwd = 0, pwdChnageStatus = 0 WHERE uid = @uid";
 
             using (SqlConnection connection = new SqlConnection(DataBaseManager.functionalityConnectionString))
             {
