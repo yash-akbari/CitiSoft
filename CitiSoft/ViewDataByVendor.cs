@@ -69,6 +69,7 @@ namespace CitiSoft
 
             topPanel.Controls.Add(searchComboBox);
             topPanel.Controls.Add(RefreshButton);
+            topPanel.Controls.Add(SaveButton);
             topPanel.Controls.Add(searchTextBox);
             topPanel.Height = 31;
 
@@ -112,7 +113,7 @@ namespace CitiSoft
             SaveButton.Name = "SaveButton";
             SaveButton.Size = new System.Drawing.Size(82, 23);
             SaveButton.TabIndex = 1;
-            SaveButton.Text = "Save Comment";
+            SaveButton.Text = "Save";
             SaveButton.UseVisualStyleBackColor = true;
             SaveButton.Click += SaveButton_Click;
 
@@ -243,7 +244,30 @@ namespace CitiSoft
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            //softwareList.Where(x => x.Operation != 'D').ToList();
+            foreach (DataGridViewRow row in SoftwareDataGridView.SelectedRows)
+            {
+                sid = Convert.ToInt32(row.Cells["SoftwareId"].Value);
+            }
+            int softwareIndex = Controller.softwareModelList.FindIndex(software => software.SoftwareId == sid && software.Operation != 'D');
+            SoftwareModel softModel = Controller.softwareModelList.FirstOrDefault(software => software.SoftwareId == sid && software.Operation != 'D');
+            if (softModel != null)
+            {
+                softModel.AdditionalInfo = InputValidation.GetStringValueOrNoneOrWhitespace(additionalInfoRichTextBox.Text);
+                softModel.Description = InputValidation.GetStringValueOrNoneOrWhitespace(descriptionRichTextBox.Text);
+                softModel.Operation = 'U';
+                Controller.softwareModelList[softwareIndex] = softModel;
+            }
+            int commentIndex = Controller.commentsModelList.FindIndex(comment => comment.Sid == sid && comment.Operation != 'D');
+            CommentsModel commentsModel = Controller.commentsModelList.FirstOrDefault(comment => comment.Sid == sid && comment.Operation != 'D');
+            if (commentsModel != null)
+            {
+                commentsModel.LastReviewedDate = lastReviewedDatePicker.Value;
+                commentsModel.LastReviewedInterval = InputValidation.ParseStringToIntOrZero(lastReviewIntTextBox.Text);
+                commentsModel.LastDemoDate = lastDemoDatePicker.Value;
+                commentsModel.Comments = InputValidation.GetStringValueOrNoneOrWhitespace(commentsRichTextBox.Text);
+                commentsModel.Operation = 'U';
+                Controller.commentsModelList[commentIndex] = commentsModel;
+            }
         }
 
         private void RefreshButton_Click(object sender, EventArgs e)
@@ -382,6 +406,7 @@ namespace CitiSoft
             SoftwareDataGridView.Columns[4].Visible = false;
             SoftwareDataGridView.Columns[6].Visible = false; 
             SoftwareDataGridView.RowHeadersVisible = false;
+            SoftCompDataGridView.Columns["Operation"].Visible = false;
         }
 
         private void AddressDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -389,12 +414,14 @@ namespace CitiSoft
             AddressDataGridView.Columns[0].Visible = false;
             AddressDataGridView.Columns[1].Visible = false;
             AddressDataGridView.RowHeadersVisible = false;
+            AddressDataGridView.Columns["Operation"].Visible = false;
         }
 
         private void VendorDataGridView_DataBindingComplete(object sender, EventArgs e)
         {
             VendorDataGridView.Columns[0].Visible = false;
             VendorDataGridView.RowHeadersVisible= false;
+            VendorDataGridView.Columns["Operation"].Visible=false;
         
         }
 
