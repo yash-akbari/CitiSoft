@@ -259,7 +259,7 @@ namespace CitiSoft
             // 
             // refreshBtn
             // 
-            this.refreshBtn.Location = new System.Drawing.Point(1278, 783);
+            this.refreshBtn.Location = new System.Drawing.Point(1279, 772);
             this.refreshBtn.Name = "refreshBtn";
             this.refreshBtn.Size = new System.Drawing.Size(184, 61);
             this.refreshBtn.TabIndex = 26;
